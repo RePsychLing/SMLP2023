@@ -1,5 +1,6 @@
 ---
 title: Contrast Coding of Visual Attention Effects
+jupyter: julia-1.9
 ---
 
 ```{julia}
@@ -76,7 +77,7 @@ We use the same formula for all analyses
 form = @formula rt ~ 1 + CTR + (1 + CTR | Subj)
 ```
 
-This is the default order of factor levels. 
+This is the default order of factor levels.
 
 ```{julia}
 StatsModels.levels(dat1.CTR)
@@ -89,15 +90,15 @@ Controlling the ordering of levels for contrasts:
 
 ### SeqDiffCoding
 
-The `SeqDiffCoding` contrast corresponds to `MASS::contr.sdif()` in R. 
-The assignment of random factors such as `Subj` to `Grouping()` is necessary when the sample size is very large. We recommend to include it always, but in this tutorial we do so only in the first example. 
+The `SeqDiffCoding` contrast corresponds to `MASS::contr.sdif()` in R.
+The assignment of random factors such as `Subj` to `Grouping()` is necessary when the sample size is very large. We recommend to include it always, but in this tutorial we do so only in the first example.
 
 ```{julia}
 form = @formula rt ~ 1 + CTR + (1 + CTR | Subj)
 levels = ["val", "sod", "dos", "dod"]
 m1 = let
   contrasts = Dict(
-    :CTR => SeqDiffCoding(; levels), 
+    :CTR => SeqDiffCoding(; levels),
     :Subj => Grouping()
   )
   fit(MixedModel, form, dat1; contrasts)
@@ -125,7 +126,7 @@ m1b = let
 end
 ```
 
-The difference to the preprogrammed `SeqDiffCoding` is that for the third contrast we changed the direction of the contrast such that the sign of the effect is positive when the result is in agreement with theoretical expectation, that is we subtract the fourth level from the third, not the third level from the fourth. 
+The difference to the preprogrammed `SeqDiffCoding` is that for the third contrast we changed the direction of the contrast such that the sign of the effect is positive when the result is in agreement with theoretical expectation, that is we subtract the fourth level from the third, not the third level from the fourth.
 
 ### DummyCoding
 
@@ -143,7 +144,7 @@ The `DummyCoding` contrast has the disadvantage that the intercept returns the m
 ### YchycaeitCoding
 
 The contrasts returned by `DummyCoding` may be exactly what we want.
-Can't we have them, but also have the intercept estimate the GM, rather than the mean of the base level? Yes, we can! We call this "You can have your cake and it eat, too"-Coding (YchycaeitCoding). And we use `HpothesisCoding` to achieve this outcome. 
+Can't we have them, but also have the intercept estimate the GM, rather than the mean of the base level? Yes, we can! We call this "You can have your cake and it eat, too"-Coding (YchycaeitCoding). And we use `HpothesisCoding` to achieve this outcome.
 
 ```{julia}
 m2b = let
@@ -155,6 +156,7 @@ m2b = let
         -1 0 0 1
       ];
       levels,
+      labels=levels[2:end],
     )
   )
   fit(MixedModel, form, dat1; contrasts)
@@ -208,7 +210,7 @@ end
 ```sh
 + HeC1:(3 - 4)/2            # (405 - 402)/2
 + HeC2:(2 - (3+4)/2)/3      # (391 - (405 + 402)/2)/3
-+ HeC3:(1 - (2+3+4)/3/4     # (356  -(391 + 405 + 402)/3)/4 
++ HeC3:(1 - (2+3+4)/3/4     # (356  -(391 + 405 + 402)/3)/4
 ```
 
 ### Anova Coding
