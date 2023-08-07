@@ -1,5 +1,6 @@
 ---
 title: Basics with Emotikon Project
+jupyter: julia-1.9
 ---
 
 This script uses a subset of data reported in @Fuehner2021.
@@ -28,7 +29,6 @@ using DataFrames
 using MixedModels
 using MixedModelsMakie
 using MixedModelsMakie: simplelinreg
-using MKL
 using ProgressMeter
 using Random
 using Statistics

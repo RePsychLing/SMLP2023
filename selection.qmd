@@ -1,3 +1,7 @@
+---
+jupyter: julia-1.9
+---
+
 ```{julia}
 #| code-fold: true
 using Arrow

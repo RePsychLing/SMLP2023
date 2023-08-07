@@ -2,6 +2,7 @@ project:
   type: website
   title: "SMLP2023"
   execute-dir: project
+  output-dir: _build/
   render:
     - index.qmd
     - about.qmd
