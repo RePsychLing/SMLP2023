@@ -1,6 +1,6 @@
 ---
 title: "Bootstrapping a fitted model"
-jupyter: julia-1.8
+jupyter: julia-1.9
 ---
 
 Begin by loading the packages to be used.

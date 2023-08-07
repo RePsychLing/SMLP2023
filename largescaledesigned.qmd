@@ -1,5 +1,5 @@
 ---
-jupyter: julia-1.8
+jupyter: julia-1.9
 ---
 
 # A large-scale designed experiment {#sec-largescaledesigned}
@@ -187,8 +187,7 @@ draw(
     :wrdlen => "Word length",
     :acc => "Accuracy";
     color=:isword,
-  ) *
-  smooth();
+  ); # smooth() is slow
   figure=(; resolution=(800, 450)),
 )
 ```
@@ -212,8 +211,7 @@ draw(
     :wrdlen => "Word length",
     :acc => "Accuracy";
     color=:isword,
-  ) *
-  smooth();
+  ) ; # * smooth()
   figure=(; resolution=(800, 450)),
 )
 ```
@@ -288,7 +286,7 @@ draw(
     :spropacc => "Proportion accurate",
     :smedianrt => "Median response time (ms)",
   ) *
-  (smooth() + visual(Scatter));
+  (visual(Scatter)); # smooth()
 )
 ```
 
@@ -407,8 +405,7 @@ draw(
     :wrdlen => "Word length",
     :rt => "Response time (ms)";
     :color => :isword,
-  ) *
-  smooth();
+  )
 )
 ```
 
@@ -424,8 +421,7 @@ draw(
     :wrdlen => "Word length",
     :rt => (x -> 1000/x) => "Speed of response (s⁻¹)";
     :color => :isword,
-  ) *
-  smooth();
+  )# * smooth();
 )
 ```
 

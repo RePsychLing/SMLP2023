@@ -27,6 +27,8 @@ Manifest.toml
 .CondaPkg/
 .jupyter_cache/
 _freeze/
+_site/
+_build/
 
 *.*~
 .vscode/

@@ -1,6 +1,6 @@
 ---
 title: 'RePsychLing Kliegl, Kuschela, & Laubrock (2015)'
-jupyter: julia-1.8
+jupyter: julia-1.9
 ---
 
 ## Background
@@ -580,7 +580,7 @@ m1L_bak = m1L;
 m1L_prf=profile(m1L)
 ```
 
-## Example 
+## Example
 
 https://dmbates.quarto.pub/plotting-profiles/#the-penicillin-example
 
