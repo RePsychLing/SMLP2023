@@ -1,6 +1,6 @@
 ---
 title: "Generalized linear mixed models"
-jupyter: julia-1.8
+jupyter: julia-1.9
 ---
 
 Load the packages to be used

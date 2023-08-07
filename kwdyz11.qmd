@@ -1,6 +1,6 @@
 ---
 title: "RePsychLing Kliegl et al. (2010)"
-jupyter: julia-1.8
+jupyter: julia-1.9
 ---
 
 ## Background

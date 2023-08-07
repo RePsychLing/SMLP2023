@@ -1,6 +1,6 @@
 ---
 title: Analysis of the sleepstudy data
-jupyter: julia-1.8
+jupyter: julia-1.9
 ---
 
 The `sleepstudy` data are from a study of the effects of sleep deprivation on response time reported in  @Balkin2000 and in @Belenky2003.

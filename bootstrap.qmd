@@ -1,6 +1,6 @@
 ---
 title: "Parametric bootstrap for mixed-effects models"
-jupyter: julia-1.8
+jupyter: julia-1.9
 ---
 
 The speed of MixedModels.jl relative to its predecessors makes the parametric bootstrap much more computationally tractable.

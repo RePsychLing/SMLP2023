@@ -1,6 +1,6 @@
 ---
 title: "Notes on saved data files"
-jupyter: julia-1.8
+jupyter: julia-1.9
 ---
 
 ## The Arrow storage format
