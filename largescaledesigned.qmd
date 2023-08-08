@@ -187,7 +187,7 @@ draw(
     :wrdlen => "Word length",
     :acc => "Accuracy";
     color=:isword,
-  ); # smooth() is slow
+  ) * smooth(; span=0.75, degree=2, npoints=200);
   figure=(; resolution=(800, 450)),
 )
 ```
@@ -211,7 +211,7 @@ draw(
     :wrdlen => "Word length",
     :acc => "Accuracy";
     color=:isword,
-  ) ; # * smooth()
+  ) * smooth();
   figure=(; resolution=(800, 450)),
 )
 ```
@@ -286,7 +286,7 @@ draw(
     :spropacc => "Proportion accurate",
     :smedianrt => "Median response time (ms)",
   ) *
-  (visual(Scatter)); # smooth()
+  (visual(Scatter) + smooth())
 )
 ```
 
@@ -405,7 +405,7 @@ draw(
     :wrdlen => "Word length",
     :rt => "Response time (ms)";
     :color => :isword,
-  )
+  ) * smooth()
 )
 ```
 
@@ -421,7 +421,7 @@ draw(
     :wrdlen => "Word length",
     :rt => (x -> 1000/x) => "Speed of response (s⁻¹)";
     :color => :isword,
-  )# * smooth();
+  ) * smooth()
 )
 ```
 
@@ -548,7 +548,7 @@ draw(
     :elm01 => "Conditional means of item random effects for model elm01",
     :elm02 => "Conditional means of item random effects for model elm02";
     color=:isword,
-  );
+  ) * visual(Scatter; alpha=0.2);
   axis=(; width=600, height=600),
 )
 ```
@@ -567,7 +567,7 @@ cor(Matrix(select(byitem, :elm01, :elm02)))
 ```{julia}
 #| echo: false
 #| output: false
-CairoMakie.activate!(; type="png")
+CairoMakie.activate!(; type="svg")
 ```
 
 These models take only a few seconds to fit on a modern laptop computer, which is quite remarkable given the size of the data set and the number of random effects.
@@ -668,7 +668,7 @@ draw(
     :vocabAge => "Vocabulary age (yr) of subject",
     :elm01 => "Random effect in model elm01";
     color=:sex,
-  ) * visual(Scatter)
+  ) * visual(Scatter; alpha=0.6)
 )
 ```
 
@@ -703,12 +703,13 @@ draw(
 #| code-fold: true
 #| label: fig-elm01BGMean
 #| fig-cap: "Random effect in model elm01 versus mean bigram frequency, by word/nonword status"
+CairoMakie.activate!(; type="png")
 draw(
   data(dropmissing(select(itemextended, :elm01, :BG_Mean, :isword))) *
   mapping(
     :BG_Mean => "Mean bigram frequency",
     :elm01 => "Random effect in model elm01";
     color=:isword,
-  ) * visual(Scatter)
+  ) * visual(Scatter; alpha=0.2)
 )
 ```

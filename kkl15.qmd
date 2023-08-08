@@ -292,7 +292,7 @@ The slant in residuals show a lower and upper boundary of reaction times, that i
 #| code-fold: true
 #| label: fig-m1fittedresid
 #| fig-cap: Residuals versus fitted values for model m1
-scatter(fitted(m1), residuals(m1))
+scatter(fitted(m1), residuals(m1); alpha=0.3)
 ```
 
 With many observations the scatterplot is not that informative. Contour plots or heatmaps may be an alternative.
@@ -445,8 +445,8 @@ Here we
 We generate 2500 samples for the 15 model parameters (4 fixed effect, 4 VCs, 6 CPs, and 1 residual).
 
 ```{julia}
-Random.seed!(1234321)
-samp = parametricbootstrap(2500, m1);
+samp = parametricbootstrap(MersenneTwister(1234321), 2500, m1;
+                           optsum_overrides=(; ftol_rel=1e-8));
 ```
 
 ```{julia}
@@ -569,15 +569,15 @@ The corresponding plot based on LMM `m1_rt` for raw reaction times still shows t
 ## KKL
 
 ```{julia}
-coeftable(m1)
-VarCorr(m1)
-m1_bak = m1;
-m1_prf=profile(m1)
+# coeftable(m1)
+# VarCorr(m1)
+# m1_bak = m1;
+# m1_pr = profile(m1)
 
-coeftable(m1L)
-VarCorr(m1L_bak)
-m1L_bak = m1L;
-m1L_prf=profile(m1L)
+# coeftable(m1L)
+# VarCorr(m1L_bak)
+# m1L_bak = m1L;
+# m1L_prf = profile(m1L)
 ```
 
 ## Example
@@ -683,6 +683,7 @@ let
     f
 end
 ```
+
 # References
 
 ::: {#refs}
