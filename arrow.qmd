@@ -129,7 +129,7 @@ At this point we can create the z-score column by standardizing the scores for e
 The code to do this follows Julius's presentation on Monday.
 
 ```{julia}
-@transform!(groupby(Score, :Test), :zScore = @c zscore(:score))
+@transform!(groupby(Score, :Test), :zScore = @bycol zscore(:score))
 ```
 
 ```{julia}
@@ -222,8 +222,8 @@ function ridgeplot!(
 
     offset = idx * spacing
 
-    lower = Node(Point2f.(row.kde.x, offset))
-    upper = Node(Point2f.(row.kde.x, dd .+ offset))
+    lower = Observable(Point2f.(row.kde.x, offset))
+    upper = Observable(Point2f.(row.kde.x, dd .+ offset))
     band!(ax, lower, upper; color=(:black, 0.3))
     lines!(ax, upper; color=(:black, 1.0))
   end

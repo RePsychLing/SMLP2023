@@ -12,7 +12,7 @@ project:
     - sleepstudy_speed.qmd
     - bootstrap.qmd
     - largescaledesigned.qmd
-    # - arrow.qmd
+    - arrow.qmd
     - glmm.qmd
     - kb07.qmd
     - kwdyz11.qmd
@@ -60,7 +60,7 @@ website:
       - sleepstudy_speed.qmd
       - bootstrap.qmd
       - largescaledesigned.qmd
-      # - arrow.qmd
+      - arrow.qmd
       - glmm.qmd
       - kb07.qmd
       - kwdyz11.qmd
