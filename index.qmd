@@ -34,7 +34,7 @@ git clone https://github.com/RePsychLing/SMLP2023
 
 ## Julia Programming Language
 
-We will use Julia v1.9.2 in the summer school. You can download the version appropriate for your setup from here: [Julia Programming Language](https://julialang.org/downloads/)
+We will use Julia v1.9.2 in the summer school. We recommend using [Juliaup](https://github.com/JuliaLang/juliaup) to install and manage Julia versions. Juliaup makes it trivial to upgrade to new Julia releases or even use old ones. Alternatively,  you can download the version appropriate for your setup from here: [Julia Programming Language](https://julialang.org/downloads/)
 
 ## Visual Studio Code (VS Code)
 
