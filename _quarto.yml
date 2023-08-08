@@ -16,7 +16,7 @@ project:
     - glmm.qmd
     - kb07.qmd
     - kwdyz11.qmd
-    # - kkl15.qmd
+    - kkl15.qmd
     - shrinkageplot.qmd
     - contrasts_fggk21.qmd
     - contrasts_kwdyz11.qmd
@@ -64,7 +64,7 @@ website:
       - glmm.qmd
       - kb07.qmd
       - kwdyz11.qmd
-      # - kkl15.qmd
+      - kkl15.qmd
       - shrinkageplot.qmd
       - contrasts_fggk21.qmd
       - contrasts_kwdyz11.qmd
