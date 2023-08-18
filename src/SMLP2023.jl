@@ -100,11 +100,13 @@ const OSF_IO_URIs = Dict{String,String}(
     "ELP_ldt_item" => "c6gxd",
     "ELP_ldt_subj" => "rqenu",
     "ELP_ldt_trial" => "3evhy",
-    # TODO: add entries for fggk21_Child.arrow, fggk21_Score.arrow, fgg21.arrow
-    # kkl15.arrow, kwdyz11.arrow
-
-    # "movies" => "kvdch",
-    # "ratings" => "v73ym",
+    "fggk21_Child" => "c2fmn", 
+    "fggk21_Score" => "7fqx3",
+    "fggk21" => "vwecy",
+    "kkl15" => "p8cea",
+    "kwdyz11" => "4cv52",
+    "movies" => "kvdch",
+    "ratings" => "v73ym",
 )
 
 """

@@ -4,7 +4,7 @@ jupyter: julia-1.9
 ---
 
 Ths script uses a subset of data reported in Fühner, Golle, Granacher, & Kliegl (2021).
-Age and sex effects in physical fitness components of 108,295 third graders including 515 primary schools and 9 cohorts. [@Fuenher2021]
+Age and sex effects in physical fitness components of 108,295 third graders including 515 primary schools and 9 cohorts. [@Fuehner2021]
 
 To circumvent delays associated with model fitting we work with models that are less complex than those in the reference publication.
 All the data to reproduce the models in the publication are used here, too; the script requires only a few changes to specify the more complex models in the paper.
@@ -46,6 +46,7 @@ using DataFrames
 using DataFrameMacros
 using MixedModels
 using ProgressMeter
+using SMLP2023: dataset
 using Statistics
 using StatsBase
 
@@ -76,7 +77,7 @@ Number of scores: 525126
 #### 1.2.1 Read data
 
 ```{julia}
-tbl = Arrow.Table("./data/fggk21.arrow")
+tbl = dataset(:fggk21)
 ```
 
 ```{julia}

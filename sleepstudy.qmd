@@ -30,6 +30,8 @@ using MixedModelsMakie # diagnostic plots
 using ProgressMeter
 using Random           # random number generators
 using RCall            # call R from Julia
+using SMLP2023
+using SMLP2023: dataset
 
 ProgressMeter.ijulia_behavior(:clear);
 CairoMakie.activate!(; type="svg");
@@ -38,7 +40,7 @@ CairoMakie.activate!(; type="svg");
 The `sleepstudy` data are one of the datasets available with the `MixedModels` package.
 
 ```{julia}
-sleepstudy = MixedModels.dataset("sleepstudy")
+sleepstudy = dataset("sleepstudy")
 ```
 
 @fig-reaction_vs_days_by_subject displays the data in a multi-panel plot created with the `lattice` package in `R` [@Sarkar2008], using [RCall.jl](https://github.com/JuliaInterop/RCall.jl).

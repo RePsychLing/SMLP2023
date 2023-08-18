@@ -38,6 +38,8 @@ using MixedModels
 using MixedModelsMakie
 using ProgressMeter
 using Random
+using SMLP2023
+using SMLP2023: dataset
 using StatsBase
 using Statistics
 using AlgebraOfGraphics: density
@@ -51,8 +53,7 @@ ProgressMeter.ijulia_behavior(:clear);
 
 ```{julia}
 #| code-fold: true
-dat = @chain "./data/kwdyz11.arrow" begin
-  Arrow.Table
+dat = @chain dataset(:kwdyz11) begin
   DataFrame
   select(
     :subj =>
