@@ -10,6 +10,7 @@ using Chain
 using DataFrames
 using MixedModels
 using ProgressMeter
+using SMLP2023: dataset
 using StatsBase
 using StatsModels
 using StatsModels: ContrastsCoding
@@ -55,8 +56,7 @@ Both data sets are available in [R-package RePsychLing](https://github.com/dmbat
 ## Preprocessing {#sec-preprocessing}
 
 ```{julia}
-dat1 = @chain "./data/kwdyz11.arrow" begin
-  Arrow.Table
+dat1 = @chain dataset(:kwdyz11) begin
   DataFrame
   select!(:subj => :Subj, :tar => :CTR, :rt)
 end

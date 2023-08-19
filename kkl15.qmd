@@ -45,6 +45,7 @@ using MixedModels
 using MixedModelsMakie
 using Random
 using ProgressMeter
+using SMLP2023: dataset
 using Statistics
 using StatsBase
 
@@ -53,7 +54,6 @@ using AlgebraOfGraphics: boxplot
 using MixedModelsMakie: qqnorm
 using MixedModelsMakie: ridgeplot
 using MixedModelsMakie: scatter
-const datadir = joinpath(@__DIR__, "data")
 
 ProgressMeter.ijulia_behavior(:clear)
 CairoMakie.activate!(; type="png")
@@ -63,9 +63,7 @@ CairoMakie.activate!(; type="png")
 
 ```{julia}
 #| scrolled: true
-dat = @chain "kkl15.arrow" begin
-  joinpath(datadir, _)
-  Arrow.Table
+dat = @chain dataset(:kkl15) begin
   DataFrame
   select(
     :subj =>
