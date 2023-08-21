@@ -1,6 +1,7 @@
 ---
 title: "Mixed Models Tutorial: Contrast Coding"
 jupyter: julia-1.9
+author: "Reinhold Kliegl"
 ---
 
 Ths script uses a subset of data reported in Fühner, Golle, Granacher, & Kliegl (2021).
@@ -30,9 +31,9 @@ The script is structured in three main sections:
   - VCs and CPs depend on contrast
   - VCs and CPs depend on random factor
 
-## 1. Setup
+# Setup
 
-### 1.0 Packages and functions
+## Packages and functions
 
 ```{julia}
 #| code-fold: true
@@ -53,7 +54,7 @@ using StatsBase
 ProgressMeter.ijulia_behavior(:clear);
 ```
 
-### 1.1 Readme for './data/fggk21.rds'
+## Readme for `dataset("fggk21")`
 
 Number of scores: 525126
 
@@ -72,9 +73,9 @@ Number of scores: 525126
       + Muscle power up (`BPT`): 1-kg medicine ball push test [m]
  7. score - see units
 
-### 1.2 Preprocessing
+## Preprocessing
 
-#### 1.2.1 Read data
+### Read data
 
 ```{julia}
 tbl = dataset(:fggk21)
@@ -85,7 +86,7 @@ df = DataFrame(tbl)
 describe(df)
 ```
 
-#### 1.2.3 Extract a stratified subsample
+### Extract a stratified subsample
 
 We extract a random sample of 500 children from the Sex (2)  x Test (5) cells of the design. Cohort and School are random.
 
@@ -99,7 +100,7 @@ begin
 end
 ```
 
-#### 1.2.2 Transformations
+### Transformations
 
 ```{julia}
 begin
@@ -120,11 +121,11 @@ begin
 end
 ```
 
-#### 1.2.3 Figure of age x Sex x Test interactions
+### Figure of age x Sex x Test interactions
 
 The main results of relevance here are shown in Figure 2 of [Scientific Reports 11:17566](https://rdcu.be/cwSeR).
 
-## 2. Contrast coding
+# Contrast coding
 
 Contrast coding is part of `StatsModels.jl`. Here is the primary author's (i.e., Dave Kleinschmidt's documentation of  [Modeling Categorical Data](https://juliastats.org/StatsModels.jl/stable/contrasts/#Modeling-categorical-data).
 
@@ -138,7 +139,7 @@ Finally, contrasts for the five levels of the fixed factor `Test` represent the 
 
 **We (initially) include only `Test` as fixed factor and `Child` as random factor. More complex LMMs can be specified by simply adding other fixed or random factors to the formula.**
 
-### 2.1 _SeqDiffCoding_: `contr1`
+## _SeqDiffCoding_: `contr1`
 
 _SeqDiffCoding_ was used in the publication. This specification tests pairwise differences between the five neighboring levels of `Test`, that is:
 
@@ -210,7 +211,7 @@ The results are very clear: Despite an abundance of statistical power there is n
 
 In the next two sections we use different contrasts. Does this have a bearing on this result?  We still ignore for now that we are looking at anti-conservative test statistics.
 
-### 2.2 _HelmertCoding_: `contr2`
+## _HelmertCoding_: `contr2`
 
 The second set of contrasts uses _HelmertCoding_. Helmert coding codes each level as the difference from the average of the lower levels. With the default order of `Test` levels we get the following test statistics which we describe in reverse order of appearance in model output
 
@@ -255,7 +256,7 @@ The default labeling of Helmert contrasts may lead to confusions with other cont
 
 Once the order of levels is memorized the proposed labelling is very transparent.
 
-### 2.3 _HypothesisCoding_: `contr3`
+## _HypothesisCoding_: `contr3`
 
 The third set of contrasts uses _HypothesisCoding_. _Hypothesis coding_ allows the user to specify their own _a priori_ contrast matrix, subject to the mathematical constraint that the matrix has full rank. For example, sport scientists agree that the first four tests can be contrasted with `BPT`, because the difference is akin to a correction of overall physical fitness. However, they want to keep the pairwise comparisons for the first four tests.
 
@@ -361,7 +362,7 @@ fit(MixedModel, f_cpx_1, dat; contrasts=contr1b)
 m_cpx_1_SeqDiff.PCA
 ```
 
-### 2.4 _PCA-based HypothesisCoding_: `contr4`
+## _PCA-based HypothesisCoding_: `contr4`
 
 The fourth set of contrasts uses _HypothesisCoding_ to specify the set of contrasts implementing the loadings of the four principle components of the published LMM based on test scores, not test effects (contrasts) - coarse-grained, that is roughly according to their signs. This is actually a very interesting and plausible solution nobody had proposed _a priori_.
 
@@ -449,9 +450,9 @@ VarCorr(m_zcp_1_PC_2)
 MixedModels.likelihoodratiotest(m_zcp_1_PC_2, m_cpx_1_PC_2)
 ```
 
-## 3. Other topics
+# Other topics
 
-### 3.1 Contrasts are re-parameterizations of the same model
+## Contrasts are re-parameterizations of the same model
 
 The choice of contrast does not affect the model objective, in other words, they  all yield the same goodness of fit. It does not matter whether a contrast is orthogonal or not.
 
@@ -463,7 +464,7 @@ The choice of contrast does not affect the model objective, in other words, they
 ]
 ```
 
-### 3.2 VCs and CPs depend on contrast coding
+## VCs and CPs depend on contrast coding
 
 Trivially, the meaning of a contrast depends on its definition. Consequently, the contrast specification has a big effect on the random-effect structure. As an illustration, we refit the LMMs with variance components (VCs) and correlation parameters (CPs) for `Child`-related contrasts of `Test`. Unfortunately, it is not easy, actually rather quite difficult, to grasp the meaning of correlations of contrast-based effects; they represent two-way interactions.
 
@@ -546,7 +547,7 @@ end
 
 The best fit was obtained for the PCA-based zcpLMM. Somewhat surprisingly the second best fit was obtained for the SDC. The relatively poor performance of HeC-based zcpLMM is puzzling to me. I thought it might be related to imbalance in design in the present data, but this does not appear to be the case. The same comparison of _SequentialDifferenceCoding_ and _Helmert Coding_ also showed a worse fit for the zcp-HeC LMM than the zcp-SDC LMM.
 
-### 3.3 VCs and CPs depend on random factor
+## VCs and CPs depend on random factor
 
 VCs and CPs resulting from a set of test contrasts can also be estimated for the random factor `School`.
 Of course, these VCs and CPs may look different from the ones we just estimated for `Child`.
@@ -609,7 +610,7 @@ end
 
 For the random factor `School` the Helmert contrast, followed by PCA-based contrasts have least information in the CPs; SDC has the largest contribution from CPs. Interesting.
 
-## 5. That's it
+# That's it
 
 That's it for this tutorial. It is time to try your own contrast coding. You can use these data; there are many alternatives to set up hypotheses for the five tests. Of course and even better, code up some contrasts for data of your own.
 
