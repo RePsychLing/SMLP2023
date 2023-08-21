@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Phillip Alday, Douglas Bates, and Reinhold Kliegl">
-<meta name="dcterms.date" content="2023-08-07">
+<meta name="dcterms.date" content="2023-08-21">
 
-<title>SMLP2023 - Notes on saved data files</title>
+<title>SMLP2023: Advanced Frequentist Track - Saving data with Arrow</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -85,17 +85,22 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./glmm.html" rel="next">
-<link href="./largescaledesigned.html" rel="prev">
+<link href="./sleepstudy.html" rel="next">
+<link href="./pkg.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="site_libs/quarto-contrib/jquery-3.6.3/jquery-3.6.3.min.js"></script>
+<script src="site_libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.js" defer="true"></script>
+<link href="site_libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -123,7 +128,7 @@ div.csl-indent {
 
 </head>
 
-<body class="nav-sidebar docked nav-fixed">
+<body class="nav-sidebar floating nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -131,7 +136,7 @@ div.csl-indent {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">SMLP2023</span>
+    <span class="navbar-title">SMLP2023: Advanced Frequentist Track</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -139,16 +144,6 @@ div.csl-indent {
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link active" href="./index.html" rel="" target="" aria-current="page">
- <span class="menu-text">Home</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./about.html" rel="" target="">
- <span class="menu-text">About</span></a>
-  </li>  
-</ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/RePsychLing/SMLP2023" rel="" target=""><i class="bi bi-github" role="img">
@@ -157,6 +152,7 @@ div.csl-indent {
   </li>  
 </ul>
             <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
@@ -166,7 +162,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./arrow.html">Notes on saved data files</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./useful_packages.html">Getting started with Julia</a></li><li class="breadcrumb-item"><a href="./arrow.html">Saving data with Arrow</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -178,7 +174,7 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
@@ -186,96 +182,151 @@ div.csl-indent {
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Seventh Summer School on Statistical Methods for Linguistics and Psychology</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Getting started with Julia</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./useful_packages.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Useful packages</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pkg.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Package management and reproducible environments</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./arrow.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Saving data with Arrow</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false">
+ <span class="menu-text">Worked examples</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./sleepstudy.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Analysis of the sleepstudy data</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./sleepstudy_speed.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">The sleepstudy: Speed - for a change …</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./bootstrap.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Parametric bootstrap for mixed-effects models</span></a>
+  <a href="./kwdyz11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">RePsychLing Kliegl et al.&nbsp;(2010)</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./kkl15.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">RePsychLing Kliegl, Kuschela, &amp; Laubrock (2015)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./largescaledesigned.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">A large-scale designed experiment</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false">
+ <span class="menu-text">Contrast coding</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./arrow.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Notes on saved data files</span></a>
+  <a href="./contrasts_fggk21.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mixed Models Tutorial: Contrast Coding</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./contrasts_kwdyz11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Contrast Coding of Visual Attention Effects</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./glmm.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Generalized linear mixed models</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false">
+ <span class="menu-text">Bootstrap</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bootstrap.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Parametric bootstrap for mixed-effects models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./kb07.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Bootstrapping a fitted model</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./kwdyz11.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">RePsychLing Kliegl et al.&nbsp;(2010)</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./kkl15.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">RePsychLing Kliegl, Kuschela, &amp; Laubrock (2015)</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="false">
+ <span class="menu-text">Visualizations and diagnostics</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./shrinkageplot.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">More on shrinkage plots</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./contrasts_fggk21.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Mixed Models Tutorial: Contrast Coding</span></a>
+  <a href="./AoGPlots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Creating multi-panel plots</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./contrasts_kwdyz11.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Contrast Coding of Visual Attention Effects</span></a>
-  </div>
-</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -285,24 +336,24 @@ div.csl-indent {
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
-  <ul>
-  <li><a href="#the-arrow-storage-format" id="toc-the-arrow-storage-format" class="nav-link active" data-scroll-target="#the-arrow-storage-format">The Arrow storage format</a></li>
-  <li><a href="#the-emotikon-data" id="toc-the-emotikon-data" class="nav-link" data-scroll-target="#the-emotikon-data">The Emotikon data</a></li>
-  <li><a href="#downloading-and-importing-the-rds-file" id="toc-downloading-and-importing-the-rds-file" class="nav-link" data-scroll-target="#downloading-and-importing-the-rds-file">Downloading and importing the RDS file</a></li>
-  <li><a href="#avoiding-needless-repetition" id="toc-avoiding-needless-repetition" class="nav-link" data-scroll-target="#avoiding-needless-repetition">Avoiding needless repetition</a></li>
-  <li><a href="#creating-the-smaller-table" id="toc-creating-the-smaller-table" class="nav-link" data-scroll-target="#creating-the-smaller-table">Creating the smaller table</a></li>
-  <li><a href="#discovering-patterns-in-the-data" id="toc-discovering-patterns-in-the-data" class="nav-link" data-scroll-target="#discovering-patterns-in-the-data">Discovering patterns in the data</a></li>
-  <li><a href="#reading-arrow-files-in-other-languages" id="toc-reading-arrow-files-in-other-languages" class="nav-link" data-scroll-target="#reading-arrow-files-in-other-languages">Reading Arrow files in other languages</a></li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  <ul class="collapse">
+  <li><a href="#the-arrow-storage-format" id="toc-the-arrow-storage-format" class="nav-link active" data-scroll-target="#the-arrow-storage-format"><span class="header-section-number">1</span> The Arrow storage format</a></li>
+  <li><a href="#the-emotikon-data" id="toc-the-emotikon-data" class="nav-link" data-scroll-target="#the-emotikon-data"><span class="header-section-number">2</span> The Emotikon data</a></li>
+  <li><a href="#downloading-and-importing-the-rds-file" id="toc-downloading-and-importing-the-rds-file" class="nav-link" data-scroll-target="#downloading-and-importing-the-rds-file"><span class="header-section-number">3</span> Downloading and importing the RDS file</a></li>
+  <li><a href="#avoiding-needless-repetition" id="toc-avoiding-needless-repetition" class="nav-link" data-scroll-target="#avoiding-needless-repetition"><span class="header-section-number">4</span> Avoiding needless repetition</a></li>
+  <li><a href="#creating-the-smaller-table" id="toc-creating-the-smaller-table" class="nav-link" data-scroll-target="#creating-the-smaller-table"><span class="header-section-number">5</span> Creating the smaller table</a></li>
+  <li><a href="#discovering-patterns-in-the-data" id="toc-discovering-patterns-in-the-data" class="nav-link" data-scroll-target="#discovering-patterns-in-the-data"><span class="header-section-number">6</span> Discovering patterns in the data</a></li>
+  <li><a href="#reading-arrow-files-in-other-languages" id="toc-reading-arrow-files-in-other-languages" class="nav-link" data-scroll-target="#reading-arrow-files-in-other-languages"><span class="header-section-number">7</span> Reading Arrow files in other languages</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">8</span> References</a></li>
   </ul>
-</nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/RePsychLing/SMLP2023/edit/main/arrow.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/RePsychLing/SMLP2023/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Notes on saved data files</h1>
+<h1 class="title">Saving data with Arrow</h1>
 </div>
 
 
@@ -319,7 +370,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2023-08-07</p>
+      <p class="date">2023-08-21</p>
     </div>
   </div>
   
@@ -329,14 +380,15 @@ div.csl-indent {
 
 </header>
 
-<section id="the-arrow-storage-format" class="level2">
-<h2 class="anchored" data-anchor-id="the-arrow-storage-format">The Arrow storage format</h2>
+<section id="the-arrow-storage-format" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> The Arrow storage format</h1>
 <p>The <a href="https://arrow.apache.org">Arrow storage format</a> provides a language-agnostic storage and memory specification for columnar data tables, which just means “something that looks like a data frame in R”. That is, an arrow table is an ordered, named collection of columns, all of the same length.</p>
 <p>The columns can be of different types including numeric values, character strings, and factor-like representations - called <em>DictEncoded</em>.</p>
 <p>An Arrow file can be read or written from R, Python, Julia and many other languages. Somewhat confusingly in R and Python the name <code>feather</code>, which refers to an earlier version of the storage format, is used in some function names like <code>read_feather</code>.</p>
+<p>Internally, the SMLP2023 package uses Arrow to store all of its datasets.</p>
 </section>
-<section id="the-emotikon-data" class="level2">
-<h2 class="anchored" data-anchor-id="the-emotikon-data">The Emotikon data</h2>
+<section id="the-emotikon-data" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> The Emotikon data</h1>
 <p>The <a href="https://github.com/RePsychling/SMLP2021">SMLP2021 repository</a> contains a version of the data from <span class="citation" data-cites="Fuehner2021">Fühner et al. (<a href="#ref-Fuehner2021" role="doc-biblioref">2021</a>)</span> in <code>notebooks/data/fggk21.arrow</code>. After that file was created there were changes in the master RDS file on the <a href="https://osf.io/2d8rj/">osf.io site</a> for the project. We will recreate the Arrow file here then split it into two separate tables, one with a row for each child in the study and one with a row for each test result.</p>
 <p>The <code>Arrow</code> package for Julia does not export any function names, which means that the function to read an Arrow file must be called as <code>Arrow.Table</code>. It returns a <em>column table</em>, as described in the <a href="https://github.com/JuliaData/Tables.jl">Tables package</a>. This is like a read-only data frame, which can be easily converted to a full-fledged <code>DataFrame</code> if desired.</p>
 <p>This arrangement allows for the <code>Arrow</code> package not to depend on the <code>DataFrames</code> package, which is a heavy-weight dependency, but still easily produce a <code>DataFrame</code> if warranted.</p>
@@ -360,8 +412,8 @@ div.csl-indent {
 </details>
 </div>
 </section>
-<section id="downloading-and-importing-the-rds-file" class="level2">
-<h2 class="anchored" data-anchor-id="downloading-and-importing-the-rds-file">Downloading and importing the RDS file</h2>
+<section id="downloading-and-importing-the-rds-file" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Downloading and importing the RDS file</h1>
 <p>This is similar to some of the code shown by Julius Krumbiegel on Monday. In the data directory of the emotikon project on osf.io under Data, the url for the rds data file is found to be [https://osf.io/xawdb/]. Note that we want version 2 of this file.</p>
 <div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>fn <span class="op">=</span> <span class="bu">Downloads</span>.<span class="fu">download</span>(<span class="st">"https://osf.io/xawdb/download?version=2"</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -975,8 +1027,8 @@ div.csl-indent {
 </div>
 </div>
 </section>
-<section id="avoiding-needless-repetition" class="level2">
-<h2 class="anchored" data-anchor-id="avoiding-needless-repetition">Avoiding needless repetition</h2>
+<section id="avoiding-needless-repetition" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Avoiding needless repetition</h1>
 <p>One of the principles of relational database design is that information should not be repeated needlessly. Each row of <code>df</code> is determined by a combination of <code>Child</code> and <code>Test</code>, together producing a <code>score</code>, which can be converted to a <code>zScore</code>.</p>
 <p>The other columns in the table, <code>Cohort</code>, <code>School</code>, <code>age</code>, and <code>Sex</code>, are properties of the <code>Child</code>.</p>
 <p>Storing these values redundantly in the full table takes up space but, more importantly, allows for inconsistency. As it stands, a given <code>Child</code> could be recorded as being in one <code>Cohort</code> for the <code>Run</code> test and in another <code>Cohort</code> for the <code>S20_r</code> test and nothing about the table would detect this as being an error.</p>
@@ -984,8 +1036,8 @@ div.csl-indent {
 <p>The maintainers of the <code>DataFrames</code> package have put in a lot of work over the past few years to make joins quite efficient in Julia. Thus the processing penalty of reassembling the big table from three smaller tables is minimal.</p>
 <p>It is important to note that the main advantage of using smaller tables that are joined together to produce the analysis table is the fact that the information in the analysis table is consistent by design.</p>
 </section>
-<section id="creating-the-smaller-table" class="level2">
-<h2 class="anchored" data-anchor-id="creating-the-smaller-table">Creating the smaller table</h2>
+<section id="creating-the-smaller-table" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Creating the smaller table</h1>
 <div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>Child <span class="op">=</span> <span class="fu">unique</span>(<span class="fu">select</span>(df, <span class="op">:</span>Child, <span class="op">:</span>School, <span class="op">:</span>Cohort, <span class="op">:</span>Sex, <span class="op">:</span>age))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
@@ -2226,8 +2278,8 @@ Note
 </div>
 </div>
 </section>
-<section id="discovering-patterns-in-the-data" class="level2">
-<h2 class="anchored" data-anchor-id="discovering-patterns-in-the-data">Discovering patterns in the data</h2>
+<section id="discovering-patterns-in-the-data" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Discovering patterns in the data</h1>
 <p>One of the motivations for creating the <code>Child</code> table was be able to bin the ages according to the age of each child, not the age of each <code>Child-Test</code> combination. Not all children have all 5 test results. We can check the number of results by grouping on <code>:Child</code> and evaluate the number of rows in each group.</p>
 <div class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>nobsChild <span class="op">=</span> <span class="fu">combine</span>(<span class="fu">groupby</span>(Score, <span class="op">:</span>Child), nrow <span class="op">=&gt;</span> <span class="op">:</span>ntest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -3377,8 +3429,8 @@ Note
 </div>
 </div>
 </section>
-<section id="reading-arrow-files-in-other-languages" class="level2">
-<h2 class="anchored" data-anchor-id="reading-arrow-files-in-other-languages">Reading Arrow files in other languages</h2>
+<section id="reading-arrow-files-in-other-languages" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Reading Arrow files in other languages</h1>
 <p>There are Arrow implementations for R (the <code>arrow</code> package) and for Python (<code>pyarrow</code>).</p>
 <pre class="{python}"><code>#| eval: false
 import pyarrow.feather: read_table
@@ -3388,8 +3440,8 @@ library("arrow")
 fggk21 &lt;- read_feather("./data/fggk21.arrow")
 nrow(fggk21)</code></pre>
 </section>
-<section id="references" class="level1">
-<h1>References</h1>
+<section id="references" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> References</h1>
 <div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="list">
 <div id="ref-Fuehner2021" class="csl-entry" role="listitem">
 Fühner, T., Granacher, U., Golle, K., &amp; Kliegl, R. (2021). Age and sex effects in physical fitness components of 108,295 third graders including 515 primary schools and 9 cohorts. <em>Scientific Reports</em>, <em>11</em>(1). <a href="https://doi.org/10.1038/s41598-021-97000-4">https://doi.org/10.1038/s41598-021-97000-4</a>
@@ -3399,7 +3451,7 @@ Fühner, T., Granacher, U., Golle, K., &amp; Kliegl, R. (2021). Age and sex effe
 
 </section>
 
-</main> <!-- /main -->
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -3420,6 +3472,121 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
   const icon = "";
   const anchorJS = new window.AnchorJS();
   anchorJS.options = {
@@ -3635,13 +3802,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./largescaledesigned.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">A large-scale designed experiment</span>
+      <a href="./pkg.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Package management and reproducible environments</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./glmm.html" class="pagination-link">
-        <span class="nav-page-text">Generalized linear mixed models</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./sleepstudy.html" class="pagination-link">
+        <span class="nav-page-text">Analysis of the sleepstudy data</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

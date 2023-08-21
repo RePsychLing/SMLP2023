@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Phillip Alday, Douglas Bates, and Reinhold Kliegl">
-<meta name="dcterms.date" content="2023-08-07">
+<meta name="dcterms.date" content="2023-08-21">
 
-<title>SMLP2023 - Bootstrapping a fitted model</title>
+<title>SMLP2023: Advanced Frequentist Track - Bootstrapping a fitted model</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -85,17 +85,22 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./kwdyz11.html" rel="next">
-<link href="./glmm.html" rel="prev">
+<link href="./shrinkageplot.html" rel="next">
+<link href="./bootstrap.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="site_libs/quarto-contrib/jquery-3.6.3/jquery-3.6.3.min.js"></script>
+<script src="site_libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.js" defer="true"></script>
+<link href="site_libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -125,7 +130,7 @@ div.csl-indent {
 
 </head>
 
-<body class="nav-sidebar docked nav-fixed">
+<body class="nav-sidebar floating nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -133,7 +138,7 @@ div.csl-indent {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">SMLP2023</span>
+    <span class="navbar-title">SMLP2023: Advanced Frequentist Track</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -141,16 +146,6 @@ div.csl-indent {
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link active" href="./index.html" rel="" target="" aria-current="page">
- <span class="menu-text">Home</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./about.html" rel="" target="">
- <span class="menu-text">About</span></a>
-  </li>  
-</ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/RePsychLing/SMLP2023" rel="" target=""><i class="bi bi-github" role="img">
@@ -159,6 +154,7 @@ div.csl-indent {
   </li>  
 </ul>
             <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
@@ -168,7 +164,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./kb07.html">Bootstrapping a fitted model</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./bootstrap.html">Bootstrap</a></li><li class="breadcrumb-item"><a href="./kb07.html">Bootstrapping a fitted model</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -180,7 +176,7 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
@@ -188,96 +184,151 @@ div.csl-indent {
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Seventh Summer School on Statistical Methods for Linguistics and Psychology</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false">
+ <span class="menu-text">Getting started with Julia</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./useful_packages.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Useful packages</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pkg.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Package management and reproducible environments</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./arrow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Saving data with Arrow</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false">
+ <span class="menu-text">Worked examples</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./sleepstudy.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Analysis of the sleepstudy data</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./sleepstudy_speed.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">The sleepstudy: Speed - for a change …</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./bootstrap.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Parametric bootstrap for mixed-effects models</span></a>
+  <a href="./kwdyz11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">RePsychLing Kliegl et al.&nbsp;(2010)</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./kkl15.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">RePsychLing Kliegl, Kuschela, &amp; Laubrock (2015)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./largescaledesigned.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">A large-scale designed experiment</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false">
+ <span class="menu-text">Contrast coding</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./arrow.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Notes on saved data files</span></a>
+  <a href="./contrasts_fggk21.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mixed Models Tutorial: Contrast Coding</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./contrasts_kwdyz11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Contrast Coding of Visual Attention Effects</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./glmm.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Generalized linear mixed models</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text">Bootstrap</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bootstrap.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Parametric bootstrap for mixed-effects models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./kb07.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Bootstrapping a fitted model</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./kwdyz11.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">RePsychLing Kliegl et al.&nbsp;(2010)</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./kkl15.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">RePsychLing Kliegl, Kuschela, &amp; Laubrock (2015)</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="false">
+ <span class="menu-text">Visualizations and diagnostics</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./shrinkageplot.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">More on shrinkage plots</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./contrasts_fggk21.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Mixed Models Tutorial: Contrast Coding</span></a>
+  <a href="./AoGPlots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Creating multi-panel plots</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./contrasts_kwdyz11.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Contrast Coding of Visual Attention Effects</span></a>
-  </div>
-</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -287,12 +338,12 @@ div.csl-indent {
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
-  <ul>
-  <li><a href="#data-set-and-model" id="toc-data-set-and-model" class="nav-link active" data-scroll-target="#data-set-and-model">Data set and model</a></li>
-  <li><a href="#a-bootstrap-sample" id="toc-a-bootstrap-sample" class="nav-link" data-scroll-target="#a-bootstrap-sample">A bootstrap sample</a></li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  <ul class="collapse">
+  <li><a href="#data-set-and-model" id="toc-data-set-and-model" class="nav-link active" data-scroll-target="#data-set-and-model"><span class="header-section-number">1</span> Data set and model</a></li>
+  <li><a href="#a-bootstrap-sample" id="toc-a-bootstrap-sample" class="nav-link" data-scroll-target="#a-bootstrap-sample"><span class="header-section-number">2</span> A bootstrap sample</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">3</span> References</a></li>
   </ul>
-</nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/RePsychLing/SMLP2023/edit/main/kb07.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/RePsychLing/SMLP2023/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -316,7 +367,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2023-08-07</p>
+      <p class="date">2023-08-21</p>
     </div>
   </div>
   
@@ -327,7 +378,7 @@ div.csl-indent {
 </header>
 
 <p>Begin by loading the packages to be used.</p>
-<div class="cell" data-execution_count="1">
+<div class="cell" data-execution_count="2">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">AlgebraOfGraphics</span></span>
@@ -343,13 +394,13 @@ div.csl-indent {
 </details>
 </div>
 <p>Provide a short alias for <code>AlgebraOfGraphics</code>.</p>
-<div class="cell" data-execution_count="2">
+<div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> AOG <span class="op">=</span> AlgebraOfGraphics;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="data-set-and-model" class="level2">
-<h2 class="anchored" data-anchor-id="data-set-and-model">Data set and model</h2>
+<section id="data-set-and-model" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Data set and model</h1>
 <p>The <code>kb07</code> data <span class="citation" data-cites="Kronmueller2007">(<a href="#ref-Kronmueller2007" role="doc-biblioref">Kronmüller &amp; Barr, 2007</a>)</span> are one of the datasets provided by the <code>MixedModels</code> package.</p>
-<div class="cell" data-execution_count="3">
+<div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>kb07 <span class="op">=</span> MixedModels.<span class="fu">dataset</span>(<span class="op">:</span>kb07)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <pre><code>Arrow.Table with 1789 rows, 7 columns, and schema:
@@ -363,7 +414,7 @@ div.csl-indent {
 </div>
 </div>
 <p>Convert the table to a DataFrame for summary.</p>
-<div class="cell" data-execution_count="4">
+<div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>kb07 <span class="op">=</span> <span class="fu">DataFrame</span>(kb07)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(kb07)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
@@ -469,14 +520,14 @@ div.csl-indent {
 </div>
 <p>The experimental factors; <code>spkr</code>, <code>prec</code>, and <code>load</code>, are two-level factors. The <code>EffectsCoding</code> contrast is used with these to create a <span class="math inline">\(\pm1\)</span> encoding. Furthermore, <code>Grouping</code> constrasts are assigned to the <code>subj</code> and <code>item</code> factors. This is not a contrast per-se but an indication that these factors will be used as grouping factors for random effects and, therefore, there is no need to create a contrast matrix. For large numbers of levels in a grouping factor, an attempt to create a contrast matrix may cause memory overflow.</p>
 <p>It is not important in these cases but a good practice in any case.</p>
-<div class="cell" data-execution_count="5">
+<div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>contrasts <span class="op">=</span> <span class="fu">merge</span>(</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Dict</span>(nm <span class="op">=&gt;</span> <span class="fu">EffectsCoding</span>() <span class="cf">for</span> nm <span class="kw">in</span> (<span class="op">:</span>spkr, <span class="op">:</span>prec, <span class="op">:</span>load)),</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Dict</span>(nm <span class="op">=&gt;</span> <span class="fu">Grouping</span>() <span class="cf">for</span> nm <span class="kw">in</span> (<span class="op">:</span>subj, <span class="op">:</span>item)),</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The display of an initial model fit</p>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>kbm01 <span class="op">=</span> <span class="kw">let</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  form <span class="op">=</span> <span class="pp">@formula</span>(</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    rt_trunc <span class="op">~</span></span>
@@ -488,7 +539,8 @@ div.csl-indent {
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(MixedModel, form, kb07; contrasts)</span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Minimizing 883   Time: 0:00:01 ( 1.38 ms/it)</code></pre>
+<pre><code>Minimizing 934   Time: 0:00:01 ( 1.46 ms/it)
+  objective:  28637.97101024215</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <table class="table table-sm table-striped small">
@@ -515,79 +567,79 @@ div.csl-indent {
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">2181.6729</td>
-<td style="text-align: right;">77.2879</td>
-<td style="text-align: right;">28.23</td>
+<td style="text-align: right;">2181.6424</td>
+<td style="text-align: right;">77.3512</td>
+<td style="text-align: right;">28.20</td>
 <td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">301.7871</td>
-<td style="text-align: right;">362.0938</td>
+<td style="text-align: right;">301.8676</td>
+<td style="text-align: right;">362.4694</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">spkr: old</td>
-<td style="text-align: right;">67.7484</td>
-<td style="text-align: right;">18.2976</td>
-<td style="text-align: right;">3.70</td>
+<td style="text-align: right;">67.7496</td>
+<td style="text-align: right;">17.9607</td>
+<td style="text-align: right;">3.77</td>
 <td style="text-align: right;">0.0002</td>
-<td style="text-align: right;">43.1536</td>
-<td style="text-align: right;">40.6843</td>
+<td style="text-align: right;">33.0524</td>
+<td style="text-align: right;">41.1185</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">prec: maintain</td>
-<td style="text-align: right;">-333.9212</td>
-<td style="text-align: right;">47.1387</td>
+<td style="text-align: right;">-333.9200</td>
+<td style="text-align: right;">47.1564</td>
 <td style="text-align: right;">-7.08</td>
 <td style="text-align: right;">&lt;1e-11</td>
-<td style="text-align: right;">62.0318</td>
-<td style="text-align: right;">246.8048</td>
+<td style="text-align: right;">58.8607</td>
+<td style="text-align: right;">247.3292</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">load: yes</td>
-<td style="text-align: right;">78.7702</td>
-<td style="text-align: right;">19.5373</td>
-<td style="text-align: right;">4.03</td>
+<td style="text-align: right;">78.8007</td>
+<td style="text-align: right;">19.7260</td>
+<td style="text-align: right;">3.99</td>
 <td style="text-align: right;">&lt;1e-04</td>
-<td style="text-align: right;">65.1901</td>
-<td style="text-align: right;">42.3299</td>
+<td style="text-align: right;">66.9505</td>
+<td style="text-align: right;">43.3885</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">spkr: old &amp; prec: maintain</td>
-<td style="text-align: right;">-21.9655</td>
-<td style="text-align: right;">15.8058</td>
+<td style="text-align: right;">-21.9960</td>
+<td style="text-align: right;">15.8191</td>
 <td style="text-align: right;">-1.39</td>
-<td style="text-align: right;">0.1646</td>
+<td style="text-align: right;">0.1644</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">spkr: old &amp; load: yes</td>
-<td style="text-align: right;">18.3844</td>
-<td style="text-align: right;">15.8058</td>
+<td style="text-align: right;">18.3832</td>
+<td style="text-align: right;">15.8191</td>
 <td style="text-align: right;">1.16</td>
-<td style="text-align: right;">0.2448</td>
+<td style="text-align: right;">0.2452</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">prec: maintain &amp; load: yes</td>
-<td style="text-align: right;">4.5340</td>
-<td style="text-align: right;">15.8058</td>
+<td style="text-align: right;">4.5327</td>
+<td style="text-align: right;">15.8191</td>
 <td style="text-align: right;">0.29</td>
-<td style="text-align: right;">0.7742</td>
+<td style="text-align: right;">0.7745</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">spkr: old &amp; prec: maintain &amp; load: yes</td>
-<td style="text-align: right;">23.6073</td>
-<td style="text-align: right;">15.8058</td>
+<td style="text-align: right;">23.6377</td>
+<td style="text-align: right;">15.8191</td>
 <td style="text-align: right;">1.49</td>
-<td style="text-align: right;">0.1353</td>
+<td style="text-align: right;">0.1351</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Residual</td>
-<td style="text-align: right;">668.4871</td>
+<td style="text-align: right;">669.0516</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -600,7 +652,7 @@ div.csl-indent {
 </div>
 <p>does not include the estimated correlations of the random effects.</p>
 <p>The <code>VarCorr</code> extractor displays these.</p>
-<div class="cell" data-execution_count="7">
+<div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(kbm01)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <table class="table table-sm table-striped small">
@@ -628,8 +680,8 @@ div.csl-indent {
 <tr class="odd">
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">91075.4527</td>
-<td style="text-align: right;">301.7871</td>
+<td style="text-align: right;">91124.0779</td>
+<td style="text-align: right;">301.8676</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -637,35 +689,35 @@ div.csl-indent {
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">spkr: old</td>
-<td style="text-align: right;">1862.2358</td>
-<td style="text-align: right;">43.1536</td>
-<td style="text-align: right;">+0.78</td>
+<td style="text-align: right;">1092.4628</td>
+<td style="text-align: right;">33.0524</td>
+<td style="text-align: right;">+1.00</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">prec: maintain</td>
-<td style="text-align: right;">3847.9447</td>
-<td style="text-align: right;">62.0318</td>
-<td style="text-align: right;">-0.59</td>
-<td style="text-align: right;">+0.03</td>
+<td style="text-align: right;">3464.5848</td>
+<td style="text-align: right;">58.8607</td>
+<td style="text-align: right;">-0.62</td>
+<td style="text-align: right;">-0.62</td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">load: yes</td>
-<td style="text-align: right;">4249.7506</td>
-<td style="text-align: right;">65.1901</td>
+<td style="text-align: right;">4482.3662</td>
+<td style="text-align: right;">66.9505</td>
 <td style="text-align: right;">+0.36</td>
-<td style="text-align: right;">+0.82</td>
-<td style="text-align: right;">+0.53</td>
+<td style="text-align: right;">+0.36</td>
+<td style="text-align: right;">+0.51</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">131111.9379</td>
-<td style="text-align: right;">362.0938</td>
+<td style="text-align: right;">131384.0733</td>
+<td style="text-align: right;">362.4694</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -673,35 +725,35 @@ div.csl-indent {
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">spkr: old</td>
-<td style="text-align: right;">1655.2134</td>
-<td style="text-align: right;">40.6843</td>
-<td style="text-align: right;">+0.44</td>
+<td style="text-align: right;">1690.7347</td>
+<td style="text-align: right;">41.1185</td>
+<td style="text-align: right;">+0.42</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">prec: maintain</td>
-<td style="text-align: right;">60912.6143</td>
-<td style="text-align: right;">246.8048</td>
+<td style="text-align: right;">61171.7458</td>
+<td style="text-align: right;">247.3292</td>
 <td style="text-align: right;">-0.69</td>
-<td style="text-align: right;">+0.35</td>
+<td style="text-align: right;">+0.37</td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">load: yes</td>
-<td style="text-align: right;">1791.8243</td>
-<td style="text-align: right;">42.3299</td>
-<td style="text-align: right;">+0.32</td>
-<td style="text-align: right;">+0.16</td>
-<td style="text-align: right;">-0.14</td>
+<td style="text-align: right;">1882.5594</td>
+<td style="text-align: right;">43.3885</td>
+<td style="text-align: right;">+0.29</td>
+<td style="text-align: right;">+0.14</td>
+<td style="text-align: right;">-0.13</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Residual</td>
 <td style="text-align: left;"></td>
-<td style="text-align: right;">446875.0375</td>
-<td style="text-align: right;">668.4871</td>
+<td style="text-align: right;">447630.0111</td>
+<td style="text-align: right;">669.0516</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -711,7 +763,7 @@ div.csl-indent {
 </div>
 </div>
 <p>None of the two-factor or three-factor interaction terms in the fixed-effects are significant. In the random-effects terms only the scalar random effects and the <code>prec</code> random effect for <code>item</code> appear to be warranted, leading to the reduced formula</p>
-<div class="cell" data-execution_count="8">
+<div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>kbm02 <span class="op">=</span> <span class="kw">let</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  form <span class="op">=</span> <span class="pp">@formula</span>(</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    rt_trunc <span class="op">~</span></span>
@@ -748,7 +800,7 @@ div.csl-indent {
 <td style="text-align: right;">77.4681</td>
 <td style="text-align: right;">28.16</td>
 <td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">364.7126</td>
+<td style="text-align: right;">364.7125</td>
 <td style="text-align: right;">298.0259</td>
 </tr>
 <tr class="even">
@@ -791,7 +843,7 @@ div.csl-indent {
 </table>
 </div>
 </div>
-<div class="cell" data-execution_count="9">
+<div class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(kbm02)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <table class="table table-sm table-striped small">
@@ -808,7 +860,7 @@ div.csl-indent {
 <tr class="odd">
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">133015.244</td>
+<td style="text-align: right;">133015.241</td>
 <td style="text-align: right;">364.713</td>
 <td style="text-align: right;"></td>
 </tr>
@@ -822,7 +874,7 @@ div.csl-indent {
 <tr class="odd">
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">88819.436</td>
+<td style="text-align: right;">88819.437</td>
 <td style="text-align: right;">298.026</td>
 <td style="text-align: right;"></td>
 </tr>
@@ -838,7 +890,7 @@ div.csl-indent {
 </div>
 </div>
 <p>These two models are nested and can be compared with a likelihood-ratio test.</p>
-<div class="cell" data-execution_count="10">
+<div class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>MixedModels.<span class="fu">likelihoodratiotest</span>(kbm02, kbm01)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
 <table class="table table-sm table-striped small">
@@ -872,10 +924,10 @@ div.csl-indent {
 <tr class="even">
 <td style="text-align: left;">rt_trunc ~ 1 + spkr + prec + load + spkr &amp; prec + spkr &amp; load + prec &amp; load + spkr &amp; prec &amp; load + (1 + spkr + prec + load | subj) + (1 + spkr + prec + load | item)</td>
 <td style="text-align: right;">29</td>
-<td style="text-align: right;">28637</td>
-<td style="text-align: right;">27</td>
+<td style="text-align: right;">28638</td>
+<td style="text-align: right;">26</td>
 <td style="text-align: right;">20</td>
-<td style="text-align: left;">0.1431</td>
+<td style="text-align: left;">0.1698</td>
 </tr>
 </tbody>
 </table>
@@ -883,16 +935,16 @@ div.csl-indent {
 </div>
 <p>The p-value of approximately 14% leads us to prefer the simpler model, <code>kbm02</code>, to the more complex, <code>kbm01</code>.</p>
 </section>
-<section id="a-bootstrap-sample" class="level2">
-<h2 class="anchored" data-anchor-id="a-bootstrap-sample">A bootstrap sample</h2>
+<section id="a-bootstrap-sample" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> A bootstrap sample</h1>
 <p>Create a bootstrap sample of a few thousand parameter estimates from the reduced model. The pseudo-random number generator is initialized to a fixed value for reproducibility.</p>
-<div class="cell" data-execution_count="11">
+<div class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="bu">Random</span>.<span class="fu">seed!</span>(<span class="fl">1234321</span>)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>hide_progress <span class="op">=</span> <span class="cn">true</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>kbm02samp <span class="op">=</span> <span class="fu">parametricbootstrap</span>(<span class="fl">2000</span>, kbm02; hide_progress);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>One of the uses of such a sample is to form “confidence intervals” on the parameters by obtaining the shortest interval that covers a given proportion (95%, by default) of the sample.</p>
-<div class="cell" data-execution_count="12">
+<div class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DataFrame</span>(<span class="fu">shortestcovint</span>(kbm02samp))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="13">
 <div><div style="float: left;"><span>9×5 DataFrame</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
@@ -954,7 +1006,7 @@ div.csl-indent {
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">261.196</td>
-<td style="text-align: right;">448.51</td>
+<td style="text-align: right;">448.509</td>
 </tr>
 <tr class="even">
 <td class="rowNumber" style="text-align: right; font-weight: bold;">6</td>
@@ -962,15 +1014,15 @@ div.csl-indent {
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">prec: maintain</td>
 <td style="text-align: right;">175.489</td>
-<td style="text-align: right;">312.051</td>
+<td style="text-align: right;">312.043</td>
 </tr>
 <tr class="odd">
 <td class="rowNumber" style="text-align: right; font-weight: bold;">7</td>
 <td style="text-align: left;">ρ</td>
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">(Intercept), prec: maintain</td>
-<td style="text-align: right;">-0.897984</td>
-<td style="text-align: right;">-0.445594</td>
+<td style="text-align: right;">-0.89799</td>
+<td style="text-align: right;">-0.445596</td>
 </tr>
 <tr class="even">
 <td class="rowNumber" style="text-align: right; font-weight: bold;">8</td>
@@ -994,7 +1046,7 @@ div.csl-indent {
 </div>
 </div>
 <p>A sample like this can be used for more than just creating an interval because it approximates the distribution of the estimator. For the fixed-effects parameters the estimators are close to being normally distributed, <a href="#fig-kbm02fedens">Figure&nbsp;1</a>.</p>
-<div class="cell" data-execution_count="13">
+<div class="cell" data-execution_count="14">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">draw</span>(</span>
@@ -1011,7 +1063,7 @@ div.csl-indent {
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="14">
+<div class="cell" data-execution_count="15">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">draw</span>(</span>
@@ -1034,7 +1086,7 @@ div.csl-indent {
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="15">
+<div class="cell" data-execution_count="16">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">draw</span>(</span>
@@ -1054,8 +1106,8 @@ div.csl-indent {
 </div>
 </div>
 </section>
-<section id="references" class="level1">
-<h1>References</h1>
+<section id="references" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> References</h1>
 <div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="list">
 <div id="ref-Kronmueller2007" class="csl-entry" role="listitem">
 Kronmüller, E., &amp; Barr, D. J. (2007). Perspective-free pragmatics: Broken precedents and the recovery-from-preemption hypothesis<span></span>. <em>Journal of Memory and Language</em>, <em>56</em>(3), 436–455. <a href="https://doi.org/10.1016/j.jml.2006.05.002">https://doi.org/10.1016/j.jml.2006.05.002</a>
@@ -1065,7 +1117,7 @@ Kronmüller, E., &amp; Barr, D. J. (2007). Perspective-free pragmatics: Broken p
 
 </section>
 
-</main> <!-- /main -->
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -1086,6 +1138,121 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
   const icon = "";
   const anchorJS = new window.AnchorJS();
   anchorJS.options = {
@@ -1301,13 +1468,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./glmm.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Generalized linear mixed models</span>
+      <a href="./bootstrap.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Parametric bootstrap for mixed-effects models</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./kwdyz11.html" class="pagination-link">
-        <span class="nav-page-text">RePsychLing Kliegl et al.&nbsp;(2010)</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./shrinkageplot.html" class="pagination-link">
+        <span class="nav-page-text">More on shrinkage plots</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

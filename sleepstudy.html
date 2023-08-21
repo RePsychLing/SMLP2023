@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Phillip Alday, Douglas Bates, and Reinhold Kliegl">
-<meta name="dcterms.date" content="2023-08-07">
+<meta name="dcterms.date" content="2023-08-21">
 
-<title>SMLP2023 - Analysis of the sleepstudy data</title>
+<title>SMLP2023: Advanced Frequentist Track - Analysis of the sleepstudy data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -86,16 +86,21 @@ div.csl-indent {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./sleepstudy_speed.html" rel="next">
-<link href="./pkg.html" rel="prev">
+<link href="./arrow.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="site_libs/quarto-contrib/jquery-3.6.3/jquery-3.6.3.min.js"></script>
+<script src="site_libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.js" defer="true"></script>
+<link href="site_libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -123,7 +128,7 @@ div.csl-indent {
 
 </head>
 
-<body class="nav-sidebar docked nav-fixed">
+<body class="nav-sidebar floating nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -131,7 +136,7 @@ div.csl-indent {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">SMLP2023</span>
+    <span class="navbar-title">SMLP2023: Advanced Frequentist Track</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -139,16 +144,6 @@ div.csl-indent {
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link active" href="./index.html" rel="" target="" aria-current="page">
- <span class="menu-text">Home</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./about.html" rel="" target="">
- <span class="menu-text">About</span></a>
-  </li>  
-</ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/RePsychLing/SMLP2023" rel="" target=""><i class="bi bi-github" role="img">
@@ -157,6 +152,7 @@ div.csl-indent {
   </li>  
 </ul>
             <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
@@ -166,7 +162,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sleepstudy.html">Analysis of the sleepstudy data</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sleepstudy.html">Worked examples</a></li><li class="breadcrumb-item"><a href="./sleepstudy.html">Analysis of the sleepstudy data</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -178,7 +174,7 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
@@ -186,96 +182,151 @@ div.csl-indent {
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Seventh Summer School on Statistical Methods for Linguistics and Psychology</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false">
+ <span class="menu-text">Getting started with Julia</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./useful_packages.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Useful packages</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pkg.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Package management and reproducible environments</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./arrow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Saving data with Arrow</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Worked examples</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./sleepstudy.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Analysis of the sleepstudy data</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./sleepstudy_speed.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">The sleepstudy: Speed - for a change …</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./bootstrap.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Parametric bootstrap for mixed-effects models</span></a>
+  <a href="./kwdyz11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">RePsychLing Kliegl et al.&nbsp;(2010)</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./kkl15.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">RePsychLing Kliegl, Kuschela, &amp; Laubrock (2015)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./largescaledesigned.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">A large-scale designed experiment</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false">
+ <span class="menu-text">Contrast coding</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./arrow.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Notes on saved data files</span></a>
+  <a href="./contrasts_fggk21.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mixed Models Tutorial: Contrast Coding</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./contrasts_kwdyz11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Contrast Coding of Visual Attention Effects</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./glmm.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Generalized linear mixed models</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false">
+ <span class="menu-text">Bootstrap</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bootstrap.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Parametric bootstrap for mixed-effects models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./kb07.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Bootstrapping a fitted model</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./kwdyz11.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">RePsychLing Kliegl et al.&nbsp;(2010)</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./kkl15.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">RePsychLing Kliegl, Kuschela, &amp; Laubrock (2015)</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="false">
+ <span class="menu-text">Visualizations and diagnostics</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./shrinkageplot.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">More on shrinkage plots</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./contrasts_fggk21.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Mixed Models Tutorial: Contrast Coding</span></a>
+  <a href="./AoGPlots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Creating multi-panel plots</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./contrasts_kwdyz11.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Contrast Coding of Visual Attention Effects</span></a>
-  </div>
-</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -285,15 +336,15 @@ div.csl-indent {
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
-  <ul>
-  <li><a href="#loading-the-data" id="toc-loading-the-data" class="nav-link active" data-scroll-target="#loading-the-data">Loading the data</a></li>
-  <li><a href="#fitting-an-initial-model" id="toc-fitting-an-initial-model" class="nav-link" data-scroll-target="#fitting-an-initial-model">Fitting an initial model</a></li>
-  <li><a href="#a-model-with-uncorrelated-random-effects" id="toc-a-model-with-uncorrelated-random-effects" class="nav-link" data-scroll-target="#a-model-with-uncorrelated-random-effects">A model with uncorrelated random effects</a></li>
-  <li><a href="#some-diagnostic-plots" id="toc-some-diagnostic-plots" class="nav-link" data-scroll-target="#some-diagnostic-plots">Some diagnostic plots</a></li>
-  <li><a href="#assessing-variability-by-bootstrapping" id="toc-assessing-variability-by-bootstrapping" class="nav-link" data-scroll-target="#assessing-variability-by-bootstrapping">Assessing variability by bootstrapping</a></li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  <ul class="collapse">
+  <li><a href="#loading-the-data" id="toc-loading-the-data" class="nav-link active" data-scroll-target="#loading-the-data"><span class="header-section-number">1</span> Loading the data</a></li>
+  <li><a href="#fitting-an-initial-model" id="toc-fitting-an-initial-model" class="nav-link" data-scroll-target="#fitting-an-initial-model"><span class="header-section-number">2</span> Fitting an initial model</a></li>
+  <li><a href="#a-model-with-uncorrelated-random-effects" id="toc-a-model-with-uncorrelated-random-effects" class="nav-link" data-scroll-target="#a-model-with-uncorrelated-random-effects"><span class="header-section-number">3</span> A model with uncorrelated random effects</a></li>
+  <li><a href="#some-diagnostic-plots" id="toc-some-diagnostic-plots" class="nav-link" data-scroll-target="#some-diagnostic-plots"><span class="header-section-number">4</span> Some diagnostic plots</a></li>
+  <li><a href="#assessing-variability-by-bootstrapping" id="toc-assessing-variability-by-bootstrapping" class="nav-link" data-scroll-target="#assessing-variability-by-bootstrapping"><span class="header-section-number">5</span> Assessing variability by bootstrapping</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">6</span> References</a></li>
   </ul>
-</nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/RePsychLing/SMLP2023/edit/main/sleepstudy.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/RePsychLing/SMLP2023/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -317,7 +368,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2023-08-07</p>
+      <p class="date">2023-08-21</p>
     </div>
   </div>
   
@@ -341,10 +392,10 @@ Note
 <p>This description is inaccurate. In fact the first two days were acclimatization, the third was a baseline and sleep deprivation was only enforced after day 2. To allow for comparison with earlier analyses of these data we retain the old data description for this notebook only.</p>
 </div>
 </div>
-<section id="loading-the-data" class="level2">
-<h2 class="anchored" data-anchor-id="loading-the-data">Loading the data</h2>
+<section id="loading-the-data" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Loading the data</h1>
 <p>First attach the MixedModels package and other packages for plotting. The CairoMakie package allows the Makie graphics system <span class="citation" data-cites="Danisch2021">(<a href="#ref-Danisch2021" role="doc-biblioref">Danisch &amp; Krumbiegel, 2021</a>)</span> to generate high quality static images. Activate that package with the SVG (Scalable Vector Graphics) backend.</p>
-<div class="cell" data-execution_count="2">
+<div class="cell" data-execution_count="1">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">CairoMakie       </span><span class="co"># graphics back-end</span></span>
@@ -356,14 +407,16 @@ Note
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">ProgressMeter</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Random           </span><span class="co"># random number generators</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">RCall            </span><span class="co"># call R from Julia</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>ProgressMeter.<span class="fu">ijulia_behavior</span>(<span class="op">:</span>clear);</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>CairoMakie.<span class="fu">activate!</span>(; <span class="kw">type</span><span class="op">=</span><span class="st">"svg"</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">SMLP2023</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">SMLP2023</span>: dataset</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>ProgressMeter.<span class="fu">ijulia_behavior</span>(<span class="op">:</span>clear);</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>CairoMakie.<span class="fu">activate!</span>(; <span class="kw">type</span><span class="op">=</span><span class="st">"svg"</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>The <code>sleepstudy</code> data are one of the datasets available with the <code>MixedModels</code> package.</p>
-<div class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sleepstudy <span class="op">=</span> MixedModels.<span class="fu">dataset</span>(<span class="st">"sleepstudy"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sleepstudy <span class="op">=</span> <span class="fu">dataset</span>(<span class="st">"sleepstudy"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>Arrow.Table with 180 rows, 3 columns, and schema:
  :subj      String
@@ -372,7 +425,7 @@ Note
 </div>
 </div>
 <p><a href="#fig-reaction_vs_days_by_subject">Figure&nbsp;1</a> displays the data in a multi-panel plot created with the <code>lattice</code> package in <code>R</code> <span class="citation" data-cites="Sarkar2008">(<a href="#ref-Sarkar2008" role="doc-biblioref">Sarkar, 2008</a>)</span>, using <a href="https://github.com/JuliaInterop/RCall.jl">RCall.jl</a>.</p>
-<div class="cell" data-execution_count="4">
+<div class="cell" data-execution_count="3">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>RCall.<span class="fu">ijulia_setdevice</span>(<span class="fu">MIME</span>(<span class="st">"image/svg+xml"</span>); width<span class="op">=</span><span class="fl">10</span>, height<span class="op">=</span><span class="fl">4.5</span>)</span>
@@ -401,9 +454,9 @@ Note
 <p>Each panel shows the data from one subject and a line fit by least squares to that subject’s data. Starting at the lower left panel and proceeding across rows, the panels are ordered by increasing intercept of the least squares line.</p>
 <p>There are some deviations from linearity within the panels but the deviations are neither substantial nor systematic.</p>
 </section>
-<section id="fitting-an-initial-model" class="level2">
-<h2 class="anchored" data-anchor-id="fitting-an-initial-model">Fitting an initial model</h2>
-<div class="cell" data-execution_count="5">
+<section id="fitting-an-initial-model" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Fitting an initial model</h1>
+<div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="m1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="m1-1"><a href="#m1-1" aria-hidden="true" tabindex="-1"></a>contrasts <span class="op">=</span> <span class="fu">Dict</span>(<span class="op">:</span>subj <span class="op">=&gt;</span> <span class="fu">Grouping</span>())</span>
 <span id="m1-2"><a href="#m1-2" aria-hidden="true" tabindex="-1"></a>m1 <span class="op">=</span> <span class="kw">let</span></span>
 <span id="m1-3"><a href="#m1-3" aria-hidden="true" tabindex="-1"></a>  form <span class="op">=</span> <span class="pp">@formula</span>(reaction <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> days <span class="op">+</span> (<span class="fl">1</span> <span class="op">+</span> days <span class="op">|</span> subj))</span>
@@ -453,7 +506,7 @@ Note
 <p>This model includes fixed effects for the intercept, representing the typical reaction time at the beginning of the experiment with zero days of sleep deprivation, and the slope w.r.t. days of sleep deprivation. The parameter estimates are about 250 ms. typical reaction time without deprivation and a typical increase of 10.5 ms. per day of sleep deprivation.</p>
 <p>The random effects represent shifts from the typical behavior for each subject. The shift in the intercept has a standard deviation of about 24 ms. which would suggest a range of about 200 ms. to 300 ms. in the intercepts. Similarly within-subject slopes would be expected to have a range of about 0 ms./day up to 20 ms./day.</p>
 <p>The random effects for the slope and for the intercept are allowed to be correlated within subject. The estimated correlation, 0.08, is small. This estimate is not shown in the default display above but is shown in the output from <code>VarCorr</code> (variance components and correlations).</p>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <table class="table table-sm table-striped small">
@@ -494,7 +547,7 @@ Note
 </div>
 <p>Technically, the random effects for each subject are unobserved random variables and are not “parameters” in the model per se. Hence we do not report standard errors or confidence intervals for these deviations. However, we can produce prediction intervals on the random effects for each subject. Because the experimental design is balanced, these intervals will have the same width for all subjects.</p>
 <p>A plot of the prediction intervals versus the level of the grouping factor (<code>subj</code>, in this case) is sometimes called a <em>caterpillar</em> plot because it can look like a fuzzy caterpillar if there are many levels of the grouping factor. By default, the levels of the grouping factor are sorted by increasing value of the first random effect.</p>
-<div class="cell" data-execution_count="7">
+<div class="cell" data-execution_count="6">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">caterpillar</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -510,10 +563,10 @@ Note
 </div>
 <p><a href="#fig-m1caterpillar">Figure&nbsp;2</a> reinforces the conclusion that there is little correlation between the random effect for intercept and the random effect for slope.</p>
 </section>
-<section id="a-model-with-uncorrelated-random-effects" class="level2">
-<h2 class="anchored" data-anchor-id="a-model-with-uncorrelated-random-effects">A model with uncorrelated random effects</h2>
+<section id="a-model-with-uncorrelated-random-effects" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> A model with uncorrelated random effects</h1>
 <p>The <code>zerocorr</code> function applied to a random-effects term creates uncorrelated vector-valued per-subject random effects.</p>
-<div class="cell" data-execution_count="8">
+<div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="m2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="m2-1"><a href="#m2-1" aria-hidden="true" tabindex="-1"></a>m2 <span class="op">=</span> <span class="kw">let</span></span>
 <span id="m2-2"><a href="#m2-2" aria-hidden="true" tabindex="-1"></a>  form <span class="op">=</span> <span class="pp">@formula</span> reaction <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> days <span class="op">+</span> <span class="fu">zerocorr</span>(<span class="fl">1</span> <span class="op">+</span> days <span class="op">|</span> subj)</span>
 <span id="m2-3"><a href="#m2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(MixedModel, form, sleepstudy; contrasts)</span>
@@ -560,7 +613,7 @@ Note
 </div>
 </div>
 <p>Again, the default display doesn’t show that there is no correlation parameter to be estimated in this model, but the <code>VarCorr</code> display does.</p>
-<div class="cell" data-execution_count="9">
+<div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(m2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
 <table class="table table-sm table-striped small">
@@ -600,7 +653,7 @@ Note
 </div>
 </div>
 <p>This model has a slightly lower log-likelihood than does <code>m1</code> and one fewer parameter than <code>m1</code>. A likelihood-ratio test can be used to compare these nested models.</p>
-<div class="cell" data-execution_count="10">
+<div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>MixedModels.<span class="fu">likelihoodratiotest</span>(m2, m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <table class="table table-sm table-striped small">
@@ -644,7 +697,7 @@ Note
 </div>
 </div>
 <p>Alternatively, the AIC or BIC values can be compared.</p>
-<div class="cell" data-execution_count="11">
+<div class="cell" data-execution_count="10">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> mods <span class="op">=</span> [m2, m1]</span>
@@ -725,11 +778,11 @@ Note
 </div>
 <p>This comparison does show, however, that a simple count of the parameters in a mixed-effects model can underestimate, sometimes drastically, the model complexity. This is because a single variance component or multiple components can add many dimensions to the linear predictor.</p>
 </section>
-<section id="some-diagnostic-plots" class="level2">
-<h2 class="anchored" data-anchor-id="some-diagnostic-plots">Some diagnostic plots</h2>
+<section id="some-diagnostic-plots" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Some diagnostic plots</h1>
 <p>In mixed-effects models the <em>linear predictor</em> expression incorporates <em>fixed-effects parameters</em>, which summarize trends for the population or certain well-defined subpopulations, and <em>random effects</em> which represent deviations associated with the <em>experimental units</em> or <em>observational units</em> - individual subjects, in this case. The random effects are modeled as unobserved random variables.</p>
 <p>The conditional means of these random variables, sometimes called the BLUPs or <em>Best Linear Unbiased Predictors</em>, are not simply the least squares estimates. They are attenuated or <em>shrunk</em> towards zero to reflect the fact that the individuals are assumed to come from a population. A <em>shrinkage plot</em>, <a href="#fig-m1shrinkage">Figure&nbsp;3</a>, shows the BLUPs from the model fit compared to the values without any shrinkage. If the BLUPs are similar to the unshrunk values then the more complicated model accounting for individual differences is supported. If the BLUPs are strongly shrunk towards zero then the additional complexity in the model to account for individual differences is not providing sufficient increase in fidelity to the data to warrant inclusion.</p>
-<div class="cell" data-execution_count="12">
+<div class="cell" data-execution_count="11">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shrinkageplot!</span>(<span class="fu">Figure</span>(; resolution<span class="op">=</span>(<span class="fl">500</span>, <span class="fl">500</span>)), m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -760,11 +813,11 @@ Note
 <p>If the shrinkage were primarily in one direction - for example, if the arrows from the unshrunk values to the shrunk values were mostly in the vertical direction - then we would get an indication that we could drop the random effect for slope and revert to a simpler model. This is not the case here.</p>
 <p>As would be expected, the unshrunk values that are further from the origin tend to be shrunk more toward the origin. That is, the arrows that originate furthest from the origin are longer. However, that is not always the case. The arrow in the upper right corner, from <code>S337</code>, is relatively short. Examination of the panel for <code>S337</code> in the data plot shows a strong linear trend, even though both the intercept and the slope are unusually large. The neighboring panels in the data plot, <code>S330</code> and <code>S331</code>, have more variability around the least squares line and are subject to a greater amount of shrinkage in the model. (They correspond to the two arrows on the right hand side of the figure around -5 on the vertical scale.)</p>
 </section>
-<section id="assessing-variability-by-bootstrapping" class="level2">
-<h2 class="anchored" data-anchor-id="assessing-variability-by-bootstrapping">Assessing variability by bootstrapping</h2>
+<section id="assessing-variability-by-bootstrapping" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Assessing variability by bootstrapping</h1>
 <p>The speed of fitting linear mixed-effects models using <code>MixedModels.jl</code> allows for using simulation-based approaches to inference instead of relying on approximate standard errors. A <em>parametric bootstrap sample</em> for model <code>m</code> is a collection of models of the same form as <code>m</code> fit to data values simulated from <code>m</code>. That is, we pretend that <code>m</code> and its parameter values are the <em>true</em> parameter values, simulate data from these values, and estimate parameters from the simulated data.</p>
 <p>Simulating and fitting a substantial number of model fits, 5000 in this case, takes only a few seconds, following which we extract a data frame of the parameter estimates and plot densities of some of these estimates.</p>
-<div class="cell" data-execution_count="13">
+<div class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> <span class="bu">Random</span>.<span class="fu">seed!</span>(<span class="fl">42</span>)    <span class="co"># initialize a random number generator</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>m1bstp <span class="op">=</span> <span class="fu">parametricbootstrap</span>(rng, <span class="fl">5000</span>, m1; hide_progress<span class="op">=</span><span class="cn">true</span>)</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>allpars <span class="op">=</span> <span class="fu">DataFrame</span>(m1bstp.allpars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -924,7 +977,7 @@ Note
 <td style="text-align: left;">σ</td>
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">31.6311</td>
+<td style="text-align: right;">31.6348</td>
 </tr>
 <tr class="even">
 <td class="rowNumber" style="text-align: right; font-weight: bold;">29992</td>
@@ -932,7 +985,7 @@ Note
 <td style="text-align: left;">σ</td>
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">days</td>
-<td style="text-align: right;">5.53413</td>
+<td style="text-align: right;">5.53414</td>
 </tr>
 <tr class="odd">
 <td class="rowNumber" style="text-align: right; font-weight: bold;">29993</td>
@@ -940,7 +993,7 @@ Note
 <td style="text-align: left;">ρ</td>
 <td style="text-align: left;">subj</td>
 <td style="text-align: left; font-style: italic;">(Intercept), days</td>
-<td style="text-align: right;">0.171692</td>
+<td style="text-align: right;">0.171676</td>
 </tr>
 <tr class="even">
 <td class="rowNumber" style="text-align: right; font-weight: bold;">29994</td>
@@ -948,7 +1001,7 @@ Note
 <td style="text-align: left;">σ</td>
 <td style="text-align: left; font-style: italic;">residual</td>
 <td style="text-align: left;">missing</td>
-<td style="text-align: right;">22.4943</td>
+<td style="text-align: right;">22.4941</td>
 </tr>
 <tr class="odd">
 <td class="rowNumber" style="text-align: right; font-weight: bold;">29995</td>
@@ -1004,7 +1057,7 @@ Note
 </div>
 </div>
 <p>An empirical density plot of the estimates for the fixed-effects coefficients, <a href="#fig-bsbetadensity">Figure&nbsp;4</a>, shows the normal distribution, “bell-curve”, shape as we might expect.</p>
-<div class="cell" data-execution_count="14">
+<div class="cell" data-execution_count="13">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="cf">begin</span></span>
@@ -1030,7 +1083,7 @@ Note
 </div>
 </div>
 <p>It is also possible to create interval estimates of the parameters from the bootstrap replicates. We define the 1-α <code>shortestcovint</code> to be the shortest interval that contains a proportion 1-α (defaults to 95%) of the bootstrap estimates of the parameter.</p>
-<div class="cell" data-execution_count="15">
+<div class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DataFrame</span>(<span class="fu">shortestcovint</span>(m1bstp))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="15">
 <div><div style="float: left;"><span>6×5 DataFrame</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
@@ -1076,22 +1129,22 @@ Note
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">10.1722</td>
-<td style="text-align: right;">33.0877</td>
+<td style="text-align: right;">33.0876</td>
 </tr>
 <tr class="even">
 <td class="rowNumber" style="text-align: right; font-weight: bold;">4</td>
 <td style="text-align: left;">σ</td>
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">days</td>
-<td style="text-align: right;">2.99474</td>
-<td style="text-align: right;">7.6612</td>
+<td style="text-align: right;">2.99479</td>
+<td style="text-align: right;">7.66115</td>
 </tr>
 <tr class="odd">
 <td class="rowNumber" style="text-align: right; font-weight: bold;">5</td>
 <td style="text-align: left;">ρ</td>
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept), days</td>
-<td style="text-align: right;">-0.40135</td>
+<td style="text-align: right;">-0.401352</td>
 <td style="text-align: right;">1.0</td>
 </tr>
 <tr class="even">
@@ -1109,7 +1162,7 @@ Note
 </div>
 <p>The intervals look reasonable except that the upper bound on the interval for ρ, the correlation coefficient, is 1.0 . It turns out that the estimates of ρ have a great deal of variability.</p>
 <p>Even more alarming, some of these ρ values are undefined (denoted <code>NaN</code>) because the way ρ is calculated can create a division by zero.</p>
-<div class="cell" data-execution_count="16">
+<div class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(<span class="pp">@select</span>(<span class="pp">@subset</span>(allpars, <span class="op">:</span><span class="kw">type</span> <span class="op">==</span> <span class="st">"ρ"</span>), <span class="op">:</span>value))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="16">
 <div><div style="float: left;"><span>1×7 DataFrame</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
@@ -1153,7 +1206,7 @@ Note
 </div>
 </div>
 <p>Because there are several values on the boundary (<code>ρ = 1.0</code>) and a <em>pulse</em> like this is not handled well by a density plot, we plot this sample as a histogram, <a href="#fig-correlationhist">Figure&nbsp;5</a>.</p>
-<div class="cell" data-execution_count="17">
+<div class="cell" data-execution_count="16">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(</span>
@@ -1173,7 +1226,7 @@ Note
 </div>
 </div>
 <p>Finally, density plots for the variance components (but on the scale of the standard deviation), <a href="#fig-bssigmadensity">Figure&nbsp;6</a>, show reasonable symmetry.</p>
-<div class="cell" data-execution_count="18">
+<div class="cell" data-execution_count="17">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="cf">begin</span></span>
@@ -1204,7 +1257,7 @@ Note
 </div>
 </div>
 <p>The estimates of the coefficients, β₁ and β₂, are not highly correlated as shown in a scatterplot of the bootstrap estimates, <a href="#fig-bsbetacontours">Figure&nbsp;7</a> .</p>
-<div class="cell" data-execution_count="19">
+<div class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vcov</span>(m1; corr<span class="op">=</span><span class="cn">true</span>)  <span class="co"># correlation estimate from the model</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="19">
 <pre><code>2×2 Matrix{Float64}:
@@ -1212,7 +1265,7 @@ Note
  -0.137545   1.0</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="20">
+<div class="cell" data-execution_count="19">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span></span>
@@ -1244,8 +1297,8 @@ Note
 </div>
 </div>
 </section>
-<section id="references" class="level1">
-<h1>References</h1>
+<section id="references" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> References</h1>
 <div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="list">
 <div id="ref-Balkin2000" class="csl-entry" role="listitem">
 Balkin, T., Thome, D., Sing, H., Thomas, M., Redmond, D., Wesensten, N., Williams, J., Hall, S., &amp; Belenky, G. (2000). <em>Effects of sleep schedules on commercial motor vehicle driver performance</em> (DOT-MC-00-133). Federal Motor Carrier Safety Administration. <a href="https://doi.org/10.21949/1503015.">https://doi.org/10.21949/1503015.</a>
@@ -1264,7 +1317,7 @@ Sarkar, D. (2008). <em>Lattice: Mutivariate data visualization with r</em>. Spri
 
 </section>
 
-</main> <!-- /main -->
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -1285,6 +1338,121 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
   const icon = "";
   const anchorJS = new window.AnchorJS();
   anchorJS.options = {
@@ -1500,8 +1668,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./pkg.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Package management and reproducible environments</span>
+      <a href="./arrow.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Saving data with Arrow</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

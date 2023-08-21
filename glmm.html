@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Phillip Alday, Douglas Bates, and Reinhold Kliegl">
-<meta name="dcterms.date" content="2023-08-07">
+<meta name="dcterms.date" content="2023-08-21">
 
-<title>SMLP2023 - Generalized linear mixed models</title>
+<title>SMLP2023: Advanced Frequentist Track - Generalized linear mixed models</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -66,17 +66,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./kb07.html" rel="next">
-<link href="./arrow.html" rel="prev">
+<link href="./bootstrap.html" rel="next">
+<link href="./contrasts_kwdyz11.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="site_libs/quarto-contrib/jquery-3.6.3/jquery-3.6.3.min.js"></script>
+<script src="site_libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.js" defer="true"></script>
+<link href="site_libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -106,7 +111,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </head>
 
-<body class="nav-sidebar docked nav-fixed">
+<body class="nav-sidebar floating nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -114,7 +119,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">SMLP2023</span>
+    <span class="navbar-title">SMLP2023: Advanced Frequentist Track</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -122,16 +127,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link active" href="./index.html" rel="" target="" aria-current="page">
- <span class="menu-text">Home</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./about.html" rel="" target="">
- <span class="menu-text">About</span></a>
-  </li>  
-</ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/RePsychLing/SMLP2023" rel="" target=""><i class="bi bi-github" role="img">
@@ -140,6 +135,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
 </ul>
             <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
@@ -161,7 +157,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
@@ -169,96 +165,151 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Seventh Summer School on Statistical Methods for Linguistics and Psychology</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false">
+ <span class="menu-text">Getting started with Julia</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./useful_packages.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Useful packages</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pkg.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Package management and reproducible environments</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./arrow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Saving data with Arrow</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false">
+ <span class="menu-text">Worked examples</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./sleepstudy.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Analysis of the sleepstudy data</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./sleepstudy_speed.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">The sleepstudy: Speed - for a change …</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./bootstrap.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Parametric bootstrap for mixed-effects models</span></a>
+  <a href="./kwdyz11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">RePsychLing Kliegl et al.&nbsp;(2010)</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./kkl15.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">RePsychLing Kliegl, Kuschela, &amp; Laubrock (2015)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./largescaledesigned.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">A large-scale designed experiment</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false">
+ <span class="menu-text">Contrast coding</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./arrow.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Notes on saved data files</span></a>
+  <a href="./contrasts_fggk21.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mixed Models Tutorial: Contrast Coding</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./contrasts_kwdyz11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Contrast Coding of Visual Attention Effects</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./glmm.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Generalized linear mixed models</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false">
+ <span class="menu-text">Bootstrap</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bootstrap.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Parametric bootstrap for mixed-effects models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./kb07.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Bootstrapping a fitted model</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./kwdyz11.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">RePsychLing Kliegl et al.&nbsp;(2010)</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./kkl15.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">RePsychLing Kliegl, Kuschela, &amp; Laubrock (2015)</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="false">
+ <span class="menu-text">Visualizations and diagnostics</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./shrinkageplot.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">More on shrinkage plots</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./contrasts_fggk21.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Mixed Models Tutorial: Contrast Coding</span></a>
+  <a href="./AoGPlots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Creating multi-panel plots</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./contrasts_kwdyz11.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Contrast Coding of Visual Attention Effects</span></a>
-  </div>
-</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -268,19 +319,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
-  <ul>
-  <li><a href="#matrix-notation-for-the-sleepstudy-model" id="toc-matrix-notation-for-the-sleepstudy-model" class="nav-link active" data-scroll-target="#matrix-notation-for-the-sleepstudy-model">Matrix notation for the sleepstudy model</a></li>
-  <li><a href="#linear-predictors-in-lmms-and-glmms" id="toc-linear-predictors-in-lmms-and-glmms" class="nav-link" data-scroll-target="#linear-predictors-in-lmms-and-glmms">Linear predictors in LMMs and GLMMs</a></li>
-  <li><a href="#generalized-linear-mixed-models" id="toc-generalized-linear-mixed-models" class="nav-link" data-scroll-target="#generalized-linear-mixed-models">Generalized Linear Mixed Models</a>
   <ul class="collapse">
-  <li><a href="#an-example-of-a-bernoulli-glmm" id="toc-an-example-of-a-bernoulli-glmm" class="nav-link" data-scroll-target="#an-example-of-a-bernoulli-glmm">An example of a Bernoulli GLMM</a></li>
-  <li><a href="#convert-livch-to-a-binary-factor" id="toc-convert-livch-to-a-binary-factor" class="nav-link" data-scroll-target="#convert-livch-to-a-binary-factor">Convert <code>livch</code> to a binary factor</a></li>
-  <li><a href="#using-urbandist-as-a-grouping-factor" id="toc-using-urbandist-as-a-grouping-factor" class="nav-link" data-scroll-target="#using-urbandist-as-a-grouping-factor">Using <code>urban&amp;dist</code> as a grouping factor</a></li>
-  <li><a href="#predictions-for-some-subgroups" id="toc-predictions-for-some-subgroups" class="nav-link" data-scroll-target="#predictions-for-some-subgroups">Predictions for some subgroups</a></li>
-  </ul></li>
-  <li><a href="#summarizing-the-results" id="toc-summarizing-the-results" class="nav-link" data-scroll-target="#summarizing-the-results">Summarizing the results</a></li>
+  <li><a href="#matrix-notation-for-the-sleepstudy-model" id="toc-matrix-notation-for-the-sleepstudy-model" class="nav-link active" data-scroll-target="#matrix-notation-for-the-sleepstudy-model"><span class="header-section-number">1</span> Matrix notation for the sleepstudy model</a></li>
+  <li><a href="#linear-predictors-in-lmms-and-glmms" id="toc-linear-predictors-in-lmms-and-glmms" class="nav-link" data-scroll-target="#linear-predictors-in-lmms-and-glmms"><span class="header-section-number">2</span> Linear predictors in LMMs and GLMMs</a></li>
+  <li><a href="#generalized-linear-mixed-models" id="toc-generalized-linear-mixed-models" class="nav-link" data-scroll-target="#generalized-linear-mixed-models"><span class="header-section-number">3</span> Generalized Linear Mixed Models</a></li>
+  <li><a href="#summarizing-the-results" id="toc-summarizing-the-results" class="nav-link" data-scroll-target="#summarizing-the-results"><span class="header-section-number">4</span> Summarizing the results</a></li>
   </ul>
-</nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/RePsychLing/SMLP2023/edit/main/glmm.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/RePsychLing/SMLP2023/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -304,7 +349,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2023-08-07</p>
+      <p class="date">2023-08-21</p>
     </div>
   </div>
   
@@ -327,8 +372,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">ProgressMeter</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>CairoMakie.<span class="fu">activate!</span>(; <span class="kw">type</span><span class="op">=</span><span class="st">"svg"</span>);</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>ProgressMeter.<span class="fu">ijulia_behavior</span>(<span class="op">:</span>clear);</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>datadir <span class="op">=</span> <span class="fu">joinpath</span>(<span class="pp">@__DIR__</span>, <span class="st">"data"</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>ProgressMeter.<span class="fu">ijulia_behavior</span>(<span class="op">:</span>clear);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <ul>
@@ -336,8 +380,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>The specification of the model includes the distribution family for the response and, possibly, the <em>link function</em>, g, relating the <em>mean response</em>, μ, to the value of the <em>linear predictor</em>, η.</p></li>
 <li><p>To explain the model it helps to consider the linear mixed model in some detail first.</p></li>
 </ul>
-<section id="matrix-notation-for-the-sleepstudy-model" class="level2">
-<h2 class="anchored" data-anchor-id="matrix-notation-for-the-sleepstudy-model">Matrix notation for the sleepstudy model</h2>
+<section id="matrix-notation-for-the-sleepstudy-model" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="matrix-notation-for-the-sleepstudy-model"><span class="header-section-number">1</span> Matrix notation for the sleepstudy model</h2>
 <div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sleepstudy <span class="op">=</span> <span class="fu">DataFrame</span>(MixedModels.<span class="fu">dataset</span>(<span class="op">:</span>sleepstudy))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
@@ -585,8 +629,8 @@ days          10.4673     1.50224   6.97    &lt;1e-11
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>m1.β</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>2-element Vector{Float64}:
- 251.40510484848414
-  10.46728595959568</code></pre>
+ 251.40510484848505
+  10.467285959596026</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="6">
@@ -627,7 +671,7 @@ days          10.4673     1.50224   6.97    &lt;1e-11
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>m1.b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <pre><code>1-element Vector{Matrix{Float64}}:
- [2.8158180863879005 -40.04844125547803 … 0.7232621646562781 12.118907819971193; 9.075511889252148 -8.644079482408275 … -0.9710526563521795 1.3106980518574347]</code></pre>
+ [2.8158187222300377 -40.04844146880806 … 0.723262085865844 12.118907788839998; 9.075511788939352 -8.64407947985815 … -0.9710526430695738 1.310698066517938]</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="8">
@@ -677,64 +721,64 @@ days          10.4673     1.50224   6.97    &lt;1e-11
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>m1.X <span class="op">*</span> m1.β <span class="op">+</span> <span class="fu">only</span>(m1.reterms) <span class="op">*</span> <span class="fu">vec</span>(<span class="fu">only</span>(m1.b))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
 <pre><code>180-element Vector{Float64}:
- 254.22092293487205
- 273.7637207837199
- 293.3065186325677
- 312.84931648141554
- 332.3921143302634
- 351.93491217911117
- 371.477710027959
- 391.02050787680685
- 410.5633057256547
- 430.1061035745025
- 211.35666359300612
- 213.17987007019354
- 215.00307654738089
+ 254.2209235707151
+ 273.76372131925046
+ 293.30651906778587
+ 312.8493168163212
+ 332.39211456485657
+ 351.934912313392
+ 371.4777100619273
+ 391.02050781046273
+ 410.5633055589981
+ 430.1061033075335
+ 211.356663379677
+ 213.17986985941488
+ 215.00307633915278
    ⋮
- 328.0982334390884
- 337.5944667423319
- 263.5240126684553
- 275.3019966799085
- 287.0799806913615
- 298.8579647028147
- 310.63594871426784
- 322.4139327257209
- 334.19191673717404
- 345.96990074862714
- 357.74788476008024
- 369.5258687715334</code></pre>
+ 328.09823346656253
+ 337.594466783089
+ 263.52401263732503
+ 275.301996663439
+ 287.079980689553
+ 298.8579647156669
+ 310.6359487417809
+ 322.4139327678949
+ 334.1919167940088
+ 345.9699008201228
+ 357.7478848462368
+ 369.52586887235077</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fitted</span>(m1)   <span class="co"># just to check that these are indeed the same as calculated above</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
 <pre><code>180-element Vector{Float64}:
- 254.22092293487205
- 273.76372078371986
- 293.30651863256764
- 312.8493164814155
- 332.3921143302633
- 351.93491217911117
- 371.477710027959
- 391.02050787680685
- 410.56330572565463
- 430.10610357450247
- 211.35666359300612
- 213.17987007019354
- 215.0030765473809
+ 254.2209235707151
+ 273.7637213192505
+ 293.30651906778587
+ 312.8493168163212
+ 332.3921145648566
+ 351.93491231339203
+ 371.4777100619274
+ 391.02050781046273
+ 410.56330555899814
+ 430.10610330753354
+ 211.356663379677
+ 213.1798698594149
+ 215.00307633915278
    ⋮
- 328.0982334390884
- 337.5944667423319
- 263.5240126684553
- 275.3019966799085
- 287.0799806913615
- 298.8579647028147
- 310.6359487142678
- 322.4139327257209
- 334.19191673717404
- 345.96990074862714
- 357.74788476008024
- 369.52586877153334</code></pre>
+ 328.0982334665625
+ 337.594466783089
+ 263.52401263732503
+ 275.301996663439
+ 287.079980689553
+ 298.8579647156669
+ 310.6359487417809
+ 322.4139327678949
+ 334.19191679400876
+ 345.96990082012275
+ 357.74788484623673
+ 369.5258688723507</code></pre>
 </div>
 </div>
 <p>In symbols we would write the <em>linear predictor expression</em> as <span class="math display">\[
@@ -751,9 +795,9 @@ days          10.4673     1.50224   6.97    &lt;1e-11
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>m1.θ</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="13">
 <pre><code>3-element Vector{Float64}:
- 0.9292213132463749
- 0.0181683611765396
- 0.2226448780526805</code></pre>
+ 0.929221315269684
+ 0.018168374324422767
+ 0.22264487618568146</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="13">
@@ -813,8 +857,8 @@ days          10.4673     1.50224   6.97    &lt;1e-11
 </div>
 </div>
 </section>
-<section id="linear-predictors-in-lmms-and-glmms" class="level2">
-<h2 class="anchored" data-anchor-id="linear-predictors-in-lmms-and-glmms">Linear predictors in LMMs and GLMMs</h2>
+<section id="linear-predictors-in-lmms-and-glmms" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="linear-predictors-in-lmms-and-glmms"><span class="header-section-number">2</span> Linear predictors in LMMs and GLMMs</h2>
 <p>Writing the model for <span class="math inline">\(\mathcal Y\)</span> as <span class="math display">\[
 (\mathcal{Y} | \mathcal{B}=\bf{b})\sim\mathcal{N}(\bf{ X\boldsymbol\beta + Z b},\sigma^2\bf{I})
 \]</span> may seem like over-mathematization (or “overkill”, if you prefer) relative to expressions like <span class="math display">\[
@@ -833,8 +877,8 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 </div>
 <p>So the only things that differ in the distributions of the <span class="math inline">\(y_i\)</span>’s are the means and they are determined by this linear predictor, <span class="math inline">\(\boldsymbol\eta = \bf{X\boldsymbol\beta+Zb}\)</span>.</p>
 </section>
-<section id="generalized-linear-mixed-models" class="level2">
-<h2 class="anchored" data-anchor-id="generalized-linear-mixed-models">Generalized Linear Mixed Models</h2>
+<section id="generalized-linear-mixed-models" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="generalized-linear-mixed-models"><span class="header-section-number">3</span> Generalized Linear Mixed Models</h2>
 <p>Consider first a GLMM for a vector, <span class="math inline">\(\bf y\)</span>, of binary (i.e.&nbsp;yes/no) responses. The probability model for the conditional distribution <span class="math inline">\(\mathcal Y|\mathcal B=\bf b\)</span> consists of independent <a href="https://en.wikipedia.org/wiki/Bernoulli_distribution">Bernoulli distributions</a> where the mean, <span class="math inline">\(\mu_i\)</span>, for the i’th response is again determined by the i’th element of a <em>linear predictor</em>, <span class="math inline">\(\boldsymbol\eta = \mathbf{X}\boldsymbol\beta+\mathbf{Z b}\)</span>.</p>
 <p>However, in this case we will run into trouble if we try to make <span class="math inline">\(\boldsymbol\mu=\boldsymbol\eta\)</span> because <span class="math inline">\(\mu_i\)</span> is the probability of “success” for the i’th response and must be between 0 and 1. We can’t guarantee that the i’th component of <span class="math inline">\(\boldsymbol\eta\)</span> will be between 0 and 1. To get around this problem we apply a transformation to take <span class="math inline">\(\eta_i\)</span> to <span class="math inline">\(\mu_i\)</span>. For historical reasons this transformation is called the <em>inverse link</em>, written <span class="math inline">\(g^{-1}\)</span>, and the opposite transformation - from the probability scale to an unbounded scale - is called the <em>link</em>, g.</p>
 <p>Each probability distribution in the <a href="https://en.wikipedia.org/wiki/Exponential_family">exponential family</a> (which is most of the important ones), has a <em>canonical link</em> which comes from the form of the distribution itself. The details aren’t as important as recognizing that the distribution itself determines a preferred link function.</p>
@@ -857,8 +901,8 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 \mathcal{B}&amp;\sim\mathcal{N}(\bf{0},\Sigma_{\boldsymbol\theta}) .
 \end{aligned}
 \]</span> where <span class="math inline">\(\mathcal{D}\)</span> is the distribution family (such as Bernoulli or Poisson), <span class="math inline">\(g^{-1}\)</span> is the inverse link and <span class="math inline">\(\phi\)</span> is a scale parameter for <span class="math inline">\(\mathcal{D}\)</span> if it has one. The important cases of the Bernoulli and Poisson distributions don’t have a scale parameter - once you know the mean you know everything you need to know about the distribution. (For those following the presentation, <a href="https://www.poetryfoundation.org/poems/44477/ode-on-a-grecian-urn">this poem</a> by John Keats is the one with the couplet “Beauty is truth, truth beauty - that is all ye know on earth and all ye need to know.”)</p>
-<section id="an-example-of-a-bernoulli-glmm" class="level3">
-<h3 class="anchored" data-anchor-id="an-example-of-a-bernoulli-glmm">An example of a Bernoulli GLMM</h3>
+<section id="an-example-of-a-bernoulli-glmm" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="an-example-of-a-bernoulli-glmm"><span class="header-section-number">3.1</span> An example of a Bernoulli GLMM</h3>
 <p>The <code>contra</code> dataset in the <code>MixedModels</code> package is from a survey on the use of artificial contraception by women in Bangladesh.</p>
 <div class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>contra <span class="op">=</span> <span class="fu">DataFrame</span>(MixedModels.<span class="fu">dataset</span>(<span class="op">:</span>contra))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1299,7 +1343,7 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 <span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(MixedModel, form, contra, dist; nAGQ, contrasts)</span>
 <span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Minimizing 214   Time: 0:00:00 ( 1.98 ms/it)</code></pre>
+<pre><code>Minimizing 184   Time: 0:00:00 ( 2.65 ms/it)</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="21">
 <table class="table table-sm table-striped small">
@@ -1327,7 +1371,7 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 <td style="text-align: right;">0.0035</td>
 <td style="text-align: right;">0.0092</td>
 <td style="text-align: right;">0.38</td>
-<td style="text-align: right;">0.7021</td>
+<td style="text-align: right;">0.7024</td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
@@ -1348,7 +1392,7 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 </tr>
 <tr class="odd">
 <td style="text-align: left;">livch: 1</td>
-<td style="text-align: right;">0.8151</td>
+<td style="text-align: right;">0.8152</td>
 <td style="text-align: right;">0.1622</td>
 <td style="text-align: right;">5.02</td>
 <td style="text-align: right;">&lt;1e-06</td>
@@ -1364,7 +1408,7 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 </tr>
 <tr class="odd">
 <td style="text-align: left;">livch: 3+</td>
-<td style="text-align: right;">0.9153</td>
+<td style="text-align: right;">0.9154</td>
 <td style="text-align: right;">0.1858</td>
 <td style="text-align: right;">4.93</td>
 <td style="text-align: right;">&lt;1e-06</td>
@@ -1393,8 +1437,8 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 <tr class="odd">
 <td style="text-align: left;">dist</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">0.229094</td>
-<td style="text-align: right;">0.478638</td>
+<td style="text-align: right;">0.229090</td>
+<td style="text-align: right;">0.478634</td>
 </tr>
 </tbody>
 </table>
@@ -1402,8 +1446,8 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 </div>
 <p>Notice that there is no “residual” variance being estimated. This is because the Bernoulli distribution doesn’t have a scale parameter.</p>
 </section>
-<section id="convert-livch-to-a-binary-factor" class="level3">
-<h3 class="anchored" data-anchor-id="convert-livch-to-a-binary-factor">Convert <code>livch</code> to a binary factor</h3>
+<section id="convert-livch-to-a-binary-factor" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="convert-livch-to-a-binary-factor"><span class="header-section-number">3.2</span> Convert <code>livch</code> to a binary factor</h3>
 <div class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="pp">@transform</span>!(contra, <span class="op">:</span>children <span class="op">=</span> <span class="op">:</span>livch <span class="op">≠</span> <span class="st">"0"</span>)</span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="co"># add the associated contrast specifier</span></span>
@@ -1426,7 +1470,7 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 <span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(MixedModel, form, contra, dist; nAGQ, contrasts)</span>
 <span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Minimizing 146   Time: 0:00:00 ( 1.02 ms/it)</code></pre>
+<pre><code>Minimizing 149   Time: 0:00:00 ( 1.02 ms/it)</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="24">
 <table class="table table-sm table-striped small">
@@ -1454,7 +1498,7 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 <td style="text-align: right;">-0.0131</td>
 <td style="text-align: right;">0.0110</td>
 <td style="text-align: right;">-1.19</td>
-<td style="text-align: right;">0.2351</td>
+<td style="text-align: right;">0.2352</td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
@@ -1558,8 +1602,8 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 <p>Because these models are not nested, we cannot do a likelihood ratio test. Nevertheless we see that the deviance is much lower in the model with <code>age &amp; children</code> even though the 3 levels of <code>livch</code> have been collapsed into a single level of <code>children</code>. There is a substantial decrease in the deviance even though there are fewer parameters in model <code>gm2</code> than in <code>gm1</code>. This decrease is because the flexibility of the model - its ability to model the behavior of the response - is being put to better use in <code>gm2</code> than in <code>gm1</code>.</p>
 <p>At present the calculation of the <code>geomdof</code> as <code>sum(influence(m))</code> is not correctly defined in our code for a GLMM so we need to do some more work before we can examine those values.</p>
 </section>
-<section id="using-urbandist-as-a-grouping-factor" class="level3">
-<h3 class="anchored" data-anchor-id="using-urbandist-as-a-grouping-factor">Using <code>urban&amp;dist</code> as a grouping factor</h3>
+<section id="using-urbandist-as-a-grouping-factor" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="using-urbandist-as-a-grouping-factor"><span class="header-section-number">3.3</span> Using <code>urban&amp;dist</code> as a grouping factor</h3>
 <p>It turns out that there can be more difference between urban and rural settings within the same political district than there is between districts. To model this difference we build a model with <code>urban&amp;dist</code> as a grouping factor.</p>
 <div class="cell" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>gm3 <span class="op">=</span> <span class="kw">let</span></span>
@@ -1575,7 +1619,7 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 <span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(MixedModel, form, contra, dist; nAGQ, contrasts)</span>
 <span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Minimizing 157   Time: 0:00:00 ( 0.93 ms/it)</code></pre>
+<pre><code>Minimizing 144   Time: 0:00:00 ( 1.04 ms/it)</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="26">
 <table class="table table-sm table-striped small">
@@ -1750,7 +1794,7 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 <td style="text-align: right;">-0.0131</td>
 <td style="text-align: right;">0.0110</td>
 <td style="text-align: right;">-1.19</td>
-<td style="text-align: right;">0.2351</td>
+<td style="text-align: right;">0.2352</td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
@@ -1866,8 +1910,8 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 </div>
 <p>The coefficient for <code>age</code> may be regarded as insignificant but we retain it for two reasons: we have a term of <code>age²</code> (written <code>abs2(age)</code>) in the model and we have a significant interaction <code>age &amp; children</code> in the model.</p>
 </section>
-<section id="predictions-for-some-subgroups" class="level3">
-<h3 class="anchored" data-anchor-id="predictions-for-some-subgroups">Predictions for some subgroups</h3>
+<section id="predictions-for-some-subgroups" class="level3" data-number="3.4">
+<h3 data-number="3.4" class="anchored" data-anchor-id="predictions-for-some-subgroups"><span class="header-section-number">3.4</span> Predictions for some subgroups</h3>
 <p>For a “typical” district (random effect near zero) the predictions on the linear predictor scale for a woman whose age is near the centering value (i.e.&nbsp;centered age of zero) are:</p>
 <div class="cell" data-execution_count="29">
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Effects</span></span>
@@ -1906,40 +1950,40 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 <td style="text-align: right;">true</td>
 <td style="text-align: right;">0.0</td>
 <td style="text-align: left;">Y</td>
-<td style="text-align: right;">0.658575</td>
+<td style="text-align: right;">0.658576</td>
 <td style="text-align: right;">0.150531</td>
-<td style="text-align: right;">0.508045</td>
-<td style="text-align: right;">0.809106</td>
+<td style="text-align: right;">0.508046</td>
+<td style="text-align: right;">0.809107</td>
 </tr>
 <tr class="even">
 <td class="rowNumber" style="text-align: right; font-weight: bold;">2</td>
 <td style="text-align: right;">false</td>
 <td style="text-align: right;">0.0</td>
 <td style="text-align: left;">Y</td>
-<td style="text-align: right;">-0.554319</td>
-<td style="text-align: right;">0.230477</td>
-<td style="text-align: right;">-0.784795</td>
-<td style="text-align: right;">-0.323842</td>
+<td style="text-align: right;">-0.554308</td>
+<td style="text-align: right;">0.230476</td>
+<td style="text-align: right;">-0.784784</td>
+<td style="text-align: right;">-0.323832</td>
 </tr>
 <tr class="odd">
 <td class="rowNumber" style="text-align: right; font-weight: bold;">3</td>
 <td style="text-align: right;">true</td>
 <td style="text-align: right;">0.0</td>
 <td style="text-align: left;">N</td>
-<td style="text-align: right;">-0.128618</td>
-<td style="text-align: right;">0.113018</td>
-<td style="text-align: right;">-0.241636</td>
-<td style="text-align: right;">-0.0156005</td>
+<td style="text-align: right;">-0.128619</td>
+<td style="text-align: right;">0.113017</td>
+<td style="text-align: right;">-0.241637</td>
+<td style="text-align: right;">-0.0156018</td>
 </tr>
 <tr class="even">
 <td class="rowNumber" style="text-align: right; font-weight: bold;">4</td>
 <td style="text-align: right;">false</td>
 <td style="text-align: right;">0.0</td>
 <td style="text-align: left;">N</td>
-<td style="text-align: right;">-1.34151</td>
-<td style="text-align: right;">0.221575</td>
-<td style="text-align: right;">-1.56309</td>
-<td style="text-align: right;">-1.11994</td>
+<td style="text-align: right;">-1.3415</td>
+<td style="text-align: right;">0.221574</td>
+<td style="text-align: right;">-1.56308</td>
+<td style="text-align: right;">-1.11993</td>
 </tr>
 </tbody>
 </table>
@@ -1951,16 +1995,16 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">logistic</span>.(preds[!, <span class="st">"use: Y"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="31">
 <pre><code>4-element Vector{Float64}:
- 0.6589402981066934
- 0.3648630189943811
- 0.46788970324953494
- 0.20726147184793126</code></pre>
+ 0.6589405322861275
+ 0.36486548122089196
+ 0.467889426448627
+ 0.20726286370951083</code></pre>
 </div>
 </div>
 </section>
 </section>
-<section id="summarizing-the-results" class="level2">
-<h2 class="anchored" data-anchor-id="summarizing-the-results">Summarizing the results</h2>
+<section id="summarizing-the-results" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="summarizing-the-results"><span class="header-section-number">4</span> Summarizing the results</h2>
 <ul>
 <li>From the data plot we can see a quadratic trend in the probability by age.</li>
 <li>The patterns for women with children are similar and we do not need to distinguish between 1, 2, and 3+ children.</li>
@@ -1970,7 +2014,7 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 
 </section>
 
-</main> <!-- /main -->
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -1991,6 +2035,121 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
   const icon = "";
   const anchorJS = new window.AnchorJS();
   anchorJS.options = {
@@ -2206,13 +2365,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./arrow.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Notes on saved data files</span>
+      <a href="./contrasts_kwdyz11.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Contrast Coding of Visual Attention Effects</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./kb07.html" class="pagination-link">
-        <span class="nav-page-text">Bootstrapping a fitted model</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./bootstrap.html" class="pagination-link">
+        <span class="nav-page-text">Parametric bootstrap for mixed-effects models</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

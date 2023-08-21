@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Phillip Alday, Douglas Bates, and Reinhold Kliegl">
-<meta name="dcterms.date" content="2023-08-07">
+<meta name="dcterms.date" content="2023-08-21">
 
-<title>SMLP2023 – largescaledesigned</title>
+<title>SMLP2023: Advanced Frequentist Track – largescaledesigned</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -85,17 +85,22 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./arrow.html" rel="next">
-<link href="./bootstrap.html" rel="prev">
+<link href="./contrasts_fggk21.html" rel="next">
+<link href="./kkl15.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="site_libs/quarto-contrib/jquery-3.6.3/jquery-3.6.3.min.js"></script>
+<script src="site_libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.js" defer="true"></script>
+<link href="site_libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -125,7 +130,7 @@ div.csl-indent {
 
 </head>
 
-<body class="nav-sidebar docked nav-fixed">
+<body class="nav-sidebar floating nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -133,7 +138,7 @@ div.csl-indent {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">SMLP2023</span>
+    <span class="navbar-title">SMLP2023: Advanced Frequentist Track</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -141,16 +146,6 @@ div.csl-indent {
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link active" href="./index.html" rel="" target="" aria-current="page">
- <span class="menu-text">Home</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./about.html" rel="" target="">
- <span class="menu-text">About</span></a>
-  </li>  
-</ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/RePsychLing/SMLP2023" rel="" target=""><i class="bi bi-github" role="img">
@@ -159,6 +154,7 @@ div.csl-indent {
   </li>  
 </ul>
             <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
@@ -168,7 +164,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./largescaledesigned.html">A large-scale designed experiment</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sleepstudy.html">Worked examples</a></li><li class="breadcrumb-item"><a href="./largescaledesigned.html">A large-scale designed experiment</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -180,7 +176,7 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
@@ -188,96 +184,151 @@ div.csl-indent {
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Seventh Summer School on Statistical Methods for Linguistics and Psychology</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false">
+ <span class="menu-text">Getting started with Julia</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./useful_packages.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Useful packages</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pkg.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Package management and reproducible environments</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./arrow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Saving data with Arrow</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Worked examples</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./sleepstudy.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Analysis of the sleepstudy data</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./sleepstudy_speed.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">The sleepstudy: Speed - for a change …</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./bootstrap.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Parametric bootstrap for mixed-effects models</span></a>
+  <a href="./kwdyz11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">RePsychLing Kliegl et al.&nbsp;(2010)</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./kkl15.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">RePsychLing Kliegl, Kuschela, &amp; Laubrock (2015)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./largescaledesigned.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">A large-scale designed experiment</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false">
+ <span class="menu-text">Contrast coding</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./arrow.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Notes on saved data files</span></a>
+  <a href="./contrasts_fggk21.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mixed Models Tutorial: Contrast Coding</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./contrasts_kwdyz11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Contrast Coding of Visual Attention Effects</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./glmm.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Generalized linear mixed models</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false">
+ <span class="menu-text">Bootstrap</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bootstrap.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Parametric bootstrap for mixed-effects models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./kb07.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Bootstrapping a fitted model</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./kwdyz11.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">RePsychLing Kliegl et al.&nbsp;(2010)</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./kkl15.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">RePsychLing Kliegl, Kuschela, &amp; Laubrock (2015)</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="false">
+ <span class="menu-text">Visualizations and diagnostics</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./shrinkageplot.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">More on shrinkage plots</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./contrasts_fggk21.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Mixed Models Tutorial: Contrast Coding</span></a>
+  <a href="./AoGPlots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Creating multi-panel plots</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./contrasts_kwdyz11.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Contrast Coding of Visual Attention Effects</span></a>
-  </div>
-</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -287,25 +338,16 @@ div.csl-indent {
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
-  <ul>
-  <li><a href="#extracting-data-tables-from-the-raw-data" id="toc-extracting-data-tables-from-the-raw-data" class="nav-link active" data-scroll-target="#extracting-data-tables-from-the-raw-data">Extracting data tables from the raw data</a>
   <ul class="collapse">
-  <li><a href="#trial-level-data-from-the-ldt" id="toc-trial-level-data-from-the-ldt" class="nav-link" data-scroll-target="#trial-level-data-from-the-ldt">Trial-level data from the LDT</a></li>
-  <li><a href="#sec-ldtinitialexplore" id="toc-sec-ldtinitialexplore" class="nav-link" data-scroll-target="#sec-ldtinitialexplore">Initial data exploration</a>
+  <li><a href="#extracting-data-tables-from-the-raw-data" id="toc-extracting-data-tables-from-the-raw-data" class="nav-link active" data-scroll-target="#extracting-data-tables-from-the-raw-data"><span class="header-section-number">1</span> Extracting data tables from the raw data</a>
   <ul class="collapse">
-  <li><a href="#summaries-by-item" id="toc-summaries-by-item" class="nav-link" data-scroll-target="#summaries-by-item">Summaries by item</a></li>
-  <li><a href="#sec-elpsumrysubj" id="toc-sec-elpsumrysubj" class="nav-link" data-scroll-target="#sec-elpsumrysubj">Summaries by subject</a></li>
-  <li><a href="#sec-ldtrtscale" id="toc-sec-ldtrtscale" class="nav-link" data-scroll-target="#sec-ldtrtscale">Choice of response scale</a></li>
-  <li><a href="#transformation-of-response-and-the-form-of-the-model" id="toc-transformation-of-response-and-the-form-of-the-model" class="nav-link" data-scroll-target="#transformation-of-response-and-the-form-of-the-model">Transformation of response and the form of the model</a></li>
-  </ul></li>
-  <li><a href="#sec-ldtinitialmodel" id="toc-sec-ldtinitialmodel" class="nav-link" data-scroll-target="#sec-ldtinitialmodel">Models with scalar random effects</a>
-  <ul class="collapse">
-  <li><a href="#establish-the-contrasts" id="toc-establish-the-contrasts" class="nav-link" data-scroll-target="#establish-the-contrasts">Establish the contrasts</a></li>
-  </ul></li>
-  <li><a href="#random-effects-from-the-simple-model-related-to-covariates" id="toc-random-effects-from-the-simple-model-related-to-covariates" class="nav-link" data-scroll-target="#random-effects-from-the-simple-model-related-to-covariates">Random effects from the simple model related to covariates</a></li>
+  <li><a href="#trial-level-data-from-the-ldt" id="toc-trial-level-data-from-the-ldt" class="nav-link" data-scroll-target="#trial-level-data-from-the-ldt"><span class="header-section-number">1.1</span> Trial-level data from the LDT</a></li>
+  <li><a href="#sec-ldtinitialexplore" id="toc-sec-ldtinitialexplore" class="nav-link" data-scroll-target="#sec-ldtinitialexplore"><span class="header-section-number">1.2</span> Initial data exploration</a></li>
+  <li><a href="#sec-ldtinitialmodel" id="toc-sec-ldtinitialmodel" class="nav-link" data-scroll-target="#sec-ldtinitialmodel"><span class="header-section-number">1.3</span> Models with scalar random effects</a></li>
+  <li><a href="#random-effects-from-the-simple-model-related-to-covariates" id="toc-random-effects-from-the-simple-model-related-to-covariates" class="nav-link" data-scroll-target="#random-effects-from-the-simple-model-related-to-covariates"><span class="header-section-number">1.4</span> Random effects from the simple model related to covariates</a></li>
   </ul></li>
   </ul>
-</nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/RePsychLing/SMLP2023/edit/main/largescaledesigned.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/RePsychLing/SMLP2023/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -329,7 +371,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2023-08-07</p>
+      <p class="date">2023-08-21</p>
     </div>
   </div>
   
@@ -353,17 +395,18 @@ div.csl-indent {
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">MixedModels</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">MixedModelsMakie</span></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">ProgressMeter</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">StandardizedPredictors</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">StatsBase</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">datadir</span>(paths<span class="op">::</span><span class="dt">AbstractString...</span>) <span class="op">=</span> <span class="fu">joinpath</span>(<span class="pp">@__DIR__</span>, <span class="st">"data"</span>, paths<span class="op">...</span>)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>CairoMakie.<span class="fu">activate!</span>(; <span class="kw">type</span><span class="op">=</span><span class="st">"svg"</span>);</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>ProgressMeter.<span class="fu">ijulia_behavior</span>(<span class="op">:</span>clear);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">SMLP2023</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">SMLP2023</span>: dataset</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">StandardizedPredictors</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">StatsBase</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>CairoMakie.<span class="fu">activate!</span>(; <span class="kw">type</span><span class="op">=</span><span class="st">"svg"</span>);</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>ProgressMeter.<span class="fu">ijulia_behavior</span>(<span class="op">:</span>clear);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>The English Lexicon Project <span class="citation" data-cites="Balota_2007">(<a href="#ref-Balota_2007" role="doc-biblioref">Balota et al., 2007</a>)</span> was a large-scale multicenter study to examine properties of English words. It incorporated both a lexical decision task and a word recognition task. Different groups of subjects participated in the different tasks.</p>
-<section id="extracting-data-tables-from-the-raw-data" class="level1">
-<h1>Extracting data tables from the raw data</h1>
+<section id="extracting-data-tables-from-the-raw-data" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Extracting data tables from the raw data</h1>
 <p>The raw data are available as an <a href="https://osf.io/n63s2">OSF project</a> as Zip files for each of the tasks. These Zip files contain one data file for each participant, which has a mixture of demographic data, responses on some pre-tests, and the actual trial runs.</p>
 <p>Parsing these data files is not fun – see <a href="https://github.com/dmbates/EnglishLexicon.jl">this repository</a> for some of the code used to untangle the data. (This respository is an unregistered Julia package.)</p>
 <p>Some lessons from this:</p>
@@ -378,12 +421,12 @@ div.csl-indent {
 <li>Remember, the data are only as useful as their provenance. If you invested a lot of time and money in gathering the data you should treat it as a valued resource and exercise great care with it.</li>
 <li>The <code>Arrow.jl</code> package allows you to add metadata as key/value pairs, called a <code>Dict</code> (or dictionary). Use this capability. The name of the file is <strong>not</strong> a suitable location for metadata.</li>
 </ul>
-<section id="trial-level-data-from-the-ldt" class="level2">
-<h2 class="anchored" data-anchor-id="trial-level-data-from-the-ldt">Trial-level data from the LDT</h2>
+<section id="trial-level-data-from-the-ldt" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="trial-level-data-from-the-ldt"><span class="header-section-number">1.1</span> Trial-level data from the LDT</h2>
 <p>In the lexical decision task the study participant is shown a character string, under carefully controlled conditions, and responds according to whether they identify the string as a word or not. Two responses are recorded: whether the choice of word/non-word is correct and the time that elapsed between exposure to the string and registering a decision.</p>
 <p>Several covariates, some relating to the subject and some relating to the target, were recorded. Initially we consider only the trial-level data.</p>
 <div class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ldttrial <span class="op">=</span> Arrow.<span class="fu">Table</span>(<span class="fu">datadir</span>(<span class="st">"ELP_ldt_trial.arrow"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ldttrial <span class="op">=</span> <span class="fu">dataset</span>(<span class="op">:</span>ELP_ldt_trial)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>Arrow.Table with 2745952 rows, 5 columns, and schema:
  :subj  Int16
@@ -496,13 +539,13 @@ with metadata given by a Base.ImmutableDict{String, String} with 3 entries:
 </div>
 </div>
 </section>
-<section id="sec-ldtinitialexplore" class="level2">
-<h2 class="anchored" data-anchor-id="sec-ldtinitialexplore">Initial data exploration</h2>
+<section id="sec-ldtinitialexplore" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="sec-ldtinitialexplore"><span class="header-section-number">1.2</span> Initial data exploration</h2>
 <p>From the basic summary of <code>ldttrial</code> we can see that there are some questionable response times — negative values and values over 32 seconds.</p>
 <p>Because of obvious outliers we will use the median response time, which is not strongly influenced by outliers, rather than the mean response time when summarizing by item or by subject.</p>
 <p>Also, there are missing values of the accuracy. We should check if these are associated with particular subjects or particular items.</p>
-<section id="summaries-by-item" class="level3">
-<h3 class="anchored" data-anchor-id="summaries-by-item">Summaries by item</h3>
+<section id="summaries-by-item" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="summaries-by-item"><span class="header-section-number">1.2.1</span> Summaries by item</h3>
 <p>To summarize by item we group the trials by item and use <code>combine</code> to produce the various summary statistics. As we will create similar summaries by subject, we incorporate an ‘i’ in the names of these summaries (and an ‘s’ in the name of the summaries by subject) to be able to identify the grouping used.</p>
 <div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>byitem <span class="op">=</span> <span class="pp">@chain</span> ldttrial <span class="cf">begin</span></span>
@@ -1426,8 +1469,8 @@ Named argument “error”
 </div>
 <p>The pattern in the range of word lengths with non-negligible counts (there are points in the plot down to word lengths of 1 and up to word lengths of 21 but these points are very small) is that the accuracy for words is nearly constant at about 84% and the accuracy fof nonwords is slightly higher until lengths of 13, at which point it falls off a bit.</p>
 </section>
-<section id="sec-elpsumrysubj" class="level3">
-<h3 class="anchored" data-anchor-id="sec-elpsumrysubj">Summaries by subject</h3>
+<section id="sec-elpsumrysubj" class="level3" data-number="1.2.2">
+<h3 data-number="1.2.2" class="anchored" data-anchor-id="sec-elpsumrysubj"><span class="header-section-number">1.2.2</span> Summaries by subject</h3>
 <p>A summary of accuracy and median response time by subject</p>
 <div class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>bysubj <span class="op">=</span> <span class="pp">@chain</span> ldttrial <span class="cf">begin</span></span>
@@ -1972,8 +2015,8 @@ Named argument “error”
 </div>
 </div>
 </section>
-<section id="sec-ldtrtscale" class="level3">
-<h3 class="anchored" data-anchor-id="sec-ldtrtscale">Choice of response scale</h3>
+<section id="sec-ldtrtscale" class="level3" data-number="1.2.3">
+<h3 data-number="1.2.3" class="anchored" data-anchor-id="sec-ldtrtscale"><span class="header-section-number">1.2.3</span> Choice of response scale</h3>
 <p>As we have indicated, generally the response times are analyzed for the correct identifications only. Furthermore, unrealistically large or small response times are eliminated. For this example we only use the responses between 200 and 3000 ms.</p>
 <p>A density plot of the pruned response times, <a href="#fig-elpldtrtdens">Figure&nbsp;6</a>, shows they are skewed to the right.</p>
 <div class="cell" data-execution_count="21">
@@ -2047,8 +2090,8 @@ Using inline transformations vs defining new columns
 </div>
 </div>
 </section>
-<section id="transformation-of-response-and-the-form-of-the-model" class="level3">
-<h3 class="anchored" data-anchor-id="transformation-of-response-and-the-form-of-the-model">Transformation of response and the form of the model</h3>
+<section id="transformation-of-response-and-the-form-of-the-model" class="level3" data-number="1.2.4">
+<h3 data-number="1.2.4" class="anchored" data-anchor-id="transformation-of-response-and-the-form-of-the-model"><span class="header-section-number">1.2.4</span> Transformation of response and the form of the model</h3>
 <p>As noted in <span class="citation" data-cites="Box1964">Box &amp; Cox (<a href="#ref-Box1964" role="doc-biblioref">1964</a>)</span>, a transformation of the response that produces a more Gaussian distribution often will also produce a simpler model structure. For example, <a href="#fig-ldtrtvswrdlen">Figure&nbsp;8</a> shows the smoothed relationship between word length and response time for words and non-words separately,</p>
 <div class="cell" data-execution_count="24">
 <details>
@@ -2121,14 +2164,14 @@ Using inline transformations vs defining new columns
 </div>
 </section>
 </section>
-<section id="sec-ldtinitialmodel" class="level2">
-<h2 class="anchored" data-anchor-id="sec-ldtinitialmodel">Models with scalar random effects</h2>
+<section id="sec-ldtinitialmodel" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="sec-ldtinitialmodel"><span class="header-section-number">1.3</span> Models with scalar random effects</h2>
 <p>A major purpose of the English Lexicon Project is to characterize the items (words or nonwords) according to the observed accuracy of identification and to response latency, taking into account subject-to-subject variability, and to relate these to lexical characteristics of the items.</p>
 <p>In <span class="citation" data-cites="Balota_2007">Balota et al. (<a href="#ref-Balota_2007" role="doc-biblioref">2007</a>)</span> the item response latency is characterized by the average response latency from the correct trials after outlier removal.</p>
 <p>Mixed-effects models allow us greater flexibility and, we hope, precision in characterizing the items by controlling for subject-to-subject variability and for item characteristics such as word/nonword and item length.</p>
 <p>We begin with a model that has scalar random effects for item and for subject and incorporates fixed-effects for word/nonword and for item length and for the interaction of these terms.</p>
-<section id="establish-the-contrasts" class="level3">
-<h3 class="anchored" data-anchor-id="establish-the-contrasts">Establish the contrasts</h3>
+<section id="establish-the-contrasts" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="establish-the-contrasts"><span class="header-section-number">1.3.1</span> Establish the contrasts</h3>
 <p>Because there are a large number of items in the data set it is important to assign a <code>Grouping()</code> contrast to <code>item</code> (and, less importantly, to <code>subj</code>). For the <code>isword</code> factor we will use an <code>EffectsCoding</code> contrast with the base level as <code>false</code>. The non-words are assigned -1 in this contrast and the words are assigned +1. The <code>wrdlen</code> covariate is on its original scale but centered at 8 characters.</p>
 <p>Thus the <code>(Intercept)</code> coefficient is the predicted speed of response for a typical subject and typical item (without regard to word/non-word status) of 8 characters.</p>
 <p>Set these contrasts</p>
@@ -2156,7 +2199,7 @@ Using inline transformations vs defining new columns
 <span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(MixedModel, form, pruned; contrasts)</span>
 <span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Minimizing 53    Time: 0:00:05 ( 0.10  s/it)</code></pre>
+<pre><code>Minimizing 53    Time: 0:00:06 ( 0.12  s/it)</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="29">
 <table class="table table-sm table-striped small">
@@ -2289,7 +2332,7 @@ Using inline transformations vs defining new columns
 <td style="text-align: right;">10</td>
 <td style="text-align: right;">false</td>
 <td style="text-align: right;">1.2373</td>
-<td style="text-align: right;">0.00898133</td>
+<td style="text-align: right;">0.00898134</td>
 <td style="text-align: right;">1.22832</td>
 <td style="text-align: right;">1.24628</td>
 </tr>
@@ -2343,7 +2386,7 @@ Using inline transformations vs defining new columns
 <td style="text-align: right;">12</td>
 <td style="text-align: right;">true</td>
 <td style="text-align: right;">1.24151</td>
-<td style="text-align: right;">0.00903127</td>
+<td style="text-align: right;">0.00903128</td>
 <td style="text-align: right;">1.23248</td>
 <td style="text-align: right;">1.25054</td>
 </tr>
@@ -2362,7 +2405,7 @@ Using inline transformations vs defining new columns
 <span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(MixedModel, form, dat; contrasts)</span>
 <span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Minimizing 53    Time: 0:00:03 (71.57 ms/it)</code></pre>
+<pre><code>Minimizing 65    Time: 0:00:05 (80.53 ms/it)</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="31">
 <table class="table table-sm table-striped small">
@@ -2467,7 +2510,7 @@ Using inline transformations vs defining new columns
 <td style="text-align: right;">4</td>
 <td style="text-align: right;">false</td>
 <td style="text-align: right;">1.45036</td>
-<td style="text-align: right;">0.00892466</td>
+<td style="text-align: right;">0.00892458</td>
 <td style="text-align: right;">1.44144</td>
 <td style="text-align: right;">1.45929</td>
 </tr>
@@ -2476,7 +2519,7 @@ Using inline transformations vs defining new columns
 <td style="text-align: right;">6</td>
 <td style="text-align: right;">false</td>
 <td style="text-align: right;">1.37297</td>
-<td style="text-align: right;">0.00887101</td>
+<td style="text-align: right;">0.00887092</td>
 <td style="text-align: right;">1.3641</td>
 <td style="text-align: right;">1.38184</td>
 </tr>
@@ -2485,7 +2528,7 @@ Using inline transformations vs defining new columns
 <td style="text-align: right;">8</td>
 <td style="text-align: right;">false</td>
 <td style="text-align: right;">1.29557</td>
-<td style="text-align: right;">0.00885308</td>
+<td style="text-align: right;">0.008853</td>
 <td style="text-align: right;">1.28672</td>
 <td style="text-align: right;">1.30443</td>
 </tr>
@@ -2494,7 +2537,7 @@ Using inline transformations vs defining new columns
 <td style="text-align: right;">10</td>
 <td style="text-align: right;">false</td>
 <td style="text-align: right;">1.21818</td>
-<td style="text-align: right;">0.0088711</td>
+<td style="text-align: right;">0.00887102</td>
 <td style="text-align: right;">1.20931</td>
 <td style="text-align: right;">1.22705</td>
 </tr>
@@ -2503,7 +2546,7 @@ Using inline transformations vs defining new columns
 <td style="text-align: right;">12</td>
 <td style="text-align: right;">false</td>
 <td style="text-align: right;">1.14078</td>
-<td style="text-align: right;">0.00892486</td>
+<td style="text-align: right;">0.00892477</td>
 <td style="text-align: right;">1.13186</td>
 <td style="text-align: right;">1.14971</td>
 </tr>
@@ -2512,7 +2555,7 @@ Using inline transformations vs defining new columns
 <td style="text-align: right;">4</td>
 <td style="text-align: right;">true</td>
 <td style="text-align: right;">1.62735</td>
-<td style="text-align: right;">0.00892465</td>
+<td style="text-align: right;">0.00892457</td>
 <td style="text-align: right;">1.61842</td>
 <td style="text-align: right;">1.63627</td>
 </tr>
@@ -2521,7 +2564,7 @@ Using inline transformations vs defining new columns
 <td style="text-align: right;">6</td>
 <td style="text-align: right;">true</td>
 <td style="text-align: right;">1.52702</td>
-<td style="text-align: right;">0.008871</td>
+<td style="text-align: right;">0.00887092</td>
 <td style="text-align: right;">1.51815</td>
 <td style="text-align: right;">1.53589</td>
 </tr>
@@ -2530,7 +2573,7 @@ Using inline transformations vs defining new columns
 <td style="text-align: right;">8</td>
 <td style="text-align: right;">true</td>
 <td style="text-align: right;">1.4267</td>
-<td style="text-align: right;">0.00885308</td>
+<td style="text-align: right;">0.00885299</td>
 <td style="text-align: right;">1.41784</td>
 <td style="text-align: right;">1.43555</td>
 </tr>
@@ -2539,7 +2582,7 @@ Using inline transformations vs defining new columns
 <td style="text-align: right;">10</td>
 <td style="text-align: right;">true</td>
 <td style="text-align: right;">1.32637</td>
-<td style="text-align: right;">0.00887109</td>
+<td style="text-align: right;">0.00887101</td>
 <td style="text-align: right;">1.3175</td>
 <td style="text-align: right;">1.33524</td>
 </tr>
@@ -2548,7 +2591,7 @@ Using inline transformations vs defining new columns
 <td style="text-align: right;">12</td>
 <td style="text-align: right;">true</td>
 <td style="text-align: right;">1.22605</td>
-<td style="text-align: right;">0.00892483</td>
+<td style="text-align: right;">0.00892475</td>
 <td style="text-align: right;">1.21712</td>
 <td style="text-align: right;">1.23497</td>
 </tr>
@@ -2714,7 +2757,7 @@ Note
 </div>
 <p>Other covariates associated with the item are available as</p>
 <div class="cell" data-execution_count="37">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>elpldtitem <span class="op">=</span> <span class="fu">DataFrame</span>(Arrow.<span class="fu">Table</span>(<span class="fu">datadir</span>(<span class="st">"ELP_ldt_item.arrow"</span>)))</span>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>elpldtitem <span class="op">=</span> <span class="fu">DataFrame</span>(<span class="fu">dataset</span>(<span class="st">"ELP_ldt_item"</span>))</span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(elpldtitem)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="38">
 <div><div style="float: left;"><span>9×7 DataFrame</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
@@ -2839,7 +2882,7 @@ Note
 </div>
 <p>and those associated with the subject are</p>
 <div class="cell" data-execution_count="38">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>elpldtsubj <span class="op">=</span> <span class="fu">DataFrame</span>(Arrow.<span class="fu">Table</span>(<span class="fu">datadir</span>(<span class="st">"ELP_ldt_subj.arrow"</span>)))</span>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>elpldtsubj <span class="op">=</span> <span class="fu">DataFrame</span>(<span class="fu">dataset</span>(<span class="st">"ELP_ldt_subj"</span>))</span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(elpldtsubj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="39">
 <div><div style="float: left;"><span>20×7 DataFrame</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
@@ -3111,8 +3154,8 @@ Note
 </div>
 </section>
 </section>
-<section id="random-effects-from-the-simple-model-related-to-covariates" class="level2">
-<h2 class="anchored" data-anchor-id="random-effects-from-the-simple-model-related-to-covariates">Random effects from the simple model related to covariates</h2>
+<section id="random-effects-from-the-simple-model-related-to-covariates" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="random-effects-from-the-simple-model-related-to-covariates"><span class="header-section-number">1.4</span> Random effects from the simple model related to covariates</h2>
 <p>The random effects “estimates” (technically they are “conditional means”) from the simple model <code>elm01</code> provide a measure of how much the item or subject differs from the population. (We use <code>elm01</code> because the main difference between <code>elm01</code> and <code>elm02</code> are that some subjects were dropped before fitting <code>elm02</code>.)</p>
 <p>For the item its length and word/non-word status have already been incorporated in the model. At this point the subjects are just being treated as a homogeneous population.</p>
 <p>The random effects conditional means have been extracted and incorporated in the <code>byitem</code> and <code>bysubj</code> tables. Now add selected demographic and item-specific measures.</p>
@@ -3620,7 +3663,7 @@ Note
 </section>
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="list">
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="list">
 <div id="ref-Balota_2007" class="csl-entry" role="listitem">
 Balota, D. A., Yap, M. J., Hutchison, K. A., Cortese, M. J., Kessler, B., Loftis, B., Neely, J. H., Nelson, D. L., Simpson, G. B., &amp; Treiman, R. (2007). The english lexicon project. <em>Behavior Research Methods</em>, <em>39</em>(3), 445–459. <a href="https://doi.org/10.3758/bf03193014">https://doi.org/10.3758/bf03193014</a>
 </div>
@@ -3648,6 +3691,121 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
   const icon = "";
   const anchorJS = new window.AnchorJS();
   anchorJS.options = {
@@ -3863,13 +4021,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./bootstrap.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Parametric bootstrap for mixed-effects models</span>
+      <a href="./kkl15.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">RePsychLing Kliegl, Kuschela, &amp; Laubrock (2015)</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./arrow.html" class="pagination-link">
-        <span class="nav-page-text">Notes on saved data files</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./contrasts_fggk21.html" class="pagination-link">
+        <span class="nav-page-text">Mixed Models Tutorial: Contrast Coding</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

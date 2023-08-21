@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Phillip Alday, Douglas Bates, and Reinhold Kliegl">
-<meta name="dcterms.date" content="2023-08-07">
+<meta name="dcterms.date" content="2023-08-21">
 
-<title>SMLP2023 - The sleepstudy: Speed - for a change …</title>
+<title>SMLP2023: Advanced Frequentist Track - The sleepstudy: Speed - for a change …</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -85,17 +85,22 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./bootstrap.html" rel="next">
+<link href="./kwdyz11.html" rel="next">
 <link href="./sleepstudy.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="site_libs/quarto-contrib/jquery-3.6.3/jquery-3.6.3.min.js"></script>
+<script src="site_libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.js" defer="true"></script>
+<link href="site_libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -123,7 +128,7 @@ div.csl-indent {
 
 </head>
 
-<body class="nav-sidebar docked nav-fixed">
+<body class="nav-sidebar floating nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -131,7 +136,7 @@ div.csl-indent {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">SMLP2023</span>
+    <span class="navbar-title">SMLP2023: Advanced Frequentist Track</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -139,16 +144,6 @@ div.csl-indent {
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link active" href="./index.html" rel="" target="" aria-current="page">
- <span class="menu-text">Home</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./about.html" rel="" target="">
- <span class="menu-text">About</span></a>
-  </li>  
-</ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/RePsychLing/SMLP2023" rel="" target=""><i class="bi bi-github" role="img">
@@ -157,6 +152,7 @@ div.csl-indent {
   </li>  
 </ul>
             <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
@@ -166,7 +162,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sleepstudy_speed.html">The sleepstudy: Speed - for a change …</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sleepstudy.html">Worked examples</a></li><li class="breadcrumb-item"><a href="./sleepstudy_speed.html">The sleepstudy: Speed - for a change …</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -178,7 +174,7 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
@@ -186,96 +182,151 @@ div.csl-indent {
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Seventh Summer School on Statistical Methods for Linguistics and Psychology</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false">
+ <span class="menu-text">Getting started with Julia</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./useful_packages.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Useful packages</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pkg.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Package management and reproducible environments</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./arrow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Saving data with Arrow</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Worked examples</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./sleepstudy.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Analysis of the sleepstudy data</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./sleepstudy_speed.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">The sleepstudy: Speed - for a change …</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./bootstrap.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Parametric bootstrap for mixed-effects models</span></a>
+  <a href="./kwdyz11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">RePsychLing Kliegl et al.&nbsp;(2010)</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./kkl15.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">RePsychLing Kliegl, Kuschela, &amp; Laubrock (2015)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./largescaledesigned.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">A large-scale designed experiment</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false">
+ <span class="menu-text">Contrast coding</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./arrow.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Notes on saved data files</span></a>
+  <a href="./contrasts_fggk21.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mixed Models Tutorial: Contrast Coding</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./contrasts_kwdyz11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Contrast Coding of Visual Attention Effects</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./glmm.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Generalized linear mixed models</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false">
+ <span class="menu-text">Bootstrap</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bootstrap.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Parametric bootstrap for mixed-effects models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./kb07.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Bootstrapping a fitted model</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./kwdyz11.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">RePsychLing Kliegl et al.&nbsp;(2010)</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./kkl15.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">RePsychLing Kliegl, Kuschela, &amp; Laubrock (2015)</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="false">
+ <span class="menu-text">Visualizations and diagnostics</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./shrinkageplot.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">More on shrinkage plots</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./contrasts_fggk21.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Mixed Models Tutorial: Contrast Coding</span></a>
+  <a href="./AoGPlots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Creating multi-panel plots</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./contrasts_kwdyz11.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Contrast Coding of Visual Attention Effects</span></a>
-  </div>
-</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -285,23 +336,29 @@ div.csl-indent {
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
-  <ul>
-  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background">Background</a></li>
-  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup">Setup</a></li>
-  <li><a href="#preprocessing" id="toc-preprocessing" class="nav-link" data-scroll-target="#preprocessing">Preprocessing</a></li>
-  <li><a href="#estimates-for-pooled-data" id="toc-estimates-for-pooled-data" class="nav-link" data-scroll-target="#estimates-for-pooled-data">Estimates for pooled data</a></li>
-  <li><a href="#within-subject-effects" id="toc-within-subject-effects" class="nav-link" data-scroll-target="#within-subject-effects">Within-subject effects</a>
   <ul class="collapse">
-  <li><a href="#within-subject-simple-regressions" id="toc-within-subject-simple-regressions" class="nav-link" data-scroll-target="#within-subject-simple-regressions">Within-subject simple regressions</a></li>
+  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background"><span class="header-section-number">1</span> Background</a>
+  <ul class="collapse">
+  <li><a href="#design" id="toc-design" class="nav-link" data-scroll-target="#design"><span class="header-section-number">1.1</span> Design</a></li>
+  <li><a href="#test-schedule-within-days" id="toc-test-schedule-within-days" class="nav-link" data-scroll-target="#test-schedule-within-days"><span class="header-section-number">1.2</span> Test schedule within days</a></li>
+  <li><a href="#statistical-analyses" id="toc-statistical-analyses" class="nav-link" data-scroll-target="#statistical-analyses"><span class="header-section-number">1.3</span> Statistical analyses</a></li>
+  <li><a href="#current-data" id="toc-current-data" class="nav-link" data-scroll-target="#current-data"><span class="header-section-number">1.4</span> Current data</a></li>
   </ul></li>
-  <li><a href="#basic-lmm" id="toc-basic-lmm" class="nav-link" data-scroll-target="#basic-lmm">Basic LMM</a></li>
-  <li><a href="#no-correlation-parameter-zcp-lmm" id="toc-no-correlation-parameter-zcp-lmm" class="nav-link" data-scroll-target="#no-correlation-parameter-zcp-lmm">No correlation parameter: zcp LMM</a></li>
-  <li><a href="#conditional-modes-of-the-random-effects" id="toc-conditional-modes-of-the-random-effects" class="nav-link" data-scroll-target="#conditional-modes-of-the-random-effects">Conditional modes of the random effects</a></li>
-  <li><a href="#caterpillar-plots-effect-profiles" id="toc-caterpillar-plots-effect-profiles" class="nav-link" data-scroll-target="#caterpillar-plots-effect-profiles">Caterpillar plots (effect profiles)</a></li>
-  <li><a href="#shrinkage-plot" id="toc-shrinkage-plot" class="nav-link" data-scroll-target="#shrinkage-plot">Shrinkage plot</a></li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup"><span class="header-section-number">2</span> Setup</a></li>
+  <li><a href="#preprocessing" id="toc-preprocessing" class="nav-link" data-scroll-target="#preprocessing"><span class="header-section-number">3</span> Preprocessing</a></li>
+  <li><a href="#estimates-for-pooled-data" id="toc-estimates-for-pooled-data" class="nav-link" data-scroll-target="#estimates-for-pooled-data"><span class="header-section-number">4</span> Estimates for pooled data</a></li>
+  <li><a href="#within-subject-effects" id="toc-within-subject-effects" class="nav-link" data-scroll-target="#within-subject-effects"><span class="header-section-number">5</span> Within-subject effects</a>
+  <ul class="collapse">
+  <li><a href="#within-subject-simple-regressions" id="toc-within-subject-simple-regressions" class="nav-link" data-scroll-target="#within-subject-simple-regressions"><span class="header-section-number">5.1</span> Within-subject simple regressions</a></li>
+  </ul></li>
+  <li><a href="#basic-lmm" id="toc-basic-lmm" class="nav-link" data-scroll-target="#basic-lmm"><span class="header-section-number">6</span> Basic LMM</a></li>
+  <li><a href="#no-correlation-parameter-zcp-lmm" id="toc-no-correlation-parameter-zcp-lmm" class="nav-link" data-scroll-target="#no-correlation-parameter-zcp-lmm"><span class="header-section-number">7</span> No correlation parameter: zcp LMM</a></li>
+  <li><a href="#conditional-modes-of-the-random-effects" id="toc-conditional-modes-of-the-random-effects" class="nav-link" data-scroll-target="#conditional-modes-of-the-random-effects"><span class="header-section-number">8</span> Conditional modes of the random effects</a></li>
+  <li><a href="#caterpillar-plots-effect-profiles" id="toc-caterpillar-plots-effect-profiles" class="nav-link" data-scroll-target="#caterpillar-plots-effect-profiles"><span class="header-section-number">9</span> Caterpillar plots (effect profiles)</a></li>
+  <li><a href="#shrinkage-plot" id="toc-shrinkage-plot" class="nav-link" data-scroll-target="#shrinkage-plot"><span class="header-section-number">10</span> Shrinkage plot</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">11</span> References</a></li>
   </ul>
-</nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/RePsychLing/SMLP2023/edit/main/sleepstudy_speed.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/RePsychLing/SMLP2023/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -325,7 +382,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2023-08-07</p>
+      <p class="date">2023-08-21</p>
     </div>
   </div>
   
@@ -335,23 +392,31 @@ div.csl-indent {
 
 </header>
 
-<section id="background" class="level2">
-<h2 class="anchored" data-anchor-id="background">Background</h2>
+<section id="background" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Background</h1>
 <p><span class="citation" data-cites="Belenky2003">Belenky et al. (<a href="#ref-Belenky2003" role="doc-biblioref">2003</a>)</span> reported effects of sleep deprivation across a 14-day study of 30-to-40-year old men and women holding commercial vehicle driving licenses. Their analyses are based on a subset of tasks and ratings from very large and comprehensive test and questionnaire battery <span class="citation" data-cites="Balkin2000">(<a href="#ref-Balkin2000" role="doc-biblioref">Balkin et al., 2000</a>)</span>.</p>
 <p>Initially 66 subjects were assigned to one of four time-in-bed (TIB) groups with 9 hours (22:00-07:00) of sleep augmentation or 7 hours (24:00-07:00), 5 hours (02:00-07:00), and 3 hours (04:00-0:00) of sleep restrictions per night, respectively. The final sample comprised 56 subjects. The Psychomotor Vigilance Test (PVT) measures simple reaction time to a visual stimulus, presented approximately 10 times ⁄ minute (interstimulus interval varied from 2 to 10 s in 2-s increments) for 10 min and implemented in a thumb-operated, hand-held device <span class="citation" data-cites="Dinges1985">(<a href="#ref-Dinges1985" role="doc-biblioref">Dinges &amp; Powell, 1985</a>)</span>.</p>
-<p><strong>Design</strong></p>
+<section id="design" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="design"><span class="header-section-number">1.1</span> Design</h2>
 <p>The study comprised 2 training days (T1, T2), one day with baseline measures (B), seven days with sleep deprivation (E1 to E7), and four recovery days (R1 to R4). T1 and T2 were devoted to training on the performance tests and familiarization with study procedures. PVT baseline testing commenced on the morning of the third day (B) and testing continued for the duration of the study (E1–E7, R1–R3; no measures were taken on R4). Bed times during T, B, and R days were 8 hours (23:00-07:00).</p>
-<p><strong>Test schedule within days</strong></p>
+</section>
+<section id="test-schedule-within-days" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="test-schedule-within-days"><span class="header-section-number">1.2</span> Test schedule within days</h2>
 <p>The PVT (along with the Stanford Sleepiness Scale) was administered as a battery four times per day (09:00, 12:00, 15:00, and 21:00 h); the battery included other tests not reported here <span class="citation" data-cites="Balkin2000">(see <a href="#ref-Balkin2000" role="doc-biblioref">Balkin et al., 2000</a>)</span>. The sleep latency test was administered at 09:40 and 15:30 h for all groups. Subjects in the 3- and 5-h TIB groups performed an additional battery at 00:00 h and 02:00 h to occupy their additional time awake. The PVT and SSS were administered in this battery; however, as data from the 00:00 and 02:00 h sessions were not common to all TIB groups, these data were not included in the statistical analyses reported in the paper.</p>
-<p><strong>Statistical analyses</strong></p>
+</section>
+<section id="statistical-analyses" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="statistical-analyses"><span class="header-section-number">1.3</span> Statistical analyses</h2>
 <p>The authors analyzed response speed, that is (1/RT)*1000 – completely warranted according to a Box-Cox check of the current data – with mixed-model ANOVAs using group as between- and day as within-subject factors. The ANOVA was followed up with simple tests of the design effects implemented over days for each of the four groups.</p>
-<p><strong>Current data</strong></p>
+</section>
+<section id="current-data" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="current-data"><span class="header-section-number">1.4</span> Current data</h2>
 <p>The current data distributed with the <em>RData</em> collection is attributed to the 3-hour TIB group, but the means do not agree at all with those reported for this group in <span class="citation" data-cites="Belenky2003">(<a href="#ref-Belenky2003" role="doc-biblioref">Belenky et al., 2003, fig. 3</a>)</span> where the 3-hour TIB group is also based on only 13 (not 18) subjects. Specifically, the current data show a much smaller slow-down of response speed across E1 to E7 and do not reflect the recovery during R1 to R3. The currrent data also cover only 10 not 11 days, but it looks like only R3 is missing. The closest match of the current means was with the average of the 3-hour and 7-hour TIB groups; if only males were included, this would amount to 18 subjects. (This conjecture is based only on visual inspection of graphs.)</p>
 </section>
-<section id="setup" class="level2">
-<h2 class="anchored" data-anchor-id="setup">Setup</h2>
+</section>
+<section id="setup" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Setup</h1>
 <p>First we attach the various packages needed, define a few helper functions, read the data, and get everything in the desired shape.</p>
-<div class="cell" data-execution_count="2">
+<div class="cell" data-execution_count="1">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">CairoMakie         </span><span class="co"># device driver for static (SVG, PDF, PNG) plots</span></span>
@@ -368,15 +433,15 @@ div.csl-indent {
 </details>
 </div>
 </section>
-<section id="preprocessing" class="level2">
-<h2 class="anchored" data-anchor-id="preprocessing">Preprocessing</h2>
+<section id="preprocessing" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Preprocessing</h1>
 <p>The <code>sleepstudy</code> data are one of the datasets available with recent versions of the <code>MixedModels</code> package. We carry out some preprocessing to have the dataframe in the desired shape:</p>
 <ul>
 <li>Capitalize random factor <code>Subj</code></li>
 <li>Compute <code>speed</code> as an alternative dependent variable from <code>reaction</code>, warranted by a ‘boxcox’ check of residuals.</li>
 <li>Create a <code>GroupedDataFrame</code> by levels of <code>Subj</code> (the original dataframe is available as <code>gdf.parent</code>, which we name <code>df</code>)</li>
 </ul>
-<div class="cell" data-execution_count="3">
+<div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>gdf <span class="op">=</span> <span class="pp">@chain</span> MixedModels.<span class="fu">dataset</span>(<span class="op">:</span>sleepstudy) <span class="cf">begin</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  DataFrame</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename!</span>(<span class="op">:</span>subj <span class="op">=&gt;</span> <span class="op">:</span>Subj, <span class="op">:</span>days <span class="op">=&gt;</span> <span class="op">:</span>day)</span>
@@ -579,7 +644,7 @@ div.csl-indent {
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="4">
+<div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> gdf.parent</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
@@ -654,23 +719,23 @@ div.csl-indent {
 </div>
 </div>
 </section>
-<section id="estimates-for-pooled-data" class="level2">
-<h2 class="anchored" data-anchor-id="estimates-for-pooled-data">Estimates for pooled data</h2>
+<section id="estimates-for-pooled-data" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Estimates for pooled data</h1>
 <p>In the first analysis we ignore the dependency of observations due to repeated measures from the same subjects. We pool all the data and estimate the regression of 180 speed scores on the nine days of the experiment.</p>
-<div class="cell" data-execution_count="5">
+<div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>pooledcoef <span class="op">=</span> <span class="fu">simplelinreg</span>(df.day, df.speed)  <span class="co"># produces a Tuple</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
-<pre><code>(3.9658119747831484, -0.110993592321997)</code></pre>
+<pre><code>(3.965811974783149, -0.11099359232199696)</code></pre>
 </div>
 </div>
 </section>
-<section id="within-subject-effects" class="level2">
-<h2 class="anchored" data-anchor-id="within-subject-effects">Within-subject effects</h2>
+<section id="within-subject-effects" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Within-subject effects</h1>
 <p>In the second analysis we estimate coefficients for each <code>Subj</code> without regard of the information available from the complete set of data. We do not “borrow strength” to adjust for differences due to between-<code>Subj</code> variability and due to being far from the population mean.</p>
-<section id="within-subject-simple-regressions" class="level3">
-<h3 class="anchored" data-anchor-id="within-subject-simple-regressions">Within-subject simple regressions</h3>
+<section id="within-subject-simple-regressions" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="within-subject-simple-regressions"><span class="header-section-number">5.1</span> Within-subject simple regressions</h2>
 <p>Applying <code>combine</code> to a grouped data frame like <code>gdf</code> produces a <code>DataFrame</code> with a row for each group. The permutation <code>ord</code> provides an ordering for the groups by increasing intercept (predicted response at day 0).</p>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>within <span class="op">=</span> <span class="fu">combine</span>(gdf, [<span class="op">:</span>day, <span class="op">:</span>speed] <span class="op">=&gt;</span> simplelinreg <span class="op">=&gt;</span> <span class="op">:</span>coef)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <div><div style="float: left;"><span>18×2 DataFrame</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
@@ -784,7 +849,7 @@ div.csl-indent {
 </div>
 </div>
 <p><a href="#fig-xyplotsleepspeed">Figure&nbsp;1</a> shows the reaction speed versus days of sleep deprivation by subject. The panels are arranged by increasing initial reaction speed starting at the lower left and proceeding across rows.</p>
-<div class="cell" data-execution_count="7">
+<div class="cell" data-execution_count="6">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span></span>
@@ -815,9 +880,9 @@ div.csl-indent {
 </div>
 </section>
 </section>
-<section id="basic-lmm" class="level2">
-<h2 class="anchored" data-anchor-id="basic-lmm">Basic LMM</h2>
-<div class="cell" data-execution_count="8">
+<section id="basic-lmm" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Basic LMM</h1>
+<div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>contrasts <span class="op">=</span> <span class="fu">Dict</span>(<span class="op">:</span>Subj <span class="op">=&gt;</span> <span class="fu">Grouping</span>())</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>m1 <span class="op">=</span> <span class="kw">let</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  form <span class="op">=</span> <span class="pp">@formula</span> speed <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> day <span class="op">+</span> (<span class="fl">1</span> <span class="op">+</span> day <span class="op">|</span> Subj)</span>
@@ -868,10 +933,10 @@ div.csl-indent {
 <p>The random effects represent shifts from the typical behavior for each subject.The shift in the intercept has a standard deviation of about 0.42/s.</p>
 <p>The within-subject correlation of the random effects for intercept and slope is small, -0.18, indicating that a simpler model with a correlation parameter (CP) forced to/ assumed to be zero may be sufficient.</p>
 </section>
-<section id="no-correlation-parameter-zcp-lmm" class="level2">
-<h2 class="anchored" data-anchor-id="no-correlation-parameter-zcp-lmm">No correlation parameter: zcp LMM</h2>
+<section id="no-correlation-parameter-zcp-lmm" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> No correlation parameter: zcp LMM</h1>
 <p>The <code>zerocorr</code> function applied to a random-effects term estimates one parameter less than LMM <code>m1</code>– the CP is now fixed to zero.</p>
-<div class="cell" data-execution_count="9">
+<div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>m2 <span class="op">=</span> <span class="kw">let</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  form <span class="op">=</span> <span class="pp">@formula</span> speed <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> day <span class="op">+</span> <span class="fu">zerocorr</span>(<span class="fl">1</span> <span class="op">+</span> day <span class="op">|</span> Subj)</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(MixedModel, form, df; contrasts)</span>
@@ -918,7 +983,7 @@ div.csl-indent {
 </div>
 </div>
 <p>LMM <code>m2</code> has a slghtly lower log-likelihood than LMM <code>m1</code> but also one fewer parameters. A likelihood-ratio test is used to compare these nested models.</p>
-<div class="cell" data-execution_count="10">
+<div class="cell" data-execution_count="9">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>MixedModels.<span class="fu">likelihoodratiotest</span>(m2, m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -965,7 +1030,7 @@ div.csl-indent {
 </div>
 </div>
 <p>Alternatively, the AIC, AICc, and BIC values can be compared. They are on a scale where “smaller is better”. All three model-fit statistics prefer the zcpLMM <code>m2</code>.</p>
-<div class="cell" data-execution_count="11">
+<div class="cell" data-execution_count="10">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span></span>
@@ -1023,13 +1088,13 @@ div.csl-indent {
 </div>
 </div>
 </section>
-<section id="conditional-modes-of-the-random-effects" class="level2">
-<h2 class="anchored" data-anchor-id="conditional-modes-of-the-random-effects">Conditional modes of the random effects</h2>
+<section id="conditional-modes-of-the-random-effects" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> Conditional modes of the random effects</h1>
 <p>The third set of estimates are their conditional modes. They represent a compromise between their own data and the model parameters. When distributional assumptions hold, predictions based on these estimates are more accurate than either the pooled or the within-subject estimates. Here we “borrow strength” to improve the accuracy of prediction.</p>
 </section>
-<section id="caterpillar-plots-effect-profiles" class="level2">
-<h2 class="anchored" data-anchor-id="caterpillar-plots-effect-profiles">Caterpillar plots (effect profiles)</h2>
-<div class="cell" data-execution_count="12">
+<section id="caterpillar-plots-effect-profiles" class="level1" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> Caterpillar plots (effect profiles)</h1>
+<div class="cell" data-execution_count="11">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">caterpillar</span>(m2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1044,9 +1109,9 @@ div.csl-indent {
 </div>
 </div>
 </section>
-<section id="shrinkage-plot" class="level2">
-<h2 class="anchored" data-anchor-id="shrinkage-plot">Shrinkage plot</h2>
-<div class="cell" data-execution_count="13">
+<section id="shrinkage-plot" class="level1" data-number="10">
+<h1 data-number="10"><span class="header-section-number">10</span> Shrinkage plot</h1>
+<div class="cell" data-execution_count="12">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shrinkageplot!</span>(<span class="fu">Figure</span>(; resolution<span class="op">=</span>(<span class="fl">500</span>, <span class="fl">500</span>)), m2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1061,8 +1126,8 @@ div.csl-indent {
 </div>
 </div>
 </section>
-<section id="references" class="level1">
-<h1>References</h1>
+<section id="references" class="level1" data-number="11">
+<h1 data-number="11"><span class="header-section-number">11</span> References</h1>
 <div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="list">
 <div id="ref-Balkin2000" class="csl-entry" role="listitem">
 Balkin, T., Thome, D., Sing, H., Thomas, M., Redmond, D., Wesensten, N., Williams, J., Hall, S., &amp; Belenky, G. (2000). <em>Effects of sleep schedules on commercial motor vehicle driver performance</em> (DOT-MC-00-133). Federal Motor Carrier Safety Administration. <a href="https://doi.org/10.21949/1503015.">https://doi.org/10.21949/1503015.</a>
@@ -1078,7 +1143,7 @@ Dinges, D. F., &amp; Powell, J. W. (1985). Microcomputer analyses of performance
 
 </section>
 
-</main> <!-- /main -->
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -1099,6 +1164,121 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
   const icon = "";
   const anchorJS = new window.AnchorJS();
   anchorJS.options = {
@@ -1319,8 +1499,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./bootstrap.html" class="pagination-link">
-        <span class="nav-page-text">Parametric bootstrap for mixed-effects models</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./kwdyz11.html" class="pagination-link">
+        <span class="nav-page-text">RePsychLing Kliegl et al.&nbsp;(2010)</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

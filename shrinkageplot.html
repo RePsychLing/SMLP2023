@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Phillip Alday, Douglas Bates, and Reinhold Kliegl">
-<meta name="dcterms.date" content="2023-08-07">
+<meta name="dcterms.date" content="2023-08-21">
 
-<title>SMLP2023 - More on shrinkage plots</title>
+<title>SMLP2023: Advanced Frequentist Track - More on shrinkage plots</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -66,17 +66,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./contrasts_fggk21.html" rel="next">
-<link href="./kkl15.html" rel="prev">
+<link href="./AoGPlots.html" rel="next">
+<link href="./kb07.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="site_libs/quarto-contrib/jquery-3.6.3/jquery-3.6.3.min.js"></script>
+<script src="site_libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.js" defer="true"></script>
+<link href="site_libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -104,7 +109,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </head>
 
-<body class="nav-sidebar docked nav-fixed">
+<body class="nav-sidebar floating nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -112,7 +117,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">SMLP2023</span>
+    <span class="navbar-title">SMLP2023: Advanced Frequentist Track</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -120,16 +125,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link active" href="./index.html" rel="" target="" aria-current="page">
- <span class="menu-text">Home</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./about.html" rel="" target="">
- <span class="menu-text">About</span></a>
-  </li>  
-</ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/RePsychLing/SMLP2023" rel="" target=""><i class="bi bi-github" role="img">
@@ -138,6 +133,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
 </ul>
             <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
@@ -147,7 +143,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./shrinkageplot.html">More on shrinkage plots</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./shrinkageplot.html">Visualizations and diagnostics</a></li><li class="breadcrumb-item"><a href="./shrinkageplot.html">More on shrinkage plots</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -159,7 +155,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
@@ -167,96 +163,151 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Seventh Summer School on Statistical Methods for Linguistics and Psychology</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false">
+ <span class="menu-text">Getting started with Julia</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./useful_packages.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Useful packages</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pkg.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Package management and reproducible environments</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./arrow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Saving data with Arrow</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false">
+ <span class="menu-text">Worked examples</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./sleepstudy.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Analysis of the sleepstudy data</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./sleepstudy_speed.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">The sleepstudy: Speed - for a change …</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./bootstrap.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Parametric bootstrap for mixed-effects models</span></a>
+  <a href="./kwdyz11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">RePsychLing Kliegl et al.&nbsp;(2010)</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./kkl15.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">RePsychLing Kliegl, Kuschela, &amp; Laubrock (2015)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./largescaledesigned.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">A large-scale designed experiment</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false">
+ <span class="menu-text">Contrast coding</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./arrow.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Notes on saved data files</span></a>
+  <a href="./contrasts_fggk21.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mixed Models Tutorial: Contrast Coding</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./contrasts_kwdyz11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Contrast Coding of Visual Attention Effects</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./glmm.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Generalized linear mixed models</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false">
+ <span class="menu-text">Bootstrap</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bootstrap.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Parametric bootstrap for mixed-effects models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./kb07.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Bootstrapping a fitted model</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./kwdyz11.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">RePsychLing Kliegl et al.&nbsp;(2010)</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./kkl15.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">RePsychLing Kliegl, Kuschela, &amp; Laubrock (2015)</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text">Visualizations and diagnostics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./shrinkageplot.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">More on shrinkage plots</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./contrasts_fggk21.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Mixed Models Tutorial: Contrast Coding</span></a>
+  <a href="./AoGPlots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Creating multi-panel plots</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./contrasts_kwdyz11.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Contrast Coding of Visual Attention Effects</span></a>
-  </div>
-</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -266,13 +317,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
-  <ul>
-  <li><a href="#expressing-the-covariance-of-random-effects" id="toc-expressing-the-covariance-of-random-effects" class="nav-link active" data-scroll-target="#expressing-the-covariance-of-random-effects">Expressing the covariance of random effects</a></li>
-  <li><a href="#shrinkage-plots" id="toc-shrinkage-plots" class="nav-link" data-scroll-target="#shrinkage-plots">Shrinkage plots</a></li>
-  <li><a href="#how-to-interpret-a-shrinkage-plot" id="toc-how-to-interpret-a-shrinkage-plot" class="nav-link" data-scroll-target="#how-to-interpret-a-shrinkage-plot">How to interpret a shrinkage plot</a></li>
-  <li><a href="#conclusions-from-these-plots" id="toc-conclusions-from-these-plots" class="nav-link" data-scroll-target="#conclusions-from-these-plots">Conclusions from these plots</a></li>
+  <ul class="collapse">
+  <li><a href="#expressing-the-covariance-of-random-effects" id="toc-expressing-the-covariance-of-random-effects" class="nav-link active" data-scroll-target="#expressing-the-covariance-of-random-effects"><span class="header-section-number">1</span> Expressing the covariance of random effects</a></li>
+  <li><a href="#shrinkage-plots" id="toc-shrinkage-plots" class="nav-link" data-scroll-target="#shrinkage-plots"><span class="header-section-number">2</span> Shrinkage plots</a></li>
+  <li><a href="#how-to-interpret-a-shrinkage-plot" id="toc-how-to-interpret-a-shrinkage-plot" class="nav-link" data-scroll-target="#how-to-interpret-a-shrinkage-plot"><span class="header-section-number">3</span> How to interpret a shrinkage plot</a></li>
+  <li><a href="#conclusions-from-these-plots" id="toc-conclusions-from-these-plots" class="nav-link" data-scroll-target="#conclusions-from-these-plots"><span class="header-section-number">4</span> Conclusions from these plots</a></li>
   </ul>
-</nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/RePsychLing/SMLP2023/edit/main/shrinkageplot.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/RePsychLing/SMLP2023/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -296,7 +347,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2023-08-07</p>
+      <p class="date">2023-08-21</p>
     </div>
   </div>
   
@@ -360,7 +411,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(MixedModel, form, kb07; contrasts)</span>
 <span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Minimizing 883   Time: 0:00:00 ( 1.02 ms/it)</code></pre>
+<pre><code>Minimizing 934   Time: 0:00:01 ( 1.39 ms/it)
+  objective:  28637.97101024215</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <table class="table table-sm table-striped small">
@@ -387,79 +439,79 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">2181.6729</td>
-<td style="text-align: right;">77.2879</td>
-<td style="text-align: right;">28.23</td>
+<td style="text-align: right;">2181.6424</td>
+<td style="text-align: right;">77.3512</td>
+<td style="text-align: right;">28.20</td>
 <td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">301.7871</td>
-<td style="text-align: right;">362.0938</td>
+<td style="text-align: right;">301.8676</td>
+<td style="text-align: right;">362.4694</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">spkr: old</td>
-<td style="text-align: right;">67.7484</td>
-<td style="text-align: right;">18.2976</td>
-<td style="text-align: right;">3.70</td>
+<td style="text-align: right;">67.7496</td>
+<td style="text-align: right;">17.9607</td>
+<td style="text-align: right;">3.77</td>
 <td style="text-align: right;">0.0002</td>
-<td style="text-align: right;">43.1536</td>
-<td style="text-align: right;">40.6843</td>
+<td style="text-align: right;">33.0524</td>
+<td style="text-align: right;">41.1185</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">prec: maintain</td>
-<td style="text-align: right;">-333.9212</td>
-<td style="text-align: right;">47.1387</td>
+<td style="text-align: right;">-333.9200</td>
+<td style="text-align: right;">47.1564</td>
 <td style="text-align: right;">-7.08</td>
 <td style="text-align: right;">&lt;1e-11</td>
-<td style="text-align: right;">62.0318</td>
-<td style="text-align: right;">246.8048</td>
+<td style="text-align: right;">58.8607</td>
+<td style="text-align: right;">247.3292</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">load: yes</td>
-<td style="text-align: right;">78.7702</td>
-<td style="text-align: right;">19.5373</td>
-<td style="text-align: right;">4.03</td>
+<td style="text-align: right;">78.8007</td>
+<td style="text-align: right;">19.7260</td>
+<td style="text-align: right;">3.99</td>
 <td style="text-align: right;">&lt;1e-04</td>
-<td style="text-align: right;">65.1901</td>
-<td style="text-align: right;">42.3299</td>
+<td style="text-align: right;">66.9505</td>
+<td style="text-align: right;">43.3885</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">spkr: old &amp; prec: maintain</td>
-<td style="text-align: right;">-21.9655</td>
-<td style="text-align: right;">15.8058</td>
+<td style="text-align: right;">-21.9960</td>
+<td style="text-align: right;">15.8191</td>
 <td style="text-align: right;">-1.39</td>
-<td style="text-align: right;">0.1646</td>
+<td style="text-align: right;">0.1644</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">spkr: old &amp; load: yes</td>
-<td style="text-align: right;">18.3844</td>
-<td style="text-align: right;">15.8058</td>
+<td style="text-align: right;">18.3832</td>
+<td style="text-align: right;">15.8191</td>
 <td style="text-align: right;">1.16</td>
-<td style="text-align: right;">0.2448</td>
+<td style="text-align: right;">0.2452</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">prec: maintain &amp; load: yes</td>
-<td style="text-align: right;">4.5340</td>
-<td style="text-align: right;">15.8058</td>
+<td style="text-align: right;">4.5327</td>
+<td style="text-align: right;">15.8191</td>
 <td style="text-align: right;">0.29</td>
-<td style="text-align: right;">0.7742</td>
+<td style="text-align: right;">0.7745</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">spkr: old &amp; prec: maintain &amp; load: yes</td>
-<td style="text-align: right;">23.6073</td>
-<td style="text-align: right;">15.8058</td>
+<td style="text-align: right;">23.6377</td>
+<td style="text-align: right;">15.8191</td>
 <td style="text-align: right;">1.49</td>
-<td style="text-align: right;">0.1353</td>
+<td style="text-align: right;">0.1351</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Residual</td>
-<td style="text-align: right;">668.4871</td>
+<td style="text-align: right;">669.0516</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -498,8 +550,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">91075.4527</td>
-<td style="text-align: right;">301.7871</td>
+<td style="text-align: right;">91124.0779</td>
+<td style="text-align: right;">301.8676</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -507,35 +559,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">spkr: old</td>
-<td style="text-align: right;">1862.2358</td>
-<td style="text-align: right;">43.1536</td>
-<td style="text-align: right;">+0.78</td>
+<td style="text-align: right;">1092.4628</td>
+<td style="text-align: right;">33.0524</td>
+<td style="text-align: right;">+1.00</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">prec: maintain</td>
-<td style="text-align: right;">3847.9447</td>
-<td style="text-align: right;">62.0318</td>
-<td style="text-align: right;">-0.59</td>
-<td style="text-align: right;">+0.03</td>
+<td style="text-align: right;">3464.5848</td>
+<td style="text-align: right;">58.8607</td>
+<td style="text-align: right;">-0.62</td>
+<td style="text-align: right;">-0.62</td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">load: yes</td>
-<td style="text-align: right;">4249.7506</td>
-<td style="text-align: right;">65.1901</td>
+<td style="text-align: right;">4482.3662</td>
+<td style="text-align: right;">66.9505</td>
 <td style="text-align: right;">+0.36</td>
-<td style="text-align: right;">+0.82</td>
-<td style="text-align: right;">+0.53</td>
+<td style="text-align: right;">+0.36</td>
+<td style="text-align: right;">+0.51</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">131111.9379</td>
-<td style="text-align: right;">362.0938</td>
+<td style="text-align: right;">131384.0733</td>
+<td style="text-align: right;">362.4694</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -543,35 +595,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">spkr: old</td>
-<td style="text-align: right;">1655.2134</td>
-<td style="text-align: right;">40.6843</td>
-<td style="text-align: right;">+0.44</td>
+<td style="text-align: right;">1690.7347</td>
+<td style="text-align: right;">41.1185</td>
+<td style="text-align: right;">+0.42</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">prec: maintain</td>
-<td style="text-align: right;">60912.6143</td>
-<td style="text-align: right;">246.8048</td>
+<td style="text-align: right;">61171.7458</td>
+<td style="text-align: right;">247.3292</td>
 <td style="text-align: right;">-0.69</td>
-<td style="text-align: right;">+0.35</td>
+<td style="text-align: right;">+0.37</td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">load: yes</td>
-<td style="text-align: right;">1791.8243</td>
-<td style="text-align: right;">42.3299</td>
-<td style="text-align: right;">+0.32</td>
-<td style="text-align: right;">+0.16</td>
-<td style="text-align: right;">-0.14</td>
+<td style="text-align: right;">1882.5594</td>
+<td style="text-align: right;">43.3885</td>
+<td style="text-align: right;">+0.29</td>
+<td style="text-align: right;">+0.14</td>
+<td style="text-align: right;">-0.13</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Residual</td>
 <td style="text-align: left;"></td>
-<td style="text-align: right;">446875.0375</td>
-<td style="text-align: right;">668.4871</td>
+<td style="text-align: right;">447630.0111</td>
+<td style="text-align: right;">669.0516</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -592,47 +644,47 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Linear mixed model fit by maximum likelihood
  rt_trunc ~ 1 + spkr + prec + load + spkr &amp; prec + spkr &amp; load + prec &amp; load + spkr &amp; prec &amp; load + (1 + spkr + prec + load | subj) + (1 + spkr + prec + load | item)
     logLik   -2 logLik      AIC         AICc        BIC     
- -14318.5614  28637.1228  28695.1228  28696.1120  28854.3157
+ -14318.9855  28637.9710  28695.9710  28696.9602  28855.1640
 
 Variance components:
              Column       Variance  Std.Dev.   Corr.
-subj     (Intercept)      91075.4527 301.7871
-         spkr: old         1862.2358  43.1536 +0.78
-         prec: maintain    3847.9447  62.0318 -0.59 +0.03
-         load: yes         4249.7506  65.1901 +0.36 +0.82 +0.53
-item     (Intercept)     131111.9379 362.0938
-         spkr: old         1655.2134  40.6843 +0.44
-         prec: maintain   60912.6143 246.8048 -0.69 +0.35
-         load: yes         1791.8243  42.3299 +0.32 +0.16 -0.14
-Residual                 446875.0375 668.4871
+subj     (Intercept)      91124.0779 301.8676
+         spkr: old         1092.4628  33.0524 +1.00
+         prec: maintain    3464.5848  58.8607 -0.62 -0.62
+         load: yes         4482.3662  66.9505 +0.36 +0.36 +0.51
+item     (Intercept)     131384.0733 362.4694
+         spkr: old         1690.7347  41.1185 +0.42
+         prec: maintain   61171.7458 247.3292 -0.69 +0.37
+         load: yes         1882.5594  43.3885 +0.29 +0.14 -0.13
+Residual                 447630.0111 669.0516
  Number of obs: 1789; levels of grouping factors: 56, 32
 
   Fixed-effects parameters:
 ───────────────────────────────────────────────────────────────────────────────
                                              Coef.  Std. Error      z  Pr(&gt;|z|)
 ───────────────────────────────────────────────────────────────────────────────
-(Intercept)                             2181.67        77.2879  28.23    &lt;1e-99
-spkr: old                                 67.7484      18.2976   3.70    0.0002
-prec: maintain                          -333.921       47.1387  -7.08    &lt;1e-11
-load: yes                                 78.7702      19.5373   4.03    &lt;1e-04
-spkr: old &amp; prec: maintain               -21.9655      15.8058  -1.39    0.1646
-spkr: old &amp; load: yes                     18.3844      15.8058   1.16    0.2448
-prec: maintain &amp; load: yes                 4.53396     15.8058   0.29    0.7742
-spkr: old &amp; prec: maintain &amp; load: yes    23.6073      15.8058   1.49    0.1353
+(Intercept)                             2181.64        77.3512  28.20    &lt;1e-99
+spkr: old                                 67.7496      17.9607   3.77    0.0002
+prec: maintain                          -333.92        47.1564  -7.08    &lt;1e-11
+load: yes                                 78.8007      19.726    3.99    &lt;1e-04
+spkr: old &amp; prec: maintain               -21.996       15.8191  -1.39    0.1644
+spkr: old &amp; load: yes                     18.3832      15.8191   1.16    0.2452
+prec: maintain &amp; load: yes                 4.53274     15.8191   0.29    0.7745
+spkr: old &amp; prec: maintain &amp; load: yes    23.6377      15.8191   1.49    0.1351
 ───────────────────────────────────────────────────────────────────────────────</code></pre>
 </div>
 </div>
-<section id="expressing-the-covariance-of-random-effects" class="level2">
-<h2 class="anchored" data-anchor-id="expressing-the-covariance-of-random-effects">Expressing the covariance of random effects</h2>
+<section id="expressing-the-covariance-of-random-effects" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="expressing-the-covariance-of-random-effects"><span class="header-section-number">1</span> Expressing the covariance of random effects</h2>
 <p>Earlier today we mentioned that the parameters being optimized are from a “matrix square root” of the covariance matrix for the random effects. There is one such lower triangular matrix for each grouping factor.</p>
 <div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>l1 <span class="op">=</span> <span class="fu">first</span>(m1.λ)   <span class="co"># Cholesky factor of relative covariance for subj</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <pre><code>4×4 LowerTriangular{Float64, Matrix{Float64}}:
-  0.451448    ⋅          ⋅          ⋅ 
-  0.050253   0.04052     ⋅          ⋅ 
- -0.0550429  0.0722936  0.0188335   ⋅ 
-  0.035184   0.0839591  0.0349697  0.0</code></pre>
+  0.451187     ⋅           ⋅          ⋅ 
+  0.0494019   0.0          ⋅          ⋅ 
+ -0.0547554  -0.00478924  0.0686931   ⋅ 
+  0.0359018  -0.00650109  0.0931791  0.0</code></pre>
 </div>
 </div>
 <p>Notice the zero on the diagonal. A triangular matrix with zeros on the diagonal is singular.</p>
@@ -640,10 +692,10 @@ spkr: old &amp; prec: maintain &amp; load: yes    23.6073      15.8058   1.49   
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>l2 <span class="op">=</span> <span class="fu">last</span>(m1.λ)    <span class="co"># this one is not singular</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
 <pre><code>4×4 LowerTriangular{Float64, Matrix{Float64}}:
-  0.541662    ⋅           ⋅          ⋅ 
-  0.0268487  0.054618     ⋅          ⋅ 
- -0.252947   0.267973    0.022725    ⋅ 
-  0.0200293  0.00134156  0.0600041  0.00249229</code></pre>
+  0.541766    ⋅            ⋅          ⋅ 
+  0.0259253  0.0557222     ⋅          ⋅ 
+ -0.253781   0.267843     0.0226331   ⋅ 
+  0.0189249  0.000871109  0.0620218  0.0</code></pre>
 </div>
 </div>
 <p>To regenerate the covariance matrix we need to know that the covariance is not the <em>square</em> of <code>l1</code>, it is <code>l1 * l1'</code> (so that the result is symmetric) and multiplied by σ̂²</p>
@@ -651,35 +703,35 @@ spkr: old &amp; prec: maintain &amp; load: yes    23.6073      15.8058   1.49   
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>Σ₁ <span class="op">=</span> <span class="fu">varest</span>(m1) <span class="op">.*</span> (l1 <span class="op">*</span> l1<span class="op">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>4×4 Matrix{Float64}:
-  91075.5   10138.1     -11104.4     7098.06
-  10138.1    1862.24        72.9585  2310.4
- -11104.4      72.9585    3847.94    2141.28
-   7098.06   2310.4       2141.28    4249.75</code></pre>
+  91124.1    9977.46   -11058.7   7250.91
+   9977.46   1092.46    -1210.85   793.924
+ -11058.7   -1210.85     3464.58  1999.15
+   7250.91    793.924    1999.15  4482.37</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">diag</span>(Σ₁)  <span class="co"># compare to the variance column in the VarCorr output</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
 <pre><code>4-element Vector{Float64}:
- 91075.4526880853
-  1862.2357643775592
-  3847.944710938748
-  4249.75056147619</code></pre>
+ 91124.07791836817
+  1092.4628467755617
+  3464.584800597221
+  4482.366224216353</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>.(<span class="fu">diag</span>(Σ₁))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
 <pre><code>4-element Vector{Float64}:
- 301.7870982797066
-  43.15362979376775
-  62.03180402776263
-  65.19011091780862</code></pre>
+ 301.86764967178607
+  33.05242573209358
+  58.86072375189776
+  66.95047590731788</code></pre>
 </div>
 </div>
 </section>
-<section id="shrinkage-plots" class="level2">
-<h2 class="anchored" data-anchor-id="shrinkage-plots">Shrinkage plots</h2>
+<section id="shrinkage-plots" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="shrinkage-plots"><span class="header-section-number">2</span> Shrinkage plots</h2>
 <div class="cell" data-execution_count="12">
 <details>
 <summary>Code</summary>
@@ -730,8 +782,8 @@ spkr: old &amp; prec: maintain &amp; load: yes    23.6073      15.8058   1.49   
 </div>
 </div>
 </section>
-<section id="how-to-interpret-a-shrinkage-plot" class="level2">
-<h2 class="anchored" data-anchor-id="how-to-interpret-a-shrinkage-plot">How to interpret a shrinkage plot</h2>
+<section id="how-to-interpret-a-shrinkage-plot" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="how-to-interpret-a-shrinkage-plot"><span class="header-section-number">3</span> How to interpret a shrinkage plot</h2>
 <ul>
 <li>Extreme shrinkage (shrunk to a line or to a point) is easy to interpret - the term is not providing benefit and can be removed.</li>
 <li>When the range of the blue dots (shrunk values) is comparable to those of the red dots (unshrunk) it indicates that the term after shrinkage is about as strong as without shrinkage.</li>
@@ -739,8 +791,8 @@ spkr: old &amp; prec: maintain &amp; load: yes    23.6073      15.8058   1.49   
 <li>Small magnitude and small relative magnitude indicate you can drop that term</li>
 </ul>
 </section>
-<section id="conclusions-from-these-plots" class="level2">
-<h2 class="anchored" data-anchor-id="conclusions-from-these-plots">Conclusions from these plots</h2>
+<section id="conclusions-from-these-plots" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="conclusions-from-these-plots"><span class="header-section-number">4</span> Conclusions from these plots</h2>
 <ul>
 <li>Only the intercept for the <code>subj</code> appears to be contributing explanatory power</li>
 <li>For the <code>item</code> both the intercept and the <code>spkr</code> appear to be contributing</li>
@@ -878,14 +930,14 @@ spkr: old &amp; prec: maintain &amp; load: yes    23.6073      15.8058   1.49   
 <tr class="odd">
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">133026.917</td>
+<td style="text-align: right;">133026.916</td>
 <td style="text-align: right;">364.729</td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">prec: maintain</td>
-<td style="text-align: right;">63841.496</td>
+<td style="text-align: right;">63841.497</td>
 <td style="text-align: right;">252.669</td>
 <td style="text-align: right;">-0.70</td>
 </tr>
@@ -1130,7 +1182,7 @@ spkr: old &amp; prec: maintain &amp; load: yes    23.6073      15.8058   1.49   
 <td style="text-align: left;">ρ</td>
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">(Intercept), prec: maintain</td>
-<td style="text-align: right;">-0.89308</td>
+<td style="text-align: right;">-0.893081</td>
 <td style="text-align: right;">-0.457084</td>
 </tr>
 <tr class="even">
@@ -1138,7 +1190,7 @@ spkr: old &amp; prec: maintain &amp; load: yes    23.6073      15.8058   1.49   
 <td style="text-align: left;">σ</td>
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">235.921</td>
+<td style="text-align: right;">235.922</td>
 <td style="text-align: right;">364.717</td>
 </tr>
 <tr class="odd">
@@ -1147,7 +1199,7 @@ spkr: old &amp; prec: maintain &amp; load: yes    23.6073      15.8058   1.49   
 <td style="text-align: left;">residual</td>
 <td style="text-align: left; font-style: italic;">missing</td>
 <td style="text-align: right;">657.736</td>
-<td style="text-align: right;">703.06</td>
+<td style="text-align: right;">703.054</td>
 </tr>
 </tbody>
 </table>
@@ -1329,8 +1381,8 @@ spkr: old &amp; prec: maintain &amp; load: yes    23.6073      15.8058   1.49   
 <td style="text-align: left;">σ</td>
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">prec: maintain</td>
-<td style="text-align: right;">177.437</td>
-<td style="text-align: right;">318.846</td>
+<td style="text-align: right;">177.438</td>
+<td style="text-align: right;">318.854</td>
 </tr>
 <tr class="odd">
 <td class="rowNumber" style="text-align: right; font-weight: bold;">7</td>
@@ -1353,7 +1405,7 @@ spkr: old &amp; prec: maintain &amp; load: yes    23.6073      15.8058   1.49   
 <td style="text-align: left;">σ</td>
 <td style="text-align: left;">residual</td>
 <td style="text-align: left; font-style: italic;">missing</td>
-<td style="text-align: right;">656.917</td>
+<td style="text-align: right;">656.918</td>
 <td style="text-align: right;">701.946</td>
 </tr>
 </tbody>
@@ -1447,12 +1499,12 @@ spkr: old &amp; prec: maintain &amp; load: yes    23.6073      15.8058   1.49   
 <tbody>
 <tr class="odd">
 <td class="rowNumber" style="text-align: right; font-weight: bold;">1</td>
-<td style="text-align: right;">131.655</td>
+<td style="text-align: right;">130.125</td>
 <td style="text-align: right;">29</td>
-<td style="text-align: right;">28637.1</td>
-<td style="text-align: right;">28695.1</td>
-<td style="text-align: right;">28854.3</td>
-<td style="text-align: right;">28696.1</td>
+<td style="text-align: right;">28638.0</td>
+<td style="text-align: right;">28696.0</td>
+<td style="text-align: right;">28855.2</td>
+<td style="text-align: right;">28697.0</td>
 </tr>
 <tr class="even">
 <td class="rowNumber" style="text-align: right; font-weight: bold;">2</td>
@@ -1492,7 +1544,7 @@ spkr: old &amp; prec: maintain &amp; load: yes    23.6073      15.8058   1.49   
 
 </section>
 
-</main> <!-- /main -->
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -1513,6 +1565,121 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
   const icon = "";
   const anchorJS = new window.AnchorJS();
   anchorJS.options = {
@@ -1728,13 +1895,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./kkl15.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">RePsychLing Kliegl, Kuschela, &amp; Laubrock (2015)</span>
+      <a href="./kb07.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Bootstrapping a fitted model</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./contrasts_fggk21.html" class="pagination-link">
-        <span class="nav-page-text">Mixed Models Tutorial: Contrast Coding</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./AoGPlots.html" class="pagination-link">
+        <span class="nav-page-text">Creating multi-panel plots</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
