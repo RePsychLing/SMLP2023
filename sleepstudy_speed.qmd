@@ -3,29 +3,29 @@ title: "The sleepstudy: Speed - for a change ..."
 jupyter: julia-1.9
 ---
 
-## Background
+# Background
 
 @Belenky2003 reported effects of sleep deprivation across a 14-day study of 30-to-40-year old men and women holding commercial vehicle driving licenses. Their analyses are based on a subset of tasks and ratings from very large and comprehensive test and questionnaire battery [@Balkin2000].
 
 Initially 66 subjects were assigned to one of four time-in-bed (TIB) groups with 9 hours  (22:00-07:00) of sleep augmentation or 7 hours (24:00-07:00), 5 hours (02:00-07:00), and 3 hours (04:00-0:00) of sleep restrictions per night, respectively. The final sample comprised 56 subjects. The Psychomotor Vigilance Test (PVT) measures simple reaction time to a visual stimulus, presented approximately 10 times ⁄ minute (interstimulus interval varied from 2 to 10 s in 2-s increments) for 10 min and implemented in a thumb-operated, hand-held device [@Dinges1985].
 
-**Design**
+## Design
 
 The study comprised 2 training days (T1, T2), one day with baseline measures (B), seven days with sleep deprivation (E1 to E7), and four recovery days (R1 to R4). T1 and T2 were devoted to training on the performance tests and familiarization with study procedures. PVT baseline testing commenced on the morning of the third day (B) and testing continued for the duration of the study (E1–E7, R1–R3; no measures were taken on R4). Bed times during T, B, and R days were 8 hours (23:00-07:00).
 
-**Test schedule within days**
+## Test schedule within days
 
 The PVT (along with the Stanford Sleepiness Scale) was administered as a battery four times per day (09:00, 12:00, 15:00, and 21:00 h); the battery included other tests not reported here [see @Balkin2000]. The sleep latency test was administered at 09:40 and 15:30 h for all groups. Subjects in the 3- and 5-h TIB groups performed an additional battery at 00:00 h and 02:00 h to occupy their additional time awake. The PVT and SSS were administered in this battery; however, as data from the 00:00 and 02:00 h sessions were not common to all TIB groups, these data were not included in the statistical analyses reported in the paper.
 
-**Statistical analyses**
+## Statistical analyses
 
 The authors analyzed response speed, that is (1/RT)*1000 -- completely warranted according to a Box-Cox check of the current data -- with mixed-model ANOVAs using group as between- and day as within-subject factors. The ANOVA was followed up with simple tests of the design effects implemented over days for each of the four groups.
 
-**Current data**
+## Current data
 
 The current data distributed with the _RData_ collection is attributed to the 3-hour TIB group, but the means do not agree at all with those reported for this group in [@Belenky2003 Figure 3] where the 3-hour TIB group is also based on only 13 (not 18) subjects. Specifically, the current data show a much smaller slow-down of response speed across E1 to E7 and do not reflect the recovery during R1 to R3. The currrent data also cover only 10 not 11 days, but it looks like only R3 is missing. The closest match of the current means was with the average of the 3-hour and 7-hour TIB groups; if only males were included, this would amount to 18 subjects. (This conjecture is based only on visual inspection of graphs.)
 
-## Setup
+# Setup
 
 First we attach the various packages needed, define a few helper functions, read the data, and get everything in the desired shape.
 
@@ -44,7 +44,7 @@ CairoMakie.activate!(; type="svg")
 ProgressMeter.ijulia_behavior(:clear);
 ```
 
-## Preprocessing
+# Preprocessing
 
 The `sleepstudy` data are one of the datasets available with recent versions of the `MixedModels` package. We carry out some preprocessing to have the dataframe in the desired shape:
 
@@ -66,7 +66,7 @@ df = gdf.parent
 describe(df)
 ```
 
-## Estimates for pooled data
+# Estimates for pooled data
 
 In the first analysis we ignore the dependency of observations due to repeated measures from the same subjects. We pool all the data and estimate the regression of 180 speed scores on the nine days of the experiment.
 
@@ -74,11 +74,11 @@ In the first analysis we ignore the dependency of observations due to repeated m
 pooledcoef = simplelinreg(df.day, df.speed)  # produces a Tuple
 ```
 
-## Within-subject effects
+# Within-subject effects
 
 In the second analysis we estimate coefficients for each `Subj` without regard of the information available from the complete set of data. We do not "borrow strength" to adjust for differences due to between-`Subj` variability and due to being far from the population mean.
 
-### Within-subject simple regressions
+## Within-subject simple regressions
 
 Applying `combine` to a grouped data frame like `gdf` produces a `DataFrame` with a row for each group.
 The permutation `ord` provides an ordering for the groups by increasing intercept (predicted response at day 0).
@@ -107,7 +107,7 @@ let
 end
 ```
 
-## Basic LMM
+# Basic LMM
 
 ```{julia}
 contrasts = Dict(:Subj => Grouping())
@@ -123,7 +123,7 @@ The random effects represent shifts from the typical behavior for each subject.T
 
 The within-subject correlation of the random effects for intercept and slope is small, -0.18, indicating that a simpler model with a correlation parameter (CP) forced to/ assumed to be zero may be sufficient.
 
-## No correlation parameter: zcp LMM
+# No correlation parameter: zcp LMM
 
 The `zerocorr` function applied to a random-effects term estimates one parameter less than LMM `m1`-- the CP is now fixed to zero.
 
@@ -158,13 +158,13 @@ let
 end
 ```
 
-## Conditional modes of the random effects
+# Conditional modes of the random effects
 
 The third set of estimates are their conditional modes.
 They represent a compromise between their own data and the model parameters. When distributional assumptions hold, predictions based on these estimates are more accurate than either the pooled or the within-subject estimates.
 Here we "borrow strength" to improve the accuracy of prediction.
 
-## Caterpillar plots (effect profiles)
+# Caterpillar plots (effect profiles)
 
 ```{julia}
 #| code-fold: true
@@ -173,7 +173,7 @@ Here we "borrow strength" to improve the accuracy of prediction.
 caterpillar(m2)
 ```
 
-## Shrinkage plot
+# Shrinkage plot
 
 ```{julia}
 #| code-fold: true
