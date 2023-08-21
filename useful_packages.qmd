@@ -32,6 +32,8 @@ Unlike in R, DataFrames are not part of the base language, nor the standard libr
 
 DataFrame.jl's mini language can be a bit daunting, if you're used to manipulations in the style of base R or the tidyverse. For that, there are several options; recently, we'e had particularly nice experiences with [DataFrameMacros.jl](https://github.com/jkrumbiegel/DataFrameMacros.jl) and [Chain.jl](https://github.com/jkrumbiegel/Chain.jl) for a convenient syntax to connect or "pipe" together successive operations. It's your choice whether and which of these add-ons you want to use! Phillip tends to write his code using raw DataFrames.jl, but Doug really enjoys DataFrameMacros.jl.
 
+There's also [Tidier.jl](https://tidierorg.github.io/Tidier.jl/stable/), which is "a 100% Julia implementation of the R tidyverse mini-language in Julia". Phillip and Doug aren't huge fans of this package because it encourages patterns from R that they consider problematic, but each user can choose their own path. :smile:
+
 # Regression
 
 Unlike in R, neither formula processing nor basic regression are part of the base language or the standard library.
