@@ -25,7 +25,7 @@ Provide a short alias for `AlgebraOfGraphics`.
 const AOG = AlgebraOfGraphics;
 ```
 
-## Data set and model
+# Data set and model
 
 The `kb07` data [@Kronmueller2007] are one of the datasets provided by the `MixedModels` package.
 
@@ -103,7 +103,7 @@ MixedModels.likelihoodratiotest(kbm02, kbm01)
 
 The p-value of approximately 14% leads us to prefer the simpler model, `kbm02`, to the more complex, `kbm01`.
 
-## A bootstrap sample
+# A bootstrap sample
 
 Create a bootstrap sample of a few thousand parameter estimates from the reduced model.
 The pseudo-random number generator is initialized to a fixed value for reproducibility.
