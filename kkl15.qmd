@@ -1,6 +1,7 @@
 ---
 title: 'RePsychLing Kliegl, Kuschela, & Laubrock (2015)'
 jupyter: julia-1.9
+author: "Reinhold Kliegl"
 ---
 
 # Background
