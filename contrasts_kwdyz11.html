@@ -394,7 +394,7 @@ div.csl-indent {
 
 </header>
 
-<div class="cell" data-execution_count="2">
+<div class="cell" data-execution_count="1">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Arrow</span></span>
@@ -436,7 +436,7 @@ div.csl-indent {
 </section>
 <section id="sec-preprocessing" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Preprocessing</h1>
-<div class="cell" data-execution_count="3">
+<div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dat1 <span class="op">=</span> <span class="pp">@chain</span> <span class="fu">dataset</span>(<span class="op">:</span>kwdyz11) <span class="cf">begin</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  DataFrame</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select!</span>(<span class="op">:</span>subj <span class="op">=&gt;</span> <span class="op">:</span>Subj, <span class="op">:</span>tar <span class="op">=&gt;</span> <span class="op">:</span>CTR, <span class="op">:</span>rt)</span>
@@ -511,7 +511,7 @@ div.csl-indent {
 <section id="sec-contrasts" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Julia contrast options</h1>
 <p>We use the same formula for all analyses</p>
-<div class="cell" data-execution_count="4">
+<div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>form <span class="op">=</span> <span class="pp">@formula</span> rt <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> CTR <span class="op">+</span> (<span class="fl">1</span> <span class="op">+</span> CTR <span class="op">|</span> Subj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <pre><code>FormulaTerm
@@ -524,7 +524,7 @@ Predictors:
 </div>
 </div>
 <p>This is the default order of factor levels.</p>
-<div class="cell" data-execution_count="5">
+<div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>StatsModels.<span class="fu">levels</span>(dat1.CTR)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>4-element Vector{String}:
@@ -542,7 +542,7 @@ Predictors:
 <section id="seqdiffcoding" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="seqdiffcoding"><span class="header-section-number">4.1</span> SeqDiffCoding</h2>
 <p>The <code>SeqDiffCoding</code> contrast corresponds to <code>MASS::contr.sdif()</code> in R. The assignment of random factors such as <code>Subj</code> to <code>Grouping()</code> is necessary when the sample size is very large. We recommend to include it always, but in this tutorial we do so only in the first example.</p>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>form <span class="op">=</span> <span class="pp">@formula</span> rt <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> CTR <span class="op">+</span> (<span class="fl">1</span> <span class="op">+</span> CTR <span class="op">|</span> Subj)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>levels <span class="op">=</span> [<span class="st">"val"</span>, <span class="st">"sod"</span>, <span class="st">"dos"</span>, <span class="st">"dod"</span>]</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>m1 <span class="op">=</span> <span class="kw">let</span></span>
@@ -553,8 +553,8 @@ Predictors:
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(MixedModel, form, dat1; contrasts)</span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Minimizing 202   Time: 0:00:00 ( 1.58 ms/it)
-  objective:  325809.5493487461</code></pre>
+<pre><code>Minimizing 206   Time: 0:00:00 ( 1.63 ms/it)
+  objective:  325809.5493500654</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <table class="table table-sm table-striped small">
@@ -572,18 +572,18 @@ Predictors:
 <tr class="odd">
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">389.7336</td>
-<td style="text-align: right;">7.0914</td>
+<td style="text-align: right;">7.0918</td>
 <td style="text-align: right;">54.96</td>
 <td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">55.2001</td>
+<td style="text-align: right;">55.2039</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: sod</td>
 <td style="text-align: right;">33.7817</td>
-<td style="text-align: right;">3.2874</td>
+<td style="text-align: right;">3.2875</td>
 <td style="text-align: right;">10.28</td>
 <td style="text-align: right;">&lt;1e-24</td>
-<td style="text-align: right;">23.2485</td>
+<td style="text-align: right;">23.2497</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: dos</td>
@@ -591,7 +591,7 @@ Predictors:
 <td style="text-align: right;">2.3056</td>
 <td style="text-align: right;">6.07</td>
 <td style="text-align: right;">&lt;1e-08</td>
-<td style="text-align: right;">10.7520</td>
+<td style="text-align: right;">10.7517</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: dod</td>
@@ -599,7 +599,7 @@ Predictors:
 <td style="text-align: right;">2.2142</td>
 <td style="text-align: right;">-1.24</td>
 <td style="text-align: right;">0.2147</td>
-<td style="text-align: right;">9.5093</td>
+<td style="text-align: right;">9.5089</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Residual</td>
@@ -617,7 +617,7 @@ Predictors:
 <section id="hypothesiscoding" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="hypothesiscoding"><span class="header-section-number">4.2</span> HypothesisCoding</h2>
 <p><code>HypothesisCoding</code> is the most general option available. We can implement all “canned” contrasts ourselves. The next example reproduces the test statistcs from <code>SeqDiffCoding</code> - with a minor modification illustrating the flexibility of going beyond the default version.</p>
-<div class="cell" data-execution_count="7">
+<div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>m1b <span class="op">=</span> <span class="kw">let</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  contrasts <span class="op">=</span> <span class="fu">Dict</span>(</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>CTR <span class="op">=&gt;</span> <span class="fu">HypothesisCoding</span>(</span>
@@ -648,34 +648,34 @@ Predictors:
 <tr class="odd">
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">389.7336</td>
-<td style="text-align: right;">7.0910</td>
+<td style="text-align: right;">7.0914</td>
 <td style="text-align: right;">54.96</td>
 <td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">55.1974</td>
+<td style="text-align: right;">55.2002</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: spt</td>
 <td style="text-align: right;">33.7817</td>
-<td style="text-align: right;">3.2869</td>
+<td style="text-align: right;">3.2873</td>
 <td style="text-align: right;">10.28</td>
 <td style="text-align: right;">&lt;1e-24</td>
-<td style="text-align: right;">23.2445</td>
+<td style="text-align: right;">23.2477</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: obj</td>
 <td style="text-align: right;">13.9852</td>
-<td style="text-align: right;">2.3060</td>
-<td style="text-align: right;">6.06</td>
+<td style="text-align: right;">2.3059</td>
+<td style="text-align: right;">6.07</td>
 <td style="text-align: right;">&lt;1e-08</td>
-<td style="text-align: right;">10.7572</td>
+<td style="text-align: right;">10.7559</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: grv</td>
 <td style="text-align: right;">2.7469</td>
-<td style="text-align: right;">2.2147</td>
+<td style="text-align: right;">2.2144</td>
 <td style="text-align: right;">1.24</td>
-<td style="text-align: right;">0.2149</td>
-<td style="text-align: right;">9.5161</td>
+<td style="text-align: right;">0.2148</td>
+<td style="text-align: right;">9.5118</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Residual</td>
@@ -694,7 +694,7 @@ Predictors:
 <section id="dummycoding" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="dummycoding"><span class="header-section-number">4.3</span> DummyCoding</h2>
 <p>Thi contrast corresponds to <code>contr.treatment()</code> in R</p>
-<div class="cell" data-execution_count="8">
+<div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>m2 <span class="op">=</span> <span class="kw">let</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  contrasts <span class="op">=</span> <span class="fu">Dict</span>(<span class="op">:</span>CTR <span class="op">=&gt;</span> <span class="fu">DummyCoding</span>(; base<span class="op">=</span><span class="st">"val"</span>))</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(MixedModel, form, dat1; contrasts)</span>
@@ -715,34 +715,34 @@ Predictors:
 <tr class="odd">
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">358.0914</td>
-<td style="text-align: right;">6.1516</td>
-<td style="text-align: right;">58.21</td>
+<td style="text-align: right;">6.1535</td>
+<td style="text-align: right;">58.19</td>
 <td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">47.8919</td>
+<td style="text-align: right;">47.9065</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: dod</td>
 <td style="text-align: right;">45.0200</td>
-<td style="text-align: right;">4.3644</td>
+<td style="text-align: right;">4.3634</td>
 <td style="text-align: right;">10.32</td>
 <td style="text-align: right;">&lt;1e-24</td>
-<td style="text-align: right;">32.2974</td>
+<td style="text-align: right;">32.2899</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: dos</td>
 <td style="text-align: right;">47.7669</td>
-<td style="text-align: right;">3.5573</td>
+<td style="text-align: right;">3.5564</td>
 <td style="text-align: right;">13.43</td>
 <td style="text-align: right;">&lt;1e-40</td>
-<td style="text-align: right;">25.5426</td>
+<td style="text-align: right;">25.5354</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: sod</td>
-<td style="text-align: right;">33.7818</td>
-<td style="text-align: right;">3.2886</td>
-<td style="text-align: right;">10.27</td>
+<td style="text-align: right;">33.7817</td>
+<td style="text-align: right;">3.2873</td>
+<td style="text-align: right;">10.28</td>
 <td style="text-align: right;">&lt;1e-24</td>
-<td style="text-align: right;">23.2586</td>
+<td style="text-align: right;">23.2479</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Residual</td>
@@ -761,7 +761,7 @@ Predictors:
 <section id="ychycaeitcoding" class="level2" data-number="4.4">
 <h2 data-number="4.4" class="anchored" data-anchor-id="ychycaeitcoding"><span class="header-section-number">4.4</span> YchycaeitCoding</h2>
 <p>The contrasts returned by <code>DummyCoding</code> may be exactly what we want. Can’t we have them, but also have the intercept estimate the GM, rather than the mean of the base level? Yes, we can! We call this “You can have your cake and it eat, too”-Coding (YchycaeitCoding). And we use <code>HpothesisCoding</code> to achieve this outcome.</p>
-<div class="cell" data-execution_count="9">
+<div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>m2b <span class="op">=</span> <span class="kw">let</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  contrasts <span class="op">=</span> <span class="fu">Dict</span>(</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>CTR <span class="op">=&gt;</span> <span class="fu">HypothesisCoding</span>(</span>
@@ -791,39 +791,39 @@ Predictors:
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">389.7335</td>
-<td style="text-align: right;">7.0691</td>
-<td style="text-align: right;">55.13</td>
+<td style="text-align: right;">389.7336</td>
+<td style="text-align: right;">7.0876</td>
+<td style="text-align: right;">54.99</td>
 <td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">55.0256</td>
+<td style="text-align: right;">55.1708</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: sod</td>
-<td style="text-align: right;">33.7816</td>
-<td style="text-align: right;">3.2802</td>
-<td style="text-align: right;">10.30</td>
+<td style="text-align: right;">33.7818</td>
+<td style="text-align: right;">3.2874</td>
+<td style="text-align: right;">10.28</td>
 <td style="text-align: right;">&lt;1e-24</td>
-<td style="text-align: right;">23.1865</td>
+<td style="text-align: right;">23.2485</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: dos</td>
 <td style="text-align: right;">47.7669</td>
-<td style="text-align: right;">3.5513</td>
-<td style="text-align: right;">13.45</td>
+<td style="text-align: right;">3.5567</td>
+<td style="text-align: right;">13.43</td>
 <td style="text-align: right;">&lt;1e-40</td>
-<td style="text-align: right;">25.4919</td>
+<td style="text-align: right;">25.5374</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: dod</td>
-<td style="text-align: right;">45.0199</td>
-<td style="text-align: right;">4.3542</td>
-<td style="text-align: right;">10.34</td>
+<td style="text-align: right;">45.0200</td>
+<td style="text-align: right;">4.3642</td>
+<td style="text-align: right;">10.32</td>
 <td style="text-align: right;">&lt;1e-24</td>
-<td style="text-align: right;">32.2138</td>
+<td style="text-align: right;">32.2966</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Residual</td>
-<td style="text-align: right;">69.8355</td>
+<td style="text-align: right;">69.8349</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -838,7 +838,7 @@ Predictors:
 <section id="effectscoding" class="level2" data-number="4.5">
 <h2 data-number="4.5" class="anchored" data-anchor-id="effectscoding"><span class="header-section-number">4.5</span> EffectsCoding</h2>
 <p>This contrast corresponds almost to <code>contr.sum()</code> in R.</p>
-<div class="cell" data-execution_count="10">
+<div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>m3 <span class="op">=</span> <span class="kw">let</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  contrasts <span class="op">=</span> <span class="fu">Dict</span>(<span class="op">:</span>CTR <span class="op">=&gt;</span> <span class="fu">EffectsCoding</span>(; base<span class="op">=</span><span class="st">"dod"</span>))</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(MixedModel, form, dat1; contrasts)</span>
@@ -859,34 +859,34 @@ Predictors:
 <tr class="odd">
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">389.7336</td>
-<td style="text-align: right;">7.0908</td>
-<td style="text-align: right;">54.96</td>
+<td style="text-align: right;">7.0919</td>
+<td style="text-align: right;">54.95</td>
 <td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">55.1953</td>
+<td style="text-align: right;">55.2042</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: dos</td>
 <td style="text-align: right;">16.1248</td>
-<td style="text-align: right;">1.4403</td>
-<td style="text-align: right;">11.20</td>
+<td style="text-align: right;">1.4404</td>
+<td style="text-align: right;">11.19</td>
 <td style="text-align: right;">&lt;1e-28</td>
-<td style="text-align: right;">7.3308</td>
+<td style="text-align: right;">7.3315</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: sod</td>
 <td style="text-align: right;">2.1396</td>
-<td style="text-align: right;">1.3338</td>
+<td style="text-align: right;">1.3339</td>
 <td style="text-align: right;">1.60</td>
 <td style="text-align: right;">0.1087</td>
-<td style="text-align: right;">6.0080</td>
+<td style="text-align: right;">6.0087</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: val</td>
 <td style="text-align: right;">-31.6422</td>
-<td style="text-align: right;">2.6424</td>
-<td style="text-align: right;">-11.97</td>
+<td style="text-align: right;">2.6421</td>
+<td style="text-align: right;">-11.98</td>
 <td style="text-align: right;">&lt;1e-32</td>
-<td style="text-align: right;">19.9512</td>
+<td style="text-align: right;">19.9488</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Residual</td>
@@ -905,7 +905,7 @@ Predictors:
 <section id="helmertcoding" class="level2" data-number="4.6">
 <h2 data-number="4.6" class="anchored" data-anchor-id="helmertcoding"><span class="header-section-number">4.6</span> HelmertCoding</h2>
 <p><code>HelmertCoding</code> codes each level as the difference from the average of the lower levels. With the default order of <code>CTR</code> levels we get the following test statistics. These contrasts are othogonal.</p>
-<div class="cell" data-execution_count="11">
+<div class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>m4 <span class="op">=</span> <span class="kw">let</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  contrasts <span class="op">=</span> <span class="fu">Dict</span>(<span class="op">:</span>CTR <span class="op">=&gt;</span> <span class="fu">HelmertCoding</span>())</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(MixedModel, form, dat1; contrasts)</span>
@@ -926,18 +926,18 @@ Predictors:
 <tr class="odd">
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">389.7336</td>
-<td style="text-align: right;">7.0931</td>
+<td style="text-align: right;">7.0919</td>
 <td style="text-align: right;">54.95</td>
 <td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">55.2134</td>
+<td style="text-align: right;">55.2044</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: dos</td>
 <td style="text-align: right;">1.3735</td>
 <td style="text-align: right;">1.1071</td>
 <td style="text-align: right;">1.24</td>
-<td style="text-align: right;">0.2147</td>
-<td style="text-align: right;">4.7544</td>
+<td style="text-align: right;">0.2148</td>
+<td style="text-align: right;">4.7550</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: sod</td>
@@ -950,10 +950,10 @@ Predictors:
 <tr class="even">
 <td style="text-align: left;">CTR: val</td>
 <td style="text-align: right;">-10.5474</td>
-<td style="text-align: right;">0.8809</td>
-<td style="text-align: right;">-11.97</td>
+<td style="text-align: right;">0.8808</td>
+<td style="text-align: right;">-11.98</td>
 <td style="text-align: right;">&lt;1e-32</td>
-<td style="text-align: right;">6.6508</td>
+<td style="text-align: right;">6.6502</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Residual</td>
@@ -974,7 +974,7 @@ Predictors:
 <section id="reverse-helmertcoding" class="level2" data-number="4.7">
 <h2 data-number="4.7" class="anchored" data-anchor-id="reverse-helmertcoding"><span class="header-section-number">4.7</span> Reverse HelmertCoding</h2>
 <p><code>Reverse HelmertCoding</code> codes each level as the difference from the average of the higher levels. To estimate these effects we simply reverse the order of factor levels. Of course, the contrasts are also orthogonal.</p>
-<div class="cell" data-execution_count="12">
+<div class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>m4b <span class="op">=</span> <span class="kw">let</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  levels <span class="op">=</span> <span class="fu">reverse</span>(StatsModels.<span class="fu">levels</span>(dat1.CTR))</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  contrasts <span class="op">=</span> <span class="fu">Dict</span>(<span class="op">:</span>CTR <span class="op">=&gt;</span> <span class="fu">HelmertCoding</span>(; levels))</span>
@@ -996,18 +996,18 @@ Predictors:
 <tr class="odd">
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">389.7336</td>
-<td style="text-align: right;">7.0931</td>
+<td style="text-align: right;">7.0919</td>
 <td style="text-align: right;">54.95</td>
 <td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">55.2134</td>
+<td style="text-align: right;">55.2044</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: dos</td>
 <td style="text-align: right;">1.3735</td>
 <td style="text-align: right;">1.1071</td>
 <td style="text-align: right;">1.24</td>
-<td style="text-align: right;">0.2147</td>
-<td style="text-align: right;">4.7544</td>
+<td style="text-align: right;">0.2148</td>
+<td style="text-align: right;">4.7550</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: sod</td>
@@ -1020,10 +1020,10 @@ Predictors:
 <tr class="even">
 <td style="text-align: left;">CTR: val</td>
 <td style="text-align: right;">-10.5474</td>
-<td style="text-align: right;">0.8809</td>
-<td style="text-align: right;">-11.97</td>
+<td style="text-align: right;">0.8808</td>
+<td style="text-align: right;">-11.98</td>
 <td style="text-align: right;">&lt;1e-32</td>
-<td style="text-align: right;">6.6508</td>
+<td style="text-align: right;">6.6502</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Residual</td>
@@ -1047,7 +1047,7 @@ Predictors:
 <section id="a2-x-b2" class="level3" data-number="4.8.1">
 <h3 data-number="4.8.1" class="anchored" data-anchor-id="a2-x-b2"><span class="header-section-number">4.8.1</span> A(2) x B(2)</h3>
 <p>An A(2) x B(2) design can be recast as an F(4) design with the levels (A1-B1, A1-B2, A2-B1, A2-B2). The following contrast specifiction returns estimates for the main effect of A, the main effect of B, and the interaction of A and B. In a figure With A on the x-axis and the levels of B shown as two lines, the interaction tests the null hypothesis that the two lines are parallel. A positive coefficient implies overadditivity (diverging lines toward the right) and a negative coefficient underadditivity (converging lines).</p>
-<div class="cell" data-execution_count="13">
+<div class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>m5 <span class="op">=</span> <span class="kw">let</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  contrasts <span class="op">=</span> <span class="fu">Dict</span>(</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>CTR <span class="op">=&gt;</span> <span class="fu">HypothesisCoding</span>(</span>
@@ -1078,34 +1078,34 @@ Predictors:
 <tr class="odd">
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">389.7336</td>
-<td style="text-align: right;">7.0912</td>
+<td style="text-align: right;">7.0914</td>
 <td style="text-align: right;">54.96</td>
 <td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">55.1986</td>
+<td style="text-align: right;">55.2001</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: A</td>
 <td style="text-align: right;">59.0052</td>
-<td style="text-align: right;">5.1827</td>
-<td style="text-align: right;">11.38</td>
+<td style="text-align: right;">5.1825</td>
+<td style="text-align: right;">11.39</td>
 <td style="text-align: right;">&lt;1e-29</td>
-<td style="text-align: right;">36.2091</td>
+<td style="text-align: right;">36.2073</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: B</td>
 <td style="text-align: right;">31.0348</td>
-<td style="text-align: right;">4.6750</td>
+<td style="text-align: right;">4.6749</td>
 <td style="text-align: right;">6.64</td>
 <td style="text-align: right;">&lt;1e-10</td>
-<td style="text-align: right;">31.7133</td>
+<td style="text-align: right;">31.7124</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: AxB</td>
 <td style="text-align: right;">-36.5287</td>
-<td style="text-align: right;">3.0927</td>
+<td style="text-align: right;">3.0928</td>
 <td style="text-align: right;">-11.81</td>
 <td style="text-align: right;">&lt;1e-31</td>
-<td style="text-align: right;">16.0046</td>
+<td style="text-align: right;">16.0057</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Residual</td>
@@ -1142,7 +1142,7 @@ Predictors:
 <h2 data-number="4.9" class="anchored" data-anchor-id="nested-coding"><span class="header-section-number">4.9</span> Nested coding</h2>
 <p>Nested contrasts are often specified as follow up as post-hoc tests for ANOVA interactions. They are orthogonal. We specify them with <code>HypothesisCoding</code>.</p>
 <p>An A(2) x B(2) design can be recast as an F(4) design with the levels (A1-B1, A1-B2, A2-B1, A2-B2). The following contrast specifiction returns an estimate for the main effect of A and the effects of B nested in the two levels of A. In a figure With A on the x-axis and the levels of B shown as two lines, the second contrast tests whether A1-B1 is different from A1-B2 and the third contrast tests whether A2-B1 is different from A2-B2.</p>
-<div class="cell" data-execution_count="14">
+<div class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>m8 <span class="op">=</span> <span class="kw">let</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  contrasts <span class="op">=</span> <span class="fu">Dict</span>(</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>CTR <span class="op">=&gt;</span> <span class="fu">HypothesisCoding</span>(</span>
@@ -1173,38 +1173,38 @@ Predictors:
 <tr class="odd">
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">389.7336</td>
-<td style="text-align: right;">7.0908</td>
+<td style="text-align: right;">7.0912</td>
 <td style="text-align: right;">54.96</td>
 <td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">55.1961</td>
+<td style="text-align: right;">55.1986</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: do_so</td>
-<td style="text-align: right;">59.0051</td>
-<td style="text-align: right;">5.1824</td>
+<td style="text-align: right;">59.0052</td>
+<td style="text-align: right;">5.1825</td>
 <td style="text-align: right;">11.39</td>
 <td style="text-align: right;">&lt;1e-29</td>
-<td style="text-align: right;">36.2060</td>
+<td style="text-align: right;">36.2067</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: spt</td>
 <td style="text-align: right;">33.7817</td>
-<td style="text-align: right;">3.2871</td>
+<td style="text-align: right;">3.2874</td>
 <td style="text-align: right;">10.28</td>
 <td style="text-align: right;">&lt;1e-24</td>
-<td style="text-align: right;">23.2462</td>
+<td style="text-align: right;">23.2487</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: grv</td>
-<td style="text-align: right;">2.7470</td>
-<td style="text-align: right;">2.2140</td>
+<td style="text-align: right;">2.7469</td>
+<td style="text-align: right;">2.2145</td>
 <td style="text-align: right;">1.24</td>
-<td style="text-align: right;">0.2147</td>
-<td style="text-align: right;">9.5068</td>
+<td style="text-align: right;">0.2148</td>
+<td style="text-align: right;">9.5133</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Residual</td>
-<td style="text-align: right;">69.8349</td>
+<td style="text-align: right;">69.8348</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -1222,7 +1222,7 @@ Predictors:
 <p>For factors with more than four levels there are many options for specifying orthogonal contrasts as long as one proceeds in a top-down strictly hiearchical fashion.</p>
 <p>Suppose you have a factor with seven levels and let’s ignore shifting colummns. In this case, you have six options for the first contrast, that is 6 vs.&nbsp;1, 5 vs.2 , 4 vs.&nbsp;3, 3 vs.&nbsp;4, 2 vs.&nbsp;5, and 1 vs.&nbsp;6 levels. Then, you specify orthogonal contrasts for partitions with more than 2 elements and so on. That is, you don’t specify a contrast that crosses an earlier partition line.</p>
 <p>In the following example, after an initial 4 vs 3 partitioning of levels, we specify <code>AnovaCoding</code> for the left and <code>HelmertCoding</code> for the right partition.</p>
-<div class="cell" data-execution_count="15">
+<div class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>contrasts <span class="op">=</span> <span class="fu">Dict</span>(</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="op">:</span>CTR <span class="op">=&gt;</span> <span class="fu">HypothesisCoding</span>(</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    [</span>

@@ -385,7 +385,7 @@ div.csl-indent {
 <p>A <em>parametric bootstrap</em> is used with a parametric model, <code>m</code>, that has been fit to data. The procedure is to simulate <code>n</code> response vectors from <code>m</code> using the estimated parameter values and refit <code>m</code> to these responses in turn, accumulating the statistics of interest at each iteration.</p>
 <p>The parameters of a <code>LinearMixedModel</code> object are the fixed-effects parameters, <code>β</code>, the standard deviation, <code>σ</code>, of the per-observation noise, and the covariance parameter, <code>θ</code>, that defines the variance-covariance matrices of the random effects. A technical description of the covariance parameter can be found in the <a href="https://juliastats.org/MixedModels.jl/v4.7.1/optimization/">MixedModels.jl docs</a>. Lisa Schwetlick and Daniel Backhaus have provided a more beginner-friendly description of the covariance parameter in the <a href="https://repsychling.github.io/MixedModelsSim.jl/v0.2.6/simulation_tutorial/">documentation for MixedModelsSim.jl</a>. For today’s purposes – looking at the uncertainty in the estimates from a fitted model – we can simply use values from the fitted model, but we will revisit the parametric bootstrap as a convenient way to simulate new data, potentially with different parameter values, for power analysis.</p>
 <p>For example, a simple linear mixed-effects model for the <code>Dyestuff</code> data in the <a href="http://github.com/lme4/lme4"><code>lme4</code></a> package for <a href="https://www.r-project.org"><code>R</code></a> is fit by</p>
-<div class="cell" data-execution_count="2">
+<div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">AlgebraOfGraphics</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">CairoMakie</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">DataFrames</span></span>
@@ -403,7 +403,7 @@ div.csl-indent {
 <section id="a-model-of-moderate-complexity" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> A model of moderate complexity</h1>
 <p>The <code>kb07</code> data <span class="citation" data-cites="Kronmueller2007">(<a href="#ref-Kronmueller2007" role="doc-biblioref">Kronmüller &amp; Barr, 2007</a>)</span> are one of the datasets provided by the <code>MixedModels</code> package.</p>
-<div class="cell" data-execution_count="3">
+<div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>kb07 <span class="op">=</span> MixedModels.<span class="fu">dataset</span>(<span class="op">:</span>kb07)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>Arrow.Table with 1789 rows, 7 columns, and schema:
@@ -417,7 +417,7 @@ div.csl-indent {
 </div>
 </div>
 <p>Convert the table to a DataFrame for summary.</p>
-<div class="cell" data-execution_count="4">
+<div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>kb07 <span class="op">=</span> <span class="fu">DataFrame</span>(kb07)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(kb07)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
@@ -522,7 +522,7 @@ div.csl-indent {
 </div>
 </div>
 <p>The experimental factors; <code>spkr</code>, <code>prec</code>, and <code>load</code>, are two-level factors.</p>
-<div class="cell" data-execution_count="5">
+<div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>contrasts <span class="op">=</span> <span class="fu">Dict</span>(<span class="op">:</span>spkr <span class="op">=&gt;</span> <span class="fu">EffectsCoding</span>(),</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                 <span class="op">:</span>prec <span class="op">=&gt;</span> <span class="fu">EffectsCoding</span>(),</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                 <span class="op">:</span>load <span class="op">=&gt;</span> <span class="fu">EffectsCoding</span>(),</span>
@@ -540,14 +540,14 @@ div.csl-indent {
 <p>The <code>EffectsCoding</code> contrast is used with these to create a ±1 encoding. Furthermore, <code>Grouping</code> constrasts are assigned to the <code>subj</code> and <code>item</code> factors. This is not a contrast per-se but an indication that these factors will be used as grouping factors for random effects and, therefore, there is no need to create a contrast matrix. For large numbers of levels in a grouping factor, an attempt to create a contrast matrix may cause memory overflow.</p>
 <p>It is not important in these cases but a good practice in any case.</p>
 <p>We can look at an initial fit of moderate complexity:</p>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>form <span class="op">=</span> <span class="pp">@formula</span>(rt_trunc <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> spkr <span class="op">*</span> prec <span class="op">*</span> load <span class="op">+</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                          (<span class="fl">1</span> <span class="op">+</span> spkr <span class="op">+</span> prec <span class="op">+</span> load <span class="op">|</span> subj) <span class="op">+</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                          (<span class="fl">1</span> <span class="op">+</span> spkr <span class="op">+</span> prec <span class="op">+</span> load <span class="op">|</span> item))</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>m0 <span class="op">=</span> <span class="fu">fit</span>(MixedModel, form, kb07; contrasts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Minimizing 934   Time: 0:00:01 ( 1.38 ms/it)
-  objective:  28637.97101024215</code></pre>
+<pre><code>Minimizing 799   Time: 0:00:01 ( 1.91 ms/it)
+  objective:  28637.123623229592</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <table class="table table-sm table-striped small">
@@ -574,79 +574,79 @@ div.csl-indent {
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">2181.6424</td>
-<td style="text-align: right;">77.3512</td>
-<td style="text-align: right;">28.20</td>
+<td style="text-align: right;">2181.6729</td>
+<td style="text-align: right;">77.3136</td>
+<td style="text-align: right;">28.22</td>
 <td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">301.8676</td>
-<td style="text-align: right;">362.4694</td>
+<td style="text-align: right;">301.8062</td>
+<td style="text-align: right;">362.2579</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">spkr: old</td>
-<td style="text-align: right;">67.7496</td>
-<td style="text-align: right;">17.9607</td>
-<td style="text-align: right;">3.77</td>
+<td style="text-align: right;">67.7491</td>
+<td style="text-align: right;">18.2664</td>
+<td style="text-align: right;">3.71</td>
 <td style="text-align: right;">0.0002</td>
-<td style="text-align: right;">33.0524</td>
-<td style="text-align: right;">41.1185</td>
+<td style="text-align: right;">42.3795</td>
+<td style="text-align: right;">40.6807</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">prec: maintain</td>
-<td style="text-align: right;">-333.9200</td>
-<td style="text-align: right;">47.1564</td>
+<td style="text-align: right;">-333.9205</td>
+<td style="text-align: right;">47.1558</td>
 <td style="text-align: right;">-7.08</td>
 <td style="text-align: right;">&lt;1e-11</td>
-<td style="text-align: right;">58.8607</td>
-<td style="text-align: right;">247.3292</td>
+<td style="text-align: right;">61.9630</td>
+<td style="text-align: right;">246.9158</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">load: yes</td>
-<td style="text-align: right;">78.8007</td>
-<td style="text-align: right;">19.7260</td>
-<td style="text-align: right;">3.99</td>
+<td style="text-align: right;">78.7702</td>
+<td style="text-align: right;">19.5298</td>
+<td style="text-align: right;">4.03</td>
 <td style="text-align: right;">&lt;1e-04</td>
-<td style="text-align: right;">66.9505</td>
-<td style="text-align: right;">43.3885</td>
+<td style="text-align: right;">64.9751</td>
+<td style="text-align: right;">42.3890</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">spkr: old &amp; prec: maintain</td>
-<td style="text-align: right;">-21.9960</td>
-<td style="text-align: right;">15.8191</td>
+<td style="text-align: right;">-21.9655</td>
+<td style="text-align: right;">15.8074</td>
 <td style="text-align: right;">-1.39</td>
-<td style="text-align: right;">0.1644</td>
+<td style="text-align: right;">0.1647</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">spkr: old &amp; load: yes</td>
-<td style="text-align: right;">18.3832</td>
-<td style="text-align: right;">15.8191</td>
+<td style="text-align: right;">18.3837</td>
+<td style="text-align: right;">15.8074</td>
 <td style="text-align: right;">1.16</td>
-<td style="text-align: right;">0.2452</td>
+<td style="text-align: right;">0.2448</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">prec: maintain &amp; load: yes</td>
-<td style="text-align: right;">4.5327</td>
-<td style="text-align: right;">15.8191</td>
+<td style="text-align: right;">4.5333</td>
+<td style="text-align: right;">15.8074</td>
 <td style="text-align: right;">0.29</td>
-<td style="text-align: right;">0.7745</td>
+<td style="text-align: right;">0.7743</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">spkr: old &amp; prec: maintain &amp; load: yes</td>
-<td style="text-align: right;">23.6377</td>
-<td style="text-align: right;">15.8191</td>
+<td style="text-align: right;">23.6073</td>
+<td style="text-align: right;">15.8074</td>
 <td style="text-align: right;">1.49</td>
-<td style="text-align: right;">0.1351</td>
+<td style="text-align: right;">0.1353</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Residual</td>
-<td style="text-align: right;">669.0516</td>
+<td style="text-align: right;">668.5542</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -659,7 +659,7 @@ div.csl-indent {
 </div>
 <p>The default display in Quarto uses the <a href="https://juliastats.org/MixedModels.jl/v4.7.1/mime/">pretty MIME show method</a> for the model and omits the estimated correlations of the random effects.</p>
 <p>The <code>VarCorr</code> extractor displays these.</p>
-<div class="cell" data-execution_count="7">
+<div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(m0)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <table class="table table-sm table-striped small">
@@ -687,8 +687,8 @@ div.csl-indent {
 <tr class="odd">
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">91124.0779</td>
-<td style="text-align: right;">301.8676</td>
+<td style="text-align: right;">91087.0055</td>
+<td style="text-align: right;">301.8062</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -696,35 +696,35 @@ div.csl-indent {
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">spkr: old</td>
-<td style="text-align: right;">1092.4628</td>
-<td style="text-align: right;">33.0524</td>
-<td style="text-align: right;">+1.00</td>
+<td style="text-align: right;">1796.0221</td>
+<td style="text-align: right;">42.3795</td>
+<td style="text-align: right;">+0.79</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">prec: maintain</td>
-<td style="text-align: right;">3464.5848</td>
-<td style="text-align: right;">58.8607</td>
-<td style="text-align: right;">-0.62</td>
-<td style="text-align: right;">-0.62</td>
+<td style="text-align: right;">3839.4126</td>
+<td style="text-align: right;">61.9630</td>
+<td style="text-align: right;">-0.59</td>
+<td style="text-align: right;">+0.02</td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">load: yes</td>
-<td style="text-align: right;">4482.3662</td>
-<td style="text-align: right;">66.9505</td>
+<td style="text-align: right;">4221.7638</td>
+<td style="text-align: right;">64.9751</td>
 <td style="text-align: right;">+0.36</td>
-<td style="text-align: right;">+0.36</td>
-<td style="text-align: right;">+0.51</td>
+<td style="text-align: right;">+0.85</td>
+<td style="text-align: right;">+0.54</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">131384.0733</td>
-<td style="text-align: right;">362.4694</td>
+<td style="text-align: right;">131230.7914</td>
+<td style="text-align: right;">362.2579</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -732,35 +732,35 @@ div.csl-indent {
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">spkr: old</td>
-<td style="text-align: right;">1690.7347</td>
-<td style="text-align: right;">41.1185</td>
-<td style="text-align: right;">+0.42</td>
+<td style="text-align: right;">1654.9232</td>
+<td style="text-align: right;">40.6807</td>
+<td style="text-align: right;">+0.44</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">prec: maintain</td>
-<td style="text-align: right;">61171.7458</td>
-<td style="text-align: right;">247.3292</td>
+<td style="text-align: right;">60967.4037</td>
+<td style="text-align: right;">246.9158</td>
 <td style="text-align: right;">-0.69</td>
-<td style="text-align: right;">+0.37</td>
+<td style="text-align: right;">+0.35</td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">load: yes</td>
-<td style="text-align: right;">1882.5594</td>
-<td style="text-align: right;">43.3885</td>
-<td style="text-align: right;">+0.29</td>
-<td style="text-align: right;">+0.14</td>
-<td style="text-align: right;">-0.13</td>
+<td style="text-align: right;">1796.8284</td>
+<td style="text-align: right;">42.3890</td>
+<td style="text-align: right;">+0.32</td>
+<td style="text-align: right;">+0.16</td>
+<td style="text-align: right;">-0.14</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Residual</td>
 <td style="text-align: left;"></td>
-<td style="text-align: right;">447630.0111</td>
-<td style="text-align: right;">669.0516</td>
+<td style="text-align: right;">446964.7062</td>
+<td style="text-align: right;">668.5542</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -770,7 +770,7 @@ div.csl-indent {
 </div>
 </div>
 <p>None of the two-factor or three-factor interaction terms in the fixed-effects are significant. In the random-effects terms only the scalar random effects and the <code>prec</code> random effect for <code>item</code> appear to be warranted, leading to the reduced formula</p>
-<div class="cell" data-execution_count="8">
+<div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># formula f4 from https://doi.org/10.33016/nextjournal.100002</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>form <span class="op">=</span> <span class="pp">@formula</span>(rt_trunc <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> spkr <span class="op">*</span> prec <span class="op">*</span> load <span class="op">+</span> (<span class="fl">1</span> <span class="op">|</span> subj) <span class="op">+</span> (<span class="fl">1</span> <span class="op">+</span> prec <span class="op">|</span> item))</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -883,7 +883,7 @@ div.csl-indent {
 </table>
 </div>
 </div>
-<div class="cell" data-execution_count="9">
+<div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
 <table class="table table-sm table-striped small">
@@ -900,21 +900,21 @@ div.csl-indent {
 <tr class="odd">
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">133026.916</td>
+<td style="text-align: right;">133026.918</td>
 <td style="text-align: right;">364.729</td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">prec: maintain</td>
-<td style="text-align: right;">63841.497</td>
+<td style="text-align: right;">63841.496</td>
 <td style="text-align: right;">252.669</td>
 <td style="text-align: right;">-0.70</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">88870.081</td>
+<td style="text-align: right;">88870.080</td>
 <td style="text-align: right;">298.111</td>
 <td style="text-align: right;"></td>
 </tr>
@@ -930,7 +930,7 @@ div.csl-indent {
 </div>
 </div>
 <p>These two models are nested and can be compared with a likelihood-ratio test.</p>
-<div class="cell" data-execution_count="10">
+<div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>MixedModels.<span class="fu">likelihoodratiotest</span>(m0, m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <table class="table table-sm table-striped small">
@@ -964,10 +964,10 @@ div.csl-indent {
 <tr class="even">
 <td style="text-align: left;">rt_trunc ~ 1 + spkr + prec + load + spkr &amp; prec + spkr &amp; load + prec &amp; load + spkr &amp; prec &amp; load + (1 + spkr + prec + load | subj) + (1 + spkr + prec + load | item)</td>
 <td style="text-align: right;">29</td>
-<td style="text-align: right;">28638</td>
+<td style="text-align: right;">28637</td>
 <td style="text-align: right;">21</td>
 <td style="text-align: right;">16</td>
-<td style="text-align: left;">0.1979</td>
+<td style="text-align: left;">0.1650</td>
 </tr>
 </tbody>
 </table>
@@ -978,7 +978,7 @@ div.csl-indent {
 <section id="bootstrap-basics" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Bootstrap basics</h1>
 <p>To bootstrap the model parameters, first initialize a random number generator then create a bootstrap sample</p>
-<div class="cell" data-execution_count="11">
+<div class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> RNG <span class="op">=</span> <span class="fu">MersenneTwister</span>(<span class="fl">42</span>)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>samp <span class="op">=</span> <span class="fu">parametricbootstrap</span>(RNG, <span class="fl">1_000</span>, m1)</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> <span class="fu">DataFrame</span>(samp.allpars)</span>
@@ -1092,7 +1092,7 @@ div.csl-indent {
 </div>
 <p>Especially for those with a background in <a href="https://www.R-project.org/"><code>R</code></a> or <a href="https://pandas.pydata.org"><code>pandas</code></a>, the simplest way of accessing the parameter estimates in the parametric bootstrap object is to create a <code>DataFrame</code> from the <code>allpars</code> property as shown above.</p>
 <p>We can use <code>subset</code> to subset out relevant rows of a dataframe. A density plot of the estimates of <code>σ</code>, the residual standard deviation, can be created as</p>
-<div class="cell" data-execution_count="12">
+<div class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>σres <span class="op">=</span> <span class="fu">subset</span>(df, <span class="op">:</span><span class="kw">type</span> <span class="op">=&gt;</span> <span class="fu">ByRow</span>(<span class="op">==</span>(<span class="st">"σ"</span>)), <span class="op">:</span>group <span class="op">=&gt;</span> <span class="fu">ByRow</span>(<span class="op">==</span>(<span class="st">"residual"</span>)); skipmissing<span class="op">=</span><span class="cn">true</span>)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>plt <span class="op">=</span> <span class="fu">data</span>(σres) <span class="op">*</span> <span class="fu">mapping</span>(<span class="op">:</span>value) <span class="op">*</span> AoG.<span class="fu">density</span>()</span>
@@ -1102,7 +1102,7 @@ div.csl-indent {
 </div>
 </div>
 <p>A density plot of the estimates of the standard deviation of the random effects is obtained as</p>
-<div class="cell" data-execution_count="13">
+<div class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>σsubjitem <span class="op">=</span> <span class="fu">subset</span>(df, <span class="op">:</span><span class="kw">type</span> <span class="op">=&gt;</span> <span class="fu">ByRow</span>(<span class="op">==</span>(<span class="st">"σ"</span>)), <span class="op">:</span>group <span class="op">=&gt;</span> <span class="fu">ByRow</span>(<span class="op">!=</span>(<span class="st">"residual"</span>)); skipmissing<span class="op">=</span><span class="cn">true</span>)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>plt <span class="op">=</span> <span class="fu">data</span>(σsubjitem) <span class="op">*</span> <span class="fu">mapping</span>(<span class="op">:</span>value; layout<span class="op">=:</span>names, color<span class="op">=:</span>group) <span class="op">*</span> AoG.<span class="fu">density</span>()</span>
@@ -1113,27 +1113,27 @@ div.csl-indent {
 </div>
 <p>The bootstrap sample can be used to generate intervals that cover a certain percentage of the bootstrapped values. We refer to these as “coverage intervals”, similar to a confidence interval. The shortest such intervals, obtained with the <code>shortestcovint</code> extractor, correspond to a highest posterior density interval in Bayesian inference.</p>
 <p>We generate these for all random and fixed effects:</p>
-<div class="cell" data-execution_count="14">
+<div class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shortestcovint</span>(samp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="14">
 <pre><code>13-element Vector{NamedTuple{(:type, :group, :names, :lower, :upper)}}:
- (type = "β", group = missing, names = "(Intercept)", lower = 2028.4504684663298, upper = 2335.498038554574)
- (type = "β", group = missing, names = "spkr: old", lower = 33.90584062173727, upper = 97.10171233641093)
- (type = "β", group = missing, names = "prec: maintain", lower = -420.9759788935399, upper = -246.9263080177159)
- (type = "β", group = missing, names = "load: yes", lower = 49.939730827892056, upper = 108.72371421725681)
- (type = "β", group = missing, names = "spkr: old &amp; prec: maintain", lower = -52.84340405357466, upper = 8.707634564888837)
- (type = "β", group = missing, names = "spkr: old &amp; load: yes", lower = -11.990358739323007, upper = 49.09084416150385)
- (type = "β", group = missing, names = "prec: maintain &amp; load: yes", lower = -25.207700054695998, upper = 36.98654156979304)
- (type = "β", group = missing, names = "spkr: old &amp; prec: maintain &amp; load: yes", lower = -5.885146326787089, upper = 54.77034471400362)
- (type = "σ", group = "item", names = "(Intercept)", lower = 267.2821884396632, upper = 462.8203408672154)
- (type = "σ", group = "item", names = "prec: maintain", lower = 178.1489090587561, upper = 316.2287416548999)
- (type = "ρ", group = "item", names = "(Intercept), prec: maintain", lower = -0.9058618744930751, upper = -0.4813912713068965)
- (type = "σ", group = "subj", names = "(Intercept)", lower = 231.87615523560174, upper = 356.151666966933)
- (type = "σ", group = "residual", names = missing, lower = 653.5649114745823, upper = 700.7662324102956)</code></pre>
+ (type = "β", group = missing, names = "(Intercept)", lower = 2028.4504678827352, upper = 2335.4980383723514)
+ (type = "β", group = missing, names = "spkr: old", lower = 33.9058405165279, upper = 97.1017123381832)
+ (type = "β", group = missing, names = "prec: maintain", lower = -420.9759732561327, upper = -246.92630850502417)
+ (type = "β", group = missing, names = "load: yes", lower = 49.93973144391102, upper = 108.72371421954583)
+ (type = "β", group = missing, names = "spkr: old &amp; prec: maintain", lower = -52.84340404834443, upper = 8.707634088469343)
+ (type = "β", group = missing, names = "spkr: old &amp; load: yes", lower = -11.990358741200508, upper = 49.090842992861646)
+ (type = "β", group = missing, names = "prec: maintain &amp; load: yes", lower = -25.20769992600972, upper = 36.98654052402985)
+ (type = "β", group = missing, names = "spkr: old &amp; prec: maintain &amp; load: yes", lower = -5.88516757104554, upper = 54.77034471490767)
+ (type = "σ", group = "item", names = "(Intercept)", lower = 267.2821922034617, upper = 462.82035004178374)
+ (type = "σ", group = "item", names = "prec: maintain", lower = 178.14890728818813, upper = 316.22872563303554)
+ (type = "ρ", group = "item", names = "(Intercept), prec: maintain", lower = -0.9058573809671474, upper = -0.4814074554466317)
+ (type = "σ", group = "subj", names = "(Intercept)", lower = 231.87600905769338, upper = 356.1555898742369)
+ (type = "σ", group = "residual", names = missing, lower = 653.5649119908876, upper = 700.7662323651775)</code></pre>
 </div>
 </div>
 <p>and convert it to a dataframe:</p>
-<div class="cell" data-execution_count="15">
+<div class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DataFrame</span>(<span class="fu">shortestcovint</span>(samp))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="15">
 <div><div style="float: left;"><span>13×5 DataFrame</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
@@ -1218,7 +1218,7 @@ div.csl-indent {
 <td style="text-align: left;">β</td>
 <td style="text-align: left; font-style: italic;">missing</td>
 <td style="text-align: left;">spkr: old &amp; prec: maintain &amp; load: yes</td>
-<td style="text-align: right;">-5.88515</td>
+<td style="text-align: right;">-5.88517</td>
 <td style="text-align: right;">54.7703</td>
 </tr>
 <tr class="odd">
@@ -1242,8 +1242,8 @@ div.csl-indent {
 <td style="text-align: left;">ρ</td>
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">(Intercept), prec: maintain</td>
-<td style="text-align: right;">-0.905862</td>
-<td style="text-align: right;">-0.481391</td>
+<td style="text-align: right;">-0.905857</td>
+<td style="text-align: right;">-0.481407</td>
 </tr>
 <tr class="even">
 <td class="rowNumber" style="text-align: right; font-weight: bold;">12</td>
@@ -1251,7 +1251,7 @@ div.csl-indent {
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">231.876</td>
-<td style="text-align: right;">356.152</td>
+<td style="text-align: right;">356.156</td>
 </tr>
 <tr class="odd">
 <td class="rowNumber" style="text-align: right; font-weight: bold;">13</td>
@@ -1266,7 +1266,7 @@ div.csl-indent {
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="16">
+<div class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">draw</span>(</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data</span>(samp.β) <span class="op">*</span> <span class="fu">mapping</span>(<span class="op">:</span>β; color<span class="op">=:</span>coefname) <span class="op">*</span> AoG.<span class="fu">density</span>();</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  figure<span class="op">=</span>(; resolution<span class="op">=</span>(<span class="fl">800</span>, <span class="fl">450</span>)),</span>
@@ -1276,14 +1276,14 @@ div.csl-indent {
 </div>
 </div>
 <p>For the fixed effects, MixedModelsMakie provides a convenience interface to plot the combined coverage intervals and density plots</p>
-<div class="cell" data-execution_count="17">
+<div class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ridgeplot</span>(samp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="17">
 <p><img src="bootstrap_files/figure-html/cell-17-output-1.svg" class="img-fluid"></p>
 </div>
 </div>
 <p>Often the intercept will be on a different scale and potentially less interesting, so we can stop it from being included in the plot:</p>
-<div class="cell" data-execution_count="18">
+<div class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ridgeplot</span>(samp; show_intercept<span class="op">=</span><span class="cn">false</span>, xlabel<span class="op">=</span><span class="st">"Bootstrap density and 95%CI"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="18">
 <p><img src="bootstrap_files/figure-html/cell-18-output-1.svg" class="img-fluid"></p>
@@ -1293,7 +1293,7 @@ div.csl-indent {
 <section id="singularity" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Singularity</h1>
 <p>Let’s consider the classic dysetuff dataset:</p>
-<div class="cell" data-execution_count="19">
+<div class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>dyestuff <span class="op">=</span> MixedModels.<span class="fu">dataset</span>(<span class="op">:</span>dyestuff)</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>mdye <span class="op">=</span> <span class="fu">fit</span>(MixedModel, <span class="pp">@formula</span>(yield <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> (<span class="fl">1</span> <span class="op">|</span> batch)), dyestuff)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="19">
@@ -1329,21 +1329,21 @@ div.csl-indent {
 </table>
 </div>
 </div>
-<div class="cell" data-execution_count="20">
+<div class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>sampdye <span class="op">=</span> <span class="fu">parametricbootstrap</span>(<span class="fu">MersenneTwister</span>(<span class="fl">1234321</span>), <span class="fl">10_000</span>, mdye)</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>dfdye <span class="op">=</span> <span class="fu">DataFrame</span>(sampdye.allpars)</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">first</span>(dfdye, <span class="fl">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>┌ Warning: NLopt was roundoff limited
-└ @ MixedModels ~/.julia/packages/MixedModels/RoypT/src/optsummary.jl:180
+└ @ MixedModels ~/.julia/packages/MixedModels/1XFIm/src/optsummary.jl:180
 ┌ Warning: NLopt was roundoff limited
-└ @ MixedModels ~/.julia/packages/MixedModels/RoypT/src/optsummary.jl:180
+└ @ MixedModels ~/.julia/packages/MixedModels/1XFIm/src/optsummary.jl:180
 ┌ Warning: NLopt was roundoff limited
-└ @ MixedModels ~/.julia/packages/MixedModels/RoypT/src/optsummary.jl:180
+└ @ MixedModels ~/.julia/packages/MixedModels/1XFIm/src/optsummary.jl:180
 ┌ Warning: NLopt was roundoff limited
-└ @ MixedModels ~/.julia/packages/MixedModels/RoypT/src/optsummary.jl:180
+└ @ MixedModels ~/.julia/packages/MixedModels/1XFIm/src/optsummary.jl:180
 ┌ Warning: NLopt was roundoff limited
-└ @ MixedModels ~/.julia/packages/MixedModels/RoypT/src/optsummary.jl:180</code></pre>
+└ @ MixedModels ~/.julia/packages/MixedModels/1XFIm/src/optsummary.jl:180</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="20">
 <div><div style="float: left;"><span>10×5 DataFrame</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
@@ -1452,7 +1452,7 @@ div.csl-indent {
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="21">
+<div class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>σbatch <span class="op">=</span> <span class="fu">subset</span>(dfdye, <span class="op">:</span><span class="kw">type</span> <span class="op">=&gt;</span> <span class="fu">ByRow</span>(<span class="op">==</span>(<span class="st">"σ"</span>)), <span class="op">:</span>group <span class="op">=&gt;</span> <span class="fu">ByRow</span>(<span class="op">==</span>(<span class="st">"batch"</span>)); skipmissing<span class="op">=</span><span class="cn">true</span>)</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>plt <span class="op">=</span> <span class="fu">data</span>(σbatch) <span class="op">*</span> <span class="fu">mapping</span>(<span class="op">:</span>value) <span class="op">*</span> AoG.<span class="fu">density</span>()</span>
@@ -1462,7 +1462,7 @@ div.csl-indent {
 </div>
 </div>
 <p>Notice that this density plot has a spike, or mode, at zero. Although this mode appears to be diffuse, this is an artifact of the way that density plots are created. In fact, it is a pulse, as can be seen from a histogram.</p>
-<div class="cell" data-execution_count="22">
+<div class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>plt <span class="op">=</span> <span class="fu">data</span>(σbatch) <span class="op">*</span> <span class="fu">mapping</span>(<span class="op">:</span>value) <span class="op">*</span> AoG.<span class="fu">histogram</span>(;bins<span class="op">=</span><span class="fl">100</span>)</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">draw</span>(plt; axis<span class="op">=</span>(;title<span class="op">=</span><span class="st">"Parametric bootstrap estimates of σ_batch"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="22">
@@ -1471,7 +1471,7 @@ div.csl-indent {
 </div>
 <p>A value of zero for the standard deviation of the random effects is an example of a <em>singular</em> covariance. It is easy to detect the singularity in the case of a scalar random-effects term. However, it is not as straightforward to detect singularity in vector-valued random-effects terms.</p>
 <p>For example, if we bootstrap a model fit to the <code>sleepstudy</code> data</p>
-<div class="cell" data-execution_count="23">
+<div class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>sleepstudy <span class="op">=</span> MixedModels.<span class="fu">dataset</span>(<span class="op">:</span>sleepstudy)</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>msleep <span class="op">=</span> <span class="fu">fit</span>(MixedModel, <span class="pp">@formula</span>(reaction <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> days <span class="op">+</span> (<span class="fl">1</span> <span class="op">+</span> days <span class="op">|</span> subj)),</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>             sleepstudy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1516,7 +1516,7 @@ div.csl-indent {
 </table>
 </div>
 </div>
-<div class="cell" data-execution_count="24">
+<div class="cell" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>sampsleep <span class="op">=</span> <span class="fu">parametricbootstrap</span>(<span class="fu">MersenneTwister</span>(<span class="fl">666</span>), <span class="fl">10_000</span>, msleep);</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>dfsleep <span class="op">=</span> <span class="fu">DataFrame</span>(sampsleep.allpars);</span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">first</span>(dfsleep, <span class="fl">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1612,7 +1612,7 @@ div.csl-indent {
 <td style="text-align: left;">σ</td>
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">20.8064</td>
+<td style="text-align: right;">20.8063</td>
 </tr>
 <tr class="even">
 <td class="rowNumber" style="text-align: right; font-weight: bold;">10</td>
@@ -1620,7 +1620,7 @@ div.csl-indent {
 <td style="text-align: left;">σ</td>
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">days</td>
-<td style="text-align: right;">4.32891</td>
+<td style="text-align: right;">4.32895</td>
 </tr>
 </tbody>
 </table>
@@ -1628,7 +1628,7 @@ div.csl-indent {
 </div>
 </div>
 <p>the singularity can be exhibited as a standard deviation of zero or as a correlation of ±1.</p>
-<div class="cell" data-execution_count="25">
+<div class="cell" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DataFrame</span>(<span class="fu">shortestcovint</span>(sampsleep))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="25">
 <div><div style="float: left;"><span>6×5 DataFrame</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
@@ -1673,7 +1673,7 @@ div.csl-indent {
 <td style="text-align: left;">σ</td>
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">10.6757</td>
+<td style="text-align: right;">10.6756</td>
 <td style="text-align: right;">33.3567</td>
 </tr>
 <tr class="even">
@@ -1706,7 +1706,7 @@ div.csl-indent {
 </div>
 </div>
 <p>A histogram of the estimated correlations from the bootstrap sample has a spike at <code>+1</code>.</p>
-<div class="cell" data-execution_count="26">
+<div class="cell" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>ρs <span class="op">=</span> <span class="fu">subset</span>(dfsleep, <span class="op">:</span><span class="kw">type</span> <span class="op">=&gt;</span> <span class="fu">ByRow</span>(<span class="op">==</span>(<span class="st">"ρ"</span>)), <span class="op">:</span>group <span class="op">=&gt;</span> <span class="fu">ByRow</span>(<span class="op">==</span>(<span class="st">"subj"</span>)); skipmissing<span class="op">=</span><span class="cn">true</span>)</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>plt <span class="op">=</span> <span class="fu">data</span>(ρs) <span class="op">*</span> <span class="fu">mapping</span>(<span class="op">:</span>value) <span class="op">*</span> AoG.<span class="fu">histogram</span>(;bins<span class="op">=</span><span class="fl">100</span>)</span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="fu">draw</span>(plt; axis<span class="op">=</span>(;title<span class="op">=</span><span class="st">"Parametric bootstrap samples of correlation of random effects"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1715,21 +1715,21 @@ div.csl-indent {
 </div>
 </div>
 <p>or, as a count,</p>
-<div class="cell" data-execution_count="27">
+<div class="cell" data-execution_count="26">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(ρs.value <span class="op">.≈</span> <span class="fl">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="27">
-<pre><code>292</code></pre>
+<pre><code>293</code></pre>
 </div>
 </div>
 <p>Close examination of the histogram shows a few values of <code>-1</code>.</p>
-<div class="cell" data-execution_count="28">
+<div class="cell" data-execution_count="27">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(ρs.value <span class="op">.≈</span> <span class="op">-</span><span class="fl">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="28">
 <pre><code>2</code></pre>
 </div>
 </div>
 <p>Furthermore there are even a few cases where the estimate of the standard deviation of the random effect for the intercept is zero.</p>
-<div class="cell" data-execution_count="29">
+<div class="cell" data-execution_count="28">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>σs <span class="op">=</span> <span class="fu">subset</span>(dfsleep, <span class="op">:</span><span class="kw">type</span> <span class="op">=&gt;</span> <span class="fu">ByRow</span>(<span class="op">==</span>(<span class="st">"σ"</span>)), <span class="op">:</span>group <span class="op">=&gt;</span> <span class="fu">ByRow</span>(<span class="op">==</span>(<span class="st">"subj"</span>)), <span class="op">:</span>names <span class="op">=&gt;</span> <span class="fu">ByRow</span>(<span class="op">==</span>(<span class="st">"(Intercept)"</span>)); skipmissing<span class="op">=</span><span class="cn">true</span>)</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(σs.value <span class="op">.≈</span> <span class="fl">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="29">
@@ -1739,10 +1739,10 @@ div.csl-indent {
 <p>There is a general condition to check for singularity of an estimated covariance matrix or matrices in a bootstrap sample. The parameter optimized in the estimation is <code>θ</code>, the relative covariance parameter. Some of the elements of this parameter vector must be non-negative and, when one of these components is approximately zero, one of the covariance matrices will be singular.</p>
 <p>The <code>issingular</code> method for a <code>MixedModel</code> object that tests if a parameter vector <code>θ</code> corresponds to a boundary or singular fit.</p>
 <p>This operation is encapsulated in a method for the <code>issingular</code> function that works on <code>MixedModelBootstrap</code> objects.</p>
-<div class="cell" data-execution_count="30">
+<div class="cell" data-execution_count="29">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(<span class="fu">issingular</span>(sampsleep))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="30">
-<pre><code>301</code></pre>
+<pre><code>302</code></pre>
 </div>
 </div>
 </section>

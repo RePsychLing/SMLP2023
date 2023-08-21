@@ -378,7 +378,7 @@ div.csl-indent {
 </header>
 
 <p>Begin by loading the packages to be used.</p>
-<div class="cell" data-execution_count="2">
+<div class="cell" data-execution_count="1">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">AlgebraOfGraphics</span></span>
@@ -394,13 +394,13 @@ div.csl-indent {
 </details>
 </div>
 <p>Provide a short alias for <code>AlgebraOfGraphics</code>.</p>
-<div class="cell" data-execution_count="3">
+<div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> AOG <span class="op">=</span> AlgebraOfGraphics;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="data-set-and-model" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Data set and model</h1>
 <p>The <code>kb07</code> data <span class="citation" data-cites="Kronmueller2007">(<a href="#ref-Kronmueller2007" role="doc-biblioref">Kronmüller &amp; Barr, 2007</a>)</span> are one of the datasets provided by the <code>MixedModels</code> package.</p>
-<div class="cell" data-execution_count="4">
+<div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>kb07 <span class="op">=</span> MixedModels.<span class="fu">dataset</span>(<span class="op">:</span>kb07)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <pre><code>Arrow.Table with 1789 rows, 7 columns, and schema:
@@ -414,7 +414,7 @@ div.csl-indent {
 </div>
 </div>
 <p>Convert the table to a DataFrame for summary.</p>
-<div class="cell" data-execution_count="5">
+<div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>kb07 <span class="op">=</span> <span class="fu">DataFrame</span>(kb07)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(kb07)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
@@ -520,14 +520,14 @@ div.csl-indent {
 </div>
 <p>The experimental factors; <code>spkr</code>, <code>prec</code>, and <code>load</code>, are two-level factors. The <code>EffectsCoding</code> contrast is used with these to create a <span class="math inline">\(\pm1\)</span> encoding. Furthermore, <code>Grouping</code> constrasts are assigned to the <code>subj</code> and <code>item</code> factors. This is not a contrast per-se but an indication that these factors will be used as grouping factors for random effects and, therefore, there is no need to create a contrast matrix. For large numbers of levels in a grouping factor, an attempt to create a contrast matrix may cause memory overflow.</p>
 <p>It is not important in these cases but a good practice in any case.</p>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>contrasts <span class="op">=</span> <span class="fu">merge</span>(</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Dict</span>(nm <span class="op">=&gt;</span> <span class="fu">EffectsCoding</span>() <span class="cf">for</span> nm <span class="kw">in</span> (<span class="op">:</span>spkr, <span class="op">:</span>prec, <span class="op">:</span>load)),</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Dict</span>(nm <span class="op">=&gt;</span> <span class="fu">Grouping</span>() <span class="cf">for</span> nm <span class="kw">in</span> (<span class="op">:</span>subj, <span class="op">:</span>item)),</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The display of an initial model fit</p>
-<div class="cell" data-execution_count="7">
+<div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>kbm01 <span class="op">=</span> <span class="kw">let</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  form <span class="op">=</span> <span class="pp">@formula</span>(</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    rt_trunc <span class="op">~</span></span>
@@ -539,8 +539,8 @@ div.csl-indent {
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(MixedModel, form, kb07; contrasts)</span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Minimizing 934   Time: 0:00:01 ( 1.46 ms/it)
-  objective:  28637.97101024215</code></pre>
+<pre><code>Minimizing 799   Time: 0:00:01 ( 1.72 ms/it)
+  objective:  28637.123623229592</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <table class="table table-sm table-striped small">
@@ -567,79 +567,79 @@ div.csl-indent {
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">2181.6424</td>
-<td style="text-align: right;">77.3512</td>
-<td style="text-align: right;">28.20</td>
+<td style="text-align: right;">2181.6729</td>
+<td style="text-align: right;">77.3136</td>
+<td style="text-align: right;">28.22</td>
 <td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">301.8676</td>
-<td style="text-align: right;">362.4694</td>
+<td style="text-align: right;">301.8062</td>
+<td style="text-align: right;">362.2579</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">spkr: old</td>
-<td style="text-align: right;">67.7496</td>
-<td style="text-align: right;">17.9607</td>
-<td style="text-align: right;">3.77</td>
+<td style="text-align: right;">67.7491</td>
+<td style="text-align: right;">18.2664</td>
+<td style="text-align: right;">3.71</td>
 <td style="text-align: right;">0.0002</td>
-<td style="text-align: right;">33.0524</td>
-<td style="text-align: right;">41.1185</td>
+<td style="text-align: right;">42.3795</td>
+<td style="text-align: right;">40.6807</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">prec: maintain</td>
-<td style="text-align: right;">-333.9200</td>
-<td style="text-align: right;">47.1564</td>
+<td style="text-align: right;">-333.9205</td>
+<td style="text-align: right;">47.1558</td>
 <td style="text-align: right;">-7.08</td>
 <td style="text-align: right;">&lt;1e-11</td>
-<td style="text-align: right;">58.8607</td>
-<td style="text-align: right;">247.3292</td>
+<td style="text-align: right;">61.9630</td>
+<td style="text-align: right;">246.9158</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">load: yes</td>
-<td style="text-align: right;">78.8007</td>
-<td style="text-align: right;">19.7260</td>
-<td style="text-align: right;">3.99</td>
+<td style="text-align: right;">78.7702</td>
+<td style="text-align: right;">19.5298</td>
+<td style="text-align: right;">4.03</td>
 <td style="text-align: right;">&lt;1e-04</td>
-<td style="text-align: right;">66.9505</td>
-<td style="text-align: right;">43.3885</td>
+<td style="text-align: right;">64.9751</td>
+<td style="text-align: right;">42.3890</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">spkr: old &amp; prec: maintain</td>
-<td style="text-align: right;">-21.9960</td>
-<td style="text-align: right;">15.8191</td>
+<td style="text-align: right;">-21.9655</td>
+<td style="text-align: right;">15.8074</td>
 <td style="text-align: right;">-1.39</td>
-<td style="text-align: right;">0.1644</td>
+<td style="text-align: right;">0.1647</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">spkr: old &amp; load: yes</td>
-<td style="text-align: right;">18.3832</td>
-<td style="text-align: right;">15.8191</td>
+<td style="text-align: right;">18.3837</td>
+<td style="text-align: right;">15.8074</td>
 <td style="text-align: right;">1.16</td>
-<td style="text-align: right;">0.2452</td>
+<td style="text-align: right;">0.2448</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">prec: maintain &amp; load: yes</td>
-<td style="text-align: right;">4.5327</td>
-<td style="text-align: right;">15.8191</td>
+<td style="text-align: right;">4.5333</td>
+<td style="text-align: right;">15.8074</td>
 <td style="text-align: right;">0.29</td>
-<td style="text-align: right;">0.7745</td>
+<td style="text-align: right;">0.7743</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">spkr: old &amp; prec: maintain &amp; load: yes</td>
-<td style="text-align: right;">23.6377</td>
-<td style="text-align: right;">15.8191</td>
+<td style="text-align: right;">23.6073</td>
+<td style="text-align: right;">15.8074</td>
 <td style="text-align: right;">1.49</td>
-<td style="text-align: right;">0.1351</td>
+<td style="text-align: right;">0.1353</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Residual</td>
-<td style="text-align: right;">669.0516</td>
+<td style="text-align: right;">668.5542</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -652,7 +652,7 @@ div.csl-indent {
 </div>
 <p>does not include the estimated correlations of the random effects.</p>
 <p>The <code>VarCorr</code> extractor displays these.</p>
-<div class="cell" data-execution_count="8">
+<div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(kbm01)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <table class="table table-sm table-striped small">
@@ -680,8 +680,8 @@ div.csl-indent {
 <tr class="odd">
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">91124.0779</td>
-<td style="text-align: right;">301.8676</td>
+<td style="text-align: right;">91087.0055</td>
+<td style="text-align: right;">301.8062</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -689,35 +689,35 @@ div.csl-indent {
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">spkr: old</td>
-<td style="text-align: right;">1092.4628</td>
-<td style="text-align: right;">33.0524</td>
-<td style="text-align: right;">+1.00</td>
+<td style="text-align: right;">1796.0221</td>
+<td style="text-align: right;">42.3795</td>
+<td style="text-align: right;">+0.79</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">prec: maintain</td>
-<td style="text-align: right;">3464.5848</td>
-<td style="text-align: right;">58.8607</td>
-<td style="text-align: right;">-0.62</td>
-<td style="text-align: right;">-0.62</td>
+<td style="text-align: right;">3839.4126</td>
+<td style="text-align: right;">61.9630</td>
+<td style="text-align: right;">-0.59</td>
+<td style="text-align: right;">+0.02</td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">load: yes</td>
-<td style="text-align: right;">4482.3662</td>
-<td style="text-align: right;">66.9505</td>
+<td style="text-align: right;">4221.7638</td>
+<td style="text-align: right;">64.9751</td>
 <td style="text-align: right;">+0.36</td>
-<td style="text-align: right;">+0.36</td>
-<td style="text-align: right;">+0.51</td>
+<td style="text-align: right;">+0.85</td>
+<td style="text-align: right;">+0.54</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">131384.0733</td>
-<td style="text-align: right;">362.4694</td>
+<td style="text-align: right;">131230.7914</td>
+<td style="text-align: right;">362.2579</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -725,35 +725,35 @@ div.csl-indent {
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">spkr: old</td>
-<td style="text-align: right;">1690.7347</td>
-<td style="text-align: right;">41.1185</td>
-<td style="text-align: right;">+0.42</td>
+<td style="text-align: right;">1654.9232</td>
+<td style="text-align: right;">40.6807</td>
+<td style="text-align: right;">+0.44</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">prec: maintain</td>
-<td style="text-align: right;">61171.7458</td>
-<td style="text-align: right;">247.3292</td>
+<td style="text-align: right;">60967.4037</td>
+<td style="text-align: right;">246.9158</td>
 <td style="text-align: right;">-0.69</td>
-<td style="text-align: right;">+0.37</td>
+<td style="text-align: right;">+0.35</td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">load: yes</td>
-<td style="text-align: right;">1882.5594</td>
-<td style="text-align: right;">43.3885</td>
-<td style="text-align: right;">+0.29</td>
-<td style="text-align: right;">+0.14</td>
-<td style="text-align: right;">-0.13</td>
+<td style="text-align: right;">1796.8284</td>
+<td style="text-align: right;">42.3890</td>
+<td style="text-align: right;">+0.32</td>
+<td style="text-align: right;">+0.16</td>
+<td style="text-align: right;">-0.14</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Residual</td>
 <td style="text-align: left;"></td>
-<td style="text-align: right;">447630.0111</td>
-<td style="text-align: right;">669.0516</td>
+<td style="text-align: right;">446964.7062</td>
+<td style="text-align: right;">668.5542</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -763,7 +763,7 @@ div.csl-indent {
 </div>
 </div>
 <p>None of the two-factor or three-factor interaction terms in the fixed-effects are significant. In the random-effects terms only the scalar random effects and the <code>prec</code> random effect for <code>item</code> appear to be warranted, leading to the reduced formula</p>
-<div class="cell" data-execution_count="9">
+<div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>kbm02 <span class="op">=</span> <span class="kw">let</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  form <span class="op">=</span> <span class="pp">@formula</span>(</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    rt_trunc <span class="op">~</span></span>
@@ -843,7 +843,7 @@ div.csl-indent {
 </table>
 </div>
 </div>
-<div class="cell" data-execution_count="10">
+<div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(kbm02)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <table class="table table-sm table-striped small">
@@ -860,21 +860,21 @@ div.csl-indent {
 <tr class="odd">
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">133015.241</td>
+<td style="text-align: right;">133015.242</td>
 <td style="text-align: right;">364.713</td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">prec: maintain</td>
-<td style="text-align: right;">63766.936</td>
+<td style="text-align: right;">63766.937</td>
 <td style="text-align: right;">252.521</td>
 <td style="text-align: right;">-0.70</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">88819.437</td>
+<td style="text-align: right;">88819.438</td>
 <td style="text-align: right;">298.026</td>
 <td style="text-align: right;"></td>
 </tr>
@@ -890,7 +890,7 @@ div.csl-indent {
 </div>
 </div>
 <p>These two models are nested and can be compared with a likelihood-ratio test.</p>
-<div class="cell" data-execution_count="11">
+<div class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>MixedModels.<span class="fu">likelihoodratiotest</span>(kbm02, kbm01)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
 <table class="table table-sm table-striped small">
@@ -924,10 +924,10 @@ div.csl-indent {
 <tr class="even">
 <td style="text-align: left;">rt_trunc ~ 1 + spkr + prec + load + spkr &amp; prec + spkr &amp; load + prec &amp; load + spkr &amp; prec &amp; load + (1 + spkr + prec + load | subj) + (1 + spkr + prec + load | item)</td>
 <td style="text-align: right;">29</td>
-<td style="text-align: right;">28638</td>
-<td style="text-align: right;">26</td>
+<td style="text-align: right;">28637</td>
+<td style="text-align: right;">27</td>
 <td style="text-align: right;">20</td>
-<td style="text-align: left;">0.1698</td>
+<td style="text-align: left;">0.1431</td>
 </tr>
 </tbody>
 </table>
@@ -938,13 +938,13 @@ div.csl-indent {
 <section id="a-bootstrap-sample" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> A bootstrap sample</h1>
 <p>Create a bootstrap sample of a few thousand parameter estimates from the reduced model. The pseudo-random number generator is initialized to a fixed value for reproducibility.</p>
-<div class="cell" data-execution_count="12">
+<div class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="bu">Random</span>.<span class="fu">seed!</span>(<span class="fl">1234321</span>)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>hide_progress <span class="op">=</span> <span class="cn">true</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>kbm02samp <span class="op">=</span> <span class="fu">parametricbootstrap</span>(<span class="fl">2000</span>, kbm02; hide_progress);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>One of the uses of such a sample is to form “confidence intervals” on the parameters by obtaining the shortest interval that covers a given proportion (95%, by default) of the sample.</p>
-<div class="cell" data-execution_count="13">
+<div class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DataFrame</span>(<span class="fu">shortestcovint</span>(kbm02samp))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="13">
 <div><div style="float: left;"><span>9×5 DataFrame</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
@@ -1006,7 +1006,7 @@ div.csl-indent {
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">261.196</td>
-<td style="text-align: right;">448.509</td>
+<td style="text-align: right;">448.512</td>
 </tr>
 <tr class="even">
 <td class="rowNumber" style="text-align: right; font-weight: bold;">6</td>
@@ -1014,15 +1014,15 @@ div.csl-indent {
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">prec: maintain</td>
 <td style="text-align: right;">175.489</td>
-<td style="text-align: right;">312.043</td>
+<td style="text-align: right;">312.049</td>
 </tr>
 <tr class="odd">
 <td class="rowNumber" style="text-align: right; font-weight: bold;">7</td>
 <td style="text-align: left;">ρ</td>
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">(Intercept), prec: maintain</td>
-<td style="text-align: right;">-0.89799</td>
-<td style="text-align: right;">-0.445596</td>
+<td style="text-align: right;">-0.897984</td>
+<td style="text-align: right;">-0.445598</td>
 </tr>
 <tr class="even">
 <td class="rowNumber" style="text-align: right; font-weight: bold;">8</td>
@@ -1046,7 +1046,7 @@ div.csl-indent {
 </div>
 </div>
 <p>A sample like this can be used for more than just creating an interval because it approximates the distribution of the estimator. For the fixed-effects parameters the estimators are close to being normally distributed, <a href="#fig-kbm02fedens">Figure&nbsp;1</a>.</p>
-<div class="cell" data-execution_count="14">
+<div class="cell" data-execution_count="13">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">draw</span>(</span>
@@ -1063,7 +1063,7 @@ div.csl-indent {
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="15">
+<div class="cell" data-execution_count="14">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">draw</span>(</span>
@@ -1086,7 +1086,7 @@ div.csl-indent {
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="16">
+<div class="cell" data-execution_count="15">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">draw</span>(</span>
