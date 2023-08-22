@@ -10,7 +10,7 @@ author: "Reinhold Kliegl"
 In this experiment two rectangles are displayed (1) in horizontal orientation , (2) in vertical orientation, (3) in left diagonal orientation, or in (4) right diagonal orientation relative to a central fixation point.
 Subjects react to the onset of a small or a large visual target occuring at one of the four ends of the two rectangles.
 The target is cued validly on 70% of trials by a brief flash of the corner of the rectangle at which it appears; it is cued invalidly at the three other locations 10% of the trials each.
-This implies a latent imbalance in design that is not visiable in the repeated-measures ANOVA, but we will show its effect in the random-effect structure and conditional modes.
+This implies a latent imbalance in design that is not visible in the repeated-measures ANOVA, but we will show its effect in the random-effect structure and conditional modes.
 
 There are a couple of differences between the first and this follow-up experiment, rendering it more a conceptual than a direct replication.
 First, the original experiment was carried out at Peking University and this follow-up at Potsdam University.
@@ -24,7 +24,7 @@ Moreover, these individual differences in the attraction effect were negatively 
 
 This comparison is of interest because a few years after the publication of @Kliegl2010, the theoretically critical correlation parameter (CP) between the spatial effect and the attraction effect was determined as the source of a non-singular LMM in that paper.
 The present study served the purpose to estimate this parameter with a larger sample and a wider variety of experimental conditions.
-Therefore, the code in this script is largely the same as the one in `kwdyz.jl`.
+Therefore, the code in this script is largely the same as the one in `kwdyz11.qmd`.
 
 There will be another vignette modelling the additional experimental manipulations of target size and orientation of cue rectangle.
 This analysis was reported in the parsimonious mixed-model paper [@Bates2015]; they were also used in a paper of GAMMs [@Baayen2017].
@@ -35,6 +35,7 @@ Here we provide some of the corresponding analyses with _MixedModels.jl_ and a m
 
 ```{julia}
 #| code-fold: true
+#| output: false
 using Arrow
 using AlgebraOfGraphics
 using CairoMakie
@@ -224,7 +225,7 @@ describe(dat_subj_w)
 ```
 
 :::{.callout-note}
-Two of the theoreticsally irrelevant within-subject effect correlations have a different sign than the corresponding, non-significant CPs in the LMM; they are negative here, numerically positive in the LMM.
+Two of the theoretically irrelevant within-subject effect correlations have a different sign than the corresponding, non-significant CPs in the LMM; they are negative here, numerically positive in the LMM.
 This occurs only very rarely in the case of ecological correlations.
 However, as they are not significant according to shortest coverage interval, it may not be that relevant either.
 It is the case both for effects based on log-transformed and raw reaction times.
