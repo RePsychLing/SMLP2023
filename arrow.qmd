@@ -29,6 +29,7 @@ Load the packages to be used.
 
 ```{julia}
 #| code-fold: true
+#| output: false
 using AlgebraOfGraphics
 using Arrow
 using CairoMakie
@@ -148,7 +149,7 @@ The call to `disallowmissing!` is because the join will create columns that allo
 
 # Discovering patterns in the data
 
-One of the motivations for creating the `Child` table was be able to bin the ages according to the age of each child, not the age of each `Child-Test` combination.
+One of the motivations for creating the `Child` table was to be able to bin the ages according to the age of each child, not the age of each `Child-Test` combination.
 Not all children have all 5 test results.
 We can check the number of results by grouping on `:Child` and evaluate the number of rows in each group.
 
