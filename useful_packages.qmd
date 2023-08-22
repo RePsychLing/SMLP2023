@@ -4,15 +4,18 @@ author: "Phillip Alday"
 ---
 
 Unlike R, Julia does not immediately expose a huge number of functions, but instead requires loading packages (whether from the standard library or from the broader package ecosystem) for a lot of relevant functionality for statistical analysis.
-There are technical reasons for this, but one further motivation is that Julia is at a broader "technical computing" audience (like MATLAB or perhaps Python) and less at a "statistical analysis" audience.
+There are technical reasons for this, such as the ease of using the Julia package system.
+One further motivation is that Julia is aimed at a broader "technical computing" audience (like MATLAB or perhaps Python) and less at a "statistical analysis" audience.
 
 This has two important implications:
 
  1. Even relatively simple programs will often load several packages.
- 2. Packages are often focused on adding a relatively narrow set of functionality, which means that "basic" functionality (e.g. reading a CSV file and manipuating it as a DataFrame) is often split across multiple packages. In other words, **see the the first point!**
+ 2. Packages are often focused on adding a relatively narrow set of functionality, which means that "basic" functionality (e.g. reading a CSV file and manipulating it as a DataFrame) is often split across multiple packages. In other words, **see the the first point!**
 
 This notebook is not intended to be an exhaustive list of packages, but rather to highlight a few packages that I suspect will be particularly useful.
-Before getting onto the packages, I have one final hint: take advantage of how easy and first-class package management in Julia is. Having good package management makes reproducible analyses much easier and avoids breaking old analyses when you start a new one. Pluto helpfully installs and manages for you, but the package-manager REPL mode (activated by typing `]` at the `julia>` prompt) is very useful.
+Before getting onto the packages, I have one final hint: take advantage of how easy and first-class package management in Julia is.
+Having good package management makes reproducible analyses much easier and avoids breaking old analyses when you start a new one. 
+The package-manager REPL mode (activated by typing `]` at the `julia>` prompt) is very useful.
 
 # Data wrangling
 
@@ -28,7 +31,8 @@ Note that by default both Arrow.jl and CSV.jl do not return a DataFrame, but rat
 
 Unlike in R, DataFrames are not part of the base language, nor the standard library.
 
-[DataFrames.jl](https://dataframes.juliadata.org/stable/) provides the basic infrastructure around DataFrames, as well as its own [mini language](https://bkamins.github.io/julialang/2020/12/24/minilanguage.html) for doing the split-apply-combine approach that underlies R's `dplyr` and much of the tidyverse.  The DataFrames.jl documentation is the place to for looking at how to e.g. read in a [CSV or Arrow file as a DataFrame](https://dataframes.juliadata.org/stable/man/importing_and_exporting/). Note that DataFrames.jl by default depends on [CategoricalArrays.jl](https://categoricalarrays.juliadata.org/stable/) to handle the equivalent of `factor` in the R world, but there is an alternative package for `factor`-like array type in Julia, [PooledArrays.jl](https://github.com/JuliaData/PooledArrays.jl/). PooledArrays are simpler, but more limited than CategoricalArrays and we (Phillip and Doug) sometimes use them in our examples and simulations.
+[DataFrames.jl](https://dataframes.juliadata.org/stable/) provides the basic infrastructure around DataFrames, as well as its own [mini language](https://bkamins.github.io/julialang/2020/12/24/minilanguage.html) for doing the split-apply-combine approach that underlies R's `dplyr` and much of the tidyverse.  The DataFrames.jl documentation is the place for looking at how to e.g. read in a [CSV or Arrow file as a DataFrame](https://dataframes.juliadata.org/stable/man/importing_and_exporting/). Note that DataFrames.jl by default depends on [CategoricalArrays.jl](https://categoricalarrays.juliadata.org/stable/) to handle the equivalent of `factor` in the R world, but there is an alternative package for `factor`-like array type in Julia, [PooledArrays.jl](https://github.com/JuliaData/PooledArrays.jl/). PooledArrays are simpler, but more limited than CategoricalArrays and we (Phillip and Doug) sometimes use them in our examples and simulations.
+The tables produced by reading an Arrow file have their own representation of factor-like data as `DictEncoded` arrays.
 
 DataFrame.jl's mini language can be a bit daunting, if you're used to manipulations in the style of base R or the tidyverse. For that, there are several options; recently, we'e had particularly nice experiences with [DataFrameMacros.jl](https://github.com/jkrumbiegel/DataFrameMacros.jl) and [Chain.jl](https://github.com/jkrumbiegel/Chain.jl) for a convenient syntax to connect or "pipe" together successive operations. It's your choice whether and which of these add-ons you want to use! Phillip tends to write his code using raw DataFrames.jl, but Doug really enjoys DataFrameMacros.jl.
 
@@ -60,11 +64,11 @@ julia > fit(
 )
 ```
 
-(You can also specify your model matrices directly and skip the formula interface, but we don't recommend this as it's easy to mess up in really subtle but very probelmatic ways.)
+(You can also specify your model matrices directly and skip the formula interface, but we don't recommend this as it's easy to mess up in really subtle but very problematic ways.)
 
 ## `@formula`, macros and domain-specific languages
 
-As a sidebar: why is `@formula` a macro and not a normal function? Well, that's because formulas are essentially their own domain-specific language (a variant of [Wilkinson-Roger notation](https://www.jstor.org/stable/2346786)) and macros are used for manipulating the language itself -- or in this case, handling an entirely new, embedded language! This is also why macros are used by packages like [Turing.jl](https://turing.ml/) and [Soss.jl](https://cscherrer.github.io/Soss.jl/stable/) that define a language for Bayesian probabilistic programming like [PyMC3](https://docs.pymc.io/) or [Stan](https://mc-stan.org/).
+As a sidebar: why is `@formula` a macro and not a normal function? Well, that's because formulas are essentially their own domain-specific language (a variant of [Wilkinson-Rogers notation](https://www.jstor.org/stable/2346786)) and macros are used for manipulating the language itself -- or in this case, handling an entirely new, embedded language! This is also why macros are used by packages like [Turing.jl](https://turing.ml/) and [Soss.jl](https://cscherrer.github.io/Soss.jl/stable/) that define a language for Bayesian probabilistic programming like [PyMC3](https://docs.pymc.io/) or [Stan](https://mc-stan.org/).
 
 ## Extensions to the formula syntax
 
