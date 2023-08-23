@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Reinhold Kliegl">
-<meta name="dcterms.date" content="2023-08-21">
+<meta name="dcterms.date" content="2023-08-23">
 
 <title>SMLP2023: Advanced Frequentist Track - RePsychLing Kliegl, Kuschela, &amp; Laubrock (2015)</title>
 <style>
@@ -389,7 +389,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2023-08-21</p>
+      <p class="date">2023-08-23</p>
     </div>
   </div>
   
@@ -401,10 +401,10 @@ div.csl-indent {
 
 <section id="background" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Background</h1>
-<p><span class="citation" data-cites="Kliegl2015">Kliegl et al. (<a href="#ref-Kliegl2015" role="doc-biblioref">2015</a>)</span> is a follow-up to <span class="citation" data-cites="Kliegl2010">Kliegl et al. (<a href="#ref-Kliegl2010" role="doc-biblioref">2010</a>)</span> (see also script <code>mmt_kwdyz11.qmd</code>) from an experiment looking at a variety of effects of visual cueing under four different cue-target relations (CTRs). In this experiment two rectangles are displayed (1) in horizontal orientation , (2) in vertical orientation, (3) in left diagonal orientation, or in (4) right diagonal orientation relative to a central fixation point. Subjects react to the onset of a small or a large visual target occuring at one of the four ends of the two rectangles. The target is cued validly on 70% of trials by a brief flash of the corner of the rectangle at which it appears; it is cued invalidly at the three other locations 10% of the trials each. This implies a latent imbalance in design that is not visiable in the repeated-measures ANOVA, but we will show its effect in the random-effect structure and conditional modes.</p>
+<p><span class="citation" data-cites="Kliegl2015">Kliegl et al. (<a href="#ref-Kliegl2015" role="doc-biblioref">2015</a>)</span> is a follow-up to <span class="citation" data-cites="Kliegl2010">Kliegl et al. (<a href="#ref-Kliegl2010" role="doc-biblioref">2010</a>)</span> (see also script <code>mmt_kwdyz11.qmd</code>) from an experiment looking at a variety of effects of visual cueing under four different cue-target relations (CTRs). In this experiment two rectangles are displayed (1) in horizontal orientation , (2) in vertical orientation, (3) in left diagonal orientation, or in (4) right diagonal orientation relative to a central fixation point. Subjects react to the onset of a small or a large visual target occuring at one of the four ends of the two rectangles. The target is cued validly on 70% of trials by a brief flash of the corner of the rectangle at which it appears; it is cued invalidly at the three other locations 10% of the trials each. This implies a latent imbalance in design that is not visible in the repeated-measures ANOVA, but we will show its effect in the random-effect structure and conditional modes.</p>
 <p>There are a couple of differences between the first and this follow-up experiment, rendering it more a conceptual than a direct replication. First, the original experiment was carried out at Peking University and this follow-up at Potsdam University. Second, diagonal orientations of rectangles and large target sizes were not part of the design of <span class="citation" data-cites="Kliegl2010">Kliegl et al. (<a href="#ref-Kliegl2010" role="doc-biblioref">2010</a>)</span>. To keep matters somewhat simpler and comparable we ignore them in this script.</p>
 <p>We specify three contrasts for the four-level factor CTR that are derived from spatial, object-based, and attractor-like features of attention. They map onto sequential differences between appropriately ordered factor levels. Replicating <span class="citation" data-cites="Kliegl2010">Kliegl et al. (<a href="#ref-Kliegl2010" role="doc-biblioref">2010</a>)</span>, the attraction effect was not significant as a fixed effect, but yielded a highly reliable variance component (VC; i.e., reliable individual differences in positive and negative attraction effects cancel the fixed effect). Moreover, these individual differences in the attraction effect were negatively correlated with those in the spatial effect.</p>
-<p>This comparison is of interest because a few years after the publication of <span class="citation" data-cites="Kliegl2010">Kliegl et al. (<a href="#ref-Kliegl2010" role="doc-biblioref">2010</a>)</span>, the theoretically critical correlation parameter (CP) between the spatial effect and the attraction effect was determined as the source of a non-singular LMM in that paper. The present study served the purpose to estimate this parameter with a larger sample and a wider variety of experimental conditions. Therefore, the code in this script is largely the same as the one in <code>kwdyz.jl</code>.</p>
+<p>This comparison is of interest because a few years after the publication of <span class="citation" data-cites="Kliegl2010">Kliegl et al. (<a href="#ref-Kliegl2010" role="doc-biblioref">2010</a>)</span>, the theoretically critical correlation parameter (CP) between the spatial effect and the attraction effect was determined as the source of a non-singular LMM in that paper. The present study served the purpose to estimate this parameter with a larger sample and a wider variety of experimental conditions. Therefore, the code in this script is largely the same as the one in <code>kwdyz11.qmd</code>.</p>
 <p>There will be another vignette modelling the additional experimental manipulations of target size and orientation of cue rectangle. This analysis was reported in the parsimonious mixed-model paper <span class="citation" data-cites="Bates2015">(<a href="#ref-Bates2015" role="doc-biblioref">Bates et al., 2015</a>)</span>; they were also used in a paper of GAMMs <span class="citation" data-cites="Baayen2017">(<a href="#ref-Baayen2017" role="doc-biblioref">Baayen et al., 2017</a>)</span>. Data and R scripts are also available in <a href="https://github.com/dmbates/RePsychLing/tree/master/data/">R-package RePsychLing</a>. Here we provide some of the corresponding analyses with <em>MixedModels.jl</em> and a much wider variety of visualizations of LMM results.</p>
 </section>
 <section id="packages" class="level1" data-number="2">
@@ -935,7 +935,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Two of the theoreticsally irrelevant within-subject effect correlations have a different sign than the corresponding, non-significant CPs in the LMM; they are negative here, numerically positive in the LMM. This occurs only very rarely in the case of ecological correlations. However, as they are not significant according to shortest coverage interval, it may not be that relevant either. It is the case both for effects based on log-transformed and raw reaction times.</p>
+<p>Two of the theoretically irrelevant within-subject effect correlations have a different sign than the corresponding, non-significant CPs in the LMM; they are negative here, numerically positive in the LMM. This occurs only very rarely in the case of ecological correlations. However, as they are not significant according to shortest coverage interval, it may not be that relevant either. It is the case both for effects based on log-transformed and raw reaction times.</p>
 </div>
 </div>
 </section>
@@ -951,7 +951,7 @@ Note
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(MixedModel, form, dat; contrasts)</span>
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Minimizing 243   Time: 0:00:00 ( 1.22 ms/it)</code></pre>
+<pre><code>Minimizing 243   Time: 0:00:00 ( 1.20 ms/it)</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <table class="table table-sm table-striped small">
