@@ -2,15 +2,6 @@
 title: "Seventh Summer School on Statistical Methods for Linguistics and Psychology"
 subtitle: "Advanced methods in frequentist statistics with Julia"
 author: "Phillip Alday, Reinhold Kliegl and Douglas Bates"
-format:
-  html:
-    toc: true
-    toc-depth: 2
-    number-sections: true
-    fig-width: 8
-    fig-height: 6
-editor_options:
-  chunk_output_type: console
 ---
 
 This site provides materials for the **Advanced frequentist methods** stream of the [Summer School on Statistical Methods](https://vasishth.github.io/smlp2023/) to be held at the University of Potsdam, 11-15 September, 2023.
@@ -34,7 +25,7 @@ git clone https://github.com/RePsychLing/SMLP2023
 
 ## Julia Programming Language
 
-We will use Julia v1.9.2 in the summer school. We recommend using [Juliaup](https://github.com/JuliaLang/juliaup) to install and manage Julia versions. Juliaup makes it trivial to upgrade to new Julia releases or even use old ones. Alternatively,  you can download the version appropriate for your setup from here: [Julia Programming Language](https://julialang.org/downloads/)
+We will use Julia v1.9 in the summer school. We recommend using [Juliaup](https://github.com/JuliaLang/juliaup) to install and manage Julia versions. Juliaup makes it trivial to upgrade to new Julia releases or even use old ones. Alternatively,  you can download the version appropriate for your setup from here: [Julia Programming Language](https://julialang.org/downloads/)
 
 ## Visual Studio Code (VS Code)
 

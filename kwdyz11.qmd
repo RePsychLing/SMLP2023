@@ -1,9 +1,10 @@
 ---
 title: "RePsychLing Kliegl et al. (2010)"
 jupyter: julia-1.9
+author: "Reinhold Kliegl"
 ---
 
-## Background
+# Background
 
 We take the `kwdyz11.arrow` dataset [@Kliegl2010] from an experiment looking at three effects of visual cueing under four different cue-target relations (CTRs).
 Two horizontal rectangles are displayed above and below a central fixation point or they displayed in vertical orientation to the left and right of the fixation point.
@@ -23,7 +24,7 @@ A more comprehensive analysis was reported in the parsimonious mixed-model paper
 Data and R scripts are also available in [R-package RePsychLing](https://github.com/dmbates/RePsychLing/tree/master/data/).
 In this and the complementary `kkl15.jl` scripts, we provide some corresponding analyses with _MixedModels.jl_.
 
-## Packages
+# Packages
 
 ```{julia}
 #| code-fold: true
@@ -49,7 +50,7 @@ CairoMakie.activate!(; type="svg")
 ProgressMeter.ijulia_behavior(:clear);
 ```
 
-## Read data, compute and plot densities and means
+# Read data, compute and plot densities and means
 
 ```{julia}
 #| code-fold: true
@@ -138,7 +139,7 @@ A better alternative to the boxplot is a dotplot. It also displays subjects' con
 
 **To be done**
 
-## Linear mixed model
+# Linear mixed model
 
 ```{julia}
 contrasts = Dict(
@@ -167,14 +168,14 @@ The problem is the +.93 CP for spatial `sod` and attraction `dod` effects.
 first(MixedModels.PCA(m1))
 ```
 
-## Diagnostic plots of LMM residuals
+# Diagnostic plots of LMM residuals
 
 Do model residuals meet LMM assumptions? Classic plots are
 
   - Residual over fitted
   - Quantiles of model residuals over theoretical quantiles of normal distribution
 
-### Residual-over-fitted plot
+## Residual-over-fitted plot
 
 The slant in residuals show a lower and upper boundary of reaction times, that is we have have too few short and too few long residuals. Not ideal, but at least width of the residual band looks similar across the fitted values, that is there is no evidence for heteroskedasticity.
 
@@ -208,7 +209,7 @@ draw(
 )
 ```
 
-### Q-Q plot
+## Q-Q plot
 
 The plot of quantiles of model residuals over corresponding quantiles of the normal distribution should yield a straight line along the main diagonal.
 
@@ -216,7 +217,7 @@ The plot of quantiles of model residuals over corresponding quantiles of the nor
 qqnorm(residuals(m1); qqline=:none)
 ```
 
-### Observed and theoretical normal distribution
+## Observed and theoretical normal distribution
 
 The violation of expectation is again due to the fact that the distribution of residuals is much narrower than expected from a normal distribution, as shown in @fig-standresdens.
 Overall, it does not look too bad.
@@ -239,7 +240,7 @@ let
 end
 ```
 
-## Conditional modes
+# Conditional modes
 
 Now we move on to visualizations that are based on model parameters and subjects' data, that is "predictions" of the LMM for subject's GM and experimental effects. Three important plots are
 
@@ -247,13 +248,13 @@ Now we move on to visualizations that are based on model parameters and subjects
   - Caterpillar
   - Shrinkage
 
-### Overlay
+## Overlay
 
 The first plot overlays shrinkage-corrected conditional modes of the random effects with within-subject-based and pooled GMs and experimental effects.
 
 **To be done**
 
-### Caterpillar plot
+## Caterpillar plot
 
 The caterpillar plot, @fig-m1caterpillar, also reveals the high correlation between spatial `sod` and attraction `dod` effects.
 
@@ -266,7 +267,7 @@ caterpillar!(
 )
 ```
 
-### Shrinkage plot
+## Shrinkage plot
 
 @fig-m1shrinkage provides more evidence for a problem with the visualization of the spatial `sod` and attraction `dod` CP.
 The corresponding panel illustrates an *implosion* of conditional modes.
@@ -278,7 +279,7 @@ The corresponding panel illustrates an *implosion* of conditional modes.
 shrinkageplot!(Figure(; resolution=(1000, 1000)), m1)
 ```
 
-## Parametric bootstrap
+# Parametric bootstrap
 
 Here we
 
@@ -286,7 +287,7 @@ Here we
   - compute shortest covergage intervals for the LMM parameters
   - plot densities of bootstrapped parameter estimates for residual, fixed effects, variance components, and correlation parameters
 
-### Generate a bootstrap sample
+## Generate a bootstrap sample
 
 We generate 2500 samples for the 15 model parameters (4 fixed effect, 4 VCs, 6 CPs, and 1 residual).
 
@@ -302,7 +303,7 @@ first(dat2, 10)
 nrow(dat2) # 2500 estimates for each of 15 model parameters
 ```
 
-### Shortest coverage interval
+## Shortest coverage interval
 
 The upper limit of the interval for the critical CP `CTR: sod, CTR: dod` is hitting the upper wall of a perfect correlation.
 This is evidence of singularity.
@@ -313,9 +314,9 @@ The other intervals do not exhibit such pathologies; they appear to be ok.
 DataFrame(shortestcovint(samp))
 ```
 
-### Comparative density plots of bootstrapped parameter estimates
+## Comparative density plots of bootstrapped parameter estimates
 
-#### Residual
+## Residual
 
 ```{julia}
 #| code-fold: true
@@ -327,7 +328,7 @@ draw(
 )
 ```
 
-#### Fixed effects (w/o GM)
+## Fixed effects (w/o GM)
 
 The shortest coverage interval for the `GM` ranges from 376 to 404 ms.
 To keep the plot range small we do not inlcude its density here.
@@ -354,7 +355,7 @@ draw(
 
 The densitiies correspond nicely with the shortest coverage intervals.
 
-#### Variance components (VCs)
+## Variance components (VCs)
 
 ```{julia}
 #| code-fold: true
@@ -372,7 +373,7 @@ draw(
 
 The VC are all very nicely defined.
 
-#### Correlation parameters (CPs)
+## Correlation parameters (CPs)
 
 ```{julia}
 #| code-fold: true

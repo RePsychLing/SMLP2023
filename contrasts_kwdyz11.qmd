@@ -18,7 +18,7 @@ using StatsModels: ContrastsCoding
 ProgressMeter.ijulia_behavior(:clear);
 ```
 
-## A word of caution {#sec-caution}
+# A word of caution {#sec-caution}
 
 For a (quasi-)experimental set of data, there is (or should be) a clear _a priori_ theoretical committment to specific hypotheses about differences between factor levels and how these differences enter in interactions with other factors. This specification should be used in the first LMM and reported, irrespective of the outcome. If alternative theories lead to alternative _a priori_ contrast specifications, both analyses are justified. If the observed means render the specification completely irrelevant, the comparisons originally planned could still be reported in a Supplement).
 
@@ -40,7 +40,7 @@ Schad, D. J., Vasishth, S., Hohenstein, S., & Kliegl, R. (2020). How to capitali
 
 For further readings see “Further Readings” in Schad et al. (2020).
 
-## Example data {#sec-data}
+# Example data {#sec-data}
 
 We take the `KWDYZ` dataset [@Kliegl2010].
 This is an experiment looking at three effects of visual cueing under four different cue-target relations (CTRs).
@@ -53,7 +53,7 @@ We specify three contrasts for the four-level factor CTR that are derived from s
 We also have a dataset from a replication and extension of this study (Kliegl, Kuschela, & Laubrock, 2015).
 Both data sets are available in [R-package RePsychLing](https://github.com/dmbates/RePsychLing/tree/master/data/)
 
-## Preprocessing {#sec-preprocessing}
+# Preprocessing {#sec-preprocessing}
 
 ```{julia}
 dat1 = @chain dataset(:kwdyz11) begin
@@ -69,7 +69,7 @@ cellmeans = combine(
 )
 ```
 
-## Julia contrast options {#sec-contrasts}
+# Julia contrast options {#sec-contrasts}
 
 We use the same formula for all analyses
 
@@ -88,7 +88,7 @@ Controlling the ordering of levels for contrasts:
  1. kwarg `levels` to order the levels
  2. The first level is set as the baseline; with kwarg `base` a different level can be specified.
 
-### SeqDiffCoding
+## SeqDiffCoding
 
 The `SeqDiffCoding` contrast corresponds to `MASS::contr.sdif()` in R.
 The assignment of random factors such as `Subj` to `Grouping()` is necessary when the sample size is very large. We recommend to include it always, but in this tutorial we do so only in the first example.
@@ -105,7 +105,7 @@ m1 = let
 end
 ```
 
-### HypothesisCoding
+## HypothesisCoding
 
 `HypothesisCoding` is the most general option available. We can implement all "canned" contrasts ourselves. The next example reproduces the test statistcs from `SeqDiffCoding` - with a minor modification illustrating the flexibility of going beyond the default version.
 
@@ -128,7 +128,7 @@ end
 
 The difference to the preprogrammed `SeqDiffCoding` is that for the third contrast we changed the direction of the contrast such that the sign of the effect is positive when the result is in agreement with theoretical expectation, that is we subtract the fourth level from the third, not the third level from the fourth.
 
-### DummyCoding
+## DummyCoding
 
 Thi contrast corresponds to `contr.treatment()` in R
 
@@ -141,7 +141,7 @@ end
 
 The `DummyCoding` contrast has the disadvantage that the intercept returns the mean of the level specified as `base`, default is the first level, not the GM.
 
-### YchycaeitCoding
+## YchycaeitCoding
 
 The contrasts returned by `DummyCoding` may be exactly what we want.
 Can't we have them, but also have the intercept estimate the GM, rather than the mean of the base level? Yes, we can! We call this "You can have your cake and it eat, too"-Coding (YchycaeitCoding). And we use `HpothesisCoding` to achieve this outcome.
@@ -165,7 +165,7 @@ end
 
 We can simply relevel the factor or move the column with -1s for a different base.
 
-### EffectsCoding
+## EffectsCoding
 
 This contrast corresponds almost to `contr.sum()` in R.
 
@@ -178,7 +178,7 @@ end
 
 The “almost” qualification refers to the fact that `contr.sum()` uses the last factor levels as defaul base level; `EffectsCoding` uses the first level.
 
-### HelmertCoding
+## HelmertCoding
 
 `HelmertCoding` codes each level as the difference from the average of the lower levels. With the default order of `CTR` levels we get the following test statistics. These contrasts are othogonal.
 
@@ -195,7 +195,7 @@ end
 + HeC3: (4 - (3+2+1)/3)/4   # (402 - (405 + 391 + 358)/3)/4
 ```
 
-### Reverse HelmertCoding
+## Reverse HelmertCoding
 
 `Reverse HelmertCoding` codes each level as the difference from the average of the higher levels. To estimate these effects we simply reverse the order of factor levels. Of course, the contrasts are also orthogonal.
 
@@ -213,12 +213,12 @@ end
 + HeC3:(1 - (2+3+4)/3/4     # (356  -(391 + 405 + 402)/3)/4
 ```
 
-### Anova Coding
+## Anova Coding
 
 Factorial designs (i.e., lab experiments) are traditionally analyzed with analysis of variance. The test statistics of main effects and interactions are based on an orthogonal set of contrasts.
 We specify them with `HypothesisCoding`.
 
-#### A(2) x B(2)
+### A(2) x B(2)
 
 An A(2) x B(2) design can be recast as an F(4) design with the levels (A1-B1, A1-B2, A2-B1, A2-B2).
 The following contrast specifiction returns estimates for the main effect of A, the main effect of B, and the interaction of A and B.
@@ -252,7 +252,7 @@ It is also helpful to see the corresponding layout of the four means for the int
 
 Thus, interaction tests whether the difference between main diagonal and minor diagonal is different from zero.
 
-#### A(2) x B(2) x C(2)
+### A(2) x B(2) x C(2)
 
 Going beyond the four level factor; it is also helpful to see the corresponding layout of the eight means for the interaction of A and B and C.
 
@@ -263,11 +263,11 @@ Going beyond the four level factor; it is also helpful to see the corresponding 
  A2   -1     +1   A2   +1     -1
 ```
 
-#### A(2) x B(2) x C(3)
+### A(2) x B(2) x C(3)
 
 TO BE DONE
 
-### Nested coding
+## Nested coding
 
 Nested contrasts are often specified as follow up as post-hoc tests for ANOVA interactions. They are orthogonal. We specify them with `HypothesisCoding`.
 
@@ -295,7 +295,7 @@ end
 The three contrasts for one main effect and two nested contrasts are orthogonal.
 There is no test of the interaction (parallelism).
 
-## Other orthogonal contrasts
+# Other orthogonal contrasts
 
 For factors with more than four levels there are many options for specifying orthogonal contrasts as long as one proceeds in a top-down strictly hiearchical fashion.
 
@@ -328,21 +328,21 @@ There are two rules that hold for all orthogonal contrasts:
  1. The weights within rows sum to zero.
  2. For all pairs of rows, the sum of the products of weights in the same columns sums to zero.
 
-## Appendix: Summary (Dave Kleinschmidt)
+# Appendix: Summary (Dave Kleinschmidt)
 
 [StatsModels](https://juliastats.org/StatsModels.jl/latest/contrasts/)
 
 StatsModels.jl provides a few commonly used contrast coding schemes, some less-commonly used schemes, and structs that allow you to manually specify your own, custom schemes.
 
-### Standard contrasts
+## Standard contrasts
 
 The most commonly used contrasts are `DummyCoding` and `EffectsCoding` (which are similar to `contr.treatment()` and `contr.sum()` in R, respectively).
 
-### "Exotic" contrasts (rk: well ...)
+## "Exotic" contrasts (rk: well ...)
 
 We also provide `HelmertCoding` and `SeqDiffCoding` (corresponding to base R's `contr.helmert()` and `MASS::contr.sdif()`).
 
-### Manual contrasts
+## Manual contrasts
 
 **ContrastsCoding()**
 

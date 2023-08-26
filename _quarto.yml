@@ -4,22 +4,26 @@ project:
   execute-dir: project
   output-dir: _build/
   render:
-    - index.qmd
-    - about.qmd
-    - useful_packages.qmd
-    - pkg.qmd
-    - sleepstudy.qmd
-    - sleepstudy_speed.qmd
-    - bootstrap.qmd
-    - largescaledesigned.qmd
-    - arrow.qmd
-    - glmm.qmd
-    - kb07.qmd
-    - kwdyz11.qmd
-    - kkl15.qmd
-    - shrinkageplot.qmd
-    - contrasts_fggk21.qmd
-    - contrasts_kwdyz11.qmd
+  - about.qmd
+  - AoGPlots.qmd
+  - arrow.qmd
+  - bootstrap.qmd
+  - check_emotikon_transform.qmd
+  - contrasts_fggk21.qmd
+  - contrasts_kwdyz11.qmd
+  - fggk21.qmd
+  - glmm.qmd
+  - index.qmd
+  - kb07.qmd
+  - kkl15.qmd
+  - kwdyz11.qmd
+  - largescaledesigned.qmd
+  - pkg.qmd
+  - selection.qmd
+  - shrinkageplot.qmd
+  - sleepstudy.qmd
+  - sleepstudy_speed.qmd
+  - useful_packages.qmd
 
 date: today
 date-format: iso
@@ -27,45 +31,70 @@ jupyter: julia-1.9
 execute:
   cache: true
   freeze: auto
+number-sections: true
+
+# editor_options:
+#   chunk_output_type: console
+filters:
+  - code-fullscreen
 
 format:
   html:
-    toc: true
     # for more info, see
     # https://quarto.org/docs/output-formats/html-themes.html
-    theme: [sandstone, theme.scss]
+    theme:
+      light: [sandstone, theme.scss]
+      dark: [darkly, theme-dark.scss]
+    # defaults, can be overriden
+    toc: true
+    toc-depth: 2
+    fig-width: 8
+    fig-height: 6
 
 website:
-  title: "SMLP2023"
+  title: "SMLP2023: Advanced Frequentist Track"
   site-url: https://RePsychLing.github.io/SMLP2023
   repo-url: https://github.com/RePsychLing/SMLP2023
-  # repo-actions: [issue]
+  repo-actions: [edit, issue]
+  # reader-mode: true
   navbar:
     background: primary
-    left:
-      - text: "Home"
-        href: index.qmd
-      - about.qmd
+    # left:
+    #   - text: "Home"
+    #     href: index.qmd
+    #   - about.qmd
     right:
       - icon: github
         href: https://github.com/RePsychLing/SMLP2023
-  sidebar:
-    style: "docked"
-    search: true
-    contents:
-      - index.qmd
-      - useful_packages.qmd
-      - pkg.qmd
-      - sleepstudy.qmd
-      - sleepstudy_speed.qmd
-      - bootstrap.qmd
-      - largescaledesigned.qmd
-      - arrow.qmd
-      - glmm.qmd
-      - kb07.qmd
-      - kwdyz11.qmd
-      - kkl15.qmd
-      - shrinkageplot.qmd
-      - contrasts_fggk21.qmd
-      - contrasts_kwdyz11.qmd
   page-navigation: true
+  back-to-top-navigation: true
+  sidebar:
+    style: "floating" # floating or docked
+    search: true
+    collapse-level: 1
+    contents:
+      - section: "Getting started with Julia"
+        contents:
+        - useful_packages.qmd
+        - pkg.qmd
+        - arrow.qmd
+      - section: "Worked examples"
+        contents:
+        - sleepstudy.qmd
+        - sleepstudy_speed.qmd
+        - kwdyz11.qmd
+        - kkl15.qmd
+        - largescaledesigned.qmd
+      - section: "Contrast coding"
+        contents:
+        - contrasts_fggk21.qmd
+        - contrasts_kwdyz11.qmd
+      - glmm.qmd
+      - section: "Bootstrap"
+        contents:
+        - bootstrap.qmd
+        - kb07.qmd
+      - section: "Visualizations and diagnostics"
+        contents:
+        - shrinkageplot.qmd
+        - AoGPlots.qmd

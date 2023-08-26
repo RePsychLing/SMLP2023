@@ -13,7 +13,7 @@ In fact the first two days were acclimatization, the third was a baseline and sl
 To allow for comparison with earlier analyses of these data we retain the old data description for this notebook only.
 :::
 
-## Loading the data
+# Loading the data
 
 First attach the MixedModels package and other packages for plotting.
 The CairoMakie package allows the Makie graphics system [@Danisch2021] to generate high quality static images.
@@ -69,7 +69,7 @@ Starting at the lower left panel and proceeding across rows, the panels are orde
 
 There are some deviations from linearity within the panels but the deviations are neither substantial nor systematic.
 
-## Fitting an initial model
+# Fitting an initial model
 
 ```{julia}
 #| lst-label: m1
@@ -112,7 +112,7 @@ caterpillar(m1)
 
 @fig-m1caterpillar reinforces the conclusion that there is little correlation between the random effect for intercept and the random effect for slope.
 
-## A model with uncorrelated random effects
+# A model with uncorrelated random effects
 
 The `zerocorr` function applied to a random-effects term creates uncorrelated vector-valued per-subject random effects.
 
@@ -172,7 +172,7 @@ I think that the upper bound may be 36, not 38, because the two columns of X lie
 This comparison does show, however, that a simple count of the parameters in a mixed-effects model can underestimate, sometimes drastically, the model complexity.
 This is because a single variance component or multiple components can add many dimensions to the linear predictor.
 
-## Some diagnostic plots
+# Some diagnostic plots
 
 In mixed-effects models the *linear predictor* expression incorporates *fixed-effects parameters*, which summarize trends for the population or certain well-defined subpopulations, and *random effects* which represent deviations associated with the *experimental units* or *observational units* - individual subjects, in this case.
 The random effects are modeled as unobserved random variables.
@@ -208,7 +208,7 @@ Examination of the panel for `S337` in the data plot shows a strong linear trend
 The neighboring panels in the data plot, `S330` and `S331`, have more variability around the least squares line and are subject to a greater amount of shrinkage in the model.
 (They correspond to the two arrows on the right hand side of the figure around -5 on the vertical scale.)
 
-## Assessing variability by bootstrapping
+# Assessing variability by bootstrapping
 
 The speed of fitting linear mixed-effects models using `MixedModels.jl` allows for using simulation-based approaches to inference instead of relying on approximate standard errors.
 A *parametric bootstrap sample* for model `m` is a collection of models of the same form as `m` fit to data values simulated from `m`.

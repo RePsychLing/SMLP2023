@@ -6,9 +6,9 @@ jupyter: julia-1.9
 The speed of MixedModels.jl relative to its predecessors makes the parametric bootstrap much more computationally tractable.
 This is valuable because the parametric bootstrap can be used to produce more accurate confidence intervals than methods based on standard errors or profiling of the likelihood surface.
 
-This page is adapted from the [MixedModels.jl docs](https://juliastats.org/MixedModels.jl/v4.7.1/bootstrap/)
+This page is adapted from the [MixedModels.jl docs](https://juliastats.org/MixedModels.jl/v4/bootstrap/)
 
-## The parametric bootstrap
+# The parametric bootstrap
 
 [Bootstrapping](https://en.wikipedia.org/wiki/Bootstrapping_(statistics)) is a family of procedures
 for generating sample values of a statistic, allowing for visualization of the distribution of the
@@ -46,7 +46,7 @@ ProgressMeter.ijulia_behavior(:clear);
 Note that the precise stream of random numbers generated for a given seed can change between Julia versions.
 For exact reproducibility, you either need to have the exact same Julia version or use the [StableRNGs](https://github.com/JuliaRandom/StableRNGs.jl) package.
 
-## A model of moderate complexity
+# A model of moderate complexity
 
 The `kb07` data [@Kronmueller2007] are one of the datasets provided by the `MixedModels` package.
 
@@ -117,7 +117,7 @@ MixedModels.likelihoodratiotest(m0, m1)
 
 The p-value of approximately 14% leads us to prefer the simpler model, `m1`, to the more complex, `m0`.
 
-## Bootstrap basics
+# Bootstrap basics
 
 To bootstrap the model parameters, first initialize a random number generator then create a bootstrap sample
 
@@ -183,7 +183,7 @@ ridgeplot(samp; show_intercept=false, xlabel="Bootstrap density and 95%CI")
 ```
 
 
-## Singularity
+# Singularity
 
 Let's consider the classic dysetuff dataset:
 

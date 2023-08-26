@@ -1,15 +1,16 @@
 ---
 title: 'RePsychLing Kliegl, Kuschela, & Laubrock (2015)'
 jupyter: julia-1.9
+author: "Reinhold Kliegl"
 ---
 
-## Background
+# Background
 
 @Kliegl2015 is a follow-up to @Kliegl2010 (see also script `mmt_kwdyz11.qmd`) from an experiment looking at a variety of effects of visual cueing under four different cue-target relations (CTRs).
 In this experiment two rectangles are displayed (1) in horizontal orientation , (2) in vertical orientation, (3) in left diagonal orientation, or in (4) right diagonal orientation relative to a central fixation point.
 Subjects react to the onset of a small or a large visual target occuring at one of the four ends of the two rectangles.
 The target is cued validly on 70% of trials by a brief flash of the corner of the rectangle at which it appears; it is cued invalidly at the three other locations 10% of the trials each.
-This implies a latent imbalance in design that is not visiable in the repeated-measures ANOVA, but we will show its effect in the random-effect structure and conditional modes.
+This implies a latent imbalance in design that is not visible in the repeated-measures ANOVA, but we will show its effect in the random-effect structure and conditional modes.
 
 There are a couple of differences between the first and this follow-up experiment, rendering it more a conceptual than a direct replication.
 First, the original experiment was carried out at Peking University and this follow-up at Potsdam University.
@@ -23,17 +24,18 @@ Moreover, these individual differences in the attraction effect were negatively 
 
 This comparison is of interest because a few years after the publication of @Kliegl2010, the theoretically critical correlation parameter (CP) between the spatial effect and the attraction effect was determined as the source of a non-singular LMM in that paper.
 The present study served the purpose to estimate this parameter with a larger sample and a wider variety of experimental conditions.
-Therefore, the code in this script is largely the same as the one in `kwdyz.jl`.
+Therefore, the code in this script is largely the same as the one in `kwdyz11.qmd`.
 
 There will be another vignette modelling the additional experimental manipulations of target size and orientation of cue rectangle.
 This analysis was reported in the parsimonious mixed-model paper [@Bates2015]; they were also used in a paper of GAMMs [@Baayen2017].
 Data and R scripts are also available in [R-package RePsychLing](https://github.com/dmbates/RePsychLing/tree/master/data/).
 Here we provide some of the corresponding analyses with _MixedModels.jl_ and a much wider variety of visualizations of LMM results.
 
-## Packages
+# Packages
 
 ```{julia}
 #| code-fold: true
+#| output: false
 using Arrow
 using AlgebraOfGraphics
 using CairoMakie
@@ -59,7 +61,7 @@ ProgressMeter.ijulia_behavior(:clear)
 CairoMakie.activate!(; type="png")
 ```
 
-## Read data, compute and plot means
+# Read data, compute and plot means
 
 ```{julia}
 #| scrolled: true
@@ -223,13 +225,13 @@ describe(dat_subj_w)
 ```
 
 :::{.callout-note}
-Two of the theoreticsally irrelevant within-subject effect correlations have a different sign than the corresponding, non-significant CPs in the LMM; they are negative here, numerically positive in the LMM.
+Two of the theoretically irrelevant within-subject effect correlations have a different sign than the corresponding, non-significant CPs in the LMM; they are negative here, numerically positive in the LMM.
 This occurs only very rarely in the case of ecological correlations.
 However, as they are not significant according to shortest coverage interval, it may not be that relevant either.
 It is the case both for effects based on log-transformed and raw reaction times.
 :::
 
-## Linear mixed model
+# Linear mixed model
 
 ```{julia}
 contrasts = Dict(
@@ -275,14 +277,14 @@ issingular(m1_rt)
 
 For untransformed reaction times, we see the model is **not** singular.
 
-## Diagnostic plots of LMM residuals
+# Diagnostic plots of LMM residuals
 
 Do model residuals meet LMM assumptions? Classic plots are
 
   - Residual over fitted
   - Quantiles of model residuals over theoretical quantiles of normal distribution
 
-### Residual-over-fitted plot
+## Residual-over-fitted plot
 
 The slant in residuals show a lower and upper boundary of reaction times, that is we have have too few short and too few long residuals. Not ideal, but at least width of the residual band looks similar across the fitted values, that is there is no evidence for heteroskedasticity.
 
@@ -309,7 +311,7 @@ draw(
 )
 ```
 
-### Q-Q plot
+## Q-Q plot
 
 The plot of quantiles of model residuals over corresponding quantiles of the normal distribution should yield a straight line along the main diagonal.
 
@@ -329,7 +331,7 @@ qqnorm(m1; qqline=:none)
 qqnorm(m1_rt; qqline=:none)
 ```
 
-### Observed and theoretical normal distribution
+## Observed and theoretical normal distribution
 
 The violation of expectation is again due to the fact that the distribution of residuals is narrower than expected from a normal distribution.
 We can see this in this plot.
@@ -353,9 +355,9 @@ let
 end
 ```
 
-## Conditional modes
+# Conditional modes
 
-### Caterpillar plot
+## Caterpillar plot
 
 ```{julia}
 #| code-fold: true
@@ -404,9 +406,9 @@ Note that this effect is not visible in a repeated-measure ANOVA with four condi
 end
 ```
 
-### Shrinkage plot
+## Shrinkage plot
 
-#### Log-transformed reaction times (LMM `m1`)
+### Log-transformed reaction times (LMM `m1`)
 
 ```{julia}
 #| code-fold: true
@@ -418,7 +420,7 @@ shrinkageplot!(Figure(; resolution=(1000, 1200)), m1)
 Three of the CPs are imploded, but not the theoretically critical ones.
 These implosions did not occur (or were not as visible) for raw reaction times.
 
-#### Raw reaction times (LMM `m1_rt`)
+### Raw reaction times (LMM `m1_rt`)
 
 ```{julia}
 #| code-fold: true
@@ -430,7 +432,7 @@ shrinkageplot!(Figure(; resolution=(1000, 1200)), m1_rt)
 The implosion is for three CP visualizations is not observed for raw reaction times.
 Interesting.
 
-## Parametric bootstrap
+# Parametric bootstrap
 
 Here we
 
@@ -438,7 +440,7 @@ Here we
   - compute shortest covergage intervals for the LMM parameters
   - plot densities of bootstrapped parameter estimates for residual, fixed effects, variance components, and correlation parameters
 
-### Generate a bootstrap sample
+## Generate a bootstrap sample
 
 We generate 2500 samples for the 15 model parameters (4 fixed effect, 4 VCs, 6 CPs, and 1 residual).
 
@@ -456,7 +458,7 @@ first(dat2, 10)
 nrow(dat2) # 2500 estimates for each of 15 model parameters
 ```
 
-### Shortest coverage interval
+## Shortest coverage interval
 
 ```{julia}
 DataFrame(shortestcovint(samp))
@@ -471,9 +473,9 @@ We can also visualize the shortest coverage intervals for fixed effects with the
 ridgeplot(samp; show_intercept=false)
 ```
 
-### Comparative density plots of bootstrapped parameter estimates
+## Comparative density plots of bootstrapped parameter estimates
 
-#### Residual
+### Residual
 
 ```{julia}
 #| code-fold: true
@@ -487,7 +489,7 @@ draw(
 )
 ```
 
-#### Fixed effects and associated variance components (w/o GM)
+### Fixed effects and associated variance components (w/o GM)
 
 The shortest coverage interval for the `GM` ranges from 376 to 404 ms and the associate variance component from .15 to .21. To keep the plot range small we do not include their densities here.
 
@@ -537,7 +539,7 @@ draw(
 
 The VC are all very nicely defined.
 
-#### Correlation parameters (CPs)
+### Correlation parameters (CPs)
 
 ```{julia}
 #| code-fold: true
@@ -564,7 +566,7 @@ The corresponding plot based on LMM `m1_rt` for raw reaction times still shows t
 
 # Profiling
 
-## KKL
+# KKL
 
 ```{julia}
 # coeftable(m1)
@@ -578,7 +580,7 @@ The corresponding plot based on LMM `m1_rt` for raw reaction times still shows t
 # m1L_prf = profile(m1L)
 ```
 
-## Example
+# Example
 
 https://dmbates.quarto.pub/plotting-profiles/#the-penicillin-example
 
