@@ -5,11 +5,11 @@ jupyter: julia-1.9
 
 ```{julia}
 #| code-fold: true
-using Arrow
 using Chain
 using DataFrames
 using MixedModels
 using ProgressMeter
+using SMLP2023: dataset
 using StatsBase
 using StatsModels
 using StatsModels: ContrastsCoding
@@ -55,8 +55,7 @@ Both data sets are available in [R-package RePsychLing](https://github.com/dmbat
 ## Preprocessing {#sec-preprocessing}
 
 ```{julia}
-dat1 = @chain "./data/kwdyz11.arrow" begin
-  Arrow.Table
+dat1 = @chain dataset(:kwdyz11) begin
   DataFrame
   select!(:subj => :Subj, :tar => :CTR, :rt)
 end
@@ -144,7 +143,7 @@ The `DummyCoding` contrast has the disadvantage that the intercept returns the m
 ### YchycaeitCoding
 
 The contrasts returned by `DummyCoding` may be exactly what we want.
-Can't we have them, but also have the intercept estimate the GM, rather than the mean of the base level? Yes, we can! We call this "You can have your cake and it eat, too"-Coding (YchycaeitCoding). And we use `HpothesisCoding` to achieve this outcome.
+Can't we have them, but also have the intercept estimate the GM, rather than the mean of the base level? Yes, we can! We call this "You can have your cake and it eat, too"-Coding (YchycaeitCoding). And we use `HypothesisCoding` to achieve this outcome.
 
 ```{julia}
 m2b = let

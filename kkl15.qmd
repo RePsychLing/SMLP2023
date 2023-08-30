@@ -34,6 +34,7 @@ Here we provide some of the corresponding analyses with _MixedModels.jl_ and a m
 
 ```{julia}
 #| code-fold: true
+#| output: false
 using Arrow
 using AlgebraOfGraphics
 using CairoMakie
@@ -53,7 +54,7 @@ using AlgebraOfGraphics: boxplot
 using MixedModelsMakie: qqnorm
 using MixedModelsMakie: ridgeplot
 using MixedModelsMakie: scatter
-const datadir = joinpath(@__DIR__, "data")
+using SMLP2023: dataset
 
 ProgressMeter.ijulia_behavior(:clear)
 CairoMakie.activate!(; type="png")
@@ -63,9 +64,7 @@ CairoMakie.activate!(; type="png")
 
 ```{julia}
 #| scrolled: true
-dat = @chain "kkl15.arrow" begin
-  joinpath(datadir, _)
-  Arrow.Table
+dat = @chain dataset(:kkl15) begin
   DataFrame
   select(
     :subj =>
@@ -225,7 +224,7 @@ describe(dat_subj_w)
 ```
 
 :::{.callout-note}
-Two of the theoreticsally irrelevant within-subject effect correlations have a different sign than the corresponding, non-significant CPs in the LMM; they are negative here, numerically positive in the LMM.
+Two of the theoretically irrelevant within-subject effect correlations have a different sign than the corresponding, non-significant CPs in the LMM; they are negative here, numerically positive in the LMM.
 This occurs only very rarely in the case of ecological correlations.
 However, as they are not significant according to shortest coverage interval, it may not be that relevant either.
 It is the case both for effects based on log-transformed and raw reaction times.
@@ -450,18 +449,13 @@ samp = parametricbootstrap(MersenneTwister(1234321), 2500, m1;
 ```
 
 ```{julia}
-dat2 = DataFrame(samp.allpars)
-first(dat2, 10)
-```
-
-```{julia}
-nrow(dat2) # 2500 estimates for each of 15 model parameters
+tbl = samp.tbl
 ```
 
 ### Shortest coverage interval
 
 ```{julia}
-DataFrame(shortestcovint(samp))
+confint(samp)
 ```
 
 We can also visualize the shortest coverage intervals for fixed effects with the `ridgeplot()` command:
@@ -482,8 +476,8 @@ ridgeplot(samp; show_intercept=false)
 #| label: fig-sigmadensitym1
 #| fig-cap: '  Kernel density estimate from bootstrap samples of the residual standard  deviation for model m1L'
 draw(
-  data(@subset(dat2, :type == "σ" && :group == "residual")) *
-  mapping(:value => "Residual") *
+  data(tbl) *
+  mapping(:σ => "Residual") *
   density();
   figure=(; resolution=(800, 400)),
 )
@@ -510,10 +504,12 @@ rn = renamer([
   "CTR: dos, CTR: dod" => "object, attraction",
 ])
 draw(
-  data(@subset(dat2, :type == "β" && :names ≠ "(Intercept)")) *
+  data(tbl) *
   mapping(
-    :value => "Experimental effect size [ms]";
-    color=:names => rn => "Experimental effects",
+    [:β2, :β3, :β4] .=> "Experimental effect size [ms]";
+    color=dims(1) => 
+    renamer(["spatial effect", "object effect", "attraction effect"]) =>
+    "Experimental effects",
   ) *
   density();
   figure=(; resolution=(800, 350)),
@@ -527,10 +523,12 @@ The densitiies correspond nicely with the shortest coverage intervals.
 #| label: fig-sigmasdensitym1
 #| fig-cap: '  Kernel density estimate from bootstrap samples of the standard deviations for  model m1L (excluding Grand Mean)'
 draw(
-  data(@subset(dat2, :type == "σ" && :group == "Subj" && :names ≠ "(Intercept)") ) *
+  data(tbl) *
   mapping(
-    :value => "Standard deviations [ms]";
-    color=:names => rn => "Variance components",
+    [:σ2, :σ3, :σ4] .=> "Standard deviations [ms]";
+    color=dims(1) =>
+    renamer(["spatial effect", "object effect", "attraction effect"]) =>
+    "Variance components",
   ) *
   density();
   figure=(; resolution=(800, 350)),
@@ -546,10 +544,13 @@ The VC are all very nicely defined.
 #| label: fig-corrdensitym1
 #| fig-cap: '  Kernel density estimate from bootstrap samples of the standard deviations for  model m1L'
 draw(
-  data(@subset(dat2, :type == "ρ")) *
+  data(tbl) *
   mapping(
-    :value => "Correlation";
-    color=:names => rn => "Correlation parameters",
+    [:ρ1, :ρ2, :ρ3, :ρ4, :ρ5, :ρ6] .=> "Correlation";
+    color=dims(1) =>
+    renamer(["GM, spatial", "GM, object", "spatial, object",
+    "GM, attraction", "spatial, attraction", "object, attraction"]) =>
+    "Correlation parameters",
   ) *
   density();
   figure=(; resolution=(800, 350)),

@@ -31,6 +31,8 @@ Unlike in R, DataFrames are not part of the base language, nor the standard libr
 
 DataFrame.jl's mini language can be a bit daunting, if you're used to manipulations in the style of base R or the tidyverse. For that, there are several options; recently, we'e had particularly nice experiences with [DataFrameMacros.jl](https://github.com/jkrumbiegel/DataFrameMacros.jl) and [Chain.jl](https://github.com/jkrumbiegel/Chain.jl) for a convenient syntax to connect or "pipe" together successive operations. It's your choice whether and which of these add-ons you want to use! Phillip tends to write his code using raw DataFrames.jl, but Doug really enjoys DataFrameMacros.jl.
 
+The recently added [Tidier](https://github.com/TidierOrg/) collection of Julia packages is popular with those coming from the tidyverse.
+
 ## Regression
 
 Unlike in R, neither formula processing nor basic regression are part of the base language or the standard library.
@@ -61,7 +63,7 @@ julia > fit(
 
 ### `@formula`, macros and domain-specific languages
 
-As a sidebar: why is `@formula` a macro and not a normal function? Well, that's because formulas are essentially their own domain-specific language (a variant of [Wilkinson-Roger notation](https://www.jstor.org/stable/2346786)) and macros are used for manipulating the language itself -- or in this case, handling an entirely new, embedded language! This is also why macros are used by packages like [Turing.jl](https://turing.ml/) and [Soss.jl](https://cscherrer.github.io/Soss.jl/stable/) that define a language for Bayesian probabilistic programming like [PyMC3](https://docs.pymc.io/) or [Stan](https://mc-stan.org/).
+As a sidebar: why is `@formula` a macro and not a normal function? Well, that's because formulas are essentially their own domain-specific language (a variant of [Wilkinson-Rogers notation](https://www.jstor.org/stable/2346786)) and macros are used for manipulating the language itself -- or in this case, handling an entirely new, embedded language! This is also why macros are used by packages like [Turing.jl](https://turing.ml/) and [Soss.jl](https://cscherrer.github.io/Soss.jl/stable/) that define a language for Bayesian probabilistic programming like [PyMC3](https://docs.pymc.io/) or [Stan](https://mc-stan.org/).
 
 ### Extensions to the formula syntax
 
@@ -86,11 +88,11 @@ Classical statistical tests such as the t-test can be found in the package [Hypo
 
 ## Plotting ecosystem
 
-Throughtout this course, we have used the Makie ecosystem for plotting, but there are several alternatives in Julia.
+Throughout this course, we have used the Makie ecosystem for plotting, but there are several alternatives in Julia.
 
 ### Makie
 
-The [Makie ecosystem](https://makie.juliaplots.org/stable/) is a relatively new take on graphics that aims to be both powerful and easy to use. Makie.jl itself only provides abstract definitions for many components (and is used in e.g. MixedModelsMakie.jl to define plot types for MixedModels.jl). The actual plotting and rendering is handled by a backend package such as CairoMakie.jl (good for Quarto notebooks or rending static 2D images) and GLMakie.jl (good for dynamic, interactive visuals and 3D images). AlgebraOfGraphics.jl builds a grammar of graphics upon the Makie framework. It's a great way to get good plots very quickly, but extensive customization is still best achieved by using Makie directly.
+The [Makie ecosystem](https://makie.org/) is a relatively new take on graphics that aims to be both powerful and easy to use. Makie.jl itself only provides abstract definitions for many components (and is used in e.g. MixedModelsMakie.jl to define plot types for MixedModels.jl). The actual plotting and rendering is handled by a backend package such as CairoMakie.jl (good for Quarto notebooks or rending static 2D images) and GLMakie.jl (good for dynamic, interactive visuals and 3D images). AlgebraOfGraphics.jl builds a grammar of graphics upon the Makie framework. It's a great way to get good plots very quickly, but extensive customization is still best achieved by using Makie directly.
 
 ### Plots.jl
 

@@ -36,9 +36,8 @@ The script is structured in three main sections:
 
 ```{julia}
 #| code-fold: true
+#| output: false
 using AlgebraOfGraphics
-using AlgebraOfGraphics: linear
-using Arrow
 using CairoMakie
 using Chain
 using CategoricalArrays
@@ -46,10 +45,11 @@ using DataFrames
 using DataFrameMacros
 using MixedModels
 using ProgressMeter
+using SMLP2023: dataset
 using Statistics
 using StatsBase
 
-ProgressMeter.ijulia_behavior(:clear);
+ProgressMeter.ijulia_behavior(:clear)
 ```
 
 ### 1.1 Readme for './data/fggk21.rds'
@@ -76,7 +76,7 @@ Number of scores: 525126
 #### 1.2.1 Read data
 
 ```{julia}
-tbl = Arrow.Table("./data/fggk21.arrow")
+tbl = dataset(:fggk21)
 ```
 
 ```{julia}

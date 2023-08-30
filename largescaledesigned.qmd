@@ -8,6 +8,7 @@ Load the packages to be used.
 
 ```{julia}
 #| code-fold: true
+#| output: false
 using AlgebraOfGraphics
 using Arrow
 using CairoMakie
@@ -18,12 +19,12 @@ using Effects
 using MixedModels
 using MixedModelsMakie
 using ProgressMeter
+using SMLP2023: dataset
 using StandardizedPredictors
 using StatsBase
 
-datadir(paths::AbstractString...) = joinpath(@__DIR__, "data", paths...)
-CairoMakie.activate!(; type="svg");
-ProgressMeter.ijulia_behavior(:clear);
+CairoMakie.activate!(; type="svg")
+ProgressMeter.ijulia_behavior(:clear)
 ```
 
 The English Lexicon Project [@Balota_2007] was a large-scale multicenter study to examine properties of English words.
@@ -59,7 +60,7 @@ Several covariates, some relating to the subject and some relating to the target
 Initially we consider only the trial-level data.
 
 ```{julia}
-ldttrial = Arrow.Table(datadir("ELP_ldt_trial.arrow"))
+ldttrial = dataset(:ELP_ldt_trial)
 ```
 
 The two response variables are `acc` - the accuracy of the response - and `rt`, the response time in milliseconds.
@@ -71,7 +72,7 @@ Notice the metadata with a citation and a URL for the OSF project.
 We convert to a DataFrame and add a Boolean column `s2` which is `true` for trials in the second session.
 
 ```{julia}
-ldttrial = @transform!(DataFrame(ldttrial), :s2 = :seq > 2000)
+ldttrial = @transform(DataFrame(ldttrial), :s2 = :seq > 2000)
 describe(ldttrial)
 ```
 
@@ -432,7 +433,7 @@ The small amount of curvature is associated with short word lengths, say less th
 
 ```{julia}
 #| code-fold: true
-#| fig-cap: "Empirical density of response speed versus word length by word/non-word status, with lines fit by linear regression to each group."
+#| fig-cap: "Empirical density of response speed versus word length by word/non-word status."
 #| label: fig-speedviolin
 let
   plt = data(@subset(pruned, :wrdlen > 3, :wrdlen < 14))
@@ -442,7 +443,7 @@ let
     color=:isword,
     side=:isword,
   )
-  plt *= (visual(Violin) + linear(; interval=:confidence))
+  plt *= visual(Violin)
   draw(plt, axis=(; limits=(nothing, (0.0, 2.8))))
 end
 ```
@@ -594,14 +595,14 @@ elm01a = restoreoptsum!(
 Other covariates associated with the item are available as
 
 ```{julia}
-elpldtitem = DataFrame(Arrow.Table(datadir("ELP_ldt_item.arrow")))
+elpldtitem = DataFrame(dataset(:ELP_ldt_item))
 describe(elpldtitem)
 ```
 
 and those associated with the subject are
 
 ```{julia}
-elpldtsubj = DataFrame(Arrow.Table(datadir("ELP_ldt_subj.arrow")))
+elpldtsubj = DataFrame(dataset(:ELP_ldt_subj))
 describe(elpldtsubj)
 ```
 
