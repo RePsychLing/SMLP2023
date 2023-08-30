@@ -37,3 +37,5 @@ _build/
 *R_files/
 
 .gitignore
+# the .luarc file contains an absolute path name to the quarto executable
+.luarc.json

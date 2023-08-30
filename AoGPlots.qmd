@@ -4,7 +4,7 @@ title: "Creating multi-panel plots"
 
 This notebook shows creating a multi-panel plot similar to Figure 2 of @Fuehner2021.
 
-The data have been saved as an Arrow-format file.
+The data are available from the SMLP2023 example datasets.
 
 ```{julia}
 #| code-fold: true
@@ -14,13 +14,13 @@ using CairoMakie   # for displaying static plots
 using DataFrames
 using Statistics
 using StatsBase
+using SMLP2023: dataset
 
 CairoMakie.activate!(; type="svg") # use SVG (other options include PNG)
-datadir = joinpath(@__DIR__, "data");
 ```
 
 ```{julia}
-tbl = Arrow.Table(joinpath(datadir, "fggk21.arrow"))
+tbl = dataset("fggk21")
 ```
 
 ```{julia}
@@ -32,7 +32,7 @@ df = DataFrame(tbl)
 typeof(df)
 ```
 
-## Creating a summary data frame
+# Creating a summary data frame
 
 The response to be plotted is the mean score by `Test` and `Sex` and `age`, rounded to the nearest 0.1 years.
 
@@ -73,7 +73,7 @@ df2 = combine(
 )
 ```
 
-## Creating the plot
+# Creating the plot
 
 The `AlgebraOfGraphics` package applies operators to the results of functions such as `data` (specify the data table to be used), `mapping` (designate the roles of columns), and `visual` (type of visual presentation).
 

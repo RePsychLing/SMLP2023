@@ -19,12 +19,13 @@ using Effects
 using MixedModels
 using MixedModelsMakie
 using ProgressMeter
+using SMLP2023
 using SMLP2023: dataset
 using StandardizedPredictors
 using StatsBase
 
-CairoMakie.activate!(; type="svg")
-ProgressMeter.ijulia_behavior(:clear)
+CairoMakie.activate!(; type="svg");
+ProgressMeter.ijulia_behavior(:clear);
 ```
 
 The English Lexicon Project [@Balota_2007] was a large-scale multicenter study to examine properties of English words.
@@ -595,14 +596,14 @@ elm01a = restoreoptsum!(
 Other covariates associated with the item are available as
 
 ```{julia}
-elpldtitem = DataFrame(dataset(:ELP_ldt_item))
+elpldtitem = DataFrame(dataset("ELP_ldt_item"))
 describe(elpldtitem)
 ```
 
 and those associated with the subject are
 
 ```{julia}
-elpldtsubj = DataFrame(dataset(:ELP_ldt_subj))
+elpldtsubj = DataFrame(dataset("ELP_ldt_subj"))
 describe(elpldtsubj)
 ```
 

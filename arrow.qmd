@@ -1,9 +1,9 @@
 ---
-title: "Notes on saved data files"
+title: "Saving data with Arrow"
 jupyter: julia-1.9
 ---
 
-## The Arrow storage format
+# The Arrow storage format
 
 The [Arrow storage format](https://arrow.apache.org) provides a language-agnostic storage and memory specification for columnar data tables, which just means "something that looks like a data frame in R".  That is, an arrow table is an ordered, named collection of columns, all of the same length.
 
@@ -11,7 +11,9 @@ The columns can be of different types including numeric values, character string
 
 An Arrow file can be read or written from R, Python, Julia and many other languages.  Somewhat confusingly in R and Python the name `feather`, which refers to an earlier version of the storage format, is used in some function names like `read_feather`.
 
-## The Emotikon data
+Internally, the SMLP2023 package uses Arrow to store all of its datasets.
+
+# The Emotikon data
 
 The [SMLP2021 repository](https://github.com/RePsychling/SMLP2021) contains a version of the data from @Fuehner2021 in `notebooks/data/fggk21.arrow`.
 After that file was created there were changes in the master RDS file on the [osf.io site](https://osf.io/2d8rj/) for the project.
@@ -27,6 +29,7 @@ Load the packages to be used.
 
 ```{julia}
 #| code-fold: true
+#| output: false
 using AlgebraOfGraphics
 using Arrow
 using CairoMakie
@@ -42,7 +45,7 @@ CairoMakie.activate!(; type="svg")
 using AlgebraOfGraphics: density
 ```
 
-## Downloading and importing the RDS file
+# Downloading and importing the RDS file
 
 This is similar to some of the code shown by Julius Krumbiegel on Monday.
 In the data directory of the emotikon project on osf.io under Data, the url for the rds data file is found to be [https://osf.io/xawdb/].  Note that we want version 2 of this file.
@@ -71,7 +74,7 @@ filesize(arrowfn)
 df = DataFrame(tbl)
 ```
 
-## Avoiding needless repetition
+# Avoiding needless repetition
 
 One of the principles of relational database design is that information should not be repeated needlessly.
 Each row of `df` is determined by a combination of `Child` and `Test`, together producing a `score`, which can be converted to a `zScore`.
@@ -89,7 +92,7 @@ Thus the processing penalty of reassembling the big table from three smaller tab
 
 It is important to note that the main advantage of using smaller tables that are joined together to produce the analysis table is the fact that the information in the analysis table is consistent by design.
 
-## Creating the smaller table
+# Creating the smaller table
 
 ```{julia}
 Child = unique(select(df, :Child, :School, :Cohort, :Sex, :age))
@@ -144,9 +147,9 @@ df1 = disallowmissing!(leftjoin(Score, Child; on=:Child))
 The call to `disallowmissing!` is because the join will create columns that allow for missing values but we know that we should not get missing values in the result.  This call will fail if, for some reason, missing values were created.
 :::
 
-## Discovering patterns in the data
+# Discovering patterns in the data
 
-One of the motivations for creating the `Child` table was be able to bin the ages according to the age of each child, not the age of each `Child-Test` combination.
+One of the motivations for creating the `Child` table was to be able to bin the ages according to the age of each child, not the age of each `Child-Test` combination.
 Not all children have all 5 test results.
 We can check the number of results by grouping on `:Child` and evaluate the number of rows in each group.
 
@@ -182,92 +185,7 @@ combine(groupby(first(gdf), :Sex), nrow => :nchild)
 combine(groupby(last(gdf), :Sex), nrow => :nchild)
 ```
 
-What about the distribution of ages?
-
-```{julia}
-#| eval: false
-"""
-	ridgeplot!(ax::Axis, df::AbstractDataFrame, densvar::Symbol, group::Symbol; normalize=false)
-	ridgeplot!(f::Figure, args...; pos=(1,1) kwargs...)
-	ridgeplot(args...; kwargs...)
-Create a "ridge plot".
-A ridge plot is stacked plot of densities for a given variable (`densvar`) grouped by a different variable (`group`). Because densities can very widely in scale, it is sometimes useful to `normalize` the densities so that each density has a maximum of 1.
-The non-mutating method creates a Figure before calling the method for Figure.
-The method for Figure places the ridge plot in the grid position specified by `pos`, default is (1,1).
-"""
-function ridgeplot!(
-  ax::Axis,
-  df::AbstractDataFrame,
-  densvar::Symbol,
-  group::Symbol;
-  normalize=false,
-)
-  # `normalize` makes it so that the max density is always 1
-  # `normalize` works on the density not the area/mass
-  gdf = groupby(df, group)
-  dens = combine(gdf, densvar => kde => :kde)
-  sort!(dens, group)
-  spacing = normalize ? 1.0 : 0.9 * maximum(dens[!, :kde]) do val
-    return maximum(val.density)
-  end
-
-  nticks = length(gdf)
-
-  for (idx, row) in enumerate(eachrow(dens))
-    dd = if normalize
-      row.kde.density ./ maximum(row.kde.density)
-    else
-      row.kde.density
-    end
-
-    offset = idx * spacing
-
-    lower = Observable(Point2f.(row.kde.x, offset))
-    upper = Observable(Point2f.(row.kde.x, dd .+ offset))
-    band!(ax, lower, upper; color=(:black, 0.3))
-    lines!(ax, upper; color=(:black, 1.0))
-  end
-
-  ax.yticks[] = (
-    1:spacing:(nticks * spacing), string.(dens[!, group])
-  )
-  ylims!(ax, 0, (nticks + 2) * spacing)
-  ax.xlabel[] = string(densvar)
-  ax.ylabel[] = string(group)
-
-  return ax
-end
-```
-
-```{julia}
-#| eval: false
-function ridgeplot!(f::Figure, args...; pos=(1, 1), kwargs...)
-  ridgeplot!(Axis(f[pos...]), args...; kwargs...)
-  return f
-end
-```
-
-```{julia}
-#| eval: false
-"""
-	ridgeplot(args...; kwargs...)
-See [ridgeplot!](@ref).
-"""
-function ridgeplot(args...; kwargs...)
-  return ridgeplot!(Figure(), args...; kwargs...)
-end
-```
-
-```{julia}
-#| eval: false
-ridgeplot(parent(gdf), :age, :ntest)
-```
-
-```{julia}
-parent(gdf)
-```
-
-## Reading Arrow files in other languages
+# Reading Arrow files in other languages
 
 There are Arrow implementations for R (the `arrow` package) and for Python (`pyarrow`).
 

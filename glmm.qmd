@@ -17,7 +17,6 @@ using ProgressMeter
 
 CairoMakie.activate!(; type="svg");
 ProgressMeter.ijulia_behavior(:clear);
-datadir = joinpath(@__DIR__, "data");
 ```
 
   - A GLMM (Generalized Linear Mixed Model) is used instead of a LMM (Linear Mixed Model) when the response is binary or, perhaps, a count with a low expected count.
