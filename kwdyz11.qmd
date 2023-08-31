@@ -6,7 +6,7 @@ author: "Reinhold Kliegl"
 
 # Background
 
-We take the `kwdyz11.arrow` dataset [@Kliegl2010] from an experiment looking at three effects of visual cueing under four different cue-target relations (CTRs).
+We take the `kwdyz11` dataset [@Kliegl2010] from an experiment looking at three effects of visual cueing under four different cue-target relations (CTRs).
 Two horizontal rectangles are displayed above and below a central fixation point or they displayed in vertical orientation to the left and right of the fixation point.
 Subjects react to the onset of a small visual target occuring at one of the four ends of the two rectangles.
 The target is cued validly on 70% of trials by a brief flash of the corner of the rectangle at which it appears; it is cued invalidly at the three other locations 10% of the trials each.
@@ -17,7 +17,7 @@ Nevertheless, there was a highly reliable variance component (VC) estimated for 
 Moreover, the reliable individual differences in the attraction effect were negatively correlated with those in the spatial effect.
 
 Unfortunately, a few years after the publication, we determined that the reported LMM is actually singular and that the singularity is linked to a theoretically critical correlation parameter (CP) between the spatial effect and the attraction effect.
-Fortunately, there is also a larger dataset `kkl15.arrow` from a replication and extension of this study [@Kliegl2015], analyzed with `kkl15.jl` notebook.
+Fortunately, there is also a larger dataset `kkl15` from a replication and extension of this study [@Kliegl2015], analyzed with `kkl15.jl` notebook.
 The critical CP (along with other fixed effects and CPs) was replicated in this study.
 
 A more comprehensive analysis was reported in the parsimonious mixed-model paper [@Bates2015].
