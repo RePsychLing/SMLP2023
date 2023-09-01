@@ -5,7 +5,6 @@ jupyter: julia-1.9
 
 ```{julia}
 #| code-fold: true
-using Arrow
 using Chain
 using DataFrames
 using MixedModels
@@ -42,7 +41,7 @@ For further readings see “Further Readings” in Schad et al. (2020).
 
 # Example data {#sec-data}
 
-We take the `KWDYZ` dataset [@Kliegl2010].
+We take the `KWDYZ` dataset from @Kliegl2010.
 This is an experiment looking at three effects of visual cueing under four different cue-target relations (CTRs).
 Two horizontal rectangles are displayed above and below a central fixation point or they displayed in vertical orientation to the left and right of the fixation point.
 Subjects react to the onset of a small visual target occuring at one of the four ends of the two rectangles.
@@ -74,6 +73,7 @@ cellmeans = combine(
 We use the same formula for all analyses
 
 ```{julia}
+#| output: false
 form = @formula rt ~ 1 + CTR + (1 + CTR | Subj)
 ```
 
@@ -94,7 +94,6 @@ The `SeqDiffCoding` contrast corresponds to `MASS::contr.sdif()` in R.
 The assignment of random factors such as `Subj` to `Grouping()` is necessary when the sample size is very large. We recommend to include it always, but in this tutorial we do so only in the first example.
 
 ```{julia}
-form = @formula rt ~ 1 + CTR + (1 + CTR | Subj)
 levels = ["val", "sod", "dos", "dod"]
 m1 = let
   contrasts = Dict(
@@ -144,7 +143,7 @@ The `DummyCoding` contrast has the disadvantage that the intercept returns the m
 ## YchycaeitCoding
 
 The contrasts returned by `DummyCoding` may be exactly what we want.
-Can't we have them, but also have the intercept estimate the GM, rather than the mean of the base level? Yes, we can! We call this "You can have your cake and it eat, too"-Coding (YchycaeitCoding). And we use `HpothesisCoding` to achieve this outcome.
+Can't we have them, but also have the intercept estimate the GM, rather than the mean of the base level? Yes, we can! We call this "You can have your cake and it eat, too"-Coding (YchycaeitCoding). And we use `HypothesisCoding` to achieve this outcome.
 
 ```{julia}
 m2b = let

@@ -6,7 +6,7 @@ author: "Reinhold Kliegl"
 
 # Background
 
-We take the `kwdyz11.arrow` dataset [@Kliegl2010] from an experiment looking at three effects of visual cueing under four different cue-target relations (CTRs).
+We take the `kwdyz11` dataset [@Kliegl2010] from an experiment looking at three effects of visual cueing under four different cue-target relations (CTRs).
 Two horizontal rectangles are displayed above and below a central fixation point or they displayed in vertical orientation to the left and right of the fixation point.
 Subjects react to the onset of a small visual target occuring at one of the four ends of the two rectangles.
 The target is cued validly on 70% of trials by a brief flash of the corner of the rectangle at which it appears; it is cued invalidly at the three other locations 10% of the trials each.
@@ -17,7 +17,7 @@ Nevertheless, there was a highly reliable variance component (VC) estimated for 
 Moreover, the reliable individual differences in the attraction effect were negatively correlated with those in the spatial effect.
 
 Unfortunately, a few years after the publication, we determined that the reported LMM is actually singular and that the singularity is linked to a theoretically critical correlation parameter (CP) between the spatial effect and the attraction effect.
-Fortunately, there is also a larger dataset `kkl15.arrow` from a replication and extension of this study [@Kliegl2015], analyzed with `kkl15.jl` notebook.
+Fortunately, there is also a larger dataset `kkl15` from a replication and extension of this study [@Kliegl2015], analyzed with `kkl15.jl` notebook.
 The critical CP (along with other fixed effects and CPs) was replicated in this study.
 
 A more comprehensive analysis was reported in the parsimonious mixed-model paper [@Bates2015].
@@ -28,6 +28,7 @@ In this and the complementary `kkl15.jl` scripts, we provide some corresponding 
 
 ```{julia}
 #| code-fold: true
+#| output: false
 using Arrow
 using AlgebraOfGraphics
 using CairoMakie
@@ -43,11 +44,13 @@ using SMLP2023
 using SMLP2023: dataset
 using StatsBase
 using Statistics
+
 using AlgebraOfGraphics: density
 using AlgebraOfGraphics: boxplot
+using SMLP2023: dataset
 
 CairoMakie.activate!(; type="svg")
-ProgressMeter.ijulia_behavior(:clear);
+ProgressMeter.ijulia_behavior(:clear)
 ```
 
 # Read data, compute and plot densities and means
@@ -295,12 +298,7 @@ We generate 2500 samples for the 15 model parameters (4 fixed effect, 4 VCs, 6 C
 #| code-fold: true
 Random.seed!(1234321)
 samp = parametricbootstrap(2500, m1; hide_progress=true)
-dat2 = DataFrame(samp.allpars)
-first(dat2, 10)
-```
-
-```{julia}
-nrow(dat2) # 2500 estimates for each of 15 model parameters
+tbl = samp.tbl
 ```
 
 ## Shortest coverage interval
@@ -311,7 +309,7 @@ The other intervals do not exhibit such pathologies; they appear to be ok.
 
 ```{julia}
 #| code-fold: true
-DataFrame(shortestcovint(samp))
+confint(samp)
 ```
 
 ## Comparative density plots of bootstrapped parameter estimates
@@ -322,8 +320,8 @@ DataFrame(shortestcovint(samp))
 #| code-fold: true
 #| label: fig-residstddevdens
 draw(
-  data(@subset(dat2, :type == "σ", ismissing(:names))) *
-  mapping(:value => "Residual standard deviation") *
+  data(tbl) *
+  mapping(:σ => "Residual standard deviation") *
   density();
 )
 ```
@@ -344,10 +342,11 @@ labels = [
   "(Intercept)" => "grand mean",
 ]
 draw(
-  data(@subset(dat2, :type == "β" && :names ≠ "(Intercept)")) *
+  data(tbl) *
   mapping(
-    :value => "Experimental effect size [ms]";
-    color=:names => renamer(labels) => "Experimental effects",
+    [:β2, :β3, :β4] .=> "Experimental effect size [ms]";
+    color=dims(1) => renamer(["spatial", "object", "attraction"] .* " effect") =>
+    "Experimental effects",
   ) *
   density();
 )
@@ -362,10 +361,12 @@ The densitiies correspond nicely with the shortest coverage intervals.
 #| fig-cap: "Comparative density plots of the variance components for model m1"
 #| label: fig-m1varcompdens
 draw(
-  data(@subset(dat2, :type == "σ" && :group == "Subj")) *
+  data(tbl) *
   mapping(
-    :value => "Standard deviations [ms]";
-    color=:names => renamer(labels) => "Variance components",
+    [:σ1, :σ2, :σ3, :σ4] .=> "Standard deviations [ms]";
+    color=dims(1) => 
+    renamer(append!(["Grand mean"],["spatial", "object", "attraction"] .* " effect")) =>
+    "Variance components",
   ) *
   density();
 )
@@ -389,10 +390,10 @@ let
     "CTR: dos, CTR: dod" => "object, attraction",
   ]
   draw(
-    data(@subset(dat2, :type == "ρ")) *
+    data(tbl) *
     mapping(
-      :value => "Correlation";
-      color=:names => renamer(labels) => "Correlation parameters",
+      [:ρ1, :ρ2, :ρ3, :ρ4, :ρ5, :ρ6] .=> "Correlation";
+      color=dims(1) => renamer(last.(labels)) => "Correlation parameters",
     ) *
     density();
   )

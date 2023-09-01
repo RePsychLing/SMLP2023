@@ -36,9 +36,9 @@ The tables produced by reading an Arrow file have their own representation of fa
 
 DataFrame.jl's mini language can be a bit daunting, if you're used to manipulations in the style of base R or the tidyverse. For that, there are several options; recently, we'e had particularly nice experiences with [DataFrameMacros.jl](https://github.com/jkrumbiegel/DataFrameMacros.jl) and [Chain.jl](https://github.com/jkrumbiegel/Chain.jl) for a convenient syntax to connect or "pipe" together successive operations. It's your choice whether and which of these add-ons you want to use! Phillip tends to write his code using raw DataFrames.jl, but Doug really enjoys DataFrameMacros.jl.
 
-There's also [Tidier.jl](https://tidierorg.github.io/Tidier.jl/stable/), which is "a 100% Julia implementation of the R tidyverse mini-language in Julia". Phillip and Doug aren't huge fans of this package because it encourages patterns from R that they consider problematic, but each user can choose their own path. 😃
+The recently added [Tidier](https://github.com/TidierOrg/) collection of Julia packages is popular with those coming from the tidyverse.
 
-# Regression
+## Regression
 
 Unlike in R, neither formula processing nor basic regression are part of the base language or the standard library.
 
@@ -93,11 +93,11 @@ Classical statistical tests such as the t-test can be found in the package [Hypo
 
 # Plotting ecosystem
 
-Throughtout this course, we have used the Makie ecosystem for plotting, but there are several alternatives in Julia.
+Throughout this course, we have used the Makie ecosystem for plotting, but there are several alternatives in Julia.
 
 ## Makie
 
-The [Makie ecosystem](https://makie.juliaplots.org/stable/) is a relatively new take on graphics that aims to be both powerful and easy to use. Makie.jl itself only provides abstract definitions for many components (and is used in e.g. MixedModelsMakie.jl to define plot types for MixedModels.jl). The actual plotting and rendering is handled by a backend package such as CairoMakie.jl (good for Quarto notebooks or rending static 2D images) and GLMakie.jl (good for dynamic, interactive visuals and 3D images). AlgebraOfGraphics.jl builds a grammar of graphics upon the Makie framework. It's a great way to get good plots very quickly, but extensive customization is still best achieved by using Makie directly.
+The [Makie ecosystem](https://makie.org/) is a relatively new take on graphics that aims to be both powerful and easy to use. Makie.jl itself only provides abstract definitions for many components (and is used in e.g. MixedModelsMakie.jl to define plot types for MixedModels.jl). The actual plotting and rendering is handled by a backend package such as CairoMakie.jl (good for Quarto notebooks or rending static 2D images) and GLMakie.jl (good for dynamic, interactive visuals and 3D images). AlgebraOfGraphics.jl builds a grammar of graphics upon the Makie framework. It's a great way to get good plots very quickly, but extensive customization is still best achieved by using Makie directly.
 
 ## Plots.jl
 

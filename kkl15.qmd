@@ -6,7 +6,7 @@ author: "Reinhold Kliegl"
 
 # Background
 
-@Kliegl2015 is a follow-up to @Kliegl2010 (see also script `mmt_kwdyz11.qmd`) from an experiment looking at a variety of effects of visual cueing under four different cue-target relations (CTRs).
+@Kliegl2015 is a follow-up to @Kliegl2010 (see also script `kwdyz11.qmd`) from an experiment looking at a variety of effects of visual cueing under four different cue-target relations (CTRs).
 In this experiment two rectangles are displayed (1) in horizontal orientation , (2) in vertical orientation, (3) in left diagonal orientation, or in (4) right diagonal orientation relative to a central fixation point.
 Subjects react to the onset of a small or a large visual target occuring at one of the four ends of the two rectangles.
 The target is cued validly on 70% of trials by a brief flash of the corner of the rectangle at which it appears; it is cued invalidly at the three other locations 10% of the trials each.
@@ -56,6 +56,7 @@ using AlgebraOfGraphics: boxplot
 using MixedModelsMakie: qqnorm
 using MixedModelsMakie: ridgeplot
 using MixedModelsMakie: scatter
+using SMLP2023: dataset
 
 ProgressMeter.ijulia_behavior(:clear)
 CairoMakie.activate!(; type="png")
@@ -117,7 +118,7 @@ describe(dat_subj)
 
 ```{julia}
 #| code-fold: true
-#| fig-cap: Comparative boxplots of mean response by subject under different conditions
+#| fig-cap: Comparative boxplots of mean log response time by subject under different conditions
 #| label: fig-bxpltsubjcond
 boxplot(
   dat_subj.CTR.refs,
@@ -145,7 +146,7 @@ We remove the outlier subject and replot, but we model the data points in `dat` 
 
 ```{julia}
 #| code-fold: true
-#| fig-cap: 'Comparative boxplots of mean response by subject under different conditions without outlier'
+#| fig-cap: 'Comparative boxplots of mean log response time by subject under different conditions without outlier'
 #| label: fig-bxpltsubjcond2
 let
   dat_subj2 = @subset(dat_subj, :rt_m < 510)
@@ -174,7 +175,7 @@ A better alternative to the boxplot is often a dotplot, because it also displays
 
 **To be done**
 
-For the next set of plots we average subjects' data within the four experimental conditions.
+For the next set of plots we average subjects' data within each of the four experimental conditions.
 This table could be used as input for a repeated-measures ANOVA.
 
 ```{julia}
@@ -212,16 +213,6 @@ dat_subj_w = @chain dat_subj begin
   )
 end
 describe(dat_subj_w)
-```
-
-```{julia}
-#| eval: false
-#@df dat_subj_w StatsPlots.corrplot(cols(2:5), grid = false, compact=false)
-```
-
-```{julia}
-#| eval: false
-#@df dat_subj_w StatsPlots.corrplot(cols(6:9), grid = false, compact=false)
 ```
 
 :::{.callout-note}
@@ -450,18 +441,13 @@ samp = parametricbootstrap(MersenneTwister(1234321), 2500, m1;
 ```
 
 ```{julia}
-dat2 = DataFrame(samp.allpars)
-first(dat2, 10)
-```
-
-```{julia}
-nrow(dat2) # 2500 estimates for each of 15 model parameters
+tbl = samp.tbl
 ```
 
 ## Shortest coverage interval
 
 ```{julia}
-DataFrame(shortestcovint(samp))
+confint(samp)
 ```
 
 We can also visualize the shortest coverage intervals for fixed effects with the `ridgeplot()` command:
@@ -482,8 +468,8 @@ ridgeplot(samp; show_intercept=false)
 #| label: fig-sigmadensitym1
 #| fig-cap: '  Kernel density estimate from bootstrap samples of the residual standard  deviation for model m1L'
 draw(
-  data(@subset(dat2, :type == "σ" && :group == "residual")) *
-  mapping(:value => "Residual") *
+  data(tbl) *
+  mapping(:σ => "Residual") *
   density();
   figure=(; resolution=(800, 400)),
 )
@@ -510,10 +496,12 @@ rn = renamer([
   "CTR: dos, CTR: dod" => "object, attraction",
 ])
 draw(
-  data(@subset(dat2, :type == "β" && :names ≠ "(Intercept)")) *
+  data(tbl) *
   mapping(
-    :value => "Experimental effect size [ms]";
-    color=:names => rn => "Experimental effects",
+    [:β2, :β3, :β4] .=> "Experimental effect size [ms]";
+    color=dims(1) => 
+    renamer(["spatial effect", "object effect", "attraction effect"]) =>
+    "Experimental effects",
   ) *
   density();
   figure=(; resolution=(800, 350)),
@@ -527,10 +515,12 @@ The densitiies correspond nicely with the shortest coverage intervals.
 #| label: fig-sigmasdensitym1
 #| fig-cap: '  Kernel density estimate from bootstrap samples of the standard deviations for  model m1L (excluding Grand Mean)'
 draw(
-  data(@subset(dat2, :type == "σ" && :group == "Subj" && :names ≠ "(Intercept)") ) *
+  data(tbl) *
   mapping(
-    :value => "Standard deviations [ms]";
-    color=:names => rn => "Variance components",
+    [:σ2, :σ3, :σ4] .=> "Standard deviations [ms]";
+    color=dims(1) =>
+    renamer(["spatial effect", "object effect", "attraction effect"]) =>
+    "Variance components",
   ) *
   density();
   figure=(; resolution=(800, 350)),
@@ -546,10 +536,13 @@ The VC are all very nicely defined.
 #| label: fig-corrdensitym1
 #| fig-cap: '  Kernel density estimate from bootstrap samples of the standard deviations for  model m1L'
 draw(
-  data(@subset(dat2, :type == "ρ")) *
+  data(tbl) *
   mapping(
-    :value => "Correlation";
-    color=:names => rn => "Correlation parameters",
+    [:ρ1, :ρ2, :ρ3, :ρ4, :ρ5, :ρ6] .=> "Correlation";
+    color=dims(1) =>
+    renamer(["GM, spatial", "GM, object", "spatial, object",
+    "GM, attraction", "spatial, attraction", "object, attraction"]) =>
+    "Correlation parameters",
   ) *
   density();
   figure=(; resolution=(800, 350)),

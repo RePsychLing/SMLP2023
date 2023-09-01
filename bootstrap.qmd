@@ -26,20 +26,22 @@ A technical description of the covariance parameter can be found in the [MixedMo
 Lisa Schwetlick and Daniel Backhaus have provided a more beginner-friendly description of the covariance parameter in the [documentation for MixedModelsSim.jl](https://repsychling.github.io/MixedModelsSim.jl/v0.2.6/simulation_tutorial/).
 For today's purposes -- looking at the uncertainty in the estimates from a fitted model -- we can simply use values from the fitted model, but we will revisit the parametric bootstrap as a convenient way to simulate new data, potentially with different parameter values, for power analysis.
 
-For example, a simple linear mixed-effects model for the `Dyestuff` data in the [`lme4`](http://github.com/lme4/lme4)
-package for [`R`](https://www.r-project.org) is fit by
-
+Attach the packages to be used
 ```{julia}
+#| code-fold: true
+#| output: false
 using AlgebraOfGraphics
 using CairoMakie
 using DataFrames
 using MixedModels
 using MixedModelsMakie
-using ProgressMeter
 using Random
+using SMLP2023: dataset
 
 using AlgebraOfGraphics: AlgebraOfGraphics as AoG
 CairoMakie.activate!(; type="svg") # use SVG (other options include PNG)
+
+import ProgressMeter
 ProgressMeter.ijulia_behavior(:clear);
 ```
 
@@ -51,7 +53,7 @@ For exact reproducibility, you either need to have the exact same Julia version 
 The `kb07` data [@Kronmueller2007] are one of the datasets provided by the `MixedModels` package.
 
 ```{julia}
-kb07 = MixedModels.dataset(:kb07)
+kb07 = dataset(:kb07)
 ```
 
 Convert the table to a DataFrame for summary.
@@ -64,6 +66,7 @@ describe(kb07)
 The experimental factors; `spkr`, `prec`, and `load`, are two-level factors.
 
 ```{julia}
+#| output: false
 contrasts = Dict(:spkr => EffectsCoding(),
                  :prec => EffectsCoding(),
                  :load => EffectsCoding(),
@@ -115,36 +118,30 @@ These two models are nested and can be compared with a likelihood-ratio test.
 MixedModels.likelihoodratiotest(m0, m1)
 ```
 
-The p-value of approximately 14% leads us to prefer the simpler model, `m1`, to the more complex, `m0`.
+The p-value of approximately 20% leads us to prefer the simpler model, `m1`, to the more complex, `m0`.
 
 # Bootstrap basics
 
-To bootstrap the model parameters, first initialize a random number generator then create a bootstrap sample
+To bootstrap the model parameters, first initialize a random number generator then create a bootstrap sample and extract the table of parameter estimates from it.
 
 ```{julia}
 const RNG = MersenneTwister(42)
-samp = parametricbootstrap(RNG, 1_000, m1)
-df = DataFrame(samp.allpars)
-first(df, 10)
+samp = parametricbootstrap(RNG, 5_000, m1)
+tbl = samp.tbl
 ```
 
-Especially for those with a background in [`R`](https://www.R-project.org/) or [`pandas`](https://pandas.pydata.org),
-the simplest way of accessing the parameter estimates in the parametric bootstrap object is to create a `DataFrame` from the `allpars` property as shown above.
-
-We can use `subset` to subset out relevant rows of a dataframe.
-A density plot of the estimates of `σ`, the residual standard deviation, can be created as
+An empirical density plot of the estimates of the residual standard deviation is obtained as
 ```{julia}
-σres = subset(df, :type => ByRow(==("σ")), :group => ByRow(==("residual")); skipmissing=true)
-
-plt = data(σres) * mapping(:value) * AoG.density()
+plt = data(tbl) * mapping(:σ) * AoG.density()
 draw(plt; axis=(;title="Parametric bootstrap estimates of σ"))
 ```
 
 A density plot of the estimates of the standard deviation of the random effects is obtained as
 ```{julia}
-σsubjitem = subset(df, :type => ByRow(==("σ")), :group => ByRow(!=("residual")); skipmissing=true)
-
-plt = data(σsubjitem) * mapping(:value; layout=:names, color=:group) * AoG.density()
+plt = data(tbl) * mapping(
+  [:σ1, :σ2, :σ3] .=> "Bootstrap replicates of standard deviations";
+  color=dims(1) => renamer(["Item intercept", "Item speaker", "Subj"])
+) * AoG.density()
 draw(plt; figure=(;supertitle="Parametric bootstrap estimates of variance components"))
 ```
 
@@ -154,12 +151,7 @@ The shortest such intervals, obtained with the `shortestcovint` extractor, corre
 
 We generate these for all random and fixed effects:
 ```{julia}
-shortestcovint(samp)
-```
-
-and convert it to a dataframe:
-```{julia}
-DataFrame(shortestcovint(samp))
+confint(samp)
 ```
 
 ```{julia}
@@ -188,21 +180,19 @@ ridgeplot(samp; show_intercept=false, xlabel="Bootstrap density and 95%CI")
 Let's consider the classic dysetuff dataset:
 
 ```{julia}
-dyestuff = MixedModels.dataset(:dyestuff)
+dyestuff = dataset(:dyestuff)
 mdye = fit(MixedModel, @formula(yield ~ 1 + (1 | batch)), dyestuff)
 ```
 
 
 ```{julia}
+#| warning: false
 sampdye = parametricbootstrap(MersenneTwister(1234321), 10_000, mdye)
-dfdye = DataFrame(sampdye.allpars)
-first(dfdye, 10)
+tbldye = sampdye.tbl
 ```
 
 ```{julia}
-σbatch = subset(dfdye, :type => ByRow(==("σ")), :group => ByRow(==("batch")); skipmissing=true)
-
-plt = data(σbatch) * mapping(:value) * AoG.density()
+plt = data(tbldye) * mapping(:σ1) * AoG.density()
 draw(plt; axis=(;title="Parametric bootstrap estimates of σ_batch"))
 ```
 
@@ -211,7 +201,7 @@ Although this mode appears to be diffuse, this is an artifact of the way that de
 In fact, it is a pulse, as can be seen from a histogram.
 
 ```{julia}
-plt = data(σbatch) * mapping(:value) * AoG.histogram(;bins=100)
+plt = data(tbldye) * mapping(:σ1) * AoG.histogram(;bins=100)
 draw(plt; axis=(;title="Parametric bootstrap estimates of σ_batch"))
 ```
 
@@ -221,42 +211,42 @@ However, it is not as straightforward to detect singularity in vector-valued ran
 
 For example, if we bootstrap a model fit to the `sleepstudy` data
 ```{julia}
-sleepstudy = MixedModels.dataset(:sleepstudy)
+sleepstudy = dataset(:sleepstudy)
 msleep = fit(MixedModel, @formula(reaction ~ 1 + days + (1 + days | subj)),
              sleepstudy)
 ```
 
 ```{julia}
-sampsleep = parametricbootstrap(MersenneTwister(666), 10_000, msleep);
-dfsleep = DataFrame(sampsleep.allpars);
-first(dfsleep, 10)
+sampsleep = parametricbootstrap(MersenneTwister(666), 10_000, msleep)
+tblsleep = sampsleep.tbl
 ```
+
 the singularity can be exhibited as a standard deviation of zero or as a correlation of ±1.
 
 ```{julia}
-DataFrame(shortestcovint(sampsleep))
+confint(sampsleep)
 ```
 
 A histogram of the estimated correlations from the bootstrap sample has a spike at `+1`.
 ```{julia}
-ρs = subset(dfsleep, :type => ByRow(==("ρ")), :group => ByRow(==("subj")); skipmissing=true)
-plt = data(ρs) * mapping(:value) * AoG.histogram(;bins=100)
+plt = data(tblsleep) * mapping(:ρ1) * AoG.histogram(;bins=100)
 draw(plt; axis=(;title="Parametric bootstrap samples of correlation of random effects"))
 ```
+
 or, as a count,
+
 ```{julia}
-count(ρs.value .≈ 1)
+count(tblsleep.ρ1  .≈ 1)
 ```
 
 Close examination of the histogram shows a few values of `-1`.
 ```{julia}
-count(ρs.value .≈ -1)
+count(tblsleep.ρ1 .≈ -1)
 ```
 
 Furthermore there are even a few cases where the estimate of the standard deviation of the random effect for the intercept is zero.
 ```{julia}
-σs = subset(dfsleep, :type => ByRow(==("σ")), :group => ByRow(==("subj")), :names => ByRow(==("(Intercept)")); skipmissing=true)
-count(σs.value .≈ 0)
+count(tblsleep.σ1 .≈ 0)
 ```
 
 There is a general condition to check for singularity of an estimated covariance matrix or matrices in a bootstrap sample.
