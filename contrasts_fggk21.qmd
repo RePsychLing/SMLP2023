@@ -49,7 +49,7 @@ using SMLP2023: dataset
 using Statistics
 using StatsBase
 
-ProgressMeter.ijulia_behavior(:clear)
+ProgressMeter.ijulia_behavior(:clear);
 ```
 
 ## Readme for `dataset("fggk21")`
