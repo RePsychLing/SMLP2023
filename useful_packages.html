@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Phillip Alday">
-<meta name="dcterms.date" content="2023-08-26">
+<meta name="dcterms.date" content="2023-09-01">
 
 <title>SMLP2023: Advanced Frequentist Track - Useful packages</title>
 <style>
@@ -318,24 +318,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#reading-data" id="toc-reading-data" class="nav-link" data-scroll-target="#reading-data"><span class="header-section-number">1.1</span> Reading data</a></li>
   <li><a href="#dataframes" id="toc-dataframes" class="nav-link" data-scroll-target="#dataframes"><span class="header-section-number">1.2</span> DataFrames</a></li>
+  <li><a href="#regression" id="toc-regression" class="nav-link" data-scroll-target="#regression"><span class="header-section-number">1.3</span> Regression</a></li>
+  <li><a href="#formula-macros-and-domain-specific-languages" id="toc-formula-macros-and-domain-specific-languages" class="nav-link" data-scroll-target="#formula-macros-and-domain-specific-languages"><span class="header-section-number">1.4</span> <code>@formula</code>, macros and domain-specific languages</a></li>
+  <li><a href="#extensions-to-the-formula-syntax" id="toc-extensions-to-the-formula-syntax" class="nav-link" data-scroll-target="#extensions-to-the-formula-syntax"><span class="header-section-number">1.5</span> Extensions to the formula syntax</a></li>
+  <li><a href="#standardizing-predictors" id="toc-standardizing-predictors" class="nav-link" data-scroll-target="#standardizing-predictors"><span class="header-section-number">1.6</span> Standardizing Predictors</a></li>
+  <li><a href="#effects" id="toc-effects" class="nav-link" data-scroll-target="#effects"><span class="header-section-number">1.7</span> Effects</a></li>
+  <li><a href="#estimated-marginal-least-square-means" id="toc-estimated-marginal-least-square-means" class="nav-link" data-scroll-target="#estimated-marginal-least-square-means"><span class="header-section-number">1.8</span> Estimated Marginal / Least Square Means</a></li>
   </ul></li>
-  <li><a href="#regression" id="toc-regression" class="nav-link" data-scroll-target="#regression"><span class="header-section-number">2</span> Regression</a>
+  <li><a href="#hypothesis-testing" id="toc-hypothesis-testing" class="nav-link" data-scroll-target="#hypothesis-testing"><span class="header-section-number">2</span> Hypothesis Testing</a></li>
+  <li><a href="#plotting-ecosystem" id="toc-plotting-ecosystem" class="nav-link" data-scroll-target="#plotting-ecosystem"><span class="header-section-number">3</span> Plotting ecosystem</a>
   <ul class="collapse">
-  <li><a href="#formula-macros-and-domain-specific-languages" id="toc-formula-macros-and-domain-specific-languages" class="nav-link" data-scroll-target="#formula-macros-and-domain-specific-languages"><span class="header-section-number">2.1</span> <code>@formula</code>, macros and domain-specific languages</a></li>
-  <li><a href="#extensions-to-the-formula-syntax" id="toc-extensions-to-the-formula-syntax" class="nav-link" data-scroll-target="#extensions-to-the-formula-syntax"><span class="header-section-number">2.2</span> Extensions to the formula syntax</a></li>
-  <li><a href="#standardizing-predictors" id="toc-standardizing-predictors" class="nav-link" data-scroll-target="#standardizing-predictors"><span class="header-section-number">2.3</span> Standardizing Predictors</a></li>
-  <li><a href="#effects" id="toc-effects" class="nav-link" data-scroll-target="#effects"><span class="header-section-number">2.4</span> Effects</a></li>
-  <li><a href="#estimated-marginal-least-square-means" id="toc-estimated-marginal-least-square-means" class="nav-link" data-scroll-target="#estimated-marginal-least-square-means"><span class="header-section-number">2.5</span> Estimated Marginal / Least Square Means</a></li>
+  <li><a href="#makie" id="toc-makie" class="nav-link" data-scroll-target="#makie"><span class="header-section-number">3.1</span> Makie</a></li>
+  <li><a href="#plots.jl" id="toc-plots.jl" class="nav-link" data-scroll-target="#plots.jl"><span class="header-section-number">3.2</span> Plots.jl</a></li>
+  <li><a href="#gadfly" id="toc-gadfly" class="nav-link" data-scroll-target="#gadfly"><span class="header-section-number">3.3</span> Gadfly</a></li>
+  <li><a href="#others" id="toc-others" class="nav-link" data-scroll-target="#others"><span class="header-section-number">3.4</span> Others</a></li>
   </ul></li>
-  <li><a href="#hypothesis-testing" id="toc-hypothesis-testing" class="nav-link" data-scroll-target="#hypothesis-testing"><span class="header-section-number">3</span> Hypothesis Testing</a></li>
-  <li><a href="#plotting-ecosystem" id="toc-plotting-ecosystem" class="nav-link" data-scroll-target="#plotting-ecosystem"><span class="header-section-number">4</span> Plotting ecosystem</a>
-  <ul class="collapse">
-  <li><a href="#makie" id="toc-makie" class="nav-link" data-scroll-target="#makie"><span class="header-section-number">4.1</span> Makie</a></li>
-  <li><a href="#plots.jl" id="toc-plots.jl" class="nav-link" data-scroll-target="#plots.jl"><span class="header-section-number">4.2</span> Plots.jl</a></li>
-  <li><a href="#gadfly" id="toc-gadfly" class="nav-link" data-scroll-target="#gadfly"><span class="header-section-number">4.3</span> Gadfly</a></li>
-  <li><a href="#others" id="toc-others" class="nav-link" data-scroll-target="#others"><span class="header-section-number">4.4</span> Others</a></li>
-  </ul></li>
-  <li><a href="#connecting-to-other-languages" id="toc-connecting-to-other-languages" class="nav-link" data-scroll-target="#connecting-to-other-languages"><span class="header-section-number">5</span> Connecting to Other Languages</a></li>
+  <li><a href="#connecting-to-other-languages" id="toc-connecting-to-other-languages" class="nav-link" data-scroll-target="#connecting-to-other-languages"><span class="header-section-number">4</span> Connecting to Other Languages</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/RePsychLing/SMLP2023/edit/main/useful_packages.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/RePsychLing/SMLP2023/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
@@ -361,7 +359,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2023-08-26</p>
+      <p class="date">2023-09-01</p>
     </div>
   </div>
   
@@ -393,11 +391,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Unlike in R, DataFrames are not part of the base language, nor the standard library.</p>
 <p><a href="https://dataframes.juliadata.org/stable/">DataFrames.jl</a> provides the basic infrastructure around DataFrames, as well as its own <a href="https://bkamins.github.io/julialang/2020/12/24/minilanguage.html">mini language</a> for doing the split-apply-combine approach that underlies R’s <code>dplyr</code> and much of the tidyverse. The DataFrames.jl documentation is the place for looking at how to e.g.&nbsp;read in a <a href="https://dataframes.juliadata.org/stable/man/importing_and_exporting/">CSV or Arrow file as a DataFrame</a>. Note that DataFrames.jl by default depends on <a href="https://categoricalarrays.juliadata.org/stable/">CategoricalArrays.jl</a> to handle the equivalent of <code>factor</code> in the R world, but there is an alternative package for <code>factor</code>-like array type in Julia, <a href="https://github.com/JuliaData/PooledArrays.jl/">PooledArrays.jl</a>. PooledArrays are simpler, but more limited than CategoricalArrays and we (Phillip and Doug) sometimes use them in our examples and simulations. The tables produced by reading an Arrow file have their own representation of factor-like data as <code>DictEncoded</code> arrays.</p>
 <p>DataFrame.jl’s mini language can be a bit daunting, if you’re used to manipulations in the style of base R or the tidyverse. For that, there are several options; recently, we’e had particularly nice experiences with <a href="https://github.com/jkrumbiegel/DataFrameMacros.jl">DataFrameMacros.jl</a> and <a href="https://github.com/jkrumbiegel/Chain.jl">Chain.jl</a> for a convenient syntax to connect or “pipe” together successive operations. It’s your choice whether and which of these add-ons you want to use! Phillip tends to write his code using raw DataFrames.jl, but Doug really enjoys DataFrameMacros.jl.</p>
-<p>There’s also <a href="https://tidierorg.github.io/Tidier.jl/stable/">Tidier.jl</a>, which is “a 100% Julia implementation of the R tidyverse mini-language in Julia”. Phillip and Doug aren’t huge fans of this package because it encourages patterns from R that they consider problematic, but each user can choose their own path. 😃</p>
+<p>The recently added <a href="https://github.com/TidierOrg/">Tidier</a> collection of Julia packages is popular with those coming from the tidyverse.</p>
 </section>
-</section>
-<section id="regression" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Regression</h1>
+<section id="regression" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="regression"><span class="header-section-number">1.3</span> Regression</h2>
 <p>Unlike in R, neither formula processing nor basic regression are part of the base language or the standard library.</p>
 <p>The formula syntax and basic contrast-coding schemes in Julia is provided by <a href="https://juliastats.org/StatsModels.jl/v0.6/">StatsModels.jl</a>. By default, MixedModels.jl re-exports the <code>@formula</code> macro and most commonly used contrast schemes from StatsModels.jl, so you often don’t have to worry about loading StatsModels.jl directly. The same is true for <a href="https://juliastats.org/GLM.jl/dev/manual/">GLM.jl</a>, which provides basic linear and generalized linear models, such as ordinary least squares (OLS) regression and logistic regression, i.e.&nbsp;the classical, non mixed regression models.</p>
 <p>The basic functionality looks quite similar to R, e.g.</p>
@@ -413,54 +410,55 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">LogitLink</span>(),</span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>(You can also specify your model matrices directly and skip the formula interface, but we don’t recommend this as it’s easy to mess up in really subtle but very problematic ways.)</p>
-<section id="formula-macros-and-domain-specific-languages" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="formula-macros-and-domain-specific-languages"><span class="header-section-number">2.1</span> <code>@formula</code>, macros and domain-specific languages</h2>
+</section>
+<section id="formula-macros-and-domain-specific-languages" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="formula-macros-and-domain-specific-languages"><span class="header-section-number">1.4</span> <code>@formula</code>, macros and domain-specific languages</h2>
 <p>As a sidebar: why is <code>@formula</code> a macro and not a normal function? Well, that’s because formulas are essentially their own domain-specific language (a variant of <a href="https://www.jstor.org/stable/2346786">Wilkinson-Rogers notation</a>) and macros are used for manipulating the language itself – or in this case, handling an entirely new, embedded language! This is also why macros are used by packages like <a href="https://turing.ml/">Turing.jl</a> and <a href="https://cscherrer.github.io/Soss.jl/stable/">Soss.jl</a> that define a language for Bayesian probabilistic programming like <a href="https://docs.pymc.io/">PyMC3</a> or <a href="https://mc-stan.org/">Stan</a>.</p>
 </section>
-<section id="extensions-to-the-formula-syntax" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="extensions-to-the-formula-syntax"><span class="header-section-number">2.2</span> Extensions to the formula syntax</h2>
+<section id="extensions-to-the-formula-syntax" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="extensions-to-the-formula-syntax"><span class="header-section-number">1.5</span> Extensions to the formula syntax</h2>
 <p>There are several ongoing efforts to extend the formula syntax to include some of the “extras” available in R, e.g.&nbsp;<a href="https://github.com/kleinschmidt/RegressionFormulae.jl">RegressionFormulae.jl</a> to use the caret (<code>^</code>) notation to limit interactions to a certain order (<code>(a+b+c)^2</code> generates <code>a + b + c + a&amp;b + a&amp;c + b&amp;c</code>, but not <code>a&amp;b&amp;c</code>). Note also that Julia uses <code>&amp;</code> to express interactions, not <code>:</code> like in R.</p>
 </section>
-<section id="standardizing-predictors" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="standardizing-predictors"><span class="header-section-number">2.3</span> Standardizing Predictors</h2>
+<section id="standardizing-predictors" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="standardizing-predictors"><span class="header-section-number">1.6</span> Standardizing Predictors</h2>
 <p>Although function calls such as <code>log</code> can be used within Julia formulae, they must act on a rowwise basis, i.e.&nbsp;on observations. Transformations such as z-scoring or centering (often done with <code>scale</code> in R) require knowledge of the entire column. <a href="https://beacon-biosignals.github.io/StandardizedPredictors.jl/stable/">StandardizedPredictors.jl</a> provides functions for centering, scaling, and z-scoring within the formula. These are treated as pseudo-contrasts and computed on demand, meaning that <code>predict</code> and <code>effects</code> (see next) computations will handle these transformations on new data (e.g.&nbsp;centering new data <em>around the mean computed during fitting the original data</em>) correctly and automatically.</p>
 </section>
-<section id="effects" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="effects"><span class="header-section-number">2.4</span> Effects</h2>
+<section id="effects" class="level2" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="effects"><span class="header-section-number">1.7</span> Effects</h2>
 <p>John Fox’s <code>effects</code> package in R (and the related <code>ggeffects</code> package for plotting these using <code>ggplot2</code>) provides a nice way to visualize a model’s overall view of the data. This functionality is provided by <a href="https://beacon-biosignals.github.io/Effects.jl/stable/"><code>Effects.jl</code></a> and works out-of-the-box with most regression model packages in Julia (including MixedModels.jl). Support for formulae with embedded functions (such as <code>log</code>) is not yet complete, but we’re working on it!</p>
 </section>
-<section id="estimated-marginal-least-square-means" class="level2" data-number="2.5">
-<h2 data-number="2.5" class="anchored" data-anchor-id="estimated-marginal-least-square-means"><span class="header-section-number">2.5</span> Estimated Marginal / Least Square Means</h2>
+<section id="estimated-marginal-least-square-means" class="level2" data-number="1.8">
+<h2 data-number="1.8" class="anchored" data-anchor-id="estimated-marginal-least-square-means"><span class="header-section-number">1.8</span> Estimated Marginal / Least Square Means</h2>
 <p><a href="https://beacon-biosignals.github.io/Effects.jl/stable/"><code>Effects.jl</code></a> provides a subset of the functionality (basic estimated-marginal means and exhaustive pairwise comparisons) of the R package <code>emmeans</code> package. However, it is often better to use sensible, hypothesis-driven contrast coding than to compute all pairwise comparisons after the fact. 😃</p>
 </section>
 </section>
-<section id="hypothesis-testing" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Hypothesis Testing</h1>
+<section id="hypothesis-testing" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Hypothesis Testing</h1>
 <p>Classical statistical tests such as the t-test can be found in the package <a href="https://github.com/JuliaStats/HypothesisTests.jl/">HypothesisTests.jl</a>.</p>
 </section>
-<section id="plotting-ecosystem" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Plotting ecosystem</h1>
-<p>Throughtout this course, we have used the Makie ecosystem for plotting, but there are several alternatives in Julia.</p>
-<section id="makie" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="makie"><span class="header-section-number">4.1</span> Makie</h2>
-<p>The <a href="https://makie.juliaplots.org/stable/">Makie ecosystem</a> is a relatively new take on graphics that aims to be both powerful and easy to use. Makie.jl itself only provides abstract definitions for many components (and is used in e.g.&nbsp;MixedModelsMakie.jl to define plot types for MixedModels.jl). The actual plotting and rendering is handled by a backend package such as CairoMakie.jl (good for Quarto notebooks or rending static 2D images) and GLMakie.jl (good for dynamic, interactive visuals and 3D images). AlgebraOfGraphics.jl builds a grammar of graphics upon the Makie framework. It’s a great way to get good plots very quickly, but extensive customization is still best achieved by using Makie directly.</p>
+<section id="plotting-ecosystem" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Plotting ecosystem</h1>
+<p>Throughout this course, we have used the Makie ecosystem for plotting, but there are several alternatives in Julia.</p>
+<section id="makie" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="makie"><span class="header-section-number">3.1</span> Makie</h2>
+<p>The <a href="https://makie.org/">Makie ecosystem</a> is a relatively new take on graphics that aims to be both powerful and easy to use. Makie.jl itself only provides abstract definitions for many components (and is used in e.g.&nbsp;MixedModelsMakie.jl to define plot types for MixedModels.jl). The actual plotting and rendering is handled by a backend package such as CairoMakie.jl (good for Quarto notebooks or rending static 2D images) and GLMakie.jl (good for dynamic, interactive visuals and 3D images). AlgebraOfGraphics.jl builds a grammar of graphics upon the Makie framework. It’s a great way to get good plots very quickly, but extensive customization is still best achieved by using Makie directly.</p>
 </section>
-<section id="plots.jl" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="plots.jl"><span class="header-section-number">4.2</span> Plots.jl</h2>
+<section id="plots.jl" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="plots.jl"><span class="header-section-number">3.2</span> Plots.jl</h2>
 <p><a href="https://docs.juliaplots.org/latest/">Plots.jl</a> is the original plotting package in Julia, but we often find it difficult to work with compared to some of the other alternatives. <a href="https://github.com/JuliaPlots/StatsPlots.jl">StatsPlots.jl</a> builds on this, adding common statistical plots, while <a href="https://github.com/Evizero/UnicodePlots.jl">UnicodePlots.jl</a> renders plots as Unicode characters directly in the REPL.</p>
 <p><a href="https://kristofferc.github.io/PGFPlotsX.jl/stable/">PGFPlotsX.jl</a> is a very new package that writes directly to PGF (the format used by LaTeX’s tikz framework) and can stand alone or be used as a rendering backend for the Plots.jl ecosystem.</p>
 </section>
-<section id="gadfly" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="gadfly"><span class="header-section-number">4.3</span> Gadfly</h2>
+<section id="gadfly" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="gadfly"><span class="header-section-number">3.3</span> Gadfly</h2>
 <p><a href="https://gadflyjl.org/stable/">Gadfly.jl</a> was the original attempt to create a plotting system in Julia based on the grammar of graphics (the “gg” in <code>ggplot2</code>). Development has largely stalled, but some functionality still exceeds AlgebraOfGraphics.jl, which has taken up the grammar of graphics mantle. Notably, the MixedModels.jl documentation still uses Gadfly as of this writing (early September 2021).</p>
 </section>
-<section id="others" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="others"><span class="header-section-number">4.4</span> Others</h2>
+<section id="others" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="others"><span class="header-section-number">3.4</span> Others</h2>
 <p>There are many <a href="https://juliapackages.com/c/graphics">other graphics packages available in Julia</a>, often wrapping well-established frameworks such as <a href="https://www.queryverse.org/VegaLite.jl/stable/">VegaLite</a>.</p>
 </section>
 </section>
-<section id="connecting-to-other-languages" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> Connecting to Other Languages</h1>
+<section id="connecting-to-other-languages" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Connecting to Other Languages</h1>
 <p>Using Julia doesn’t mean you have to leave all the packages you knew in other languages behind. In Julia, it’s often possible to even easily and quickly invoke code from other languages <em>from within Julia</em>.</p>
 <p><a href="https://juliainterop.github.io/RCall.jl/stable/gettingstarted/">RCall.jl</a> provides a very convenient interface for interacting with R. <a href="https://github.com/palday/JellyMe4.jl/">JellyMe4.jl</a> adds support for moving MixedModels.jl and <code>lme4</code> models back and forth between the languages (which means that you can use <code>emmeans</code>, <code>sjtools</code>, <code>DHARMa</code>, <code>car</code>, etc. to examine MixedModels.jl models!). <a href="https://github.com/JuliaData/RData.jl">RData.jl</a> provides support for reading <code>.rds</code> and <code>.rda</code> files from Julia, while <a href="https://github.com/JuliaStats/RDatasets.jl">RDatasets.jl</a> provides convenient access to many of the standard datasets provided by R and various R packages.</p>
 <p><a href="https://github.com/JuliaPy/PyCall.jl/">PyCall.jl</a> provides a very convenient way for interacting with Python code and packages. <a href="https://github.com/JuliaPy/PyPlot.jl">PyPlot.jl</a> builds upon this foundation to provide support for Python’s <code>matplotlib</code>. Similarly, <a href="https://github.com/beacon-biosignals/PyMNE.jl">PyMNE.jl</a> and <a href="https://github.com/beacon-biosignals/pyfooof.jl">PyFOOOF.jl</a> provide some additional functionality to make interacting with MNE-Python and FOOOF from within Julia even easier than with vanilla PyCall. More recently, <a href="https://github.com/cjdoris/PythonCall.jl">PythonCall.jl</a> has proven to be a populat alternative to PyCall.jl.</p>

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Phillip Alday, Douglas Bates, and Reinhold Kliegl">
-<meta name="dcterms.date" content="2023-08-26">
+<meta name="dcterms.date" content="2023-09-01">
 
 <title>SMLP2023: Advanced Frequentist Track - More on shrinkage plots</title>
 <style>
@@ -347,7 +347,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2023-08-26</p>
+      <p class="date">2023-09-01</p>
     </div>
   </div>
   
@@ -411,7 +411,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(MixedModel, form, kb07; contrasts)</span>
 <span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Minimizing 799   Time: 0:00:01 ( 1.78 ms/it)
+<pre><code>Minimizing 799   Time: 0:00:01 ( 1.66 ms/it)
   objective:  28637.123623229592</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="4">
@@ -689,7 +689,7 @@ spkr: old &amp; prec: maintain &amp; load: yes    23.6073      15.8074   1.49   
 </div>
 <p>Notice the zero on the diagonal. A triangular matrix with zeros on the diagonal is singular.</p>
 <div class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>l2 <span class="op">=</span> <span class="fu">last</span>(m1.λ)    <span class="co"># this one is not singular</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>l2 <span class="op">=</span> <span class="fu">last</span>(m1.λ)    <span class="co"># this one is also singular</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
 <pre><code>4×4 LowerTriangular{Float64, Matrix{Float64}}:
   0.541853    ⋅           ⋅          ⋅ 
@@ -1217,11 +1217,16 @@ spkr: old &amp; prec: maintain &amp; load: yes    23.6073      15.8074   1.49   
 </div>
 </div>
 </div>
+<div class="cell" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ridgeplot</span>(m3btstrp; show_intercept<span class="op">=</span><span class="cn">false</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="26">
 <div id="fig-ridgeplotnoint" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ridgeplot</span>(m3btstrp; show_intercept<span class="op">=</span><span class="cn">false</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<figcaption class="figure-caption">Figure&nbsp;4: <strong>?(caption)</strong></figcaption>
+<p><img src="shrinkageplot_files/figure-html/fig-ridgeplotnoint-output-1.svg" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;4: Ridge plot of the fixed-effects coefficients from the bootstrap sample (with the intercept)</figcaption>
 </figure>
+</div>
+</div>
 </div>
 <div class="cell" data-execution_count="26">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>m4 <span class="op">=</span> <span class="kw">let</span></span>
@@ -1231,7 +1236,7 @@ spkr: old &amp; prec: maintain &amp; load: yes    23.6073      15.8074   1.49   
 <span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(MixedModel, form, kb07; contrasts)</span>
 <span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="26">
+<div class="cell-output cell-output-display" data-execution_count="27">
 <table class="table table-sm table-striped small">
 <colgroup>
 <col style="width: 23%">
@@ -1308,13 +1313,13 @@ spkr: old &amp; prec: maintain &amp; load: yes    23.6073      15.8074   1.49   
 </div>
 <div class="cell" data-execution_count="28">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ridgeplot</span>(m4bstrp; show_intercept<span class="op">=</span><span class="cn">false</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="28">
+<div class="cell-output cell-output-display" data-execution_count="29">
 <p><img src="shrinkageplot_files/figure-html/cell-29-output-1.svg" class="img-fluid"></p>
 </div>
 </div>
 <div class="cell" data-execution_count="29">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DataFrame</span>(<span class="fu">shortestcovint</span>(m4bstrp))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="29">
+<div class="cell-output cell-output-display" data-execution_count="30">
 <div><div style="float: left;"><span>9×5 DataFrame</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
 <table class="data-frame table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
@@ -1341,16 +1346,16 @@ spkr: old &amp; prec: maintain &amp; load: yes    23.6073      15.8074   1.49   
 <td style="text-align: left;">β</td>
 <td style="text-align: left; font-style: italic;">missing</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">2008.72</td>
-<td style="text-align: right;">2319.8</td>
+<td style="text-align: right;">2030.75</td>
+<td style="text-align: right;">2342.66</td>
 </tr>
 <tr class="even">
 <td class="rowNumber" style="text-align: right; font-weight: bold;">2</td>
 <td style="text-align: left;">β</td>
 <td style="text-align: left; font-style: italic;">missing</td>
 <td style="text-align: left;">prec: maintain</td>
-<td style="text-align: right;">-433.808</td>
-<td style="text-align: right;">-248.858</td>
+<td style="text-align: right;">-432.619</td>
+<td style="text-align: right;">-249.063</td>
 </tr>
 <tr class="odd">
 <td class="rowNumber" style="text-align: right; font-weight: bold;">3</td>
@@ -1365,8 +1370,8 @@ spkr: old &amp; prec: maintain &amp; load: yes    23.6073      15.8074   1.49   
 <td style="text-align: left;">β</td>
 <td style="text-align: left; font-style: italic;">missing</td>
 <td style="text-align: left;">load: yes</td>
-<td style="text-align: right;">47.0078</td>
-<td style="text-align: right;">108.437</td>
+<td style="text-align: right;">47.0469</td>
+<td style="text-align: right;">108.272</td>
 </tr>
 <tr class="odd">
 <td class="rowNumber" style="text-align: right; font-weight: bold;">5</td>
@@ -1381,15 +1386,15 @@ spkr: old &amp; prec: maintain &amp; load: yes    23.6073      15.8074   1.49   
 <td style="text-align: left;">σ</td>
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">prec: maintain</td>
-<td style="text-align: right;">177.436</td>
-<td style="text-align: right;">318.846</td>
+<td style="text-align: right;">177.803</td>
+<td style="text-align: right;">318.379</td>
 </tr>
 <tr class="odd">
 <td class="rowNumber" style="text-align: right; font-weight: bold;">7</td>
 <td style="text-align: left;">ρ</td>
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">(Intercept), prec: maintain</td>
-<td style="text-align: right;">-0.898508</td>
+<td style="text-align: right;">-0.904904</td>
 <td style="text-align: right;">-0.477346</td>
 </tr>
 <tr class="even">
@@ -1397,16 +1402,16 @@ spkr: old &amp; prec: maintain &amp; load: yes    23.6073      15.8074   1.49   
 <td style="text-align: left;">σ</td>
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">229.03</td>
-<td style="text-align: right;">356.407</td>
+<td style="text-align: right;">234.299</td>
+<td style="text-align: right;">361.964</td>
 </tr>
 <tr class="odd">
 <td class="rowNumber" style="text-align: right; font-weight: bold;">9</td>
 <td style="text-align: left;">σ</td>
 <td style="text-align: left;">residual</td>
 <td style="text-align: left; font-style: italic;">missing</td>
-<td style="text-align: right;">656.918</td>
-<td style="text-align: right;">701.946</td>
+<td style="text-align: right;">657.11</td>
+<td style="text-align: right;">701.879</td>
 </tr>
 </tbody>
 </table>
@@ -1415,7 +1420,7 @@ spkr: old &amp; prec: maintain &amp; load: yes    23.6073      15.8074   1.49   
 </div>
 <div class="cell" data-execution_count="30">
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(m4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="30">
+<div class="cell-output cell-output-display" data-execution_count="31">
 <table class="table table-sm table-striped small">
 <thead>
 <tr class="header">
@@ -1473,7 +1478,7 @@ spkr: old &amp; prec: maintain &amp; load: yes    23.6073      15.8074   1.49   
 <span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="31">
+<div class="cell-output cell-output-display" data-execution_count="32">
 <div><div style="float: left;"><span>3×6 DataFrame</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
 <table class="data-frame table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
@@ -1531,7 +1536,7 @@ spkr: old &amp; prec: maintain &amp; load: yes    23.6073      15.8074   1.49   
 </div>
 <div class="cell" data-execution_count="32">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scatter</span>(<span class="fu">fitted</span>(m4), <span class="fu">residuals</span>(m4))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="32">
+<div class="cell-output cell-output-display" data-execution_count="33">
 <div id="fig-scatterm4" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="shrinkageplot_files/figure-html/fig-scatterm4-output-1.svg" class="img-fluid figure-img"></p>
