@@ -21,8 +21,8 @@ Activate that package with the SVG (Scalable Vector Graphics) backend.
 
 ```{julia}
 #| code-fold: true
+#| output: false
 using CairoMakie       # graphics back-end
-using DataFrameMacros  # simplified dplyr-like data wrangling
 using DataFrames
 using KernelDensity    # density estimation
 using MixedModels
@@ -33,11 +33,11 @@ using RCall            # call R from Julia
 using SMLP2023
 using SMLP2023: dataset
 
-ProgressMeter.ijulia_behavior(:clear);
-CairoMakie.activate!(; type="svg");
+ProgressMeter.ijulia_behavior(:clear)
+CairoMakie.activate!(; type="svg")
 ```
 
-The `sleepstudy` data are one of the datasets available with the `MixedModels` package.
+The `sleepstudy` data are one of the datasets available with the `MixedModels` package.  It is re-exported by the `SMLP2023` package's `dataset` function.
 
 ```{julia}
 sleepstudy = dataset("sleepstudy")
@@ -73,10 +73,9 @@ There are some deviations from linearity within the panels but the deviations ar
 
 ```{julia}
 #| lst-label: m1
-contrasts = Dict(:subj => Grouping())
-m1 = let
-  form = @formula(reaction ~ 1 + days + (1 + days | subj))
-  fit(MixedModel, form, sleepstudy; contrasts)
+contrasts = Dict{Symbol,Any}(:subj => Grouping())
+m1 = let f = @formula(reaction ~ 1 + days + (1 + days | subj))
+  fit(MixedModel, f, sleepstudy; contrasts)
 end
 ```
 
@@ -118,9 +117,8 @@ The `zerocorr` function applied to a random-effects term creates uncorrelated ve
 
 ```{julia}
 #| lst-label: m2
-m2 = let
-  form = @formula reaction ~ 1 + days + zerocorr(1 + days | subj)
-  fit(MixedModel, form, sleepstudy; contrasts)
+m2 = let f = @formula reaction ~ 1 + days + zerocorr(1 + days | subj)
+  fit(MixedModel, f, sleepstudy; contrasts)
 end
 ```
 
@@ -142,7 +140,7 @@ Alternatively, the AIC or BIC values can be compared.
 ```{julia}
 #| code-fold: true
 let mods = [m2, m1]
-  DataFrame(;
+  Table(;
     model=[:m2, :m1],
     pars=dof.(mods),
     geomdof=(sum ∘ leverage).(mods),
@@ -219,7 +217,7 @@ Simulating and fitting a substantial number of model fits, 5000 in this case, ta
 ```{julia}
 rng = Random.seed!(42)    # initialize a random number generator
 m1bstp = parametricbootstrap(rng, 5000, m1; hide_progress=true)
-allpars = DataFrame(m1bstp.allpars)
+tbl = m1bstp.tbl
 ```
 
 An empirical density plot of the estimates for the fixed-effects coefficients, @fig-bsbetadensity, shows the normal distribution, "bell-curve", shape as we might expect.
@@ -231,12 +229,11 @@ An empirical density plot of the estimates for the fixed-effects coefficients, @
 begin
   f1 = Figure(; resolution=(1000, 400))
   CairoMakie.density!(
-    Axis(f1[1, 1]; xlabel="Intercept [ms]"),
-    @subset(allpars, :type == "β" && :names == "(Intercept)").value,
+    Axis(f1[1, 1]; xlabel="Intercept [ms]"), tbl.β1
   )
   CairoMakie.density!(
     Axis(f1[1, 2]; xlabel="Coefficient of days [ms/day]"),
-    @subset(allpars, :type == "β" && :names == "days").value,
+    tbl.β2
   )
   f1
 end
@@ -246,17 +243,11 @@ It is also possible to create interval estimates of the parameters from the boot
 We define the 1-α `shortestcovint` to be the shortest interval that contains a proportion 1-α (defaults to 95%) of the bootstrap estimates of the parameter.
 
 ```{julia}
-DataFrame(shortestcovint(m1bstp))
+Table(shortestcovint(m1bstp))
 ```
 
-The intervals look reasonable except that the upper bound on the interval for ρ, the correlation coefficient, is 1.0 .
+The intervals look reasonable except that the upper end point of the interval for ρ1, the correlation coefficient, is 1.0 .
 It turns out that the estimates of ρ have a great deal of variability.
-
-Even more alarming, some of these ρ values are undefined (denoted `NaN`) because the way ρ is calculated can create a division by zero.
-
-```{julia}
-describe(@select(@subset(allpars, :type == "ρ"), :value))
-```
 
 Because there are several values on the boundary (`ρ = 1.0`) and a *pulse* like this is not handled well by a density plot, we plot this sample as a histogram, @fig-correlationhist.
 
@@ -265,7 +256,7 @@ Because there are several values on the boundary (`ρ = 1.0`) and a *pulse* like
 #| fig-cap: 'Histogram of bootstrap replications of the within-subject correlation parameter'
 #| label: fig-correlationhist
 hist(
-  @subset(allpars, :type == "ρ", isfinite(:value)).value;
+  tbl.ρ1;
   bins=40,
   axis=(; xlabel="Estimated correlation of the random effects"),
   figure=(; resolution=(500, 500)),
@@ -279,19 +270,18 @@ Finally, density plots for the variance components (but on the scale of the stan
 #| fig-cap: 'Empirical density plots of bootstrap replicates of standard deviation estimates'
 #| label: fig-bssigmadensity
 begin
-  σs = @subset(allpars, :type == "σ")
   f2 = Figure(; resolution=(1000, 300))
   CairoMakie.density!(
     Axis(f2[1, 1]; xlabel="Residual σ"),
-    @subset(σs, :group == "residual").value,
+    tbl.σ,
   )
   CairoMakie.density!(
     Axis(f2[1, 2]; xlabel="subj-Intercept σ"),
-    @subset(σs, :group == "subj" && :names == "(Intercept)").value,
+    tbl.σ1,
   )
   CairoMakie.density!(
     Axis(f2[1, 3]; xlabel="subj-slope σ"),
-    @subset(σs, :group == "subj" && :names == "days").value,
+    tbl.σ2,
   )
   f2
 end
@@ -308,21 +298,13 @@ vcov(m1; corr=true)  # correlation estimate from the model
 #| fig-cap: 'Scatter-plot of bootstrap replicates of fixed-effects estimates with contours'
 #| label: fig-bsbetacontours
 let
-  vals = disallowmissing(
-    Array(
-      select(
-        unstack(DataFrame(m1bstp.β), :iter, :coefname, :β),
-        Not(:iter),
-      ),
-    ),
-  )
   scatter(
-    vals;
+    tbl.β1, tbl.β2,
     color=(:blue, 0.20),
     axis=(; xlabel="Intercept", ylabel="Coefficient of days"),
     figure=(; resolution=(500, 500)),
   )
-  contour!(kde(vals))
+  contour!(kde((tbl.β1, tbl.β2)))
   current_figure()
 end
 ```

@@ -7,16 +7,19 @@ Load the packages to be used
 
 ```{julia}
 #| code-fold: true
+#| output: false
 using AlgebraOfGraphics
 using CairoMakie
 using DataFrameMacros
 using DataFrames
 using MixedModels
 using MixedModelsMakie
-using ProgressMeter
+using SMLP2023: dataset
 
-CairoMakie.activate!(; type="svg");
-ProgressMeter.ijulia_behavior(:clear);
+CairoMakie.activate!(; type="svg")
+
+import ProgressMeter
+ProgressMeter.ijulia_behavior(:clear)
 ```
 
   - A GLMM (Generalized Linear Mixed Model) is used instead of a LMM (Linear Mixed Model) when the response is binary or, perhaps, a count with a low expected count.
@@ -27,14 +30,13 @@ ProgressMeter.ijulia_behavior(:clear);
 ## Matrix notation for the sleepstudy model
 
 ```{julia}
-sleepstudy = DataFrame(MixedModels.dataset(:sleepstudy))
+sleepstudy = DataFrame(dataset(:sleepstudy))
 ```
 
 ```{julia}
 contrasts = Dict(:subj => Grouping())
-m1 = let
-  form = @formula(reaction ~ 1 + days + (1 + days | subj))
-  fit(MixedModel, form, sleepstudy; contrasts)
+m1 = let f = @formula reaction ~ 1 + days + (1 + days | subj)
+  fit(MixedModel, f, sleepstudy; contrasts)
 end
 println(m1)
 ```
@@ -64,7 +66,7 @@ m1.b
 ```
 
 ```{julia}
-first(m1.b)   # only one grouping factor
+only(m1.b)   # only one grouping factor
 ```
 
 There is a model matrix, Z, for the random effects.
@@ -168,7 +170,7 @@ $$
 This is why fitting a binary response is sometimes called *logistic regression*.
 
 For later use we define a Julia `logistic` function.
-See [this presentation](https://github.com/dmbates/JSM2021/blob/main/notebooks/2compilation.jl) for more information than you could possible want to know on how Julia converts code like this to run on the processor.
+See [this presentation](https://github.com/dmbates/JSM2021/blob/main/notebooks/2compilation.jl) for more information than you could possibly want to know on how Julia converts code like this to run on the processor.
 
 ```{julia}
 increment(x) = x + one(x)
@@ -190,7 +192,7 @@ The important cases of the Bernoulli and Poisson distributions don't have a scal
 The `contra` dataset in the `MixedModels` package is from a survey on the use of artificial contraception by women in Bangladesh.
 
 ```{julia}
-contra = DataFrame(MixedModels.dataset(:contra))
+contra = DataFrame(dataset(:contra))
 ```
 
 ```{julia}
@@ -202,7 +204,7 @@ The information recorded included woman's age, the number of live children she h
 The age was centered.
 Unfortunately, the version of the data to which I had access did not record what the centering value was.
 
-A data plot, drawn using `lattice` graphics in `R`, shows that the probability of contraception use is **not** linear in `age` - it is low for younger women, higher for women in the middle of the range (assumed to be women in late 20's to early 30's) and low again for older women (late 30's to early 40's in this survey).
+A data plot, @fig-contradata, shows that the probability of contraception use is **not** linear in `age` - it is low for younger women, higher for women in the middle of the range (assumed to be women in late 20's to early 30's) and low again for older women (late 30's to early 40's in this survey).
 
 If we fit a model with only the `age` term in the fixed effects, that term will not be significant.
 This doesn't mean that there is no "age effect", it only means that there is no significant linear effect for `age`.

@@ -72,7 +72,7 @@ l1 = first(m1.λ)   # Cholesky factor of relative covariance for subj
 Notice the zero on the diagonal.  A triangular matrix with zeros on the diagonal is singular.
 
 ```{julia}
-l2 = last(m1.λ)    # this one is not singular
+l2 = last(m1.λ)    # this one is also singular
 ```
 
 To regenerate the covariance matrix we need to know that the covariance is not the *square* of `l1`, it is `l1 * l1'` (so that the result is symmetric) and multiplied by σ̂²
@@ -181,7 +181,6 @@ ridgeplot(m3btstrp)
 ```{julia}
 #| label: fig-ridgeplotnoint
 #| fig-cap: 'Ridge plot of the fixed-effects coefficients from the bootstrap sample (with the intercept)'
-#| eval: false
 ridgeplot(m3btstrp; show_intercept=false)
 ```
 

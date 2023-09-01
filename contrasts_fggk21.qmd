@@ -4,13 +4,12 @@ jupyter: julia-1.9
 author: "Reinhold Kliegl"
 ---
 
-Ths script uses a subset of data reported in Fühner, Golle, Granacher, & Kliegl (2021).
-Age and sex effects in physical fitness components of 108,295 third graders including 515 primary schools and 9 cohorts. [@Fuehner2021]
+Ths script uses a subset of data reported in @Fuehner2021.
 
 To circumvent delays associated with model fitting we work with models that are less complex than those in the reference publication.
 All the data to reproduce the models in the publication are used here, too; the script requires only a few changes to specify the more complex models in the paper.
 
-All children were between 6.0 and 6.99 years at legal keydate (30 September) of school enrollement, that is in their ninth year of life in the third grade.
+All children were between 6.0 and 6.99 years at legal keydate (30 September) of school enrollment, that is in their ninth year of life in the third grade.
 To avoid delays associated with model fitting we work with a reduced data set and less complex models than those in the reference publication.
 The script requires only a few changes to specify the more complex models in the paper.
 
@@ -37,9 +36,8 @@ The script is structured in three main sections:
 
 ```{julia}
 #| code-fold: true
+#| output: false
 using AlgebraOfGraphics
-using AlgebraOfGraphics: linear
-using Arrow
 using CairoMakie
 using Chain
 using CategoricalArrays
@@ -91,34 +89,28 @@ describe(df)
 We extract a random sample of 500 children from the Sex (2)  x Test (5) cells of the design. Cohort and School are random.
 
 ```{julia}
-begin
-  dat = @chain df begin
-    @transform(:Sex = :Sex == "female" ? "Girls" : "Boys")
-    @groupby(:Test, :Sex)
-    combine(x -> x[sample(1:nrow(x), 500), :])
-  end
+dat = @chain df begin
+  @transform(:Sex = :Sex == "female" ? "Girls" : "Boys")
+  @groupby(:Test, :Sex)
+  combine(x -> x[sample(1:nrow(x), 500), :])
 end
 ```
 
 ### Transformations
 
 ```{julia}
-begin
-  transform!(dat, :age, :age => (x -> x .- 8.5) => :a1) # centered age (linear)
-  select!(groupby(dat, :Test), :, :score => zscore => :zScore) # z-score
-end
+transform!(dat, :age, :age => (x -> x .- 8.5) => :a1) # centered age (linear)
+select!(groupby(dat, :Test), :, :score => zscore => :zScore) # z-score
 ```
 
 ```{julia}
-begin
-  dat2 = combine(
-    groupby(dat, [:Test, :Sex]),
-    :score => mean,
-    :score => std,
-    :zScore => mean,
-    :zScore => std,
-  )
-end
+dat2 = combine(
+  groupby(dat, [:Test, :Sex]),
+  :score => mean,
+  :score => std,
+  :zScore => mean,
+  :zScore => std,
+)
 ```
 
 ### Figure of age x Sex x Test interactions
@@ -127,7 +119,7 @@ The main results of relevance here are shown in Figure 2 of [Scientific Reports 
 
 # Contrast coding
 
-Contrast coding is part of `StatsModels.jl`. Here is the primary author's (i.e., Dave Kleinschmidt's documentation of  [Modeling Categorical Data](https://juliastats.org/StatsModels.jl/stable/contrasts/#Modeling-categorical-data).
+Contrast coding is part of `StatsModels.jl`. Here is the primary author's (i.e., Dave Kleinschmidt's) documentation of  [Modeling Categorical Data](https://juliastats.org/StatsModels.jl/stable/contrasts/#Modeling-categorical-data).
 
 The random factors `Child`, `School`, and `Cohort` are assigned a _Grouping_ contrast. This contrast is needed when the number of groups (i.e., units, levels) is very large. This is the case for `Child` (i.e., the 108,925 children in the full and probably also the 11,566 children in the reduced data set). The assignment is not necessary for the typical sample size of experiments. However, we use this coding of random factors irrespective of the number of units associated with them to be transparent about the distinction between random and fixed factors.
 
