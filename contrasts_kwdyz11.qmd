@@ -176,7 +176,7 @@ m3 = let
 end
 ```
 
-The “almost” qualification refers to the fact that `contr.sum()` uses the last factor levels as defaul base level; `EffectsCoding` uses the first level.
+The “almost” qualification refers to the fact that `contr.sum()` uses the last factor levels as default base level; `EffectsCoding` uses the first level.
 
 ## HelmertCoding
 
