@@ -42,7 +42,7 @@ For further readings see “Further Readings” in Schad et al. (2020).
 
 # Example data {#sec-data}
 
-We take the `KWDYZ` dataset [@Kliegl2010].
+We take the `KWDYZ` dataset [@Kliegl2011].
 This is an experiment looking at three effects of visual cueing under four different cue-target relations (CTRs).
 Two horizontal rectangles are displayed above and below a central fixation point or they displayed in vertical orientation to the left and right of the fixation point.
 Subjects react to the onset of a small visual target occuring at one of the four ends of the two rectangles.
