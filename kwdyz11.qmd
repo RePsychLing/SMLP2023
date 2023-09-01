@@ -6,7 +6,7 @@ author: "Reinhold Kliegl"
 
 # Background
 
-We take the `kwdyz11` dataset [@Kliegl2010] from an experiment looking at three effects of visual cueing under four different cue-target relations (CTRs).
+We take the `kwdyz11` dataset [@Kliegl2011] from an experiment looking at three effects of visual cueing under four different cue-target relations (CTRs).
 Two horizontal rectangles are displayed above and below a central fixation point or they displayed in vertical orientation to the left and right of the fixation point.
 Subjects react to the onset of a small visual target occuring at one of the four ends of the two rectangles.
 The target is cued validly on 70% of trials by a brief flash of the corner of the rectangle at which it appears; it is cued invalidly at the three other locations 10% of the trials each.
@@ -77,7 +77,7 @@ We also recommend to sort levels of factors into a meaningful order, that is ove
 This is also a good place to choose alternative names for variables in the context of the present analysis.
 
 The LMM analysis is based on log-transformed reaction times `lrt`, indicated by a _boxcox()_ check of model residuals.
-With the exception of diagnostic plots of model residuals, the analysis of untransformed reaction times did not lead to different results and exhibited the same problems of model identification [see @Kliegl2010].
+With the exception of diagnostic plots of model residuals, the analysis of untransformed reaction times did not lead to different results and exhibited the same problems of model identification [see @Kliegl2011].
 
 Comparative density plots of all response times by cue-target relation, @fig-comparativedensity, show the times for valid cues to be faster than for the other conditions.
 

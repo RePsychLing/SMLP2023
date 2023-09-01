@@ -6,7 +6,7 @@ author: "Reinhold Kliegl"
 
 # Background
 
-@Kliegl2015 is a follow-up to @Kliegl2010 (see also script `kwdyz11.qmd`) from an experiment looking at a variety of effects of visual cueing under four different cue-target relations (CTRs).
+@Kliegl2015 is a follow-up to @Kliegl2011 (see also script `kwdyz11.qmd`) from an experiment looking at a variety of effects of visual cueing under four different cue-target relations (CTRs).
 In this experiment two rectangles are displayed (1) in horizontal orientation , (2) in vertical orientation, (3) in left diagonal orientation, or in (4) right diagonal orientation relative to a central fixation point.
 Subjects react to the onset of a small or a large visual target occuring at one of the four ends of the two rectangles.
 The target is cued validly on 70% of trials by a brief flash of the corner of the rectangle at which it appears; it is cued invalidly at the three other locations 10% of the trials each.
@@ -14,15 +14,15 @@ This implies a latent imbalance in design that is not visible in the repeated-me
 
 There are a couple of differences between the first and this follow-up experiment, rendering it more a conceptual than a direct replication.
 First, the original experiment was carried out at Peking University and this follow-up at Potsdam University.
-Second, diagonal orientations of rectangles and large target sizes were not part of the design of @Kliegl2010.
+Second, diagonal orientations of rectangles and large target sizes were not part of the design of @Kliegl2011.
 To keep matters somewhat simpler and comparable we ignore them in this script.
 
 We specify three contrasts for the four-level factor CTR that are derived from spatial, object-based, and attractor-like features of attention.
 They map onto sequential differences between appropriately ordered factor levels.
-Replicating @Kliegl2010, the attraction effect was not significant as a fixed effect, but yielded a highly reliable variance component (VC; i.e., reliable individual differences in positive and negative attraction effects cancel the fixed effect).
+Replicating @Kliegl2011, the attraction effect was not significant as a fixed effect, but yielded a highly reliable variance component (VC; i.e., reliable individual differences in positive and negative attraction effects cancel the fixed effect).
 Moreover, these individual differences in the attraction effect were negatively correlated with those in the spatial effect.
 
-This comparison is of interest because a few years after the publication of @Kliegl2010, the theoretically critical correlation parameter (CP) between the spatial effect and the attraction effect was determined as the source of a non-singular LMM in that paper.
+This comparison is of interest because a few years after the publication of @Kliegl2011, the theoretically critical correlation parameter (CP) between the spatial effect and the attraction effect was determined as the source of a non-singular LMM in that paper.
 The present study served the purpose to estimate this parameter with a larger sample and a wider variety of experimental conditions.
 Therefore, the code in this script is largely the same as the one in `kwdyz11.qmd`.
 
@@ -247,7 +247,7 @@ issingular(m1)
 only(MixedModels.PCA(m1))
 ```
 
-We note that the critical correlation parameter between spatial (`sod`) and attraction (`dod`) is now estimated at .66 -- not that close to the 1.0 boundary that caused singularity in @Kliegl2010.
+We note that the critical correlation parameter between spatial (`sod`) and attraction (`dod`) is now estimated at .66 -- not that close to the 1.0 boundary that caused singularity in @Kliegl2011.
 However, the LMM based on log reaction times is still singular.
 Let's check for untransformed reaction times.
 
