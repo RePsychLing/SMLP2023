@@ -300,34 +300,29 @@ The plot of quantiles of model residuals over corresponding quantiles of the nor
 #| code-fold: true
 #| label: fig-qqnormm1
 #| fig-cap: Quantile-quantile plot of the residuals for model m1 versus a standard normal
-let ppts = inv(1024):inv(512):1
-  lines(
-    quantile(Normal(), ppts),
-    quantile(residuals(m1), ppts);
-    figure=(; resolution=(650, 650)),
-    axis=(;
-      xlabel="Standard normal quantiles",
-      ylabel="Quantiles of the residuals from model m1",
-    ),
-  )
-end
+CairoMakie.activate!(; type="png")
+qqnorm(
+  residuals(m1);
+  qqline=:none,
+  axis=(;
+    xlabel="Standard normal quantiles",
+    ylabel="Quantiles of the residuals from model m1",
+  ),
+)
 ```
 
 ```{julia}
 #| code-fold: true
 #| label: fig-qqnormm1_rt
 #| fig-cap: 'Quantile-quantile plot of the residuals for model m1_rt versus a standard normal'
-let ppts = inv(1024):inv(512):1
-  lines(
-    quantile(Normal(), ppts),
-    quantile(residuals(m1_rt), ppts);
-    figure=(; resolution=(650, 650)),
-    axis=(;
-      xlabel="Standard normal quantiles",
-      ylabel="Quantiles of the residuals from model m1",
-    ),
-  )
-end
+qqnorm(
+  residuals(m1_rt);
+  qqline=:none,
+  axis=(;
+    xlabel="Standard normal quantiles",
+    ylabel="Quantiles of the residuals from model m1",
+  ),
+)
 ```
 
 ## Observed and theoretical normal distribution

@@ -184,8 +184,8 @@ end
 `Reverse HelmertCoding` codes each level as the difference from the average of the higher levels. To estimate these effects we simply reverse the order of factor levels. Of course, the contrasts are also orthogonal.
 
 ```{julia}
-m4b = let levels = reverse(levels(dat1.CTR))
 m4b = let levels = reverse(StatsModels.levels(dat1.CTR))
+  contrasts = Dict(:CTR => HelmertCoding(; levels))
   fit(MixedModel, form, dat1; contrasts)
 end
 ```
