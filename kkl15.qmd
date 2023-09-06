@@ -100,7 +100,7 @@ dat_subj = combine(
   groupby(dat, [:Subj, :CTR]),
   nrow => :n,
   :rt => mean => :rt_m,
-  :rt => (c -> mean(log.(c))) => :lrt_m,
+  :rt => (c -> mean(log, c)) => :lrt_m,
 )
 dat_subj.CTR = categorical(dat_subj.CTR, levels=levels(dat.CTR))
 describe(dat_subj)

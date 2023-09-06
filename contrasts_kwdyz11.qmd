@@ -11,7 +11,6 @@ using MixedModels
 using SMLP2023: dataset
 using StatsBase
 using StatsModels
-#using StatsModels: ContrastsCoding
 
 import ProgressMeter
 ProgressMeter.ijulia_behavior(:clear);
@@ -186,7 +185,7 @@ end
 
 ```{julia}
 m4b = let levels = reverse(levels(dat1.CTR))
-  contrasts = Dict(:CTR => HelmertCoding(; levels))
+m4b = let levels = reverse(StatsModels.levels(dat1.CTR))
   fit(MixedModel, form, dat1; contrasts)
 end
 ```

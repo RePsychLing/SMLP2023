@@ -93,7 +93,7 @@ dat_subj = combine(
   groupby(dat, [:Subj, :CTR]),
   :rt => length => :n,
   :rt => mean => :rt_m,
-  :rt => (r -> mean(log.(r))) => :lrt_m,
+  :rt => (r -> mean(log, r)) => :lrt_m,
 )
 dat_subj.CTR = categorical(dat_subj.CTR, levels=levels(dat.CTR))
 dat_subj

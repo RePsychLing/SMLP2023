@@ -1,0 +1,80 @@
+---
+title: "Confidence intervals from profiled objective"
+author: "Douglas Bates"
+---
+
+## Assessing the variability of parameter estimates
+
+Statistical methods that are based on probability models can be used to provide us with a "best guess" of the value of parameters, such as the effect of a particular experimental treatment, in the form of a *parameter estimate*.
+In addition, the probability model can be used to assess the uncertainty in the estimate.
+
+Often the information about the uncertainty is reduced to a single number, a p-value for a test of a null hypothesis, such as the effect being zero, versus the alternative of a non-zero effect.
+But quoting a single number from a model fit to experimental data, which may have required considerable effort and expense to obtain, will often mean discarding a huge amount of the information in the data.
+In the days when computing was expensive and labor-intensive this may have been unavoidable.
+However, modern computing hardware and software systems provide us with the opportunity of much more intensive evaluation of the uncertainty.
+At a minimum, instead of focussing solely on the question of whether a coefficient could reasonably be zero, we can formulate confidence intervals on individual parameter estimates or confidence regions on groups of parameters.
+
+We have seen the used of a parametric bootstrap to create a sample from the distribution of the estimators of the parameters, and how such samples can be used to create coverage intervals.
+The bootstrap is based on simulating response vectors from the model that has been fit to the observed data and refitting the same model to these simulated responses.
+
+In this section we explore another approach based on refitting the model.
+However, in this *profiling* approach we keep the observed responses but modify the model by fixing one or more of the parameters.
+
+## An example
+
+Load the packages to be used
+
+```{julia}
+#| code-fold: true
+#| output: false
+using AlgebraOfGraphics
+using CairoMakie
+using MixedModels
+using MixedModelsMakie
+using SMLP2023: dataset
+
+CairoMakie.activate!(; type="svg")
+import ProgressMeter
+ProgressMeter.ijulia_behavior(:clear)
+```
+
+and fit a reduced model to the `kb07` data
+
+```{julia}
+contrasts = Dict(   # choose base levels so coefficient estimates for speed are positive
+  :load => EffectsCoding(; base="yes"),
+  :prec => EffectsCoding(; base="break"),
+  :spkr => EffectsCoding(; base="old"),
+)
+kb07 = Table(dataset(:kb07))
+```
+
+```{julia}
+pr01 = let f = @formula 1000 / rt_raw ~
+    1 + load + spkr + prec + (1 + prec | item) + (1 | subj)
+  profile(fit(MixedModel, f, kb07; contrasts))
+end
+println(pr01.m)    # the model itself is one of the properties of the profile
+```
+
+This call is similar to other model fits in these notes except that the fit is then wrapped in a call to `profile`.
+Because the object returned from `profile` includes the original model fit as its `m` property, it is not necessary to save the original model fit separately.
+
+The profile provides information to generate confidence intervals.
+The evaluation of these intervals is described below; right now we concentrate on the results.
+
+```{julia}
+confint(pr01)  # defaults to the 95% confidence level
+```
+
+We can assess the symmetry and range of these intervals in a plot of the square root of the change in negative twice the log-likelihood from the global parameter estimate (again, details are given below).
+On the signed square root scale this quantity is called $\zeta$ because it is comparable to a standard normal deviate, which is usually written as `z`.
+@fig-kb07abszetabeta shows the absolute value of $\zeta$ for each of the fixed-effects coefficients in the model.
+
+
+```{julia}
+#| code-fold: true
+#| fig-cap: "Absolute value of ζ versus value of the coefficient for the fixed-effects parameters in a model of response speed for the kb07 data.  The horizontal lines are confidence intervals with nominal 50%, 80%, 90%, 95% and 99% confidence."
+#| label: fig-kb07abszetabeta
+zetaplot!(Figure(; resolution=(1200, 310)), pr01; ptyp='β', absv=true)
+```
