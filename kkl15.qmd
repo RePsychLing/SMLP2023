@@ -45,38 +45,22 @@ using DataFrameMacros
 using DataFrames
 using MixedModels
 using MixedModelsMakie
+using MixedModelsMakie: qqnorm
 using Random
-using ProgressMeter
 using SMLP2023: dataset
-using Statistics
 using StatsBase
 
 using AlgebraOfGraphics: density
-using AlgebraOfGraphics: boxplot
-using MixedModelsMakie: qqnorm
-using MixedModelsMakie: ridgeplot
-using MixedModelsMakie: scatter
-using SMLP2023: dataset
 
+import ProgressMeter
 ProgressMeter.ijulia_behavior(:clear)
-CairoMakie.activate!(; type="png")
+CairoMakie.activate!(; type="svg")
 ```
 
 # Read data, compute and plot means
 
 ```{julia}
-#| scrolled: true
-dat = @chain dataset(:kkl15) begin
-  DataFrame
-  select(
-    :subj =>
-      (s -> categorical(string.('S', lpad.(s, 3, '0')))) => :Subj,
-    :tar => categorical => :CTR,
-    :rt => (x -> log.(x)) => :lrt,
-    :rt,
-  )
-end
-levels!(dat.CTR, ["val", "sod", "dos", "dod"])
+dat = DataFrame(dataset(:kkl15))
 describe(dat)
 ```
 
@@ -91,13 +75,18 @@ Comparative density plots of all response times by cue-target relation show the 
 ```{julia}
 #| code-fold: true
 #| label: fig-kkl15comparativedens
-#| fig-cap: Compartive density plots of log response time by condition
+#| fig-cap: Comparative density plots of log response time by condition
 draw(
   data(dat) *
   mapping(
-    :lrt => "log(Reaction time [ms])";
+    :rt => log => "log(Reaction time [ms])";
     color=:CTR =>
-      renamer("val" => "valid cue", "sod" => "some obj/diff pos", "dos" => "diff obj/same pos", "dod" => "diff obj/diff pos") => "Cue-target relation",
+      renamer(
+        "val" => "valid cue",
+        "sod" => "some obj/diff pos",
+        "dos" => "diff obj/same pos",
+        "dod" => "diff obj/diff pos",
+      ) => "Cue-target relation",
   ) *
   density();
   figure=(; resolution=(800, 350)),
@@ -109,10 +98,11 @@ Boxplots of the mean of log response time by subject under the different conditi
 ```{julia}
 dat_subj = combine(
   groupby(dat, [:Subj, :CTR]),
-  :rt => length => :n,
+  nrow => :n,
   :rt => mean => :rt_m,
-  :lrt => mean => :lrt_m,
+  :rt => (c -> mean(log, c)) => :lrt_m,
 )
+dat_subj.CTR = categorical(dat_subj.CTR, levels=levels(dat.CTR))
 describe(dat_subj)
 ```
 
@@ -133,8 +123,8 @@ boxplot(
         "same obj/diff pos",
         "diff obj/same pos",
         "diff obj/diff pos",
-      ],
-    ),
+      ]
+    )
   ),
   figure=(; resolution=(800, 300)),
 )
@@ -148,11 +138,10 @@ We remove the outlier subject and replot, but we model the data points in `dat` 
 #| code-fold: true
 #| fig-cap: 'Comparative boxplots of mean log response time by subject under different conditions without outlier'
 #| label: fig-bxpltsubjcond2
-let
-  dat_subj2 = @subset(dat_subj, :rt_m < 510)
+let dat_subj = filter(r -> r.rt_m < 510, dat_subj)
   boxplot(
-    dat_subj2.CTR.refs,
-    dat_subj2.lrt_m;
+    dat_subj.CTR.refs,
+    dat_subj.lrt_m;
     orientation=:horizontal,
     show_notch=true,
     axis=(;
@@ -163,8 +152,8 @@ let
           "same obj/diff pos",
           "diff obj/same pos",
           "diff obj/diff pos",
-        ],
-      ),
+        ]
+      )
     ),
     figure=(; resolution=(800, 300)),
   )
@@ -230,7 +219,7 @@ contrasts = Dict(
   :CTR => SeqDiffCoding(; levels=["val", "sod", "dos", "dod"]),
 )
 m1 = let
-  form = @formula lrt ~ 1 + CTR + (1 + CTR | Subj)
+  form = @formula log(rt) ~ 1 + CTR + (1 + CTR | Subj)
   fit(MixedModel, form, dat; contrasts)
 end
 ```
@@ -283,6 +272,7 @@ The slant in residuals show a lower and upper boundary of reaction times, that i
 #| code-fold: true
 #| label: fig-m1fittedresid
 #| fig-cap: Residuals versus fitted values for model m1
+CairoMakie.activate!(; type="png")
 scatter(fitted(m1), residuals(m1); alpha=0.3)
 ```
 
@@ -310,16 +300,29 @@ The plot of quantiles of model residuals over corresponding quantiles of the nor
 #| code-fold: true
 #| label: fig-qqnormm1
 #| fig-cap: Quantile-quantile plot of the residuals for model m1 versus a standard normal
-#| eval: false
-qqnorm(m1; qqline=:none)
+CairoMakie.activate!(; type="png")
+qqnorm(
+  residuals(m1);
+  qqline=:none,
+  axis=(;
+    xlabel="Standard normal quantiles",
+    ylabel="Quantiles of the residuals from model m1",
+  ),
+)
 ```
 
 ```{julia}
 #| code-fold: true
 #| label: fig-qqnormm1_rt
 #| fig-cap: 'Quantile-quantile plot of the residuals for model m1_rt versus a standard normal'
-#| eval: false
-qqnorm(m1_rt; qqline=:none)
+qqnorm(
+  residuals(m1_rt);
+  qqline=:none,
+  axis=(;
+    xlabel="Standard normal quantiles",
+    ylabel="Quantiles of the residuals from model m1",
+  ),
+)
 ```
 
 ## Observed and theoretical normal distribution
@@ -332,6 +335,7 @@ Overall, it does not look too bad.
 #| code-fold: true
 #| label: fig-stdresidm1dens
 #| fig-cap: '  Kernel density plot of the standardized residuals for model m1 versus a  standard normal'
+CairoMakie.activate!(; type="svg")
 let
   n = nrow(dat)
   dat_rz = (;
@@ -367,7 +371,7 @@ When we order the conditional modes for GM, that is `(Intercept)`, the outlier s
 caterpillar!(Figure(; resolution=(800, 1200)), cm1; orderby=1)
 ```
 
-The catepillar plot also reveals that credibilty intervals are much shorter for subjects' Grand Means, shown in `(Intercept)`, than the subjects' experimental effects, because the latter are based on difference scores not means.
+The caterpillar plot also reveals that credibility intervals are much shorter for subjects' Grand Means, shown in `(Intercept)`, than the subjects' experimental effects, because the latter are based on difference scores not means.
 Moreover, credibility intervals are shorter for the first spatial effect `sod` than the other two effects, because the spatial effect involves the valid condition which yielded three times as many trials than the other three conditions.
 Consequently, the spatial effect is more reliable. Unfortunately, due to differences in scaling of the x-axis of the panels this effect must be inferred. One option to reveal this difference is to reparameterize the LMM such model parameters estimate the conditional modes for the levels of condition rather than the contrast-based effects.
 This is accomplished by replacing the `1` in the random effect term with `0`, as shown next.
@@ -556,126 +560,6 @@ The third CP replicates a CP that was judged questionable in script `kwdyz11.jl`
 The three remaining CPs are not well defined for log-transformed reaction times; they only fit noise and should be removed.
 It is also possible that fitting the complex experimental design (including target size and rectangle orientation) will lead to more acceptable estimates.
 The corresponding plot based on LMM `m1_rt` for raw reaction times still shows them with very wide distributions, but acceptable.
-
-# Profiling
-
-# KKL
-
-```{julia}
-# coeftable(m1)
-# VarCorr(m1)
-# m1_bak = m1;
-# m1_pr = profile(m1)
-
-# coeftable(m1L)
-# VarCorr(m1L_bak)
-# m1L_bak = m1L;
-# m1L_prf = profile(m1L)
-```
-
-# Example
-
-https://dmbates.quarto.pub/plotting-profiles/#the-penicillin-example
-
-```{julia}
-using BSplineKit
-include(pkgdir(MixedModels, "test", "modelcache.jl"));
-```
-This works, ...
-
-```{julia}
-slpr01 = profile(models(:sleepstudy)[1]);
-show(slpr01.m)
-Table(slpr01.tbl)
-
-slpr02 = profile(models(:sleepstudy)[2]);
-show(slpr02.m)
-Table(slpr02.tbl)
-
-slpr03 = profile(models(:sleepstudy)[3]);
-show(slpr03.m)
-Table(slpr03.tbl)
-
-slpr04 = profile(models(:sleepstudy)[4]);
-show(slpr04.m)
-Table(slpr04.tbl)
-```
-
-```{julia}
-function fwdspline(pr::MixedModelProfile, par::Symbol)
-    spl = pr.fwd[par]
-    xv = spl.x
-    yv = spl.(xv)
-    minv = findmin(abs, yv)
-    est = xv[last(minv)]
-    slope = (Derivative(1) * spl)(est)
-    return (; spl, xv, yv, slope, intercept = first(minv) - slope * est)
-end
-
-```
-
-
-```{julia}
-let
-    f = Figure(; resolution=(700,600))
-    ax = Axis(f[1,1]; xlabel = "θ₁", ylabel="ζ")
-    (; spl, xv, yv, slope, intercept) = fwdspline(slpr03, :θ1)
-    lines!(ax, first(xv) .. last(xv), identity ∘ spl;)
-    scatter!(ax, xv, yv)
-    ablines!(ax, intercept, slope)
-    f
-end
-```
-
-We see that in both cases the profile  function is concave down over the region of interest. The ideal situation is for the profile  to be close to a straight line suggesting a transformation like the square root.
-
-
-```{julia}
-let
-    f = Figure(; resolution=(700,600))
-    ax = Axis(f[1,1]; xlabel = "√θ₂", ylabel="ζ")
-    (; spl, xv, yv) = fwdspline(slpr03, :θ2)
-    lines!(ax, sqrt(first(xv) + sqrt(eps())) .. sqrt(last(xv)), spl ∘ abs2;)
-    scatter!(ax, sqrt.(xv), yv)
-    f
-end
-```
-
-Although it is tempting to use a logarithmic transformation of the theta parameter instead of the square root, we must allow the  theta parameters to take on the value of zero, which is not possible when using a logarithmic transformation.
-
-```{julia}
-function extractzeta(pr::MixedModelProfile)
-    (; tbl, fwd) = pr
-    tbl = Table(tbl)
-    rounddownabs(x) = (abs(x) < 1.0e-5 ? 0. : x)
-    pnms = sort!(collect(keys(fwd)))
-    ptbl = NamedTuple{(pnms...,)}(ntuple(length(pnms)) do i
-        k = pnms[i]
-        rounddownabs.(fwd[k].(getproperty(tbl, k)))
-    end
-    )
-
-    Table(merge((; p=tbl.p), ptbl))
-end
-```
-
-
-```{julia}
-slpr03zeta = extractzeta(slpr03)
-```
-
-
-```{julia}
-let
-    f = Figure(; resolution=(700, 700))
-    ax = Axis(f[1,1]; aspect = 1, xlabel="ζ(θ₁)", ylabel="ζ(θ₂)")
-    tbl = filter(r -> r.p == :θ1, slpr03zeta)
-    scatterlines!(ax, tbl.θ1, tbl.θ2)
-    tbl = filter(r -> r.p == :θ2, slpr03zeta)
-    scatterlines!(ax, tbl.θ1, tbl.θ2)
-    f
-end
-```
 
 # References
 

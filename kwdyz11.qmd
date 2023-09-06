@@ -29,45 +29,30 @@ In this and the complementary `kkl15.jl` scripts, we provide some corresponding 
 ```{julia}
 #| code-fold: true
 #| output: false
-using Arrow
 using AlgebraOfGraphics
+using AlgebraOfGraphics: density
 using CairoMakie
 using CategoricalArrays
 using Chain
 using DataFrames
 using DataFrameMacros
+using Distributions
 using MixedModels
 using MixedModelsMakie
-using ProgressMeter
 using Random
-using SMLP2023
 using SMLP2023: dataset
 using StatsBase
-using Statistics
-
-using AlgebraOfGraphics: density
-using AlgebraOfGraphics: boxplot
-using SMLP2023: dataset
 
 CairoMakie.activate!(; type="svg")
+
+import ProgressMeter
 ProgressMeter.ijulia_behavior(:clear)
 ```
 
 # Read data, compute and plot densities and means
 
 ```{julia}
-#| code-fold: true
-dat = @chain dataset(:kwdyz11) begin
-  DataFrame
-  select(
-    :subj =>
-      (s -> categorical(string.('S', lpad.(s, 2, '0')))) => :Subj,
-    :tar => categorical => :CTR,
-    :rt,
-    :rt => (x -> log.(x)) => :lrt,
-  )
-end
-levels!(dat.CTR, ["val", "sod", "dos", "dod"])
+dat = DataFrame(dataset(:kwdyz11))
 describe(dat)
 ```
 
@@ -88,7 +73,7 @@ Comparative density plots of all response times by cue-target relation, @fig-com
 draw(
   data(dat) *
   mapping(
-    :lrt => "log(Reaction time [ms])";
+    :rt => log => "log(Reaction time [ms])";
     color=:CTR =>
       renamer("val" => "valid cue", "sod" => "some obj/diff pos", "dos" => "diff obj/same pos", "dod" => "diff obj/diff pos") => "Cue-target relation",
   ) *
@@ -108,8 +93,10 @@ dat_subj = combine(
   groupby(dat, [:Subj, :CTR]),
   :rt => length => :n,
   :rt => mean => :rt_m,
-  :lrt => mean => :lrt_m,
+  :rt => (r -> mean(log, r)) => :lrt_m,
 )
+dat_subj.CTR = categorical(dat_subj.CTR, levels=levels(dat.CTR))
+dat_subj
 ```
 
 ```{julia}
@@ -150,7 +137,7 @@ contrasts = Dict(
   :Subj => Grouping(),
 )
 m1 = let
-  form = @formula(lrt ~ 1 + CTR + (1 + CTR | Subj))
+  form = @formula(log(rt) ~ 1 + CTR + (1 + CTR | Subj))
   fit(MixedModel, form, dat; contrasts)
 end
 ```

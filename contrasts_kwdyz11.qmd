@@ -8,12 +8,11 @@ jupyter: julia-1.9
 using Chain
 using DataFrames
 using MixedModels
-using ProgressMeter
 using SMLP2023: dataset
 using StatsBase
 using StatsModels
-using StatsModels: ContrastsCoding
 
+import ProgressMeter
 ProgressMeter.ijulia_behavior(:clear);
 ```
 
@@ -25,19 +24,9 @@ In this script, we are working through a large number of different contrasts for
 
 Irrespective of how results turn out, there is nothing wrong with specifying a set of post-hoc contrasts to gain a better understanding of what the data are trying to tell us. Of course, in an article or report about the study, the _a priori_ and post-hoc nature of contrast specifications must be made clear. Some kind of alpha-level adjustment (e.g., Bonferroni) may be called for, too. And, of course, there are grey zones.
 
-There is quite a bit of statistical literature on contrasts. Two “local” references are:
+There is quite a bit of statistical literature on contrasts. Two “local” references are @Brehm2022 and @Schad2020.
 
-Brehm, L., & Alday, P. M., (2022). Contrast coding choices in a decade of mixed models. Journal of Memory and Language, 125, 104334.
-
-+ [URL](https://pure.mpg.de/rest/items/item_3384534_1/component/file_3384535/content)
-+ [OSF](https://osf.io/jkpxt/)
-
-Schad, D. J., Vasishth, S., Hohenstein, S., & Kliegl, R. (2020). How to capitalize on a priori contrasts in linear (mixed) models: A tutorial. Journal of Memory and Language, 110, 104038.
-
-+ [URL](https://www.sciencedirect.com/science/article/pii/S0749596X19300695)
-+ [OSF](https://osf.io/7ukf6/)
-
-For further readings see “Further Readings” in Schad et al. (2020).
+For further readings see “Further Readings” in @Schad2020.
 
 # Example data {#sec-data}
 
@@ -49,16 +38,13 @@ The target is cued validly on 70% of trials by a brief flash of the corner of th
 
 We specify three contrasts for the four-level factor CTR that are derived from spatial, object-based, and attractor-like features of attention. They map onto sequential differences between appropriately ordered factor levels.
 
-We also have a dataset from a replication and extension of this study (Kliegl, Kuschela, & Laubrock, 2015).
+We also have a dataset from a replication and extension of this study @Kliegl2015
 Both data sets are available in [R-package RePsychLing](https://github.com/dmbates/RePsychLing/tree/master/data/)
 
 # Preprocessing {#sec-preprocessing}
 
 ```{julia}
-dat1 = @chain dataset(:kwdyz11) begin
-  DataFrame
-  select!(:subj => :Subj, :tar => :CTR, :rt)
-end
+dat1 = DataFrame(dataset(:kwdyz11))
 cellmeans = combine(
   groupby(dat1, [:CTR]),
   :rt => mean,
@@ -80,7 +66,7 @@ form = @formula rt ~ 1 + CTR + (1 + CTR | Subj)
 This is the default order of factor levels.
 
 ```{julia}
-StatsModels.levels(dat1.CTR)
+show(StatsModels.levels(dat1.CTR))
 ```
 
 Controlling the ordering of levels for contrasts:
@@ -94,8 +80,7 @@ The `SeqDiffCoding` contrast corresponds to `MASS::contr.sdif()` in R.
 The assignment of random factors such as `Subj` to `Grouping()` is necessary when the sample size is very large. We recommend to include it always, but in this tutorial we do so only in the first example.
 
 ```{julia}
-levels = ["val", "sod", "dos", "dod"]
-m1 = let
+m1 = let levels = ["val", "sod", "dos", "dod"]
   contrasts = Dict(
     :CTR => SeqDiffCoding(; levels),
     :Subj => Grouping()
@@ -109,7 +94,7 @@ end
 `HypothesisCoding` is the most general option available. We can implement all "canned" contrasts ourselves. The next example reproduces the test statistcs from `SeqDiffCoding` - with a minor modification illustrating the flexibility of going beyond the default version.
 
 ```{julia}
-m1b = let
+m1b = let levels = ["val", "sod", "dos", "dod"]
   contrasts = Dict(
     :CTR => HypothesisCoding(
       [
@@ -146,7 +131,7 @@ The contrasts returned by `DummyCoding` may be exactly what we want.
 Can't we have them, but also have the intercept estimate the GM, rather than the mean of the base level? Yes, we can! We call this "You can have your cake and it eat, too"-Coding (YchycaeitCoding). And we use `HypothesisCoding` to achieve this outcome.
 
 ```{julia}
-m2b = let
+m2b = let levels = ["val", "sod", "dos", "dod"]
   contrasts = Dict(
     :CTR => HypothesisCoding(
       [
@@ -199,8 +184,7 @@ end
 `Reverse HelmertCoding` codes each level as the difference from the average of the higher levels. To estimate these effects we simply reverse the order of factor levels. Of course, the contrasts are also orthogonal.
 
 ```{julia}
-m4b = let
-  levels = reverse(StatsModels.levels(dat1.CTR))
+m4b = let levels = reverse(StatsModels.levels(dat1.CTR))
   contrasts = Dict(:CTR => HelmertCoding(; levels))
   fit(MixedModel, form, dat1; contrasts)
 end
@@ -225,7 +209,7 @@ In a figure With A on the x-axis and the levels of B shown as two lines, the int
 A positive coefficient implies overadditivity (diverging lines toward the right) and a negative coefficient underadditivity (converging lines).
 
 ```{julia}
-m5 = let
+m5 = let levels = ["val", "sod", "dos", "dod"]
   contrasts = Dict(
     :CTR => HypothesisCoding(
       [
@@ -275,7 +259,7 @@ The following contrast specifiction returns an estimate for the main effect of A
 In a figure With A on the x-axis and the levels of B shown as two lines, the second contrast tests whether A1-B1 is different from A1-B2 and the third contrast tests whether A2-B1 is different from A2-B2.
 
 ```{julia}
-m8 = let
+m8 = let levels = ["val", "sod", "dos", "dod"]
   contrasts = Dict(
     :CTR => HypothesisCoding(
       [
