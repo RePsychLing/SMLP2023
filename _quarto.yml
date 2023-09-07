@@ -19,6 +19,7 @@ project:
   - kwdyz11.qmd
   - largescaledesigned.qmd
   - pkg.qmd
+  - profiling.qmd
   - selection.qmd
   - shrinkageplot.qmd
   - sleepstudy.qmd
@@ -90,9 +91,10 @@ website:
         - contrasts_fggk21.qmd
         - contrasts_kwdyz11.qmd
       - glmm.qmd
-      - section: "Bootstrap"
+      - section: "Bootstrap and profiling"
         contents:
         - bootstrap.qmd
+        - profiling.qmd
         - kb07.qmd
       - section: "Visualizations and diagnostics"
         contents:
