@@ -11,7 +11,7 @@ Two horizontal rectangles are displayed above and below a central fixation point
 Subjects react to the onset of a small visual target occuring at one of the four ends of the two rectangles.
 The target is cued validly on 70% of trials by a brief flash of the corner of the rectangle at which it appears; it is cued invalidly at the three other locations 10% of the trials each.
 
-We specify three contrasts for the four-level factor CTR that are derived from spatial, object-based, and attractor-like features of attention.
+We specify three contrasts for the four-level factor `tar` that are derived from spatial, object-based, and attractor-like features of attention.
 They map onto sequential differences between appropriately ordered factor levels. At the level of fixed effects, there is the noteworthy result, that the attraction effect was estimated at 2 ms, that is clearly not significant.
 Nevertheless, there was a highly reliable variance component (VC) estimated for this effect.
 Moreover, the reliable individual differences in the attraction effect were negatively correlated with those in the spatial effect.
@@ -74,7 +74,7 @@ draw(
   data(dat) *
   mapping(
     :rt => log => "log(Reaction time [ms])";
-    color=:CTR =>
+    color=:tar =>
       renamer("val" => "valid cue", "sod" => "some obj/diff pos", "dos" => "diff obj/same pos", "dod" => "diff obj/diff pos") => "Cue-target relation",
   ) *
   density(),
@@ -90,12 +90,12 @@ This table could be used as input for a repeated-measures ANOVA.
 
 ```{julia}
 dat_subj = combine(
-  groupby(dat, [:Subj, :CTR]),
+  groupby(dat, [:subj, :tar]),
   :rt => length => :n,
   :rt => mean => :rt_m,
   :rt => (r -> mean(log, r)) => :lrt_m,
 )
-dat_subj.CTR = categorical(dat_subj.CTR, levels=levels(dat.CTR))
+dat_subj.tar = categorical(dat_subj.tar, levels=levels(dat.tar))
 dat_subj
 ```
 
@@ -104,7 +104,7 @@ dat_subj
 #| label: fig-logrtboxplots
 #| fig-cap: "Comparative boxplots of log response time by cue-target relation."
 boxplot(
-  dat_subj.CTR.refs,
+  dat_subj.tar.refs,
   dat_subj.lrt_m;
   orientation=:horizontal,
   show_notch=true,
@@ -133,11 +133,11 @@ A better alternative to the boxplot is a dotplot. It also displays subjects' con
 
 ```{julia}
 contrasts = Dict(
-  :CTR => SeqDiffCoding(; levels=["val", "sod", "dos", "dod"]),
-  :Subj => Grouping(),
+  :tar => SeqDiffCoding(; levels=["val", "sod", "dos", "dod"]),
+  :subj => Grouping(),
 )
 m1 = let
-  form = @formula(log(rt) ~ 1 + CTR + (1 + CTR | Subj))
+  form = @formula(log(rt) ~ 1 + tar + (1 + tar | subj))
   fit(MixedModel, form, dat; contrasts)
 end
 ```
@@ -250,10 +250,10 @@ The caterpillar plot, @fig-m1caterpillar, also reveals the high correlation betw
 
 ```{julia}
 #| code-fold: true
-#| fig-cap: "Prediction intervals on the random effects for Subj in model m1"
+#| fig-cap: "Prediction intervals on the random effects for subj in model m1"
 #| label: fig-m1caterpillar
 caterpillar!(
-  Figure(; resolution=(800, 1000)), ranefinfo(m1, :Subj); orderby=2
+  Figure(; resolution=(800, 1000)), ranefinfo(m1, :subj); orderby=2
 )
 ```
 
@@ -290,7 +290,7 @@ tbl = samp.tbl
 
 ## Shortest coverage interval
 
-The upper limit of the interval for the critical CP `CTR: sod, CTR: dod` is hitting the upper wall of a perfect correlation.
+The upper limit of the interval for the critical CP `tar: sod, tar: dod` is hitting the upper wall of a perfect correlation.
 This is evidence of singularity.
 The other intervals do not exhibit such pathologies; they appear to be ok.
 
@@ -323,9 +323,9 @@ To keep the plot range small we do not inlcude its density here.
 #| fig-cap: "Comparative density plots of the fixed-effects parameters for model m1"
 #| label: fig-m1fixedeffdens
 labels = [
-  "CTR: sod" => "spatial effect",
-  "CTR: dos" => "object effect",
-  "CTR: dod" => "attraction effect",
+  "tar: sod" => "spatial effect",
+  "tar: dos" => "object effect",
+  "tar: dod" => "attraction effect",
   "(Intercept)" => "grand mean",
 ]
 draw(
@@ -369,12 +369,12 @@ The VC are all very nicely defined.
 #| fig-cap: "Comparative density plots of the correlation parameters for model m1"
 let
   labels = [
-    "(Intercept), CTR: sod" => "GM, spatial",
-    "(Intercept), CTR: dos" => "GM, object",
-    "CTR: sod, CTR: dos" => "spatial, object",
-    "(Intercept), CTR: dod" => "GM, attraction",
-    "CTR: sod, CTR: dod" => "spatial, attraction",
-    "CTR: dos, CTR: dod" => "object, attraction",
+    "(Intercept), tar: sod" => "GM, spatial",
+    "(Intercept), tar: dos" => "GM, object",
+    "tar: sod, tar: dos" => "spatial, object",
+    "(Intercept), tar: dod" => "GM, attraction",
+    "tar: sod, tar: dod" => "spatial, attraction",
+    "tar: dos, tar: dod" => "object, attraction",
   ]
   draw(
     data(tbl) *

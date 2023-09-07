@@ -31,12 +31,12 @@ For further readings see “Further Readings” in @Schad2020.
 # Example data {#sec-data}
 
 We take the `KWDYZ` dataset from @Kliegl2011.
-This is an experiment looking at three effects of visual cueing under four different cue-target relations (CTRs).
+This is an experiment looking at three effects of visual cueing under four different cue-target relations (TARs).
 Two horizontal rectangles are displayed above and below a central fixation point or they displayed in vertical orientation to the left and right of the fixation point.
 Subjects react to the onset of a small visual target occuring at one of the four ends of the two rectangles.
 The target is cued validly on 70% of trials by a brief flash of the corner of the rectangle at which it appears; it is cued invalidly at the three other locations 10% of the trials each.
 
-We specify three contrasts for the four-level factor CTR that are derived from spatial, object-based, and attractor-like features of attention. They map onto sequential differences between appropriately ordered factor levels.
+We specify three contrasts for the four-level factor `tar` that are derived from spatial, object-based, and attractor-like features of attention. They map onto sequential differences between appropriately ordered factor levels.
 
 We also have a dataset from a replication and extension of this study @Kliegl2015
 Both data sets are available in [R-package RePsychLing](https://github.com/dmbates/RePsychLing/tree/master/data/)
@@ -46,7 +46,7 @@ Both data sets are available in [R-package RePsychLing](https://github.com/dmbat
 ```{julia}
 dat1 = DataFrame(dataset(:kwdyz11))
 cellmeans = combine(
-  groupby(dat1, [:CTR]),
+  groupby(dat1, [:tar]),
   :rt => mean,
   :rt => std,
   :rt => length,
@@ -60,13 +60,13 @@ We use the same formula for all analyses
 
 ```{julia}
 #| output: false
-form = @formula rt ~ 1 + CTR + (1 + CTR | Subj)
+form = @formula rt ~ 1 + tar + (1 + tar | subj)
 ```
 
 This is the default order of factor levels.
 
 ```{julia}
-show(StatsModels.levels(dat1.CTR))
+show(StatsModels.levels(dat1.tar))
 ```
 
 Controlling the ordering of levels for contrasts:
@@ -77,14 +77,12 @@ Controlling the ordering of levels for contrasts:
 ## SeqDiffCoding
 
 The `SeqDiffCoding` contrast corresponds to `MASS::contr.sdif()` in R.
-The assignment of random factors such as `Subj` to `Grouping()` is necessary when the sample size is very large. We recommend to include it always, but in this tutorial we do so only in the first example.
+The assignment of random factors such as `subj` to `Grouping()` is necessary when the sample size is very large. We recommend to include it always, but in this tutorial we do so only in the first example.
 
 ```{julia}
 m1 = let levels = ["val", "sod", "dos", "dod"]
   contrasts = Dict(
-    :CTR => SeqDiffCoding(; levels),
-    :Subj => Grouping()
-  )
+    :tar => SeqDiffCoding(; levels))
   fit(MixedModel, form, dat1; contrasts)
 end
 ```
@@ -96,7 +94,7 @@ end
 ```{julia}
 m1b = let levels = ["val", "sod", "dos", "dod"]
   contrasts = Dict(
-    :CTR => HypothesisCoding(
+    :tar => HypothesisCoding(
       [
         -1  1 0  0
          0 -1 1  0
@@ -118,7 +116,7 @@ Thi contrast corresponds to `contr.treatment()` in R
 
 ```{julia}
 m2 = let
-  contrasts = Dict(:CTR => DummyCoding(; base="val"))
+  contrasts = Dict(:tar => DummyCoding(; base="val"))
   fit(MixedModel, form, dat1; contrasts)
 end
 ```
@@ -133,7 +131,7 @@ Can't we have them, but also have the intercept estimate the GM, rather than the
 ```{julia}
 m2b = let levels = ["val", "sod", "dos", "dod"]
   contrasts = Dict(
-    :CTR => HypothesisCoding(
+    :tar => HypothesisCoding(
       [
         -1 1 0 0
         -1 0 1 0
@@ -155,7 +153,7 @@ This contrast corresponds almost to `contr.sum()` in R.
 
 ```{julia}
 m3 = let
-  contrasts = Dict(:CTR => EffectsCoding(; base="dod"))
+  contrasts = Dict(:tar => EffectsCoding(; base="dod"))
   fit(MixedModel, form, dat1; contrasts)
 end
 ```
@@ -164,11 +162,11 @@ The “almost” qualification refers to the fact that `contr.sum()` uses the la
 
 ## HelmertCoding
 
-`HelmertCoding` codes each level as the difference from the average of the lower levels. With the default order of `CTR` levels we get the following test statistics. These contrasts are othogonal.
+`HelmertCoding` codes each level as the difference from the average of the lower levels. With the default order of `tar` levels we get the following test statistics. These contrasts are othogonal.
 
 ```{julia}
 m4 = let
-  contrasts = Dict(:CTR => HelmertCoding())
+  contrasts = Dict(:tar => HelmertCoding())
   fit(MixedModel, form, dat1; contrasts)
 end
 ```
@@ -184,8 +182,8 @@ end
 `Reverse HelmertCoding` codes each level as the difference from the average of the higher levels. To estimate these effects we simply reverse the order of factor levels. Of course, the contrasts are also orthogonal.
 
 ```{julia}
-m4b = let levels = reverse(StatsModels.levels(dat1.CTR))
-  contrasts = Dict(:CTR => HelmertCoding(; levels))
+m4b = let levels = reverse(StatsModels.levels(dat1.tar))
+  contrasts = Dict(:tar => HelmertCoding(; levels))
   fit(MixedModel, form, dat1; contrasts)
 end
 ```
@@ -211,7 +209,7 @@ A positive coefficient implies overadditivity (diverging lines toward the right)
 ```{julia}
 m5 = let levels = ["val", "sod", "dos", "dod"]
   contrasts = Dict(
-    :CTR => HypothesisCoding(
+    :tar => HypothesisCoding(
       [
         -1 -1 +1 +1          # A
         -1 +1 -1 +1          # B
@@ -261,7 +259,7 @@ In a figure With A on the x-axis and the levels of B shown as two lines, the sec
 ```{julia}
 m8 = let levels = ["val", "sod", "dos", "dod"]
   contrasts = Dict(
-    :CTR => HypothesisCoding(
+    :tar => HypothesisCoding(
       [
         -1 -1 +1 +1
         -1 +1  0  0
@@ -291,7 +289,7 @@ In the following example, after an initial 4 vs 3 partitioning of levels, we spe
 
 ```{julia}
 contrasts = Dict(
-  :CTR => HypothesisCoding(
+  :tar => HypothesisCoding(
     [
       -1/4 -1/4 -1/4 -1/4 +1/3 +1/3 +1/3
       -1/2 -1/2 +1/2 +1/2    0    0    0

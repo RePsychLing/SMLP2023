@@ -17,7 +17,7 @@ First, the original experiment was carried out at Peking University and this fol
 Second, diagonal orientations of rectangles and large target sizes were not part of the design of @Kliegl2011.
 To keep matters somewhat simpler and comparable we ignore them in this script.
 
-We specify three contrasts for the four-level factor CTR that are derived from spatial, object-based, and attractor-like features of attention.
+We specify three contrasts for the four-level factor `tar` that are derived from spatial, object-based, and attractor-like features of attention.
 They map onto sequential differences between appropriately ordered factor levels.
 Replicating @Kliegl2011, the attraction effect was not significant as a fixed effect, but yielded a highly reliable variance component (VC; i.e., reliable individual differences in positive and negative attraction effects cancel the fixed effect).
 Moreover, these individual differences in the attraction effect were negatively correlated with those in the spatial effect.
@@ -80,7 +80,7 @@ draw(
   data(dat) *
   mapping(
     :rt => log => "log(Reaction time [ms])";
-    color=:CTR =>
+    color=:tar =>
       renamer(
         "val" => "valid cue",
         "sod" => "some obj/diff pos",
@@ -97,12 +97,12 @@ Boxplots of the mean of log response time by subject under the different conditi
 
 ```{julia}
 dat_subj = combine(
-  groupby(dat, [:Subj, :CTR]),
+  groupby(dat, [:subj, :tar]),
   nrow => :n,
   :rt => mean => :rt_m,
   :rt => (c -> mean(log, c)) => :lrt_m,
 )
-dat_subj.CTR = categorical(dat_subj.CTR, levels=levels(dat.CTR))
+dat_subj.tar = categorical(dat_subj.tar, levels=levels(dat.tar))
 describe(dat_subj)
 ```
 
@@ -111,7 +111,7 @@ describe(dat_subj)
 #| fig-cap: Comparative boxplots of mean log response time by subject under different conditions
 #| label: fig-bxpltsubjcond
 boxplot(
-  dat_subj.CTR.refs,
+  dat_subj.tar.refs,
   dat_subj.lrt_m;
   orientation=:horizontal,
   show_notch=true,
@@ -140,7 +140,7 @@ We remove the outlier subject and replot, but we model the data points in `dat` 
 #| label: fig-bxpltsubjcond2
 let dat_subj = filter(r -> r.rt_m < 510, dat_subj)
   boxplot(
-    dat_subj.CTR.refs,
+    dat_subj.tar.refs,
     dat_subj.lrt_m;
     orientation=:horizontal,
     show_notch=true,
@@ -169,7 +169,7 @@ This table could be used as input for a repeated-measures ANOVA.
 
 ```{julia}
 dat_cond = combine(
-  groupby(dat_subj, :CTR),
+  groupby(dat_subj, :tar),
   :n => length => :N,
   :lrt_m => mean => :lrt_M,
   :lrt_m => std => :lrt_SD,
@@ -192,7 +192,7 @@ To this end, we
 
 ```{julia}
 dat_subj_w = @chain dat_subj begin
-  unstack(:Subj, :CTR, :rt_m)
+  unstack(:subj, :tar, :rt_m)
   disallowmissing!
   @transform(
     :GM = (:val + :sod + :dos + :dod) ./ 4,
@@ -215,11 +215,11 @@ It is the case both for effects based on log-transformed and raw reaction times.
 
 ```{julia}
 contrasts = Dict(
-  :Subj => Grouping(),
-  :CTR => SeqDiffCoding(; levels=["val", "sod", "dos", "dod"]),
+  :subj => Grouping(),
+  :tar => SeqDiffCoding(; levels=["val", "sod", "dos", "dod"]),
 )
 m1 = let
-  form = @formula log(rt) ~ 1 + CTR + (1 + CTR | Subj)
+  form = @formula log(rt) ~ 1 + tar + (1 + tar | subj)
   fit(MixedModel, form, dat; contrasts)
 end
 ```
@@ -242,7 +242,7 @@ Let's check for untransformed reaction times.
 
 ```{julia}
 m1_rt = let
-  form = @formula rt ~ 1 + CTR + (1 + CTR | Subj)
+  form = @formula rt ~ 1 + tar + (1 + tar | subj)
   fit(MixedModel, form, dat; contrasts)
 end
 ```
@@ -378,7 +378,7 @@ This is accomplished by replacing the `1` in the random effect term with `0`, as
 
 ```{julia}
 m1L = let
-  form = @formula rt ~ 1 + CTR + (0 + CTR | Subj)
+  form = @formula rt ~ 1 + tar + (0 + tar | subj)
   fit(MixedModel, form, dat; contrasts)
 end
 ```
@@ -489,15 +489,15 @@ The shortest coverage interval for the `GM` ranges from 376 to 404 ms and the as
 #| fig-cap: '  Kernel density estimate from bootstrap samples of the fixed effects for model  m1L'
 rn = renamer([
   "(Intercept)" => "GM",
-  "CTR: sod" => "spatial effect",
-  "CTR: dos" => "object effect",
-  "CTR: dod" => "attraction effect",
-  "(Intercept), CTR: sod" => "GM, spatial",
-  "(Intercept), CTR: dos" => "GM, object",
-  "CTR: sod, CTR: dos" => "spatial, object",
-  "(Intercept), CTR: dod" => "GM, attraction",
-  "CTR: sod, CTR: dod" => "spatial, attraction",
-  "CTR: dos, CTR: dod" => "object, attraction",
+  "tar: sod" => "spatial effect",
+  "tar: dos" => "object effect",
+  "tar: dod" => "attraction effect",
+  "(Intercept), tar: sod" => "GM, spatial",
+  "(Intercept), tar: dos" => "GM, object",
+  "tar: sod, tar: dos" => "spatial, object",
+  "(Intercept), tar: dod" => "GM, attraction",
+  "tar: sod, tar: dod" => "spatial, attraction",
+  "tar: dos, tar: dod" => "object, attraction",
 ])
 draw(
   data(tbl) *
