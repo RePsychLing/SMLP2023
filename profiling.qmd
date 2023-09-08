@@ -3,13 +3,13 @@ title: "Confidence intervals from profiled objective"
 author: "Douglas Bates"
 ---
 
-## Assessing the variability of parameter estimates
+# Assessing the variability of parameter estimates
 
 Statistical methods that are based on probability models can be used to provide us with a "best guess" of the value of parameters, such as the effect of a particular experimental treatment, in the form of a *parameter estimate*.
 In addition, the probability model can be used to assess the uncertainty in the estimate.
 
 Often the information about the uncertainty is reduced to a single number, a p-value for a test of a null hypothesis, such as the effect being zero, versus the alternative of a non-zero effect.
-But quoting a single number from a model fit to experimental data, which may have required considerable effort and expense to obtain, will often mean discarding a huge amount of the information in the data.
+But quoting a single number from a model fit to experimental data, which may have required considerable effort and expense to obtain, will often mean discarding a considerable amount of the information in the data.
 In the days when computing was expensive and labor-intensive this may have been unavoidable.
 However, modern computing hardware and software systems provide us with the opportunity of much more intensive evaluation of the uncertainty.
 At a minimum, instead of focussing solely on the question of whether a coefficient could reasonably be zero, we can formulate confidence intervals on individual parameter estimates or confidence regions on groups of parameters.
@@ -17,10 +17,9 @@ At a minimum, instead of focussing solely on the question of whether a coefficie
 We have seen the used of a parametric bootstrap to create a sample from the distribution of the estimators of the parameters, and how such samples can be used to create coverage intervals.
 The bootstrap is based on simulating response vectors from the model that has been fit to the observed data and refitting the same model to these simulated responses.
 
-In this section we explore another approach based on refitting the model.
-However, in this *profiling* approach we keep the observed responses but modify the model by fixing one or more of the parameters.
+In this section we explore another approach based on refitting the model, keeping the same responses but holding one of the parameters fixed at a specified value.
 
-## An example
+## Profiling a model for the kb07 data
 
 Load the packages to be used
 
@@ -31,6 +30,7 @@ using AlgebraOfGraphics
 using CairoMakie
 using MixedModels
 using MixedModelsMakie
+using Random
 using SMLP2023: dataset
 
 CairoMakie.activate!(; type="svg")
@@ -38,10 +38,10 @@ import ProgressMeter
 ProgressMeter.ijulia_behavior(:clear)
 ```
 
-and fit a reduced model to the `kb07` data
+Load the data and define the contrasts so that the coefficients for each of the experimental variables, `load`, `spkr` and `prec`, are positive.
 
 ```{julia}
-contrasts = Dict(   # choose base levels so coefficient estimates for speed are positive
+contrasts = Dict( # base levels so estimates for speed are positive
   :load => EffectsCoding(; base="yes"),
   :prec => EffectsCoding(; base="break"),
   :spkr => EffectsCoding(; base="old"),
@@ -49,32 +49,174 @@ contrasts = Dict(   # choose base levels so coefficient estimates for speed are 
 kb07 = Table(dataset(:kb07))
 ```
 
+Now we fit and profile a model.
+The response is defined as `1000 / rt_raw` where `rt_raw` is measured in milliseconds.
+Thus the response being modeled is the speed measured in responses per second.
+
 ```{julia}
 pr01 = let f = @formula 1000 / rt_raw ~
     1 + load + spkr + prec + (1 + prec | item) + (1 | subj)
   profile(fit(MixedModel, f, kb07; contrasts))
 end
-println(pr01.m)    # the model itself is one of the properties of the profile
+println(pr01.m) # model is a property of the profile object
 ```
 
-This call is similar to other model fits in these notes except that the fit is then wrapped in a call to `profile`.
+Evaluation of `pr01` is similar to other model fits in these notes except that the call to `fit` is wrapped in a call to `profile`.
 Because the object returned from `profile` includes the original model fit as its `m` property, it is not necessary to save the original model fit separately.
 
-The profile provides information to generate confidence intervals.
-The evaluation of these intervals is described below; right now we concentrate on the results.
+## Fixing values of parameters
+
+The information from the profile is encapsulated in a table.
 
 ```{julia}
-confint(pr01)  # defaults to the 95% confidence level
+pr01.tbl
 ```
 
-We can assess the symmetry and range of these intervals in a plot of the square root of the change in negative twice the log-likelihood from the global parameter estimate (again, details are given below).
-On the signed square root scale this quantity is called $\zeta$ because it is comparable to a standard normal deviate, which is usually written as `z`.
-@fig-kb07abszetabeta shows the absolute value of $\zeta$ for each of the fixed-effects coefficients in the model.
+Each row of the table summarizes a fit of the original model to the original data but with one of the parameters held fixed.
+For the first 18 rows of the table, the parameter being held fixed is $\sigma$, as shown in the `p` column.
+In the next set of rows the parameter being held fixed will be $\beta_1$, the intercept.
 
+There are blocks of rows for the fixed-effects ($\boldsymbol{\beta}$) parameters, the variance components (on the scale of a standard deviation), and the $\boldsymbol{\theta}$ parameters that generate the covariance factor $\boldsymbol{\Lambda}_{\boldsymbol{\theta}}$.
+(At present the correlation parameters are not profiled - we may add them later but that computation is rather awkward.)
+
+```{julia}
+show(unique(pr01.tbl.p))
+```
+
+To reiterate, the first row contains the parameter estimates for this model fit to the original response values with the constraint that $\sigma=0.130088$, instead of the global estimate $\hat{\sigma}=0.139458$ in the row for which $\zeta=0.0$.
+
+The global estimates are included in every block at the row for which $\zeta=0.0$.
+
+```{julia}
+filter(r -> iszero(r.ζ), pr01.tbl)
+```
+
+The $\zeta$ column in this table is a measure of the quality of the fit from the parameters in each row, relative to the global parameter estimates, as measured by the change in the objective (negative twice the log-likelihood).
+
+The minimum value for the objective is that at the global parameter estimates.
+The change in the objective when we constrain one parameter to a particular value has approximately a $\chi^2$ distribution on 1 degree of freedom, which is the square of a standard normal distribution, $\mathcal{Z}^2$.
+We can convert this change in the quality of the fit to the scale of the standard normal distribution by taking the *signed square root*, which is the square root of the change in the objective with the sign of $\psi-\hat{\psi}$ where $\psi$ represents the parameter being profiled.
+This is the value labelled $\zeta$ in the table.
+
+To review:
+
+- Each row in the table is the result of re-fitting the original model with the parameter in the `p` column held fixed at a particular value, as shown in the column for that parameter.
+
+- The $\zeta$ column is the signed square root of the change in the objective from the global parameter estimates.
+
+- Thus in the block of rows where $\sigma$ is held fixed, the $\zeta$ values in rows for which $\sigma<\hat\sigma$ are negative and those for which $\sigma > \hat\sigma$ have positive values of $\zeta$.
+
+- Rows in which $\zeta=0.0$ are the global parameter estimates.
+
+## Profile zeta plots
+
+@fig-kb07zetabeta shows, for each of the fixed effects parameters, $\zeta$ versus the parameter value.
+
+```{julia}
+#| code-fold: true
+#| fig-cap: "ζ versus the value of the coefficient for the fixed-effects parameters in a model of response speed for the kb07 data."
+#| label: fig-kb07zetabeta
+zetaplot!(Figure(; resolution=(1200, 350)), pr01; ptyp='β')
+```
+
+The lines on these panels are read like normal probability plots, i.e. QQ plots against a standard normal distribution.
+Those on the $\beta_2$ and $\beta_3$ panels are, to the resolution of the plot, straight lines which indicates that the estimators of those parameters are normally distributed over the region of interest.
+
+The points in the $\beta_1$ and $\beta_4$ panels are slightly over-dispersed relative to the straight line, which means that the estimators of these parameters are distributed like a T-distribution with a moderate number of degrees of freedom.
+
+The profile-$\zeta$ function can be used to generate confidence intervals on the parameters
+
+```{julia}
+confint(pr01)
+```
+
+as shown in @fig-kb07abszetabeta, which shows the absolute value of $\zeta$, which is simply the square root of the difference in the objective, versus the parameter being profiled.
 
 ```{julia}
 #| code-fold: true
 #| fig-cap: "Absolute value of ζ versus value of the coefficient for the fixed-effects parameters in a model of response speed for the kb07 data.  The horizontal lines are confidence intervals with nominal 50%, 80%, 90%, 95% and 99% confidence."
 #| label: fig-kb07abszetabeta
-zetaplot!(Figure(; resolution=(1200, 310)), pr01; ptyp='β', absv=true)
+zetaplot!(Figure(; resolution=(1200, 330)), pr01; ptyp='β', absv=true)
+```
+
+The 95% confidence intervals are the second horizontal lines from the top in each panel, at 1.96 on the vertical scale.
+
+```{julia}
+#| code-fold: true
+#| fig-cap: "Absolute value of ζ versus value of the coefficient for the variance component parameters in a model of response speed for the kb07 data.  The horizontal lines are confidence intervals with nominal 50%, 80%, 90%, 95% and 99% confidence."
+#| label: fig-kb07abszetasigma
+zetaplot!(Figure(; resolution=(1200, 330)), pr01; ptyp='σ', absv=true)
+```
+
+@fig-kb07abszetasigma shows similar confidence intervals on the parameters representing standard deviations as does @fig-kb07abszetatheta for the $\theta$ parameters.
+
+```{julia}
+#| code-fold: true
+#| fig-cap: "Absolute value of ζ versus parameter value for the θ parameters in a model of response speed for the kb07 data.  The horizontal lines are confidence intervals with nominal 50%, 80%, 90%, 95% and 99% confidence."
+#| label: fig-kb07abszetatheta
+zetaplot!(Figure(; resolution=(1200, 330)), pr01; ptyp='θ', absv=true)
+```
+
+# Comparisons with the parametric bootstrap
+
+With two methods of assessing the variability in the parameter estimates --- the parametric bootstrap and profiling the objective function --- we should compare and contrast these approaches.
+
+Profiling the objective has two main advantages:
+
+- Profiling is deterministic whereas the parametric bootstrap is stochastic because it is based on a random sample from the model at the estimated parameter values.  Repeating the evaluation of the bootstrap intervals will result in slightly different end points for the coverage intervals.  The variability in the end points is a function of the size of the bootstrap sample.
+
+- Generally profiling is faster than the bootstrap.  In this example the profiling required fitting a reduced model to the data 237 times (249 rows in the table but 12 of these rows are repetitions of the global estimates).  To obtain reasonable precision in a bootstrap usually requires thousands of samples.
+
+The main advantage of the bootstrap is that any parameter or any function of the parameters, such as the predicted response at some setting of the experimental factors, can be evaluated and assessed from the sample. When doing so, however, it is necessary to work with large samples so as to avoid undesirable levels of sample re-use.
+
+Because profiling different parameters requires customized code for each parameter type, it is more difficult to generalize this approach to different types of parameters or predictions.
+We have already mentioned that the correlation parameters are not profiled in the current version of the code.
+
+For comparison with the profiling results, we create a table of 2500 bootstrap samples
+
+```{julia}
+Random.seed!(8765678)
+samp01 = parametricbootstrap(2500, pr01.m; optsum_overrides=(; ftol_rel=1e-8))
+confint(samp01)
+```
+
+Comparing these intervals with those from the profile results shows that the intervals on the fixed-effects parameters from the two methods are quite similar.
+The intervals on $\sigma$ from the two methods are quite similar but the bootstrap intervals on the other variance components are shifted to the left relative to those from the profiling results.
+The reason for this is because the bootstrap intervals are chosen to be the shortest intervals with the desired coverage.
+In a density that is skewed to the right, as these are, the shortest interval will be to the left of an interval with equal tail coverage, which is how the profile-based intervals are constructed.
+
+The profile-$\zeta$ function can be transformed to an equivalent density function which we plot in @fig-kb07densigma, showing the skewness of the variance component parameters other than $\sigma$.
+
+```{julia}
+#| code-fold: true
+#| fig-cap: "Density functions of the marginal distribution of the estimators of variance component parameters in a model of response speed in the kb07 data."
+#| label: fig-kb07densigma
+profiledensity!(Figure(; resolution=(1200, 300)), pr01; share_y_scale=false)
+```
+
+Alternatively we can see the skewness in the plots of $\zeta$
+
+```{julia}
+#| code-fold: true
+#| label: fig-kb07zetasigma
+#| fig-cap: "Plot of ζ scores for the variance component parameters in a model of response speed for the kb07 data"
+zetaplot!(Figure(; resolution=(1100, 330)), pr01; ptyp='σ')
+```
+
+The skewness is less obvious in @fig-kb07bskdesigma because of the stochastic nature of the bootstrap sample and the kernel density estimators.
+
+```{julia}
+#| code-fold: true
+#| label: fig-kb07bskdesigma
+#| fig-cap: "Kernel density estimator plots from bootstrap samples of the variance component parameters in a model of response speed for the kb07 data"
+let pars=["σ", "σ1", "σ2", "σ3"]
+  draw(
+    data(samp01.tbl) *
+    mapping(
+      pars .=> "Variance component parameters";
+      color=dims(1) => renamer(pars),
+    ) *
+    AlgebraOfGraphics.density()
+  )
+end
 ```
