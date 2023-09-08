@@ -3,7 +3,7 @@ title: "Confidence intervals from profiled objective"
 author: "Douglas Bates"
 ---
 
-## Assessing the variability of parameter estimates
+# Assessing the variability of parameter estimates
 
 Statistical methods that are based on probability models can be used to provide us with a "best guess" of the value of parameters, such as the effect of a particular experimental treatment, in the form of a *parameter estimate*.
 In addition, the probability model can be used to assess the uncertainty in the estimate.
@@ -30,6 +30,7 @@ using AlgebraOfGraphics
 using CairoMakie
 using MixedModels
 using MixedModelsMakie
+using Random
 using SMLP2023: dataset
 
 CairoMakie.activate!(; type="svg")
@@ -63,7 +64,7 @@ println(pr01.m) # model is a property of the profile object
 Evaluation of `pr01` is similar to other model fits in these notes except that the call to `fit` is wrapped in a call to `profile`.
 Because the object returned from `profile` includes the original model fit as its `m` property, it is not necessary to save the original model fit separately.
 
-### Fixing values of parameters
+## Fixing values of parameters
 
 The information from the profile is encapsulated in a table.
 
@@ -154,4 +155,68 @@ zetaplot!(Figure(; resolution=(1200, 330)), pr01; ptyp='σ', absv=true)
 #| fig-cap: "Absolute value of ζ versus parameter value for the θ parameters in a model of response speed for the kb07 data.  The horizontal lines are confidence intervals with nominal 50%, 80%, 90%, 95% and 99% confidence."
 #| label: fig-kb07abszetatheta
 zetaplot!(Figure(; resolution=(1200, 330)), pr01; ptyp='θ', absv=true)
+```
+
+# Comparisons with the parametric bootstrap
+
+With two methods of assessing the variability in the parameter estimates --- the parametric bootstrap and profiling the objective function --- we should compare and contrast these approaches.
+
+Profiling the objective has two main advantages:
+
+- Profiling is deterministic whereas the parametric bootstrap is stochastic because it is based on a random sample from the model at the estimated parameter values.  Repeating the evaluation of the bootstrap intervals will result in slightly different end points for the coverage intervals.  The variability in the end points is a function of the size of the bootstrap sample.
+
+- Generally profiling is faster than the bootstrap.  In this example the profiling required fitting a reduced model to the data 237 times (249 rows in the table but 12 of these rows are repetitions of the global estimates).  To obtain reasonable precision in a bootstrap usually requires thousands of samples.
+
+The main advantage of the bootstrap is that any parameter or any function of the parameters, such as the predicted response at some setting of the experimental factors, can be evaluated and assessed from the sample. When doing so, however, it is necessary to work with large samples so as to avoid undesirable levels of sample re-use.
+
+Because profiling different parameters requires customized code for each parameter type, it is more difficult to generalize this approach to different types of parameters or predictions.
+We have already mentioned that the correlation parameters are not profiled in the current version of the code.
+
+For comparison with the profiling results, we create a table of 2500 bootstrap samples
+
+```{julia}
+Random.seed!(8765678)
+samp01 = parametricbootstrap(2500, pr01.m; optsum_overrides=(; ftol_rel=1e-8))
+confint(samp01)
+```
+
+Comparing these intervals with those from the profile results shows that the intervals on the fixed-effects parameters from the two methods are quite similar.
+The intervals on $\sigma$ from the two methods are quite similar but the bootstrap intervals on the other variance components are shifted to the left relative to those from the profiling results.
+The reason for this is because the bootstrap intervals are chosen to be the shortest intervals with the desired coverage.
+In a density that is skewed to the right, as these are, the shortest interval will be to the left of an interval with equal tail coverage, which is how the profile-based intervals are constructed.
+
+The profile-$\zeta$ function can be transformed to an equivalent density function which we plot in @fig-kb07densigma, showing the skewness of the variance component parameters other than $\sigma$.
+
+```{julia}
+#| code-fold: true
+#| fig-cap: "Density functions of the marginal distribution of the estimators of variance component parameters in a model of response speed in the kb07 data."
+#| label: fig-kb07densigma
+profiledensity!(Figure(; resolution=(1200, 300)), pr01; share_y_scale=false)
+```
+
+Alternatively we can see the skewness in the plots of $\zeta$
+
+```{julia}
+#| code-fold: true
+#| label: fig-kb07zetasigma
+#| fig-cap: "Plot of ζ scores for the variance component parameters in a model of response speed for the kb07 data"
+zetaplot!(Figure(; resolution=(1100, 330)), pr01; ptyp='σ')
+```
+
+The skewness is less obvious in @fig-kb07bskdesigma because of the stochastic nature of the bootstrap sample and the kernel density estimators.
+
+```{julia}
+#| code-fold: true
+#| label: fig-kb07bskdesigma
+#| fig-cap: "Kernel density estimator plots from bootstrap samples of the variance component parameters in a model of response speed for the kb07 data"
+let pars=["σ", "σ1", "σ2", "σ3"]
+  draw(
+    data(samp01.tbl) *
+    mapping(
+      pars .=> "Variance component parameters";
+      color=dims(1) => renamer(pars),
+    ) *
+    AlgebraOfGraphics.density()
+  )
+end
 ```
