@@ -49,7 +49,7 @@ kb07 = Table(dataset(:kb07))
 ```
 
 Now we fit and profile a model.
-The response is defined as `1000 / rt_raw` where `rt_raw` is measured in microseconds.
+The response is defined as `1000 / rt_raw` where `rt_raw` is measured in milliseconds.
 Thus the response being modeled is the speed measured in responses per second.
 
 ```{julia}
@@ -118,7 +118,7 @@ To review:
 zetaplot!(Figure(; resolution=(1200, 350)), pr01; ptyp='β')
 ```
 
-The lines on these panels are read like normal probability plots.
+The lines on these panels are read like normal probability plots, i.e. QQ plots against a standard normal distribution.
 Those on the $\beta_2$ and $\beta_3$ panels are, to the resolution of the plot, straight lines which indicates that the estimators of those parameters are normally distributed over the region of interest.
 
 The points in the $\beta_1$ and $\beta_4$ panels are slightly over-dispersed relative to the straight line, which means that the estimators of these parameters are distributed like a T-distribution with a moderate number of degrees of freedom.
