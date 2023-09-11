@@ -353,16 +353,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p><em>Julius Krumbiegel also has a <a href="https://jkrumbiegel.com/pages/2022-08-26-pkg-introduction/">great blog post</a> with more details on Julia environments.</em></p>
 <p>Julia packages can be configured (in a file called <code>Project.toml</code>) on a per-project basis. The packaged sources and compiled versions are stored in a central location, e.g.&nbsp;<code>~/.julia/packages</code> and <code>~/.julia/compiled</code> on Linux systems, but the configuration of packages to be used can be local to a project. The <code>Pkg</code> package is used to modify the local project’s configuration. (An alternative is “package mode” in the read-eval-print-loop or REPL, which we will show at the summer school.) Start julia in the directory of the cloned <code>SMLP2023</code> repository</p>
-<div class="cell" data-execution_count="1">
+<div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Pkg        </span><span class="co"># there's a package called 'Pkg' to manipulate package configs</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">Pkg</span>.<span class="fu">activate</span>(<span class="st">"."</span>)<span class="co"># activate the current directory as the project</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>If you’ve received an environment from someone/somewhere else – such as this course repository – then you’ll need to first “instantiate” it (i.e., install all the dependencies).</p>
-<div class="cell" data-execution_count="2">
+<div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">Pkg</span>.<span class="fu">instantiate</span>()<span class="co"># only needed the first time you work in a project</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">Pkg</span>.<span class="fu">update</span>()     <span class="co"># get the latest package versions compatible with the project</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="3">
+<div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">Pkg</span>.<span class="fu">status</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Occasionally the <code>Pkg.status</code> function call will give info about new versions being available but blocked by requirements of other packages. This is to be expected - the package system is large and the web of dependencies are complex. Generally the Julia package system is very good at resolving dependencies.</p>

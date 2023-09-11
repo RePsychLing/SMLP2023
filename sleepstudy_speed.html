@@ -422,7 +422,7 @@ div.csl-indent {
 <section id="setup" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Setup</h1>
 <p>First we attach the various packages needed, define a few helper functions, read the data, and get everything in the desired shape.</p>
-<div class="cell" data-execution_count="1">
+<div class="cell" data-execution_count="2">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">CairoMakie         </span><span class="co"># device driver for static (SVG, PDF, PNG) plots</span></span>
@@ -447,7 +447,7 @@ div.csl-indent {
 <li>Compute <code>speed</code> as an alternative dependent variable from <code>reaction</code>, warranted by a ‘boxcox’ check of residuals.</li>
 <li>Create a <code>GroupedDataFrame</code> by levels of <code>Subj</code> (the original dataframe is available as <code>gdf.parent</code>, which we name <code>df</code>)</li>
 </ul>
-<div class="cell" data-execution_count="2">
+<div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>gdf <span class="op">=</span> <span class="pp">@chain</span> MixedModels.<span class="fu">dataset</span>(<span class="op">:</span>sleepstudy) <span class="cf">begin</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  DataFrame</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename!</span>(<span class="op">:</span>subj <span class="op">=&gt;</span> <span class="op">:</span>Subj, <span class="op">:</span>days <span class="op">=&gt;</span> <span class="op">:</span>day)</span>
@@ -650,7 +650,7 @@ div.csl-indent {
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="3">
+<div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> gdf.parent</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
@@ -728,10 +728,10 @@ div.csl-indent {
 <section id="estimates-for-pooled-data" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Estimates for pooled data</h1>
 <p>In the first analysis we ignore the dependency of observations due to repeated measures from the same subjects. We pool all the data and estimate the regression of 180 speed scores on the nine days of the experiment.</p>
-<div class="cell" data-execution_count="4">
+<div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>pooledcoef <span class="op">=</span> <span class="fu">simplelinreg</span>(df.day, df.speed)  <span class="co"># produces a Tuple</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
-<pre><code>(3.965811974783149, -0.11099359232199696)</code></pre>
+<pre><code>(3.965811974783146, -0.1109935923219964)</code></pre>
 </div>
 </div>
 </section>
@@ -741,7 +741,7 @@ div.csl-indent {
 <section id="within-subject-simple-regressions" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="within-subject-simple-regressions"><span class="header-section-number">5.1</span> Within-subject simple regressions</h2>
 <p>Applying <code>combine</code> to a grouped data frame like <code>gdf</code> produces a <code>DataFrame</code> with a row for each group. The permutation <code>ord</code> provides an ordering for the groups by increasing intercept (predicted response at day 0).</p>
-<div class="cell" data-execution_count="5">
+<div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>within <span class="op">=</span> <span class="fu">combine</span>(gdf, [<span class="op">:</span>day, <span class="op">:</span>speed] <span class="op">=&gt;</span> simplelinreg <span class="op">=&gt;</span> <span class="op">:</span>coef)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <div><div style="float: left;"><span>18×2 DataFrame</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
@@ -855,7 +855,7 @@ div.csl-indent {
 </div>
 </div>
 <p><a href="#fig-xyplotsleepspeed">Figure&nbsp;1</a> shows the reaction speed versus days of sleep deprivation by subject. The panels are arranged by increasing initial reaction speed starting at the lower left and proceeding across rows.</p>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-execution_count="7">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span></span>
@@ -888,7 +888,7 @@ div.csl-indent {
 </section>
 <section id="basic-lmm" class="level1" data-number="6">
 <h1 data-number="6"><span class="header-section-number">6</span> Basic LMM</h1>
-<div class="cell" data-execution_count="7">
+<div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>contrasts <span class="op">=</span> <span class="fu">Dict</span>(<span class="op">:</span>Subj <span class="op">=&gt;</span> <span class="fu">Grouping</span>())</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>m1 <span class="op">=</span> <span class="kw">let</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  form <span class="op">=</span> <span class="pp">@formula</span> speed <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> day <span class="op">+</span> (<span class="fl">1</span> <span class="op">+</span> day <span class="op">|</span> Subj)</span>
@@ -942,7 +942,7 @@ div.csl-indent {
 <section id="no-correlation-parameter-zcp-lmm" class="level1" data-number="7">
 <h1 data-number="7"><span class="header-section-number">7</span> No correlation parameter: zcp LMM</h1>
 <p>The <code>zerocorr</code> function applied to a random-effects term estimates one parameter less than LMM <code>m1</code>– the CP is now fixed to zero.</p>
-<div class="cell" data-execution_count="8">
+<div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>m2 <span class="op">=</span> <span class="kw">let</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  form <span class="op">=</span> <span class="pp">@formula</span> speed <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> day <span class="op">+</span> <span class="fu">zerocorr</span>(<span class="fl">1</span> <span class="op">+</span> day <span class="op">|</span> Subj)</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(MixedModel, form, df; contrasts)</span>
@@ -989,7 +989,7 @@ div.csl-indent {
 </div>
 </div>
 <p>LMM <code>m2</code> has a slghtly lower log-likelihood than LMM <code>m1</code> but also one fewer parameters. A likelihood-ratio test is used to compare these nested models.</p>
-<div class="cell" data-execution_count="9">
+<div class="cell" data-execution_count="10">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>MixedModels.<span class="fu">likelihoodratiotest</span>(m2, m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1036,7 +1036,7 @@ div.csl-indent {
 </div>
 </div>
 <p>Alternatively, the AIC, AICc, and BIC values can be compared. They are on a scale where “smaller is better”. All three model-fit statistics prefer the zcpLMM <code>m2</code>.</p>
-<div class="cell" data-execution_count="10">
+<div class="cell" data-execution_count="11">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span></span>
@@ -1100,7 +1100,7 @@ div.csl-indent {
 </section>
 <section id="caterpillar-plots-effect-profiles" class="level1" data-number="9">
 <h1 data-number="9"><span class="header-section-number">9</span> Caterpillar plots (effect profiles)</h1>
-<div class="cell" data-execution_count="11">
+<div class="cell" data-execution_count="12">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">caterpillar</span>(m2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1117,7 +1117,7 @@ div.csl-indent {
 </section>
 <section id="shrinkage-plot" class="level1" data-number="10">
 <h1 data-number="10"><span class="header-section-number">10</span> Shrinkage plot</h1>
-<div class="cell" data-execution_count="12">
+<div class="cell" data-execution_count="13">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shrinkageplot!</span>(<span class="fu">Figure</span>(; resolution<span class="op">=</span>(<span class="fl">500</span>, <span class="fl">500</span>)), m2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
