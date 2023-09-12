@@ -80,7 +80,7 @@ shrinkageplot(m0)
 
 ```{julia}
 #| code-fold: true
-caterpillar(m0; orderby=3)
+caterpillar(m0; orderby=nothing, vline_at_zero=true)
 ```
 
 
@@ -120,5 +120,5 @@ shrinkageplot(m1)
 
 ```{julia}
 #| code-fold: true
-caterpillar(m1; orderby=3)
+caterpillar(m1; orderby=nothing, vline_at_zero=true)
 ```
