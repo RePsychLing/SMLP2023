@@ -38,6 +38,7 @@ Here we provide some of the corresponding analyses with _MixedModels.jl_ and a m
 #| output: false
 using Arrow
 using AlgebraOfGraphics
+using AlgebraOfGraphics: density
 using CairoMakie
 using CategoricalArrays
 using Chain
@@ -45,14 +46,11 @@ using DataFrameMacros
 using DataFrames
 using MixedModels
 using MixedModelsMakie
-using MixedModelsMakie: qqnorm
+using ProgressMeter
 using Random
 using SMLP2023: dataset
 using StatsBase
 
-using AlgebraOfGraphics: density
-
-import ProgressMeter
 ProgressMeter.ijulia_behavior(:clear)
 CairoMakie.activate!(; type="svg")
 ```
@@ -432,7 +430,7 @@ Interesting.
 Here we
 
   - generate a bootstrap sample
-  - compute shortest covergage intervals for the LMM parameters
+  - compute shortest coverage intervals for the LMM parameters
   - plot densities of bootstrapped parameter estimates for residual, fixed effects, variance components, and correlation parameters
 
 ## Generate a bootstrap sample
@@ -487,6 +485,7 @@ The shortest coverage interval for the `GM` ranges from 376 to 404 ms and the as
 #| code-fold: true
 #| label: fig-betadensitym1
 #| fig-cap: '  Kernel density estimate from bootstrap samples of the fixed effects for model  m1L'
+#=
 rn = renamer([
   "(Intercept)" => "GM",
   "CTR: sod" => "spatial effect",
@@ -499,6 +498,7 @@ rn = renamer([
   "CTR: sod, CTR: dod" => "spatial, attraction",
   "CTR: dos, CTR: dod" => "object, attraction",
 ])
+=#
 draw(
   data(tbl) *
   mapping(
