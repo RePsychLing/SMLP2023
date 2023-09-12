@@ -10,7 +10,6 @@ Begin by loading the packages to be used.
 #| output: false
 using AlgebraOfGraphics
 using CairoMakie
-using DataFrameMacros
 using DataFrames
 using MixedModels
 using ProgressMeter
@@ -19,7 +18,6 @@ using SMLP2023: dataset
 
 CairoMakie.activate!(; type="svg")
 
-import ProgressMeter
 ProgressMeter.ijulia_behavior(:clear)
 ```
 
