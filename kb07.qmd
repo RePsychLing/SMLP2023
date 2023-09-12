@@ -106,8 +106,7 @@ The pseudo-random number generator is initialized to a fixed value for reproduci
 
 ```{julia}
 Random.seed!(1234321)
-hide_progress = true
-kbm02samp = parametricbootstrap(2000, kbm02; hide_progress)
+kbm02samp = parametricbootstrap(2000, kbm02)
 kbm02tbl = kbm02samp.tbl
 ```
 

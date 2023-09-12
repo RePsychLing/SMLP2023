@@ -216,7 +216,7 @@ Simulating and fitting a substantial number of model fits, 5000 in this case, ta
 
 ```{julia}
 rng = Random.seed!(42)    # initialize a random number generator
-m1bstp = parametricbootstrap(rng, 5000, m1; hide_progress=true)
+m1bstp = parametricbootstrap(rng, 5000, m1)
 tbl = m1bstp.tbl
 ```
 
