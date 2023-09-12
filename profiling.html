@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Douglas Bates">
-<meta name="dcterms.date" content="2023-09-11">
+<meta name="dcterms.date" content="2023-09-12">
 
 <title>SMLP2023: Advanced Frequentist Track - Confidence intervals from profiled objective</title>
 <style>
@@ -215,7 +215,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./kwdyz11.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">RePsychLing Kliegl et al.&nbsp;(2010)</span></a>
+ <span class="menu-text">RePsychLing Kliegl et al.&nbsp;(2011)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -355,7 +355,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2023-09-11</p>
+      <p class="date">2023-09-12</p>
     </div>
   </div>
   
@@ -374,7 +374,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="profiling-a-model-for-the-kb07-data" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="profiling-a-model-for-the-kb07-data"><span class="header-section-number">1.1</span> Profiling a model for the kb07 data</h2>
 <p>Load the packages to be used</p>
-<div class="cell" data-execution_count="2">
+<div class="cell" data-execution_count="1">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">AlgebraOfGraphics</span></span>
@@ -390,7 +390,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 <p>Load the data and define the contrasts so that the coefficients for each of the experimental variables, <code>load</code>, <code>spkr</code> and <code>prec</code>, are positive.</p>
-<div class="cell" data-execution_count="3">
+<div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>contrasts <span class="op">=</span> <span class="fu">Dict</span>( <span class="co"># base levels so estimates for speed are positive</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="op">:</span>load <span class="op">=&gt;</span> <span class="fu">EffectsCoding</span>(; base<span class="op">=</span><span class="st">"yes"</span>),</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="op">:</span>prec <span class="op">=&gt;</span> <span class="fu">EffectsCoding</span>(; base<span class="op">=</span><span class="st">"break"</span>),</span>
@@ -428,14 +428,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Now we fit and profile a model. The response is defined as <code>1000 / rt_raw</code> where <code>rt_raw</code> is measured in milliseconds. Thus the response being modeled is the speed measured in responses per second.</p>
-<div class="cell" data-execution_count="4">
+<div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>pr01 <span class="op">=</span> <span class="kw">let</span> f <span class="op">=</span> <span class="pp">@formula</span> <span class="fl">1000</span> <span class="op">/</span> rt_raw <span class="op">~</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="fl">1</span> <span class="op">+</span> load <span class="op">+</span> spkr <span class="op">+</span> prec <span class="op">+</span> (<span class="fl">1</span> <span class="op">+</span> prec <span class="op">|</span> item) <span class="op">+</span> (<span class="fl">1</span> <span class="op">|</span> subj)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">profile</span>(<span class="fu">fit</span>(MixedModel, f, kb07; contrasts))</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(pr01.m) <span class="co"># model is a property of the profile object</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Minimizing 67    Time: 0:00:00 ( 5.92 ms/it)</code></pre>
+<pre><code>Minimizing 67    Time: 0:00:00 ( 9.08 ms/it)</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Linear mixed model fit by maximum likelihood
@@ -467,7 +467,7 @@ prec: maintain  0.0698293  0.00865212   8.07    &lt;1e-15
 <section id="fixing-values-of-parameters" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="fixing-values-of-parameters"><span class="header-section-number">1.2</span> Fixing values of parameters</h2>
 <p>The information from the profile is encapsulated in a table.</p>
-<div class="cell" data-execution_count="5">
+<div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>pr01.tbl</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>Table with 15 columns and 249 rows:
@@ -483,7 +483,7 @@ prec: maintain  0.0698293  0.00865212   8.07    &lt;1e-15
  8  │ σ   -0.504067  0.531523  0.0212961  0.0112177  0.0698297  0.138251  ⋯
  9  │ σ   0.0        0.531523  0.0212959  0.011218   0.0698293  0.139458  ⋯
  10 │ σ   0.501151   0.531523  0.0212956  0.0112184  0.069829   0.140675  ⋯
- 11 │ σ   0.999416   0.531522  0.0212953  0.0112187  0.0698286  0.141904  ⋯
+ 11 │ σ   0.999417   0.531522  0.0212953  0.0112187  0.0698286  0.141904  ⋯
  12 │ σ   1.49482    0.531522  0.021295   0.0112191  0.0698282  0.143143  ⋯
  13 │ σ   1.98739    0.531522  0.0212947  0.0112195  0.0698279  0.144392  ⋯
  14 │ σ   2.47714    0.531521  0.0212944  0.0112199  0.0698275  0.145653  ⋯
@@ -491,17 +491,17 @@ prec: maintain  0.0698293  0.00865212   8.07    &lt;1e-15
  16 │ σ   3.4483     0.531521  0.0212937  0.0112206  0.0698267  0.148208  ⋯
  17 │ σ   3.92976    0.53152   0.0212934  0.011221   0.0698263  0.149502  ⋯
  18 │ σ   4.4085     0.53152   0.0212931  0.0112214  0.0698259  0.150807  ⋯
- 19 │ β1  -4.15491   0.453786  0.0212914  0.0112175  0.0763336  0.139442  ⋯
- 20 │ β1  -3.75285   0.462423  0.0212917  0.0112177  0.0755066  0.139444  ⋯
- 21 │ β1  -3.33142   0.471061  0.0212921  0.0112179  0.0747193  0.139446  ⋯
- 22 │ β1  -2.89208   0.479698  0.0212926  0.0112181  0.0739649  0.139448  ⋯
- 23 │ β1  -2.43663   0.488335  0.0212931  0.0112182  0.0732389  0.13945   ⋯
+ 19 │ β1  -4.15491   0.453786  0.0212914  0.0112175  0.0763354  0.139442  ⋯
+ 20 │ β1  -3.75285   0.462423  0.0212917  0.0112177  0.0755102  0.139444  ⋯
+ 21 │ β1  -3.33142   0.471061  0.0212921  0.0112179  0.0747192  0.139446  ⋯
+ 22 │ β1  -2.89208   0.479698  0.0212926  0.0112181  0.0739651  0.139448  ⋯
+ 23 │ β1  -2.43663   0.488335  0.0212931  0.0112182  0.0732385  0.13945   ⋯
  ⋮  │ ⋮       ⋮         ⋮          ⋮          ⋮          ⋮         ⋮      ⋱</code></pre>
 </div>
 </div>
 <p>Each row of the table summarizes a fit of the original model to the original data but with one of the parameters held fixed. For the first 18 rows of the table, the parameter being held fixed is <span class="math inline">\(\sigma\)</span>, as shown in the <code>p</code> column. In the next set of rows the parameter being held fixed will be <span class="math inline">\(\beta_1\)</span>, the intercept.</p>
 <p>There are blocks of rows for the fixed-effects (<span class="math inline">\(\boldsymbol{\beta}\)</span>) parameters, the variance components (on the scale of a standard deviation), and the <span class="math inline">\(\boldsymbol{\theta}\)</span> parameters that generate the covariance factor <span class="math inline">\(\boldsymbol{\Lambda}_{\boldsymbol{\theta}}\)</span>. (At present the correlation parameters are not profiled - we may add them later but that computation is rather awkward.)</p>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(<span class="fu">unique</span>(pr01.tbl.p))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[:σ, :β1, :β2, :β3, :β4, :θ1, :θ2, :θ3, :θ4, :σ1, :σ2, :σ3]</code></pre>
@@ -509,7 +509,7 @@ prec: maintain  0.0698293  0.00865212   8.07    &lt;1e-15
 </div>
 <p>To reiterate, the first row contains the parameter estimates for this model fit to the original response values with the constraint that <span class="math inline">\(\sigma=0.130088\)</span>, instead of the global estimate <span class="math inline">\(\hat{\sigma}=0.139458\)</span> in the row for which <span class="math inline">\(\zeta=0.0\)</span>.</p>
 <p>The global estimates are included in every block at the row for which <span class="math inline">\(\zeta=0.0\)</span>.</p>
-<div class="cell" data-execution_count="7">
+<div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(r <span class="op">-&gt;</span> <span class="fu">iszero</span>(r.ζ), pr01.tbl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>Table with 15 columns and 12 rows:
@@ -542,7 +542,7 @@ prec: maintain  0.0698293  0.00865212   8.07    &lt;1e-15
 <section id="profile-zeta-plots" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="profile-zeta-plots"><span class="header-section-number">1.3</span> Profile zeta plots</h2>
 <p><a href="#fig-kb07zetabeta">Figure&nbsp;1</a> shows, for each of the fixed effects parameters, <span class="math inline">\(\zeta\)</span> versus the parameter value.</p>
-<div class="cell" data-execution_count="8">
+<div class="cell" data-execution_count="7">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zetaplot!</span>(<span class="fu">Figure</span>(; resolution<span class="op">=</span>(<span class="fl">1200</span>, <span class="fl">350</span>)), pr01; ptyp<span class="op">=</span><span class="ch">'β'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -559,7 +559,7 @@ prec: maintain  0.0698293  0.00865212   8.07    &lt;1e-15
 <p>The lines on these panels are read like normal probability plots, i.e.&nbsp;QQ plots against a standard normal distribution. Those on the <span class="math inline">\(\beta_2\)</span> and <span class="math inline">\(\beta_3\)</span> panels are, to the resolution of the plot, straight lines which indicates that the estimators of those parameters are normally distributed over the region of interest.</p>
 <p>The points in the <span class="math inline">\(\beta_1\)</span> and <span class="math inline">\(\beta_4\)</span> panels are slightly over-dispersed relative to the straight line, which means that the estimators of these parameters are distributed like a T-distribution with a moderate number of degrees of freedom.</p>
 <p>The profile-<span class="math inline">\(\zeta\)</span> function can be used to generate confidence intervals on the parameters</p>
-<div class="cell" data-execution_count="9">
+<div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(pr01)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
 <pre><code>DictTable with 3 columns and 8 rows:
@@ -576,7 +576,7 @@ prec: maintain  0.0698293  0.00865212   8.07    &lt;1e-15
 </div>
 </div>
 <p>as shown in <a href="#fig-kb07abszetabeta">Figure&nbsp;2</a>, which shows the absolute value of <span class="math inline">\(\zeta\)</span>, which is simply the square root of the difference in the objective, versus the parameter being profiled.</p>
-<div class="cell" data-execution_count="10">
+<div class="cell" data-execution_count="9">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zetaplot!</span>(<span class="fu">Figure</span>(; resolution<span class="op">=</span>(<span class="fl">1200</span>, <span class="fl">330</span>)), pr01; ptyp<span class="op">=</span><span class="ch">'β'</span>, absv<span class="op">=</span><span class="cn">true</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -591,7 +591,7 @@ prec: maintain  0.0698293  0.00865212   8.07    &lt;1e-15
 </div>
 </div>
 <p>The 95% confidence intervals are the second horizontal lines from the top in each panel, at 1.96 on the vertical scale.</p>
-<div class="cell" data-execution_count="11">
+<div class="cell" data-execution_count="10">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zetaplot!</span>(<span class="fu">Figure</span>(; resolution<span class="op">=</span>(<span class="fl">1200</span>, <span class="fl">330</span>)), pr01; ptyp<span class="op">=</span><span class="ch">'σ'</span>, absv<span class="op">=</span><span class="cn">true</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -606,7 +606,7 @@ prec: maintain  0.0698293  0.00865212   8.07    &lt;1e-15
 </div>
 </div>
 <p><a href="#fig-kb07abszetasigma">Figure&nbsp;3</a> shows similar confidence intervals on the parameters representing standard deviations as does <a href="#fig-kb07abszetatheta">Figure&nbsp;4</a> for the <span class="math inline">\(\theta\)</span> parameters.</p>
-<div class="cell" data-execution_count="12">
+<div class="cell" data-execution_count="11">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zetaplot!</span>(<span class="fu">Figure</span>(; resolution<span class="op">=</span>(<span class="fl">1200</span>, <span class="fl">330</span>)), pr01; ptyp<span class="op">=</span><span class="ch">'θ'</span>, absv<span class="op">=</span><span class="cn">true</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -633,7 +633,7 @@ prec: maintain  0.0698293  0.00865212   8.07    &lt;1e-15
 <p>The main advantage of the bootstrap is that any parameter or any function of the parameters, such as the predicted response at some setting of the experimental factors, can be evaluated and assessed from the sample. When doing so, however, it is necessary to work with large samples so as to avoid undesirable levels of sample re-use.</p>
 <p>Because profiling different parameters requires customized code for each parameter type, it is more difficult to generalize this approach to different types of parameters or predictions. We have already mentioned that the correlation parameters are not profiled in the current version of the code.</p>
 <p>For comparison with the profiling results, we create a table of 2500 bootstrap samples</p>
-<div class="cell" data-execution_count="13">
+<div class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="bu">Random</span>.<span class="fu">seed!</span>(<span class="fl">8765678</span>)</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>samp01 <span class="op">=</span> <span class="fu">parametricbootstrap</span>(<span class="fl">2500</span>, pr01.m; optsum_overrides<span class="op">=</span>(; ftol_rel<span class="op">=</span><span class="fl">1e-8</span>))</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(samp01)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -645,16 +645,16 @@ prec: maintain  0.0698293  0.00865212   8.07    &lt;1e-15
  β2  │ 0.0147172   0.0274258
  β3  │ 0.00481004  0.0169282
  β4  │ 0.0524409   0.0857708
- ρ1  │ -0.557298   0.203915
- σ   │ 0.134745    0.144354
- σ1  │ 0.0587605   0.0986167
- σ2  │ 0.0316134   0.0571327
- σ3  │ 0.05724     0.087862</code></pre>
+ ρ1  │ -0.577499   0.183778
+ σ   │ 0.134747    0.144354
+ σ1  │ 0.0587605   0.0986544
+ σ2  │ 0.0316108   0.0571327
+ σ3  │ 0.0572288   0.087862</code></pre>
 </div>
 </div>
 <p>Comparing these intervals with those from the profile results shows that the intervals on the fixed-effects parameters from the two methods are quite similar. The intervals on <span class="math inline">\(\sigma\)</span> from the two methods are quite similar but the bootstrap intervals on the other variance components are shifted to the left relative to those from the profiling results. The reason for this is because the bootstrap intervals are chosen to be the shortest intervals with the desired coverage. In a density that is skewed to the right, as these are, the shortest interval will be to the left of an interval with equal tail coverage, which is how the profile-based intervals are constructed.</p>
 <p>The profile-<span class="math inline">\(\zeta\)</span> function can be transformed to an equivalent density function which we plot in <a href="#fig-kb07densigma">Figure&nbsp;5</a>, showing the skewness of the variance component parameters other than <span class="math inline">\(\sigma\)</span>.</p>
-<div class="cell" data-execution_count="14">
+<div class="cell" data-execution_count="13">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">profiledensity!</span>(<span class="fu">Figure</span>(; resolution<span class="op">=</span>(<span class="fl">1200</span>, <span class="fl">300</span>)), pr01; share_y_scale<span class="op">=</span><span class="cn">false</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -669,7 +669,7 @@ prec: maintain  0.0698293  0.00865212   8.07    &lt;1e-15
 </div>
 </div>
 <p>Alternatively we can see the skewness in the plots of <span class="math inline">\(\zeta\)</span></p>
-<div class="cell" data-execution_count="15">
+<div class="cell" data-execution_count="14">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zetaplot!</span>(<span class="fu">Figure</span>(; resolution<span class="op">=</span>(<span class="fl">1100</span>, <span class="fl">330</span>)), pr01; ptyp<span class="op">=</span><span class="ch">'σ'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -684,7 +684,7 @@ prec: maintain  0.0698293  0.00865212   8.07    &lt;1e-15
 </div>
 </div>
 <p>The skewness is less obvious in <a href="#fig-kb07bskdesigma">Figure&nbsp;7</a> because of the stochastic nature of the bootstrap sample and the kernel density estimators.</p>
-<div class="cell" data-execution_count="16">
+<div class="cell" data-execution_count="15">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> pars<span class="op">=</span>[<span class="st">"σ"</span>, <span class="st">"σ1"</span>, <span class="st">"σ2"</span>, <span class="st">"σ3"</span>]</span>
