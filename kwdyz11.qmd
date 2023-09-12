@@ -284,7 +284,7 @@ We generate 2500 samples for the 15 model parameters (4 fixed effect, 4 VCs, 6 C
 ```{julia}
 #| code-fold: true
 Random.seed!(1234321)
-samp = parametricbootstrap(2500, m1; hide_progress=true)
+samp = parametricbootstrap(2500, m1)
 tbl = samp.tbl
 ```
 
