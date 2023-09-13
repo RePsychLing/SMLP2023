@@ -367,14 +367,9 @@ using Effects
 design = Dict(
   :children => [true, false], :urban => ["Y", "N"], :age => [0.0]
 )
-preds = effects(design, gm3)
+preds = effects(design, gm3; invlink=AutoInvLink())
 ```
 
-Converting these η values to probabilities yields
-
-```{julia}
-logistic.(preds[!, "use: Y"])
-```
 
 ## Summarizing the results
 
