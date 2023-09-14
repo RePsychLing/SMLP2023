@@ -197,6 +197,8 @@ end
 
 # Parsimonious LMM - replication of MRK17 LMM
 
+The LMM is not nested in the previous sequence. 
+
 ```{julia}
 m_prm =let 
    form = @formula (1000/rt) ~ 1 + F*P*Q*lQ*lT +
@@ -207,10 +209,6 @@ end
 VarCorr(m_prm)
 issingular(m_prm)
 MixedModels.PCA(m_prm)
-```
-
-```{julia}
-MixedModels.likelihoodratiotest(m_zcp, m_prm,  m_cpx)
 ```
 
 ## Fixed effects
