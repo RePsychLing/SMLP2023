@@ -250,7 +250,7 @@ Let's compare the three models.
 gof_summary = let
   nms = [:m_zcp1_rdc, :m_zcp1, :m_max]
   mods = eval.(nms)
-  lrt = MixedModels.likelihoodratiotest(m_zcp1_rdc, m_zcp1, m_cpx)
+  lrt = MixedModels.likelihoodratiotest(m_zcp1_rdc, m_zcp1, m_max)
   DataFrame(;
     name = nms, 
     dof=dof.(mods),
@@ -297,7 +297,7 @@ We note that the critical correlation parameter between spatial (`sod`) and attr
 gof_summary = let
   nms = [:m_zcp1_rdc, :m_prm1, :m_max]
   mods = eval.(nms)
-  lrt = MixedModels.likelihoodratiotest(m_prm, m_zcp, m_cpx)
+  lrt = MixedModels.likelihoodratiotest(m_prm1, m_zcp1, m_max)
   DataFrame(;
     name = nms, 
     dof=dof.(mods),
@@ -342,7 +342,7 @@ end
 gof_summary = let
   nms = [:m_zcp2, :m_cpx, :m_max]
   mods = eval.(nms)
-  lrt = MixedModels.likelihoodratiotest(m_zcp2, m_prm, m_cpx)
+  lrt = MixedModels.likelihoodratiotest(m_zcp2, m_cpx, m_max)
   DataFrame(;
     name = nms, 
     dof=dof.(mods),
@@ -372,9 +372,9 @@ MixedModels.PCA(m_cpx_rt)
 # Other checks
 
 ```{julia}
-m_prm.θ
-m_prm.lowerbd
-m_prm.λ
+m_prm1.θ
+m_prm1.lowerbd
+m_prm1.λ
 ```
 
 # Diagnostic plots of LMM residuals
@@ -445,7 +445,7 @@ CairoMakie.activate!(; type="svg")
 let
   n = nrow(dat)
   dat_rz = (;
-    value=vcat(residuals(m1) ./ std(residuals(m_prm1)), randn(n)),
+    value=vcat(residuals(m_prm1) ./ std(residuals(m_prm1)), randn(n)),
     curve=repeat(["residual", "normal"]; inner=n),
   )
   draw(
