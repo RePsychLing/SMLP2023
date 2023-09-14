@@ -154,9 +154,9 @@ m2c = let levels = ["val", "sod", "dos", "dod"]
   contrasts = Dict(
     :CTR => HypothesisCoding(
       [
-        -1/2 1/2   0 0
-        -1/2   0 1/2 0
-        -1/2   0  0  1
+        -1/2 1/2   0   0
+        -1/2   0 1/2   0
+        -1/2   0   0  1/2
       ];
       levels,
       labels=levels[2:end],
@@ -181,6 +181,41 @@ end
 ```
 
 The “almost” qualification refers to the fact that `contr.sum()` uses the last factor levels as default base level; `EffectsCoding` uses the first level.
+
+```{julia}
+m3b = let levels = [ "dod", "val", "sod", "dos"]
+  contrasts = Dict(
+    :CTR => HypothesisCoding(
+      [
+         -1/4   3/4 -1/4  -1/4
+         -1/4  -1/4  3/4  -1/4
+         -1/4  -1/4 -1/4   3/4
+      ];
+      levels,
+      labels=levels[2:end],
+    )
+  )
+  fit(MixedModel, form, dat1; contrasts)
+end
+```
+
+```{julia}
+m3c = let levels = [ "dod", "val", "sod", "dos"]
+  contrasts = Dict(
+    :CTR => HypothesisCoding(
+      [
+         -1/2   3/2 -1/2  -1/2
+         -1/2  -1/2  3/2  -1/2
+         -1/2  -1/2 -1/2   3/2
+      ];
+      levels,
+      labels=levels[2:end],
+    )
+  )
+  fit(MixedModel, form, dat1; contrasts)
+end
+```
+
 
 ## HelmertCoding
 
