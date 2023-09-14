@@ -163,21 +163,42 @@ issingular(m_zcp)
 MixedModels.PCA(m_zcp)
 ```
 
+```{julia}
+m_zcp3 = let 
+    form = @formula (1000/rt) ~ 1+F*P*Q*lQ*lT +
+                            zerocorr(1+Q+lT | subj) +
+                            zerocorr(1 | item);
+    fit(MixedModel, form, dat; contrasts)
+end
+VarCorr(m_zcp2)
+```
+
+```{julia}
+m_prm = let 
+    form = @formula (1000/rt) ~ 1+F*P*Q*lQ*lT +
+                               (1+    Q+lT | subj) +
+                               (1 | item);
+    fit(MixedModel, form, dat; contrasts)
+end
+VarCorr(m_prm)
+```
+
+
 ## VCs and CPs
 
 Look ok. It might be a good idea to prune the LMM. 
 
 ```{julia}
-MixedModels.likelihoodratiotest(m_zcp, m_cpx)
+MixedModels.likelihoodratiotest(m_zcp3, m_prm, m_cpx)
 ```
 
 The LRT favors the complex LMM, but not that  χ² < 2*(χ²-dof); AIC and BIC suggest against selection. 
 
 ```{julia}
 gof_summary = let
-  nms = [:m_zcp, :m_cpx]
+  nms = [:m_zcp3, :m_prm, :m_cpx]
   mods = eval.(nms)
-  lrt = MixedModels.likelihoodratiotest(m_zcp, m_cpx)
+  lrt = MixedModels.likelihoodratiotest(m_zcp3, m_prm, m_cpx)
   DataFrame(;
     name = nms, 
     dof=dof.(mods),
@@ -193,30 +214,42 @@ end
 
 ```
 
-
-
 # Parsimonious LMM - replication of MRK17 LMM
 
 The LMM is not nested in the previous sequence. 
 
+## Crossed fixed effects
+
 ```{julia}
-m_prm =let 
+m_mrk17_crossed =let 
    form = @formula (1000/rt) ~ 1 + F*P*Q*lQ*lT +
         (1+Q | subj) + zerocorr(0+lT | subj) + zerocorr(1 + P | item) ;
     fit(MixedModel, form, dat; contrasts)
 end
 
 VarCorr(m_prm)
-issingular(m_prm)
-MixedModels.PCA(m_prm)
 ```
 
-## Fixed effects
+```{julia}
+show(m_mrk17_crossed)
+```
 
 Finally, a look at the fixed effects. The four-factor interaction reported in Masson & Kliegl (2013) was not replicated.
 
+## Nested fixed effects
+
 ```{julia}
-show(m_prm)
+m_mrk17_nested =let 
+   form = @formula (1000/rt) ~ 1 + lQ + Q/(lT/(F*P)) +
+        (1+Q | subj) + zerocorr(0+lT | subj) + zerocorr(1 + P | item) ;
+    fit(MixedModel, form, dat; contrasts)
+end
+
+VarCorr(m_mrk17_nested)
+```
+
+```{julia}
+show(m_mrk17_nested)
 ```
 
 ## Info
