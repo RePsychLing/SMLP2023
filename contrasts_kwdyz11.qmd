@@ -149,6 +149,26 @@ end
 
 We can simply relevel the factor or move the column with -1s for a different base.
 
+```{julia}
+m2c = let levels = ["val", "sod", "dos", "dod"]
+  contrasts = Dict(
+    :CTR => HypothesisCoding(
+      [
+        -1/2 1/2   0 0
+        -1/2   0 1/2 0
+        -1/2   0  0  1
+      ];
+      levels,
+      labels=levels[2:end],
+    )
+  )
+  fit(MixedModel, form, dat1; contrasts)
+end
+```
+
+We can simply relevel the factor or move the column with -1s for a different base.
+
+
 ## EffectsCoding
 
 This contrast corresponds almost to `contr.sum()` in R.
