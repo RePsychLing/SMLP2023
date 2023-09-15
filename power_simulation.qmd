@@ -10,6 +10,7 @@ format:
 
 ```{julia}
 #| output: false
+using CairoMakie
 using DataFrames
 using Distributions
 using MixedModels
@@ -103,7 +104,8 @@ subj_n = 20
 item_n = 20
 subj_btwn = Dict(:age => ["old", "young"])
 item_btwn = Dict(:frequency => ["low", "high"])
-dat = simdat_crossed(MersenneTwister(42), subj_n, item_n; 
+const RNG = MersenneTwister(42)
+dat = simdat_crossed(RNG, subj_n, item_n; 
                      subj_btwn, item_btwn)               
 Table(dat)
 ```
@@ -115,21 +117,60 @@ Finally, we have a dependent variable `dv` initalized to be draws from the stand
 :::{.callout-note title="Latin squares, partial crossing, and continuous covariates"}
 `simdat_crossed` is designed to simulate a fully crossed factorial design. 
 If you have a partially crossed or Latin squaresdesign, then you could delete the "extra" cells to reduce the fully crossed data here to be partially crossed.
+For continuous covariates, we need to separately construct the covariates and then use a tabular join to create the design. 
+We'll examine an example of this later.
 :::
+
+```{julia}
+simmod = fit(MixedModel, 
+             @formula(dv ~ 1 + age * frequency + 
+                          (1 + frequency | subj) + 
+                          (1 + age | item)), dat)
+println(simmod)
+```
 
 
 ```{julia}
-subj_btwn = Dict(:age => ["old", "young"])
-item_btwn = Dict(:frequency => ["low", "high"])
 β = [250.0, -25.0, 10, 0.0]
+simulate!(RNG, simmod; β)
+```
+
+
+```{julia}
+fit!(simmod)
+```
+
+```{julia}
 σ = 25.0
+fit!(simulate!(RNG, simmod; β, σ))
+```
+
+```{julia}
 # relative to σ!
 subj_re = create_re(2.0, 1.3)
+```
+
+```{julia}
 item_re = create_re(1.3, 2.0)
 ```
 
 ```{julia}
-# simulate!(simmod; β, σ, θ)
+θ = createθ(simmod; subj=subj_re, item=item_re)
+```
+
+```{julia}
+fit!(simulate!(RNG, simmod; β, σ, θ))
+```
+
+```{julia}
+samp = parametricbootstrap(RNG, 1000, simmod; β, σ, θ)
+```
+
+```{julia}
+ridgeplot(samp)
+```
+
+```{julia}
 # datdat[!, :dv] = rand(MersenneTwister(12), [0, 1], nrow(datdat))
 # coefpvalues = DataFrame()
 # rng = MersenneTwister(42)
