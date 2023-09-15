@@ -132,6 +132,7 @@ simmod = fit(MixedModel,
 println(simmod)
 ```
 
+make sure to discuss contrasts here
 
 ```{julia}
 β = [250.0, -25.0, 10, 0.0]
@@ -196,16 +197,16 @@ end
 
 ```{julia}
 coefpvalues = DataFrame()
-@showprogress for subj_n in [20, 30, 50, 100],  item_n in [40, 60, 100]
+@showprogress for subj_n in [20, 40, 60, 80, 100, 120, 140],  item_n in [40, 60, 80, 100, 120, 140]
     dat = simdat_crossed(RNG, subj_n, item_n; 
                          subj_btwn, item_btwn)
     simmod = fit(MixedModel, 
                  @formula(dv ~ 1 + age * frequency + 
                               (1 + frequency | subj) + 
-                              (1 + age | item)), dat)
+                              (1 + age | item)), dat; progress=false)
 
     θ = createθ(simmod; subj=subj_re, item=item_re)
-    simboot = parametricbootstrap(RNG, 1000, simmod; 
+    simboot = parametricbootstrap(RNG, 100, simmod; 
                                   β, σ, θ, 
                                   optsum_overrides=(;ftol_rel=1e-8),
                                   progress=false)
@@ -237,4 +238,53 @@ select!(power, :coefname, :subj_n, :item_n, :power,
 
 ```{julia}
 data(power) * mapping(:subj_n, :item_n, :power; layout=:coefname) * visual(Heatmap) |> draw
+```
+
+
+```{julia}
+dat = simdat_crossed(RNG, subj_n, item_n; 
+                     subj_btwn, item_btwn)
+dat = DataFrame(dat)                 
+```
+
+```{julia}
+item_covariates = unique!(select(dat, :item))
+```
+
+
+```{julia}
+item_covariates[!, :chaos] = rand(rng, 
+                                  Normal(5, 2), 
+                                  nrow(item_covariates))            
+```
+
+```{julia}
+leftjoin!(dat, item_covariates; on=:item)
+```
+
+```{julia}
+simmod = fit(MixedModel, 
+             @formula(dv ~ 1 + age * frequency * chaos + 
+                          (1 + frequency | subj) + 
+                          (1 + age | item)), dat; contrasts)
+```
+
+TODO: continuous covariate
+TODO: bernoulli response
+TODO: savereplicates
+
+```{julia}
+dat[!, :dv] = rand(rng, Bernoulli(), nrow(dat))
+```
+
+```{julia}
+dat[!, :dv] = rand(rng, Poisson(), nrow(dat))
+```
+
+```{julia}
+dat[!, :n] = rand(rng, Poisson(), nrow(dat)) .+ 3
+```
+
+```{julia}
+dat[!, :dv] = rand.(rng, Binomial.(dat[!, :n])) ./ dat[!, :n] 
 ```
