@@ -22,6 +22,7 @@ project:
   - profiling.qmd
   - selection.qmd
   - shrinkageplot.qmd
+  - singularity.qmd
   - sleepstudy.qmd
   - sleepstudy_speed.qmd
   - useful_packages.qmd
@@ -98,5 +99,6 @@ website:
         - kb07.qmd
       - section: "Visualizations and diagnostics"
         contents:
+        - singularity.qmd
         - shrinkageplot.qmd
         - AoGPlots.qmd
