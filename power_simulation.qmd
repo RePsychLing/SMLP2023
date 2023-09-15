@@ -10,6 +10,7 @@ format:
 
 ```{julia}
 #| output: false
+using AlgebraOfGraphics
 using CairoMakie
 using DataFrames
 using Distributions
@@ -17,8 +18,10 @@ using MixedModels
 using MixedModelsMakie
 using MixedModelsSim
 using ProgressMeter
+using StatsBase
 using Random
 
+using AlgebraOfGraphics: AlgebraOfGraphics as AOG
 using MixedModels: dataset
 ProgressMeter.ijulia_behavior(:clear)
 ```
@@ -171,36 +174,67 @@ ridgeplot(samp)
 ```
 
 ```{julia}
-# datdat[!, :dv] = rand(MersenneTwister(12), [0, 1], nrow(datdat))
-# coefpvalues = DataFrame()
-# rng = MersenneTwister(42)
-# @showprogress for subj_n in [20, 30, 50, 100]
-#     for item_n in [40, 60, 100]
-#         dat = simdat_crossed(rng, subj_n, item_n; 
-#                              subj_btwn, item_btwn)
-#         simmod = fit(MixedModel, 
-#                      @formula(dv ~ 1 + age * frequency + 
-#                                   (1 + frequency | subj) + 
-#                                   (1 + age | item)), dat)
+let f = Figure()
+    ax = Axis(f[1, 1])
+    coefplot!(ax, samp;
+              conf_level=0.8, 
+              vline_at_zero=true, 
+              show_intercept=true)
+    ridgeplot!(ax, samp; 
+               conf_level=0.8, 
+               vline_at_zero=true, 
+               show_intercept=true,
+               xlabel="Normalized density and 80% range")
+    scatter!(ax, β, length(β):-1:1; 
+             marker=:x, 
+             markersize=20,
+             color=:red)
+    f
+end
+```
 
-#         θ = createθ(simmod; subj=subj_re, item=item_re)
-#         simboot = parametricbootstrap(rng, 1000, simmod; 
-#                                       β, σ, θ, 
-#                                       optsum_overrides=(;ftol_rel=1e-8),
-#                                       progress=false)
-#         df = DataFrame(simboot.coefpvalues)
-#         df[!, :subj_n] .= subj_n
-#         df[!, :item_n] .= item_n      
-#         append!(coefpvalues, df)                                
-#     end
-# end
+
+```{julia}
+coefpvalues = DataFrame()
+@showprogress for subj_n in [20, 30, 50, 100],  item_n in [40, 60, 100]
+    dat = simdat_crossed(RNG, subj_n, item_n; 
+                         subj_btwn, item_btwn)
+    simmod = fit(MixedModel, 
+                 @formula(dv ~ 1 + age * frequency + 
+                              (1 + frequency | subj) + 
+                              (1 + age | item)), dat)
+
+    θ = createθ(simmod; subj=subj_re, item=item_re)
+    simboot = parametricbootstrap(RNG, 1000, simmod; 
+                                  β, σ, θ, 
+                                  optsum_overrides=(;ftol_rel=1e-8),
+                                  progress=false)
+    df = DataFrame(simboot.coefpvalues)
+    df[!, :subj_n] .= subj_n
+    df[!, :item_n] .= item_n      
+    append!(coefpvalues, df)                                
+end
 ```
 
 ```{julia}
-# power = combine(groupby(coefpvalues, [:coefname, :subj_n, :item_n]), 
-#                 :p => (p -> mean(p .< 0.05)) => :power)
+power = combine(groupby(coefpvalues, [:coefname, :subj_n, :item_n]), 
+                :p => (p -> mean(p .< 0.05)) => :power)
 ```
 
 ```{julia}
-# ridgeplot(simboot)
+power = combine(groupby(coefpvalues, 
+                        [:coefname, :subj_n, :item_n]),
+                :p => (p -> mean(p .< 0.05)) => :power,
+                :p => (p -> sem(p .< 0.05)) => :power_se)
+
+```
+
+```{julia}
+select!(power, :coefname, :subj_n, :item_n, :power,
+        [:power, :power_se] => ByRow((p, se) -> [p - 1.96*se, p + 1.96*se]) => [:lower, :upper])
+```
+
+
+```{julia}
+data(power) * mapping(:subj_n, :item_n, :power; layout=:coefname) * visual(Heatmap) |> draw
 ```
