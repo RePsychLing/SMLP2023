@@ -22,6 +22,8 @@ describe(dat)
 ```
 # Specification
 
+This section covers the general terminology and advice for model specification.
+
 ## Response, covariates, and factors
 
 Linear mixed models (LMMs), like many other types of statistical models, describe a relationship between a *response* variable and *covariates* that have been measured or observed along with the response. The statistical model assumes that the residuals of the fitted response (i.e., not the responses) are normally -- also identically and independently -- distributed. This is the *first assumption* of normality in the LMM. It is standard practice that model residuals are inspected and, if serious skew is indicated, that the response is Box-Cox transformed (unless not justified for theoretical reasons) to fulfill this model assumption. 
@@ -82,9 +84,49 @@ In this outline of the dimensions underlying the specification of an LMM, we hav
 
 The VC is the prior variance of the random effects, whereas `var(ranef(model))` is the variance of the posterior means/modes of the random effects. See Kliegl et al. (2010, VisualCognition); [Rizopoulos (2019, stackexchange](https://stats.stackexchange.com/questions/392283/interpreting-blups-or-varcorr-estimates-in-mixed-models/392307#392307).
 
-# Preprocessing
+# Background for data
 
-The levels of several factors are not in the desired order. We reorder factor levels such that the level with the expected slow response (`rt`) / high speed (1000/`rt`) is the second level. This way the fixed effect will be estimated as a positive value. 
+## Abstract
+This semantic-priming experiment was reported in Masson, Rabe, & Kliegl (2017, Exp. 1, Memory & Cognition). It is a direct replication of an experiment reported in Masson & Kliegl (2013, Exp. 1, JEPLMC). Following a prime word a related or unrelated high- or low-frequency target word or a nonword was presented in clear or dim font. The subject's task was to decide as quickly as possible whether the target was a word or a nonword, that is subjects performed a lexical decision task (LDT). The reaction time and the accuracy of the response were recorded. Only correct reaction times to words are included. After filtering there were 16,409 observations recorded from 73 subjects and 240 items.
+
+##  Codebook
+
+The data (variables and observations) used by Masson et al. (2017) are available in file `MRK17_Exp1.RDS`
+
+|Variable | Description|
+|---------|----------- |
+|Subj     | Subject identifier |
+|Item     | Target (non-)word  |    
+|trial    | Trial number |
+|F        | Target frequency is _high_  or _low_ |
+|P        | Prime is _related_ or _unrelated_ to target |
+|Q        | Target quality is _clear_ or _degraded_   |
+|lQ       | Last-trial target quality is _clear_ or _degraded_  |
+|lT       | Last-trail target requires _word_ or _nonword_ response |
+|rt       | Reaction time [ms] |
+
+`lagQlty` and `lagTrgt` refer to experimental conditions in the last trial. 
+
+Corresponding indicator variables (-1/+1):
+
+# Setup
+
+Packages we (might) use.
+
+```{julia}
+using CategoricalArrays
+using DataFrames
+using MixedModels
+using MixedModelsMakie
+using SMLP2023: dataset
+using Statistics: mean, std
+
+```
+
+```{julia}
+dat = DataFrame(MixedModels.dataset(:mrk17_Exp1))
+describe(dat)
+```
 
 ```{julia}
 cells = combine(
@@ -97,6 +139,7 @@ cells = combine(
 #dat_subj.CTR = categorical(dat_subj.CTR, levels=levels(dat.CTR))
 cells
 ```
+
 # Complex LMM
 
 The following LMM is *not* the maximal factorial LMM because we do not include interaction terms and associated correlation parameters in the RE structure.
@@ -114,16 +157,21 @@ contrasts =
 
 m_cpx = let 
     form = @formula (1000/rt) ~ 1+F*P*Q*lQ*lT +
-                                (1+F+P+Q+lQ+lT | subj) +
-                                (1+P+Q+lQ+lT | item);
+                               (1+F+P+Q+lQ+lT | subj) +
+                               (1  +P+Q+lQ+lT | item);
     fit(MixedModel, form, dat; contrasts)
 end
 
 VarCorr(m_cpx)
-issingular(m_cpx)
-MixedModels.PCA(m_cpx)
 ```
 
+```{julia}
+issingular(m_cpx)
+```
+
+```{julia}
+MixedModels.PCA(m_cpx)
+```
 Variance-covariance matrix of random-effect structure suggests overparameterization
 for both subject-related and item-related components.
 
@@ -153,8 +201,8 @@ We take out correlation parameters.
 ```{julia}
 m_zcp = let 
     form = @formula (1000/rt) ~ 1+F*P*Q*lQ*lT +
-                            zerocorr(1+F+P+Q+lQ+lT | subj) +
-                            zerocorr(1+P+Q+lQ+lT | item);
+                       zerocorr(1+F+P+Q+lQ+lT | subj) +
+                       zerocorr(1  +P+Q+lQ+lT | item);
     fit(MixedModel, form, dat; contrasts)
 end
 
@@ -164,29 +212,69 @@ MixedModels.PCA(m_zcp)
 ```
 
 ```{julia}
-m_zcp3 = let 
+MixedModels.likelihoodratiotest(m_zcp, m_cpx)
+```
+
+Looks ok. It might be a good idea to prune the LMM by removing small VCs.
+
+```{julia}
+m_zcp2 = let 
     form = @formula (1000/rt) ~ 1+F*P*Q*lQ*lT +
-                            zerocorr(1+Q+lT | subj) +
-                            zerocorr(1 | item);
+                       zerocorr(1  +P+Q+lQ+lT | subj) +
+                       zerocorr(1  +P+Q   +lT | item);
     fit(MixedModel, form, dat; contrasts)
 end
 VarCorr(m_zcp2)
 ```
 
 ```{julia}
-m_prm = let 
+MixedModels.likelihoodratiotest(m_zcp2, m_zcp, m_cpx)
+```
+
+We can perhaps remove some more.
+
+```{julia}
+m_zcp3 = let 
     form = @formula (1000/rt) ~ 1+F*P*Q*lQ*lT +
-                               (1+    Q+lT | subj) +
-                               (1 | item);
+                       zerocorr(1    +Q   +lT | subj) + (1 | item);
+    fit(MixedModel, form, dat; contrasts)
+end
+VarCorr(m_zcp3)
+```
+
+```{julia}
+MixedModels.likelihoodratiotest(m_zcp3, m_zcp2, m_zcp, m_cpx)
+```
+
+And another iteration.
+
+```{julia}
+m_zcp4 = let 
+    form = @formula (1000/rt) ~ 1+F*P*Q*lQ*lT +
+                       zerocorr(1         +lT | subj) + (1 | item);
+    fit(MixedModel, form, dat; contrasts)
+end
+VarCorr(m_zcp4)
+```
+
+```{julia}
+MixedModels.likelihoodratiotest(m_zcp4, m_zcp3, m_zcp2, m_zcp, m_cpx)
+```
+
+Too much removed. Stay with `m_zcp3`, but extend with CPs.
+
+```{julia}
+m_prm = let 
+    form = @formula (1000/rt) ~ 1+F*P*Q*lQ*lT + 
+                               (1+    Q+lT | subj) + (1 | item);
     fit(MixedModel, form, dat; contrasts)
 end
 VarCorr(m_prm)
 ```
 
-
 ## VCs and CPs
 
-Look ok. It might be a good idea to prune the LMM. 
+
 
 ```{julia}
 MixedModels.likelihoodratiotest(m_zcp3, m_prm, m_cpx)
@@ -205,13 +293,12 @@ gof_summary = let
     deviance=round.(deviance.(mods), digits=0),
     AIC=round.(aic.(mods),digits=0),
     AICc=round.(aicc.(mods),digits=0),
-     BIC=round.(bic.(mods),digits=0),
+    BIC=round.(bic.(mods),digits=0),
     χ²=vcat(:., round.(lrt.tests.deviancediff, digits=0)),
     χ²_dof=vcat(:., round.(lrt.tests.dofdiff, digits=0)),
     pvalue=vcat(:., round.(lrt.tests.pvalues, digits=3))
   )
 end
-
 ```
 
 # Parsimonious LMM - replication of MRK17 LMM
@@ -244,12 +331,69 @@ m_mrk17_nested =let
         (1+Q | subj) + zerocorr(0+lT | subj) + zerocorr(1 + P | item) ;
     fit(MixedModel, form, dat; contrasts)
 end
-
-VarCorr(m_mrk17_nested)
 ```
 
+# Questions
+
+## Nesting within products of factors
+
+Include parenthesis
+
 ```{julia}
-show(m_mrk17_nested)
+m_mrk17_nested =let 
+   form = @formula (1000/rt) ~ 1 + Q/(F/P) +
+        (1+Q | subj) + zerocorr(0+lT | subj) + zerocorr(1 + P | item) ;
+    fit(MixedModel, form, dat; contrasts)
+end
+```
+
+## Selection in fixed effects
+
+```{julia}
+using RegressionFormulae
+# m_prm_5 is equivalent to m_prm
+m_prm_5 = let 
+    form = @formula (1000/rt) ~ 1+(F+P+Q+lQ+lT)^5 + (1+Q+lT | subj) + (1 | item);
+    fit(MixedModel, form, dat; contrasts)
+end;
+
+m_prm_4 = let 
+    form = @formula (1000/rt) ~ 1+(F+P+Q+lQ+lT)^4 + (1+Q+lT | subj) + (1 | item);
+    fit(MixedModel, form, dat; contrasts)
+end;
+
+m_prm_3 = let 
+    form = @formula (1000/rt) ~ 1+(F+P+Q+lQ+lT)^3 + (1+Q+lT | subj) + (1 | item);
+    fit(MixedModel, form, dat; contrasts)
+end;
+
+m_prm_2 = let 
+    form = @formula (1000/rt) ~ 1+(F+P+Q+lQ+lT)^2 + (1+Q+lT | subj) + (1 | item);
+    fit(MixedModel, form, dat; contrasts)
+end;
+
+m_prm_1 = let 
+    form = @formula (1000/rt) ~ 1+ F+P+Q+lQ+lT +   (1+Q+lT | subj) + (1 | item);
+    fit(MixedModel, form, dat; contrasts)
+end;
+
+# Compare the fits
+gof_summary = let
+  nms = [:m_prm_1, :m_prm_2, :m_prm_3, :m_prm_4, :m_prm_5]
+  mods = eval.(nms)
+  lrt = MixedModels.likelihoodratiotest(m_prm_1, m_prm_2, m_prm_3, m_prm_4, m_prm_5)
+  DataFrame(;
+    name = nms, 
+    dof=dof.(mods),
+    deviance=round.(deviance.(mods), digits=0),
+    AIC=round.(aic.(mods),digits=0),
+    AICc=round.(aicc.(mods),digits=0),
+    BIC=round.(bic.(mods),digits=0),
+    χ²=vcat(:., round.(lrt.tests.deviancediff, digits=0)),
+    χ²_dof=vcat(:., round.(lrt.tests.dofdiff, digits=0)),
+    pvalue=vcat(:., round.(lrt.tests.pvalues, digits=3))
+  )
+end
 ```
 
 ## Info
