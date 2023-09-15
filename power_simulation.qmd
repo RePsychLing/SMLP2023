@@ -1,0 +1,84 @@
+
+```{julia}
+using DataFrames
+using MixedModels
+using MixedModelsMakie
+using MixedModelsSim
+using Random
+using MixedModels: dataset
+```
+
+Let us consider the kb07 dataset.
+
+```{julia}
+kb07 = dataset(:kb07)
+contrasts = Dict(:spkr => EffectsCoding(),
+                 :prec => EffectsCoding(),
+                 :load => EffectsCoding())
+fm1 = fit(MixedModel, 
+          @formula(rt_trunc ~ 1 * spkr * prec * load + (1|subj) + (1|item)),
+          kb07; contrasts)
+```          
+We can perform a *parametric bootstrap* on the model to get estimates of our uncertainty.
+In the parametric bootstrap, we use the *parameters* we estimated to simulate new data. 
+If we repeat this process many times, we are able to "pick ourselves up by our bootstraps"  
+and examine the variability we would expect to see based purely on chance if the ground truth 
+exactly matched our estimates.
+In this way, we are able to estimate our uncertainty -- we cannot be more certain than the 'natural'
+variability we would have for a given parameter value.
+
+```{julia}
+pb1 = parametricbootstrap(MersenneTwister(42), 1000, fm1; optsum_overrides=(;ftol_rel=1e-8))
+```
+
+Now, if we look at the docstring for `parametricbootstrap`, we see that there are keyword-arguments
+for the various model parameters:
+```{julia}
+@doc parametricbootstrap`
+```
+
+```{julia}
+subj_btwn = Dict(:age => ["old", "young"])
+item_btwn = Dict(:frequency => ["low", "high"])
+β = [250.0, -25.0, 10, 0.0]
+σ = 25.0
+# relative to σ!
+subj_re = create_re(2.0, 1.3)
+item_re = create_re(1.3, 2.0)
+```
+
+```{julia}
+# simulate!(simmod; β, σ, θ)
+# datdat[!, :dv] = rand(MersenneTwister(12), [0, 1], nrow(datdat))
+coefpvalues = DataFrame()
+rng = MersenneTwister(42)
+@showprogress for subj_n in [20, 30, 50, 100]
+    for item_n in [40, 60, 100]
+        dat = simdat_crossed(rng, subj_n, item_n; 
+                             subj_btwn, item_btwn)
+        simmod = fit(MixedModel, 
+                     @formula(dv ~ 1 + age * frequency + 
+                                  (1 + frequency | subj) + 
+                                  (1 + age | item)), dat)
+
+        θ = createθ(simmod; subj=subj_re, item=item_re)
+        simboot = parametricbootstrap(rng, 1000, simmod; 
+                                      β, σ, θ, 
+                                      optsum_overrides=(;ftol_rel=1e-8),
+                                      progress=false)
+        df = DataFrame(simboot.coefpvalues)
+        df[!, :subj_n] .= subj_n
+        df[!, :item_n] .= item_n      
+        append!(coefpvalues, df)                                
+    end
+end
+```
+
+```{julia}
+power = combine(groupby(coefpvalues, [:coefname, :subj_n, :item_n]), 
+                :p => (p -> mean(p .< 0.05)) => :power)
+```
+
+```{julia}
+ridgeplot(simboot)
+```
