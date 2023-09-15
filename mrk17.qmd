@@ -271,10 +271,17 @@ m_prm = let
 end
 VarCorr(m_prm)
 ```
+### post-hoc LMM
+```{julia}
+m_prm = let 
+    form = @formula (1000/rt) ~ 1+F*P*Q*lQ*lT + 
+                               (1+    Q+lT | subj) + (1 | item);
+    fit(MixedModel, form, dat; contrasts)
+end
+VarCorr(m_prm)
+```
 
 ## VCs and CPs
-
-
 
 ```{julia}
 MixedModels.likelihoodratiotest(m_zcp3, m_prm, m_cpx)
@@ -301,7 +308,7 @@ gof_summary = let
 end
 ```
 
-# Parsimonious LMM - replication of MRK17 LMM
+# Parsimonious LMM - replication of MRK17 LMM    
 
 The LMM is not nested in the previous sequence. 
 
@@ -327,13 +334,13 @@ Finally, a look at the fixed effects. The four-factor interaction reported in Ma
 
 ```{julia}
 m_mrk17_nested =let 
-   form = @formula (1000/rt) ~ 1 + lQ + Q/(lT/(F*P)) +
+   form = @formula (1000/rt) ~ 1 + Q/(F/P) +
         (1+Q | subj) + zerocorr(0+lT | subj) + zerocorr(1 + P | item) ;
     fit(MixedModel, form, dat; contrasts)
 end
 ```
 
-# Questions
+# Questions from the Discussion forum
 
 ## Nesting within products of factors
 
@@ -385,17 +392,49 @@ gof_summary = let
   DataFrame(;
     name = nms, 
     dof=dof.(mods),
-    deviance=round.(deviance.(mods), digits=0),
-    AIC=round.(aic.(mods),digits=0),
-    AICc=round.(aicc.(mods),digits=0),
-    BIC=round.(bic.(mods),digits=0),
-    χ²=vcat(:., round.(lrt.tests.deviancediff, digits=0)),
-    χ²_dof=vcat(:., round.(lrt.tests.dofdiff, digits=0)),
+    deviance=deviance.(mods),
+    AIC=aic.(mods),
+    AICc=aicc.(mods),
+    BIC=bic.(mods),
+    χ²=vcat(:.,lrt.tests.deviancediff),
+    χ²_dof=vcat(:.,lrt.tests.dofdiff),
     pvalue=vcat(:., round.(lrt.tests.pvalues, digits=3))
   )
 end
 ```
 
+Depending on the level of precision of your hypothesis. You could stay with main effect (BIC), include 2-factor interactions (AIC; also called _simple_ interactions) or include 3-factor interactions [χ² < 2*(χ²-dof); also called _2-way_ interactions]. 
+
+## Posthoc LMM
+
+We are using only three factors for the illustruation. 
+
+```{julia}
+m_prm3 = let 
+    form = @formula (1000/rt) ~ 1 + lT*lQ*Q +
+                               (1+    Q+lT | subj) + (1 | item);
+    fit(MixedModel, form, dat; contrasts)
+end
+```
+
+The `lT & lQ & Q` interactions is significant. Let's follow it up with a post-hoc LMM, that is looking at the `lQ & Q` interaction in the two levels of whether the last word was a target or not. 
+
+```{julia}
+m_prm3_posthoc1 = let 
+    form = @formula (1000/rt) ~ 1 + lT/(lQ*Q) +
+                               (1+    Q+lT | subj) + (1 | item);
+    fit(MixedModel, form, dat; contrasts)
+end
+```
+
+The source of the interaction are trials where the last trial was a word target; there is no evidence for the interaction when the last trial was a nonword target.
+
+The orginal and post-hoc LMM have the same goodness of fit.
+
+```{julia}
+[objective(m_prm3), objective(m_prm3_posthoc)]
+ ```
+ 
 ## Info
 
 ```{julia}
