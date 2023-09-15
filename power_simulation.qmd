@@ -1,14 +1,29 @@
+---
+title: "Using simulation to estimate uncertainty and power"
+subtitle    : "Or how I learned how to stop worrying and love the bootstrap"
+jupyter: julia-1.9
+format:
+  html:
+    embed-resources: true
+    css: styles.css
+---
 
 ```{julia}
+#| output: false
 using DataFrames
 using MixedModels
 using MixedModelsMakie
 using MixedModelsSim
+using ProgressMeter
 using Random
+
 using MixedModels: dataset
+ProgressMeter.ijulia_behavior(:clear)
 ```
 
-Let us consider the kb07 dataset.
+# The Parametric Bootstrap
+
+Let us consider the `kb07` dataset.
 
 ```{julia}
 kb07 = dataset(:kb07)
@@ -16,9 +31,12 @@ contrasts = Dict(:spkr => EffectsCoding(),
                  :prec => EffectsCoding(),
                  :load => EffectsCoding())
 fm1 = fit(MixedModel, 
-          @formula(rt_trunc ~ 1 * spkr * prec * load + (1|subj) + (1|item)),
+          @formula(rt_trunc ~ 1 * spkr * prec * load + 
+                             (1 | subj) + 
+                             (1 | item)),
           kb07; contrasts)
 ```          
+
 We can perform a *parametric bootstrap* on the model to get estimates of our uncertainty.
 In the parametric bootstrap, we use the *parameters* we estimated to simulate new data. 
 If we repeat this process many times, we are able to "pick ourselves up by our bootstraps"  
@@ -28,14 +46,24 @@ In this way, we are able to estimate our uncertainty -- we cannot be more certai
 variability we would have for a given parameter value.
 
 ```{julia}
-pb1 = parametricbootstrap(MersenneTwister(42), 1000, fm1; optsum_overrides=(;ftol_rel=1e-8))
+pb1 = parametricbootstrap(MersenneTwister(42), 1000, fm1; 
+                          optsum_overrides=(;ftol_rel=1e-8))
 ```
+
+
+:::{.callout-tip collapse=true, title="`optsum_overrides`"}
+The option `optsum_overrides` allows us to pass additional arguments for controlling the model fitting of each simulation replicate.
+:::
 
 Now, if we look at the docstring for `parametricbootstrap`, we see that there are keyword-arguments
 for the various model parameters:
+
+:::{.border id="docstring"}
 ```{julia}
-@doc parametricbootstrap`
+#| code-fold: true
+@doc parametricbootstrap
 ```
+:::
 
 ```{julia}
 subj_btwn = Dict(:age => ["old", "young"])
@@ -50,35 +78,35 @@ item_re = create_re(1.3, 2.0)
 ```{julia}
 # simulate!(simmod; β, σ, θ)
 # datdat[!, :dv] = rand(MersenneTwister(12), [0, 1], nrow(datdat))
-coefpvalues = DataFrame()
-rng = MersenneTwister(42)
-@showprogress for subj_n in [20, 30, 50, 100]
-    for item_n in [40, 60, 100]
-        dat = simdat_crossed(rng, subj_n, item_n; 
-                             subj_btwn, item_btwn)
-        simmod = fit(MixedModel, 
-                     @formula(dv ~ 1 + age * frequency + 
-                                  (1 + frequency | subj) + 
-                                  (1 + age | item)), dat)
+# coefpvalues = DataFrame()
+# rng = MersenneTwister(42)
+# @showprogress for subj_n in [20, 30, 50, 100]
+#     for item_n in [40, 60, 100]
+#         dat = simdat_crossed(rng, subj_n, item_n; 
+#                              subj_btwn, item_btwn)
+#         simmod = fit(MixedModel, 
+#                      @formula(dv ~ 1 + age * frequency + 
+#                                   (1 + frequency | subj) + 
+#                                   (1 + age | item)), dat)
 
-        θ = createθ(simmod; subj=subj_re, item=item_re)
-        simboot = parametricbootstrap(rng, 1000, simmod; 
-                                      β, σ, θ, 
-                                      optsum_overrides=(;ftol_rel=1e-8),
-                                      progress=false)
-        df = DataFrame(simboot.coefpvalues)
-        df[!, :subj_n] .= subj_n
-        df[!, :item_n] .= item_n      
-        append!(coefpvalues, df)                                
-    end
-end
+#         θ = createθ(simmod; subj=subj_re, item=item_re)
+#         simboot = parametricbootstrap(rng, 1000, simmod; 
+#                                       β, σ, θ, 
+#                                       optsum_overrides=(;ftol_rel=1e-8),
+#                                       progress=false)
+#         df = DataFrame(simboot.coefpvalues)
+#         df[!, :subj_n] .= subj_n
+#         df[!, :item_n] .= item_n      
+#         append!(coefpvalues, df)                                
+#     end
+# end
 ```
 
 ```{julia}
-power = combine(groupby(coefpvalues, [:coefname, :subj_n, :item_n]), 
-                :p => (p -> mean(p .< 0.05)) => :power)
+# power = combine(groupby(coefpvalues, [:coefname, :subj_n, :item_n]), 
+#                 :p => (p -> mean(p .< 0.05)) => :power)
 ```
 
 ```{julia}
-ridgeplot(simboot)
+# ridgeplot(simboot)
 ```
