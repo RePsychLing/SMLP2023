@@ -18,10 +18,12 @@ project:
   - kkl15.qmd
   - kwdyz11.qmd
   - largescaledesigned.qmd
+  - mrk17.qmd
   - pkg.qmd
   - profiling.qmd
   - selection.qmd
   - shrinkageplot.qmd
+  - singularity.qmd
   - sleepstudy.qmd
   - sleepstudy_speed.qmd
   - useful_packages.qmd
@@ -86,6 +88,7 @@ website:
         - kwdyz11.qmd
         - kkl15.qmd
         - largescaledesigned.qmd
+        - mrk17.qmd
       - section: "Contrast coding"
         contents:
         - contrasts_fggk21.qmd
@@ -98,5 +101,6 @@ website:
         - kb07.qmd
       - section: "Visualizations and diagnostics"
         contents:
+        - singularity.qmd
         - shrinkageplot.qmd
         - AoGPlots.qmd
