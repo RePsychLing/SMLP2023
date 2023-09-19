@@ -18,6 +18,7 @@ project:
   - kkl15.qmd
   - kwdyz11.qmd
   - largescaledesigned.qmd
+  - mrk17.qmd
   - pkg.qmd
   - profiling.qmd
   - selection.qmd
@@ -87,6 +88,7 @@ website:
         - kwdyz11.qmd
         - kkl15.qmd
         - largescaledesigned.qmd
+        - mrk17.qmd
       - section: "Contrast coding"
         contents:
         - contrasts_fggk21.qmd
