@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Phillip Alday, Douglas Bates, and Reinhold Kliegl">
+<meta name="author" content="Douglas Bates">
 <meta name="dcterms.date" content="2023-09-19">
 
-<title>SMLP2023: Advanced Frequentist Track - About</title>
+<title>SMLP2023: Advanced Frequentist Track - Convergence, singularity and all that</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,6 +22,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -32,6 +66,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./shrinkageplot.html" rel="next">
+<link href="./kb07.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -67,6 +103,8 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -104,7 +142,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">About</li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./singularity.html">Visualizations and diagnostics</a></li><li class="breadcrumb-item"><a href="./singularity.html">Convergence, singularity and all that</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -260,16 +298,16 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
  <span class="menu-text">Visualizations and diagnostics</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./singularity.html" class="sidebar-item-text sidebar-link">
+  <a href="./singularity.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Convergence, singularity and all that</span></a>
   </div>
 </li>
@@ -293,14 +331,28 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul class="collapse">
+  <li><a href="#what-does-it-mean-for-a-converged-model-to-be-singular" id="toc-what-does-it-mean-for-a-converged-model-to-be-singular" class="nav-link active" data-scroll-target="#what-does-it-mean-for-a-converged-model-to-be-singular"><span class="header-section-number">0.1</span> What does it mean for a converged model to be singular?</a></li>
+  <li><a href="#the-factor-is-generated-from-a-parameter-vector" id="toc-the-factor-is-generated-from-a-parameter-vector" class="nav-link" data-scroll-target="#the-factor-is-generated-from-a-parameter-vector"><span class="header-section-number">0.2</span> The factor is generated from a parameter vector</a></li>
+  <li><a href="#progress-of-the-iterations" id="toc-progress-of-the-iterations" class="nav-link" data-scroll-target="#progress-of-the-iterations"><span class="header-section-number">0.3</span> Progress of the iterations</a></li>
+  <li><a href="#a-model-that-converges-to-a-degenerate-distribution" id="toc-a-model-that-converges-to-a-degenerate-distribution" class="nav-link" data-scroll-target="#a-model-that-converges-to-a-degenerate-distribution"><span class="header-section-number">1</span> A model that converges to a degenerate distribution</a></li>
+  <li><a href="#appendix" id="toc-appendix" class="nav-link" data-scroll-target="#appendix"><span class="header-section-number">2</span> Appendix</a>
+  <ul class="collapse">
+  <li><a href="#evaluating-the-random-effects-correlation-from-theta" id="toc-evaluating-the-random-effects-correlation-from-theta" class="nav-link" data-scroll-target="#evaluating-the-random-effects-correlation-from-theta"><span class="header-section-number">2.1</span> Evaluating the random effects correlation from <span class="math inline">\(\theta\)</span></a></li>
+  <li><a href="#optimizing-with-a-fixed-correlation" id="toc-optimizing-with-a-fixed-correlation" class="nav-link" data-scroll-target="#optimizing-with-a-fixed-correlation"><span class="header-section-number">2.2</span> Optimizing with a fixed correlation</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/RePsychLing/SMLP2023/edit/main/singularity.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/RePsychLing/SMLP2023/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">About</h1>
+<h1 class="title">Convergence, singularity and all that</h1>
 </div>
 
 
@@ -310,7 +362,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Phillip Alday, Douglas Bates, and Reinhold Kliegl </p>
+             <p>Douglas Bates </p>
           </div>
   </div>
     
@@ -327,9 +379,207 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>About this site</p>
+<section id="what-does-it-mean-for-a-converged-model-to-be-singular" class="level2" data-number="0.1">
+<h2 data-number="0.1" class="anchored" data-anchor-id="what-does-it-mean-for-a-converged-model-to-be-singular"><span class="header-section-number">0.1</span> What does it mean for a converged model to be singular?</h2>
+<p>Add the packages to be used</p>
+<div class="cell" data-execution_count="1">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">CairoMakie</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">DataFrames</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">LinearAlgebra</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">MixedModels</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">MixedModelsMakie</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">ProgressMeter</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>ProgressMeter.<span class="fu">ijulia_behavior</span>(<span class="op">:</span>clear)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>CairoMakie.<span class="fu">activate!</span>(; <span class="kw">type</span><span class="op">=</span><span class="st">"svg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Fit a model for reaction time in the sleepstudy example, preserving information on the estimation progress (the <code>thin=1</code> optional argument)</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>m01 <span class="op">=</span> <span class="kw">let</span> f <span class="op">=</span> <span class="pp">@formula</span> reaction <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> days <span class="op">+</span> (<span class="fl">1</span> <span class="op">+</span> days<span class="op">|</span>subj)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(MixedModel, f, MixedModels.<span class="fu">dataset</span>(<span class="op">:</span>sleepstudy); thin<span class="op">=</span><span class="fl">1</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(m01)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by maximum likelihood
+ reaction ~ 1 + days + (1 + days | subj)
+   logLik   -2 logLik     AIC       AICc        BIC    
+  -875.9697  1751.9393  1763.9393  1764.4249  1783.0971
+
+Variance components:
+            Column    Variance Std.Dev.   Corr.
+subj     (Intercept)  565.51067 23.78047
+         days          32.68212  5.71683 +0.08
+Residual              654.94145 25.59182
+ Number of obs: 180; levels of grouping factors: 18
+
+  Fixed-effects parameters:
+──────────────────────────────────────────────────
+                Coef.  Std. Error      z  Pr(&gt;|z|)
+──────────────────────────────────────────────────
+(Intercept)  251.405      6.63226  37.91    &lt;1e-99
+days          10.4673     1.50224   6.97    &lt;1e-11
+──────────────────────────────────────────────────</code></pre>
+</div>
+</div>
+<p>The covariance matrix for each subject’s random effects is evaluated from its “matrix square root”, called the Cholesky factor.</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>λ <span class="op">=</span> <span class="fu">only</span>(m01.λ)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>2×2 LowerTriangular{Float64, Matrix{Float64}}:
+ 0.929221    ⋅ 
+ 0.0181684  0.222645</code></pre>
+</div>
+</div>
+<p>The <em>transpose</em> of <span class="math inline">\(\lambda\)</span>, written <span class="math inline">\(\lambda'\)</span>, is an upper triangular matrix generated by “flipping” <span class="math inline">\(\lambda\)</span> about the main diagonal.</p>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>λ<span class="ch">'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>2×2 UpperTriangular{Float64, Adjoint{Float64, Matrix{Float64}}}:
+ 0.929221  0.0181684
+  ⋅        0.222645</code></pre>
+</div>
+</div>
+<p>The product <span class="math inline">\(\lambda * \lambda'\)</span> will be symmetric. The covariance matrix of the random effects, <span class="math inline">\(\Sigma\)</span>, is this symmetric matrix scaled by <span class="math inline">\(\sigma^2\)</span></p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>Σ <span class="op">=</span> m01.σ<span class="op">^</span><span class="fl">2</span> <span class="op">*</span> λ <span class="op">*</span> λ<span class="ch">'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>2×2 Matrix{Float64}:
+ 565.511  11.057
+  11.057  32.6821</code></pre>
+</div>
+</div>
+<p>The estimated variances of the random effects, which are the diagonal elements of <span class="math inline">\(\Sigma\)</span>, correspond to the values shown in the table. To evaluate the covariance, isolate the correlation</p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># m01.σρs extracts the `σρs` property of the model.</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># This property is a NamedTuple where the names</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># correspond to grouping factors - in this case, `subj`.</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># So `m01.σρs.subj.ρ` is the estimated correlation(s) for</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># this grouping factor.  Because there is only one such correlation</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co"># we can extract it with `only()`, which also verifies that</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># there is exactly one.</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>ρ <span class="op">=</span> <span class="fu">only</span>(m01.σρs.subj.ρ)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>0.08133213658952317</code></pre>
+</div>
+</div>
+<p>and multiply by the standard deviations</p>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>ρ <span class="op">*</span> <span class="fu">sqrt</span>(<span class="fu">first</span>(Σ) <span class="op">*</span> <span class="fu">last</span>(Σ))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<pre><code>11.057010185853459</code></pre>
+</div>
+</div>
+</section>
+<section id="the-factor-is-generated-from-a-parameter-vector" class="level2" data-number="0.2">
+<h2 data-number="0.2" class="anchored" data-anchor-id="the-factor-is-generated-from-a-parameter-vector"><span class="header-section-number">0.2</span> The factor is generated from a parameter vector</h2>
+<p>In practice we optimize the log-likelihood with respect to a parameter vector called <span class="math inline">\(\theta\)</span> that generates <span class="math inline">\(\lambda\)</span>.</p>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>m01.θ</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>3-element Vector{Float64}:
+ 0.929221315269684
+ 0.018168374324422767
+ 0.22264487618568146</code></pre>
+</div>
+</div>
+<p>The elements of this parameter vector are subject to constraints. In particular, two of the three elements have a lower bound of zero.</p>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>m01.lowerbd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<pre><code>3-element Vector{Float64}:
+   0.0
+ -Inf
+   0.0</code></pre>
+</div>
+</div>
+<p>That is, the first and third elements of <span class="math inline">\(\theta\)</span>, corresponding to diagonal elements of <span class="math inline">\(\lambda\)</span>, must be non-negative, whereas the second component is unconstrained (has a lower bound of <span class="math inline">\(-\infty\)</span>).</p>
+</section>
+<section id="progress-of-the-iterations" class="level2" data-number="0.3">
+<h2 data-number="0.3" class="anchored" data-anchor-id="progress-of-the-iterations"><span class="header-section-number">0.3</span> Progress of the iterations</h2>
+<p>The <code>optsum.fitlog</code> property of the model is a vector of tuples where each tuple contains the value of the <span class="math inline">\(\theta\)</span> vector and the value of the objective at that <span class="math inline">\(\theta\)</span>. The <code>fitlog</code> always contains the first and the last evaluation. When the <code>thin</code> named argument is set, this property has a row for every thin’th evaluation.</p>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>m01.optsum.fitlog</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<pre><code>57-element Vector{Tuple{Vector{Float64}, Float64}}:
+ ([1.0, 0.0, 1.0], 1784.642296192471)
+ ([1.75, 0.0, 1.0], 1790.1256369894638)
+ ([1.0, 1.0, 1.0], 1798.9996244965905)
+ ([1.0, 0.0, 1.75], 1803.8532002844106)
+ ([0.25, 0.0, 1.0], 1800.613980745553)
+ ([1.0, -1.0, 1.0], 1798.6046308389334)
+ ([1.0, 0.0, 0.25], 1752.2607369909213)
+ ([1.1832612965367755, -0.008661887958064992, 0.0], 1797.5876920198464)
+ ([1.075, 0.0, 0.32499999999999996], 1754.954109579864)
+ ([0.8166315695342949, 0.01116725445704404, 0.28823768689699913], 1753.695681656814)
+ ([1.0, -0.07071067811865475, 0.19696699141100893], 1754.8169985163852)
+ ([0.9436827046396457, 0.06383542916420701, 0.26269630296461177], 1753.1067335474995)
+ ([0.9801419885634466, -0.026656844944287855, 0.274742756095367], 1752.9393767190047)
+ ⋮
+ ([0.928985605351637, 0.01823660224885193, 0.222484401095438], 1751.9393548581684)
+ ([0.9286970760733537, 0.018293693774617543, 0.22317535508759054], 1751.9394897723046)
+ ([0.9282426198642394, 0.018269521463291326, 0.2225837137255985], 1751.9393630912089)
+ ([0.9291127537830922, 0.018179125528737915, 0.22262389023225293], 1751.9393448296642)
+ ([0.9291906050240891, 0.01816575476108833, 0.22264320554148873], 1751.9393444890131)
+ ([0.9292543109280886, 0.018209271163292122, 0.2226208143750069], 1751.939345033841)
+ ([0.9291892350323775, 0.01812979413800049, 0.2225732361409234], 1751.9393475283216)
+ ([0.9292535802338697, 0.0181676260315492, 0.22264990430132825], 1751.9393444903765)
+ ([0.929214503729909, 0.018171739372235835, 0.2226467425808239], 1751.9393444744146)
+ ([0.9292083698208214, 0.018171477237744156, 0.22264619390446877], 1751.9393444750388)
+ ([0.9292092970880226, 0.01817296654455959, 0.22265206177082955], 1751.9393445065577)
+ ([0.929221315269684, 0.018168374324422767, 0.22264487618568146], 1751.9393444646767)</code></pre>
+</div>
+</div>
+<p>There were 57 evaluations of the objective before convergence was declared, according to rather stringent convergence criteria. We can see that the last 10 evaluations only produced changes in the fourth decimal place of the objective or even smaller. That is, effective convergence occurred after about 40 or 45 evaluations.</p>
+</section>
+<section id="a-model-that-converges-to-a-degenerate-distribution" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> A model that converges to a degenerate distribution</h1>
+<p>When the iterations converge to a value of <span class="math inline">\(\theta\)</span> that is on the boundary, which means that one of the diagonal elements of <span class="math inline">\(\lambda\)</span> is exactly zero, we say that <span class="math inline">\(\lambda\)</span> is <em>singular</em>, in the sense that its inverse does not exist.</p>
+<p>Another, more evocative characterization, is that the distribution of the random effects is a <em>degenerate distribution</em>, in the sense that the values of the random effects are constrained to a plane (technically, a linear subspace) in the space of all possible random effects.</p>
+<p>This is shown in section 3.5.3 of <a href="https://www.embraceuncertaintybook.com">Embrace Uncertainty</a>, especially <a href="https://www.embraceuncertaintybook.com/longitudinal.html#fig-bxm03plane">Figure 3.13</a>.</p>
+</section>
+<section id="appendix" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Appendix</h1>
+<p>These are some appendices, mostly so that I can keep track of them</p>
+<section id="evaluating-the-random-effects-correlation-from-theta" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="evaluating-the-random-effects-correlation-from-theta"><span class="header-section-number">2.1</span> Evaluating the random effects correlation from <span class="math inline">\(\theta\)</span></h2>
+<p>There is a short-cut for evaluating the correlation which is to “normalize” the second row of <span class="math inline">\(\lambda\)</span>, in the sense that the row is scaled so that it has unit length.</p>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>normed <span class="op">=</span> <span class="fu">normalize!</span>(λ[<span class="fl">2</span>, <span class="op">:</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<pre><code>2-element Vector{Float64}:
+ 0.08133213658952315
+ 0.9966870539732033</code></pre>
+</div>
+</div>
+<p>providing the correlation as</p>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">first</span>(normed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<pre><code>0.08133213658952315</code></pre>
+</div>
+</div>
+</section>
+<section id="optimizing-with-a-fixed-correlation" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="optimizing-with-a-fixed-correlation"><span class="header-section-number">2.2</span> Optimizing with a fixed correlation</h2>
+<p>To profile the correlation we need optimize the objective while fixing a value of the correlation. The way we will do this is to determine <span class="math inline">\(\theta_2\)</span> as a function of the fixed <span class="math inline">\(\rho\)</span> and <span class="math inline">\(\theta_3\)</span>.</p>
+<p>We need to solve <span class="math display">\[
+\rho = \frac{\theta_2}{\sqrt{\theta_2^2 + \theta_3^2}}
+\]</span></p>
+<p>for <span class="math inline">\(\theta_2\)</span> as a function of <span class="math inline">\(\rho\)</span> and <span class="math inline">\(\theta_3\)</span>.</p>
+<p>Notice that <span class="math inline">\(\theta_2\)</span> and <span class="math inline">\(\rho\)</span> have the same sign. Thus it is sufficient to determine the absolute value of <span class="math inline">\(\theta_2\)</span> then transfer the sign from <span class="math inline">\(\rho\)</span>. <span class="math display">\[
+\theta_2^2=\rho^2(\theta_2^2 + \theta_3^2)
+\]</span> which implies <span class="math display">\[
+\theta_2^2 = \frac{\rho^2}{1-\rho^2}\theta_3^2, \quad \theta_3\ge 0
+\]</span> and thus <span class="math display">\[
+\theta_2=\frac{\rho}{\sqrt{1-\rho^2}}\theta_3
+\]</span></p>
 
 
+</section>
+</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -680,8 +930,20 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./kb07.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Bootstrapping a fitted model</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./shrinkageplot.html" class="pagination-link">
+        <span class="nav-page-text">More on shrinkage plots</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/RePsychLing/SMLP2023/edit/main/about.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/RePsychLing/SMLP2023/issues/new" class="toc-action">Report an issue</a></p></div></div></div></div></footer></body></html>
+</body></html>

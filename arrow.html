@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Phillip Alday, Douglas Bates, and Reinhold Kliegl">
-<meta name="dcterms.date" content="2023-09-14">
+<meta name="dcterms.date" content="2023-09-19">
 
 <title>SMLP2023: Advanced Frequentist Track - Saving data with Arrow</title>
 <style>
@@ -241,13 +241,19 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./kkl15.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">RePsychLing Kliegl, Kuschela, &amp; Laubrock (2015)</span></a>
+ <span class="menu-text">RePsychLing Kliegl, Kuschela, &amp; Laubrock (2015)- Reduction of Model Complexity</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./largescaledesigned.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">A large-scale designed experiment</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mrk17.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">RePsychLing Masson, Rabe, &amp; Kliegl, 2017) with Julia: Specification and selection</span></a>
   </div>
 </li>
       </ul>
@@ -321,6 +327,12 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./singularity.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Convergence, singularity and all that</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./shrinkageplot.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">More on shrinkage plots</span></a>
   </div>
@@ -376,7 +388,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2023-09-14</p>
+      <p class="date">2023-09-19</p>
     </div>
   </div>
   
@@ -399,7 +411,7 @@ div.csl-indent {
 <p>The <code>Arrow</code> package for Julia does not export any function names, which means that the function to read an Arrow file must be called as <code>Arrow.Table</code>. It returns a <em>column table</em>, as described in the <a href="https://github.com/JuliaData/Tables.jl">Tables package</a>. This is like a read-only data frame, which can be easily converted to a full-fledged <code>DataFrame</code> if desired.</p>
 <p>This arrangement allows for the <code>Arrow</code> package not to depend on the <code>DataFrames</code> package, which is a heavy-weight dependency, but still easily produce a <code>DataFrame</code> if warranted.</p>
 <p>Load the packages to be used.</p>
-<div class="cell" data-execution_count="2">
+<div class="cell" data-execution_count="1">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">AlgebraOfGraphics</span></span>
@@ -421,10 +433,10 @@ div.csl-indent {
 <section id="downloading-and-importing-the-rds-file" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Downloading and importing the RDS file</h1>
 <p>This is similar to some of the code shown by Julius Krumbiegel on Monday. In the data directory of the emotikon project on osf.io under Data, the url for the rds data file is found to be [https://osf.io/xawdb/]. Note that we want version 2 of this file.</p>
-<div class="cell" data-execution_count="3">
+<div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>fn <span class="op">=</span> <span class="bu">Downloads</span>.<span class="fu">download</span>(<span class="st">"https://osf.io/xawdb/download?version=2"</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="4">
+<div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dfrm <span class="op">=</span> <span class="fu">rcopy</span>(R<span class="st">"readRDS(</span><span class="sc">$</span>fn<span class="st">)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <div><div style="float: left;"><span>525126×7 DataFrame</span></div><div style="float: right;"><span style="font-style: italic;">525101 rows omitted</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
@@ -718,7 +730,7 @@ div.csl-indent {
 </div>
 </div>
 <p>Now write this file as a Arrow file and read it back in.</p>
-<div class="cell" data-execution_count="5">
+<div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>arrowfn <span class="op">=</span> <span class="fu">joinpath</span>(<span class="st">"data"</span>, <span class="st">"fggk21.arrow"</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>Arrow.<span class="fu">write</span>(arrowfn, dfrm; compress<span class="op">=:</span>lz4)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>tbl <span class="op">=</span> Arrow.<span class="fu">Table</span>(arrowfn)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -733,13 +745,13 @@ div.csl-indent {
  :score   Float64</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filesize</span>(arrowfn)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>3077850</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="7">
+<div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> <span class="fu">DataFrame</span>(tbl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <div><div style="float: left;"><span>525126×7 DataFrame</span></div><div style="float: right;"><span style="font-style: italic;">525101 rows omitted</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
@@ -1044,7 +1056,7 @@ div.csl-indent {
 </section>
 <section id="creating-the-smaller-table" class="level1" data-number="5">
 <h1 data-number="5"><span class="header-section-number">5</span> Creating the smaller table</h1>
-<div class="cell" data-execution_count="8">
+<div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>Child <span class="op">=</span> <span class="fu">unique</span>(<span class="fu">select</span>(df, <span class="op">:</span>Child, <span class="op">:</span>School, <span class="op">:</span>Cohort, <span class="op">:</span>Sex, <span class="op">:</span>age))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <div><div style="float: left;"><span>108295×5 DataFrame</span></div><div style="float: right;"><span style="font-style: italic;">108270 rows omitted</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
@@ -1281,13 +1293,13 @@ div.csl-indent {
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="9">
+<div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(Child.Child))  <span class="co"># should be 108295</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
 <pre><code>108295</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="10">
+<div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filesize</span>(</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  Arrow.<span class="fu">write</span>(<span class="st">"./data/fggk21_Child.arrow"</span>, Child; compress<span class="op">=:</span>lz4)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1295,7 +1307,7 @@ div.csl-indent {
 <pre><code>1774946</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="11">
+<div class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filesize</span>(</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  Arrow.<span class="fu">write</span>(</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"./data/fggk21_Score.arrow"</span>,</span>
@@ -1321,7 +1333,7 @@ Note
 </div>
 </div>
 <p>Now read the Arrow tables in and reassemble the original table.</p>
-<div class="cell" data-execution_count="12">
+<div class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Score <span class="op">=</span> <span class="fu">DataFrame</span>(Arrow.<span class="fu">Table</span>(<span class="st">"./data/fggk21_Score.arrow"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
 <div><div style="float: left;"><span>525126×3 DataFrame</span></div><div style="float: right;"><span style="font-style: italic;">525101 rows omitted</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
@@ -1503,7 +1515,7 @@ Note
 </div>
 </div>
 <p>At this point we can create the z-score column by standardizing the scores for each <code>Test</code>. The code to do this follows Julius’s presentation on Monday.</p>
-<div class="cell" data-execution_count="13">
+<div class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="pp">@transform</span>!(<span class="fu">groupby</span>(Score, <span class="op">:</span><span class="bu">Test</span>), <span class="op">:</span>zScore <span class="op">=</span> <span class="pp">@bycol</span> <span class="fu">zscore</span>(<span class="op">:</span>score))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="13">
 <div><div style="float: left;"><span>525126×4 DataFrame</span></div><div style="float: right;"><span style="font-style: italic;">525101 rows omitted</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
@@ -1712,7 +1724,7 @@ Note
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="14">
+<div class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>Child <span class="op">=</span> <span class="fu">DataFrame</span>(Arrow.<span class="fu">Table</span>(<span class="st">"./data/fggk21_Child.arrow"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="14">
 <div><div style="float: left;"><span>108295×5 DataFrame</span></div><div style="float: right;"><span style="font-style: italic;">108270 rows omitted</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
@@ -1949,7 +1961,7 @@ Note
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="15">
+<div class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="op">=</span> <span class="fu">disallowmissing!</span>(<span class="fu">leftjoin</span>(Score, Child; on<span class="op">=:</span>Child))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="15">
 <div><div style="float: left;"><span>525126×8 DataFrame</span></div><div style="float: right;"><span style="font-style: italic;">525101 rows omitted</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
@@ -2287,7 +2299,7 @@ Note
 <section id="discovering-patterns-in-the-data" class="level1" data-number="6">
 <h1 data-number="6"><span class="header-section-number">6</span> Discovering patterns in the data</h1>
 <p>One of the motivations for creating the <code>Child</code> table was to be able to bin the ages according to the age of each child, not the age of each <code>Child-Test</code> combination. Not all children have all 5 test results. We can check the number of results by grouping on <code>:Child</code> and evaluate the number of rows in each group.</p>
-<div class="cell" data-execution_count="16">
+<div class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>nobsChild <span class="op">=</span> <span class="fu">combine</span>(<span class="fu">groupby</span>(Score, <span class="op">:</span>Child), nrow <span class="op">=&gt;</span> <span class="op">:</span>ntest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="16">
 <div><div style="float: left;"><span>108295×2 DataFrame</span></div><div style="float: right;"><span style="font-style: italic;">108270 rows omitted</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
@@ -2441,7 +2453,7 @@ Note
 </div>
 </div>
 <p>Now create a table of the number of children with 1, 2, …, 5 test scores.</p>
-<div class="cell" data-execution_count="17">
+<div class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">combine</span>(<span class="fu">groupby</span>(nobsChild, <span class="op">:</span>ntest), nrow)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="17">
 <div><div style="float: left;"><span>5×2 DataFrame</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
@@ -2491,7 +2503,7 @@ Note
 </div>
 <p>A natural question at this point is whether there is something about those students who have few observations. For example, are they from only a few schools?</p>
 <p>One approach to examining properties like is to add the number of observations for each child to the :Child table. Later we can group the table according to this <code>:ntest</code> to look at properties of <code>:Child</code> by <code>:ntest</code>.</p>
-<div class="cell" data-execution_count="18">
+<div class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>gdf <span class="op">=</span> <span class="fu">groupby</span>(</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">disallowmissing!</span>(<span class="fu">leftjoin</span>(Child, nobsChild; on<span class="op">=:</span>Child)), <span class="op">:</span>ntest</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -3031,7 +3043,7 @@ Note
 </div>
 </div>
 <p>Are the sexes represented more-or-less equally?</p>
-<div class="cell" data-execution_count="19">
+<div class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">combine</span>(<span class="fu">groupby</span>(<span class="fu">first</span>(gdf), <span class="op">:</span>Sex), nrow <span class="op">=&gt;</span> <span class="op">:</span>nchild)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="19">
 <div><div style="float: left;"><span>2×2 DataFrame</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
@@ -3064,7 +3076,7 @@ Note
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="20">
+<div class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">combine</span>(<span class="fu">groupby</span>(<span class="fu">last</span>(gdf), <span class="op">:</span>Sex), nrow <span class="op">=&gt;</span> <span class="op">:</span>nchild)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="20">
 <div><div style="float: left;"><span>2×2 DataFrame</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
