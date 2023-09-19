@@ -124,7 +124,7 @@ using Statistics: mean, std
 ```
 
 ```{julia}
-dat = DataFrame(MixedModels.dataset(:mrk17_Exp1))
+dat = DataFrame(dataset(:mrk17_exp1))
 describe(dat)
 ```
 
