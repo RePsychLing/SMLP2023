@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Phillip Alday, Douglas Bates, and Reinhold Kliegl">
-<meta name="dcterms.date" content="2023-09-19">
+<meta name="dcterms.date" content="2023-11-06">
 
 <title>SMLP2023: Advanced Frequentist Track - RePsychLing Masson, Rabe, &amp; Kliegl, 2017) with Julia: Specification and selection</title>
 <style>
@@ -401,7 +401,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2023-09-19</p>
+      <p class="date">2023-11-06</p>
     </div>
   </div>
   
@@ -1148,8 +1148,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 │  - To prevent this behaviour, do `ProgressMeter.ijulia_behavior(:append)`. 
 │  - To disable this warning message, do `ProgressMeter.ijulia_behavior(:clear)`.
 └ @ ProgressMeter ~/.julia/packages/ProgressMeter/vnCY0/src/ProgressMeter.jl:626
-Minimizing 2428    Time: 0:00:11 ( 4.71 ms/it)
-  objective:  7147.550334722926</code></pre>
+Minimizing 1996    Time: 0:00:16 ( 8.20 ms/it)</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <table class="table table-sm table-striped small">
@@ -1181,8 +1180,8 @@ Minimizing 2428    Time: 0:00:11 ( 4.71 ms/it)
 <tr class="odd">
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">0.00320217</td>
-<td style="text-align: right;">0.05658771</td>
+<td style="text-align: right;">0.00320253</td>
+<td style="text-align: right;">0.05659092</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -1192,8 +1191,8 @@ Minimizing 2428    Time: 0:00:11 ( 4.71 ms/it)
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">P: rel</td>
-<td style="text-align: right;">0.00012902</td>
-<td style="text-align: right;">0.01135869</td>
+<td style="text-align: right;">0.00012895</td>
+<td style="text-align: right;">0.01135548</td>
 <td style="text-align: right;">+0.05</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -1203,8 +1202,8 @@ Minimizing 2428    Time: 0:00:11 ( 4.71 ms/it)
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">Q: clr</td>
-<td style="text-align: right;">0.00015999</td>
-<td style="text-align: right;">0.01264859</td>
+<td style="text-align: right;">0.00016016</td>
+<td style="text-align: right;">0.01265559</td>
 <td style="text-align: right;">+0.36</td>
 <td style="text-align: right;">+0.38</td>
 <td style="text-align: right;"></td>
@@ -1214,8 +1213,8 @@ Minimizing 2428    Time: 0:00:11 ( 4.71 ms/it)
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">lQ: clr</td>
-<td style="text-align: right;">0.00003492</td>
-<td style="text-align: right;">0.00590960</td>
+<td style="text-align: right;">0.00003469</td>
+<td style="text-align: right;">0.00588962</td>
 <td style="text-align: right;">+0.38</td>
 <td style="text-align: right;">+0.03</td>
 <td style="text-align: right;">+0.03</td>
@@ -1225,8 +1224,8 @@ Minimizing 2428    Time: 0:00:11 ( 4.71 ms/it)
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">lT: WD</td>
-<td style="text-align: right;">0.00015740</td>
-<td style="text-align: right;">0.01254582</td>
+<td style="text-align: right;">0.00015744</td>
+<td style="text-align: right;">0.01254769</td>
 <td style="text-align: right;">-0.11</td>
 <td style="text-align: right;">-0.87</td>
 <td style="text-align: right;">-0.01</td>
@@ -1236,8 +1235,8 @@ Minimizing 2428    Time: 0:00:11 ( 4.71 ms/it)
 <tr class="even">
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">0.03061297</td>
-<td style="text-align: right;">0.17496562</td>
+<td style="text-align: right;">0.03061842</td>
+<td style="text-align: right;">0.17498121</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -1247,8 +1246,8 @@ Minimizing 2428    Time: 0:00:11 ( 4.71 ms/it)
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">F: HF</td>
-<td style="text-align: right;">0.00004438</td>
-<td style="text-align: right;">0.00666198</td>
+<td style="text-align: right;">0.00004433</td>
+<td style="text-align: right;">0.00665790</td>
 <td style="text-align: right;">+0.36</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -1258,10 +1257,10 @@ Minimizing 2428    Time: 0:00:11 ( 4.71 ms/it)
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">P: rel</td>
-<td style="text-align: right;">0.00012731</td>
-<td style="text-align: right;">0.01128317</td>
+<td style="text-align: right;">0.00012732</td>
+<td style="text-align: right;">0.01128374</td>
 <td style="text-align: right;">+0.35</td>
-<td style="text-align: right;">+0.89</td>
+<td style="text-align: right;">+0.90</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -1269,8 +1268,8 @@ Minimizing 2428    Time: 0:00:11 ( 4.71 ms/it)
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">Q: clr</td>
-<td style="text-align: right;">0.00078997</td>
-<td style="text-align: right;">0.02810642</td>
+<td style="text-align: right;">0.00079007</td>
+<td style="text-align: right;">0.02810816</td>
 <td style="text-align: right;">+0.41</td>
 <td style="text-align: right;">+0.45</td>
 <td style="text-align: right;">+0.73</td>
@@ -1280,8 +1279,8 @@ Minimizing 2428    Time: 0:00:11 ( 4.71 ms/it)
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">lQ: clr</td>
-<td style="text-align: right;">0.00011619</td>
-<td style="text-align: right;">0.01077914</td>
+<td style="text-align: right;">0.00011622</td>
+<td style="text-align: right;">0.01078051</td>
 <td style="text-align: right;">+0.06</td>
 <td style="text-align: right;">+0.16</td>
 <td style="text-align: right;">+0.18</td>
@@ -1291,8 +1290,8 @@ Minimizing 2428    Time: 0:00:11 ( 4.71 ms/it)
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">lT: WD</td>
-<td style="text-align: right;">0.00104556</td>
-<td style="text-align: right;">0.03233519</td>
+<td style="text-align: right;">0.00104550</td>
+<td style="text-align: right;">0.03233423</td>
 <td style="text-align: right;">+0.26</td>
 <td style="text-align: right;">-0.10</td>
 <td style="text-align: right;">-0.02</td>
@@ -1302,8 +1301,8 @@ Minimizing 2428    Time: 0:00:11 ( 4.71 ms/it)
 <tr class="even">
 <td style="text-align: left;">Residual</td>
 <td style="text-align: left;"></td>
-<td style="text-align: right;">0.08569945</td>
-<td style="text-align: right;">0.29274469</td>
+<td style="text-align: right;">0.08569940</td>
+<td style="text-align: right;">0.29274459</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -1332,34 +1331,34 @@ Principal components based on correlation matrix
  lT: WD       -0.11  -0.87  -0.01  -0.35   1.0
 
 Normalized cumulative variances:
-[0.4222, 0.6864, 0.9057, 1.0, 1.0]
+[0.4225, 0.6867, 0.9059, 1.0, 1.0]
 
 Component loadings
                 PC1    PC2    PC3    PC4    PC5
  (Intercept)  -0.3   -0.67   0.02  -0.67   0.07
  P: rel       -0.6    0.38   0.22  -0.05   0.67
  Q: clr       -0.31  -0.34   0.7    0.46  -0.28
- lQ: clr      -0.31  -0.41  -0.62   0.55   0.2
- lT: WD        0.6   -0.34   0.27   0.15   0.66, subj = 
+ lQ: clr      -0.31  -0.41  -0.62   0.55   0.19
+ lT: WD        0.6   -0.34   0.26   0.15   0.66, subj = 
 Principal components based on correlation matrix
  (Intercept)   1.0     .      .      .      .      .
  F: HF         0.36   1.0     .      .      .      .
- P: rel        0.35   0.89   1.0     .      .      .
+ P: rel        0.35   0.9    1.0     .      .      .
  Q: clr        0.41   0.45   0.73   1.0     .      .
  lQ: clr       0.06   0.16   0.18   0.58   1.0     .
  lT: WD        0.26  -0.1   -0.02   0.37   0.51   1.0
 
 Normalized cumulative variances:
-[0.4766, 0.7359, 0.8812, 0.9431, 1.0, 1.0]
+[0.4768, 0.736, 0.8814, 0.9433, 1.0, 1.0]
 
 Component loadings
                 PC1    PC2    PC3    PC4    PC5    PC6
- (Intercept)  -0.34   0.02   0.84   0.31  -0.28  -0.11
- F: HF        -0.45   0.42  -0.12  -0.41  -0.43   0.5
- P: rel       -0.51   0.35  -0.16  -0.16   0.27  -0.7
- Q: clr       -0.52  -0.15  -0.11   0.41   0.56   0.45
- lQ: clr      -0.32  -0.51  -0.43   0.29  -0.56  -0.21
- lT: WD       -0.21  -0.65   0.24  -0.67   0.17  -0.0)</code></pre>
+ (Intercept)  -0.34   0.02   0.84   0.31  -0.27  -0.11
+ F: HF        -0.45   0.42  -0.12  -0.41  -0.44   0.5
+ P: rel       -0.51   0.35  -0.16  -0.17   0.27  -0.7
+ Q: clr       -0.52  -0.15  -0.11   0.4    0.57   0.45
+ lQ: clr      -0.32  -0.51  -0.43   0.3   -0.56  -0.21
+ lT: WD       -0.21  -0.65   0.24  -0.68   0.16  -0.0)</code></pre>
 </div>
 </div>
 <p>Variance-covariance matrix of random-effect structure suggests overparameterization for both subject-related and item-related components.</p>
@@ -1372,11 +1371,11 @@ Component loadings
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">first</span>(m_cpx.λ)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>5×5 LinearAlgebra.LowerTriangular{Float64, Matrix{Float64}}:
-  0.193301      ⋅           ⋅            ⋅          ⋅ 
-  0.00211947   0.0387427    ⋅            ⋅          ⋅ 
-  0.0156009    0.0156542   0.0371267     ⋅          ⋅ 
-  0.00757735   0.0001395  -0.00253342   0.018538    ⋅ 
- -0.00483827  -0.0370574   0.0173962   -0.0117189  0.0</code></pre>
+  0.193312      ⋅             ⋅           ⋅          ⋅ 
+  0.00211078   0.0387323      ⋅           ⋅          ⋅ 
+  0.0156026    0.0156457     0.0371574    ⋅          ⋅ 
+  0.00757549   0.000171477  -0.0025496   0.0184619   ⋅ 
+ -0.0048343   -0.0370832     0.0173848  -0.0116792  0.0</code></pre>
 </div>
 </div>
 <p>VP is zero for last diagonal entry; not supported by data.</p>
@@ -1384,12 +1383,12 @@ Component loadings
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">last</span>(m_cpx.λ)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
 <pre><code>6×6 LinearAlgebra.LowerTriangular{Float64, Matrix{Float64}}:
- 0.597673      ⋅          ⋅           ⋅          ⋅          ⋅ 
- 0.00815037   0.0212474   ⋅           ⋅          ⋅          ⋅ 
- 0.0134519    0.0317662  0.01719      ⋅          ⋅          ⋅ 
- 0.0392923    0.0307444  0.0690338   0.0443075   ⋅          ⋅ 
- 0.00205904   0.0056347  0.00252826  0.0362409  0.0         ⋅ 
- 0.0283427   -0.0224457  0.0135807   0.0577618  0.0813156  0.027571</code></pre>
+ 0.597727      ⋅           ⋅           ⋅          ⋅          ⋅ 
+ 0.00814994   0.0212326    ⋅           ⋅          ⋅          ⋅ 
+ 0.0134514    0.0318017   0.0171291    ⋅          ⋅          ⋅ 
+ 0.0392939    0.030817    0.0691447   0.0440952   ⋅          ⋅ 
+ 0.00204868   0.00560883  0.00264412  0.036242   0.0         ⋅ 
+ 0.0283421   -0.0224684   0.0138518   0.0576631  0.0414037  0.0752354</code></pre>
 </div>
 </div>
 <p>VP is zero for fourth diagonal entry; not supported by data.</p>
@@ -1416,7 +1415,7 @@ Component loadings
 │  - To prevent this behaviour, do `ProgressMeter.ijulia_behavior(:append)`. 
 │  - To disable this warning message, do `ProgressMeter.ijulia_behavior(:clear)`.
 └ @ ProgressMeter ~/.julia/packages/ProgressMeter/vnCY0/src/ProgressMeter.jl:626
-Minimizing 414    Time: 0:00:01 ( 3.96 ms/it)</code></pre>
+Minimizing 318    Time: 0:00:02 ( 6.57 ms/it)</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="12">
 <pre><code>(item = 
@@ -1433,10 +1432,10 @@ Normalized cumulative variances:
 Component loadings
                PC1   PC2   PC3   PC4   PC5
  (Intercept)  1.0   0.0   0.0   0.0   0.0
- P: rel       0.0   0.0   0.0   0.0   1.0
- Q: clr       0.0   1.0   0.0   0.0   0.0
- lQ: clr      0.0   0.0   1.0   0.0   0.0
- lT: WD       0.0   0.0   0.0   1.0   0.0, subj = 
+ P: rel       0.0   1.0   0.0   0.0   0.0
+ Q: clr       0.0   0.0   1.0   0.0   0.0
+ lQ: clr      0.0   0.0   0.0   1.0   0.0
+ lT: WD       0.0   0.0   0.0   0.0   1.0, subj = 
 Principal components based on correlation matrix
  (Intercept)  1.0  .    .    .    .    .
  F: HF        0.0  1.0  .    .    .    .
@@ -1515,7 +1514,7 @@ Component loadings
 │  - To prevent this behaviour, do `ProgressMeter.ijulia_behavior(:append)`. 
 │  - To disable this warning message, do `ProgressMeter.ijulia_behavior(:clear)`.
 └ @ ProgressMeter ~/.julia/packages/ProgressMeter/vnCY0/src/ProgressMeter.jl:626
-Minimizing 243    Time: 0:00:00 ( 2.92 ms/it)</code></pre>
+Minimizing 246    Time: 0:00:01 ( 4.27 ms/it)</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="14">
 <table class="table table-sm table-striped small">
@@ -1545,8 +1544,8 @@ Minimizing 243    Time: 0:00:00 ( 2.92 ms/it)</code></pre>
 <tr class="odd">
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">0.00320202</td>
-<td style="text-align: right;">0.05658639</td>
+<td style="text-align: right;">0.00320207</td>
+<td style="text-align: right;">0.05658680</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -1555,8 +1554,8 @@ Minimizing 243    Time: 0:00:00 ( 2.92 ms/it)</code></pre>
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">P: rel</td>
-<td style="text-align: right;">0.00007137</td>
-<td style="text-align: right;">0.00844786</td>
+<td style="text-align: right;">0.00007141</td>
+<td style="text-align: right;">0.00845070</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -1566,7 +1565,7 @@ Minimizing 243    Time: 0:00:00 ( 2.92 ms/it)</code></pre>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">Q: clr</td>
 <td style="text-align: right;">0.00014720</td>
-<td style="text-align: right;">0.01213261</td>
+<td style="text-align: right;">0.01213269</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;"></td>
@@ -1575,8 +1574,8 @@ Minimizing 243    Time: 0:00:00 ( 2.92 ms/it)</code></pre>
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">lT: WD</td>
-<td style="text-align: right;">0.00011707</td>
-<td style="text-align: right;">0.01081993</td>
+<td style="text-align: right;">0.00011711</td>
+<td style="text-align: right;">0.01082155</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
@@ -1585,8 +1584,8 @@ Minimizing 243    Time: 0:00:00 ( 2.92 ms/it)</code></pre>
 <tr class="odd">
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">0.03061067</td>
-<td style="text-align: right;">0.17495906</td>
+<td style="text-align: right;">0.03060924</td>
+<td style="text-align: right;">0.17495498</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -1596,7 +1595,7 @@ Minimizing 243    Time: 0:00:00 ( 2.92 ms/it)</code></pre>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">P: rel</td>
 <td style="text-align: right;">0.00009922</td>
-<td style="text-align: right;">0.00996077</td>
+<td style="text-align: right;">0.00996082</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -1605,8 +1604,8 @@ Minimizing 243    Time: 0:00:00 ( 2.92 ms/it)</code></pre>
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">Q: clr</td>
-<td style="text-align: right;">0.00077304</td>
-<td style="text-align: right;">0.02780365</td>
+<td style="text-align: right;">0.00077303</td>
+<td style="text-align: right;">0.02780349</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;"></td>
@@ -1616,7 +1615,7 @@ Minimizing 243    Time: 0:00:00 ( 2.92 ms/it)</code></pre>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">lQ: clr</td>
 <td style="text-align: right;">0.00011891</td>
-<td style="text-align: right;">0.01090475</td>
+<td style="text-align: right;">0.01090450</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
@@ -1625,8 +1624,8 @@ Minimizing 243    Time: 0:00:00 ( 2.92 ms/it)</code></pre>
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">lT: WD</td>
-<td style="text-align: right;">0.00106151</td>
-<td style="text-align: right;">0.03258076</td>
+<td style="text-align: right;">0.00106141</td>
+<td style="text-align: right;">0.03257925</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
@@ -1635,8 +1634,8 @@ Minimizing 243    Time: 0:00:00 ( 2.92 ms/it)</code></pre>
 <tr class="even">
 <td style="text-align: left;">Residual</td>
 <td style="text-align: left;"></td>
-<td style="text-align: right;">0.08591586</td>
-<td style="text-align: right;">0.29311407</td>
+<td style="text-align: right;">0.08591582</td>
+<td style="text-align: right;">0.29311400</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -1705,6 +1704,13 @@ Minimizing 243    Time: 0:00:00 ( 2.92 ms/it)</code></pre>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fit</span>(MixedModel, form, dat; contrasts)</span>
 <span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
 <span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(m_zcp3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>┌ Warning: ProgressMeter by default refresh meters with additional information in IJulia via `IJulia.clear_output`, which clears all outputs in the cell. 
+│  - To prevent this behaviour, do `ProgressMeter.ijulia_behavior(:append)`. 
+│  - To disable this warning message, do `ProgressMeter.ijulia_behavior(:clear)`.
+└ @ ProgressMeter ~/.julia/packages/ProgressMeter/vnCY0/src/ProgressMeter.jl:626
+Minimizing 93    Time: 0:00:00 ( 1.14 ms/it)</code></pre>
+</div>
 <div class="cell-output cell-output-display" data-execution_count="16">
 <table class="table table-sm table-striped small">
 <thead>
@@ -1721,40 +1727,40 @@ Minimizing 243    Time: 0:00:00 ( 2.92 ms/it)</code></pre>
 <tr class="odd">
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">0.0032049</td>
-<td style="text-align: right;">0.0566117</td>
+<td style="text-align: right;">0.0032048</td>
+<td style="text-align: right;">0.0566108</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">0.0306169</td>
-<td style="text-align: right;">0.1749768</td>
+<td style="text-align: right;">0.0306166</td>
+<td style="text-align: right;">0.1749760</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">Q: clr</td>
-<td style="text-align: right;">0.0007629</td>
-<td style="text-align: right;">0.0276198</td>
+<td style="text-align: right;">0.0007628</td>
+<td style="text-align: right;">0.0276190</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">lT: WD</td>
-<td style="text-align: right;">0.0010645</td>
-<td style="text-align: right;">0.0326267</td>
+<td style="text-align: right;">0.0010644</td>
+<td style="text-align: right;">0.0326259</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Residual</td>
 <td style="text-align: left;"></td>
-<td style="text-align: right;">0.0864752</td>
-<td style="text-align: right;">0.2940667</td>
+<td style="text-align: right;">0.0864753</td>
+<td style="text-align: right;">0.2940668</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
@@ -1763,7 +1769,7 @@ Minimizing 243    Time: 0:00:00 ( 2.92 ms/it)</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>MixedModels.<span class="fu">likelihoodratiotest</span>(m_zcp3, m_zcp2, m_zcp, m_cpx)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>MixedModels.<span class="fu">likelihoodratiotest</span>(m_zcp3, m_zcp2, m_zcp, m_cpx)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="17">
 <table class="table table-sm table-striped small">
 <colgroup>
@@ -1823,12 +1829,12 @@ Minimizing 243    Time: 0:00:00 ( 2.92 ms/it)</code></pre>
 </div>
 <p>And another iteration.</p>
 <div class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>m_zcp4 <span class="op">=</span> <span class="kw">let</span> </span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    form <span class="op">=</span> <span class="pp">@formula</span> (<span class="fl">1000</span><span class="op">/</span>rt) <span class="op">~</span> <span class="fl">1</span><span class="op">+</span>F<span class="op">*</span>P<span class="op">*</span>Q<span class="op">*</span>lQ<span class="op">*</span>lT <span class="op">+</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">zerocorr</span>(<span class="fl">1</span>         <span class="op">+</span>lT <span class="op">|</span> subj) <span class="op">+</span> (<span class="fl">1</span> <span class="op">|</span> item);</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fit</span>(MixedModel, form, dat; contrasts)</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(m_zcp4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>m_zcp4 <span class="op">=</span> <span class="kw">let</span> </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    form <span class="op">=</span> <span class="pp">@formula</span> (<span class="fl">1000</span><span class="op">/</span>rt) <span class="op">~</span> <span class="fl">1</span><span class="op">+</span>F<span class="op">*</span>P<span class="op">*</span>Q<span class="op">*</span>lQ<span class="op">*</span>lT <span class="op">+</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">zerocorr</span>(<span class="fl">1</span>         <span class="op">+</span>lT <span class="op">|</span> subj) <span class="op">+</span> (<span class="fl">1</span> <span class="op">|</span> item);</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fit</span>(MixedModel, form, dat; contrasts)</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(m_zcp4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="18">
 <table class="table table-sm table-striped small">
 <thead>
@@ -1845,14 +1851,14 @@ Minimizing 243    Time: 0:00:00 ( 2.92 ms/it)</code></pre>
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">0.0032067</td>
-<td style="text-align: right;">0.0566278</td>
+<td style="text-align: right;">0.0566280</td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">0.0306608</td>
-<td style="text-align: right;">0.1751022</td>
+<td style="text-align: right;">0.0306601</td>
+<td style="text-align: right;">0.1751003</td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
@@ -1874,7 +1880,7 @@ Minimizing 243    Time: 0:00:00 ( 2.92 ms/it)</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>MixedModels.<span class="fu">likelihoodratiotest</span>(m_zcp4, m_zcp3, m_zcp2, m_zcp, m_cpx)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>MixedModels.<span class="fu">likelihoodratiotest</span>(m_zcp4, m_zcp3, m_zcp2, m_zcp, m_cpx)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="19">
 <table class="table table-sm table-striped small">
 <colgroup>
@@ -1942,18 +1948,18 @@ Minimizing 243    Time: 0:00:00 ( 2.92 ms/it)</code></pre>
 </div>
 <p>Too much removed. Stay with <code>m_zcp3</code>, but extend with CPs.</p>
 <div class="cell" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>m_prm <span class="op">=</span> <span class="kw">let</span> </span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    form <span class="op">=</span> <span class="pp">@formula</span> (<span class="fl">1000</span><span class="op">/</span>rt) <span class="op">~</span> <span class="fl">1</span><span class="op">+</span>F<span class="op">*</span>P<span class="op">*</span>Q<span class="op">*</span>lQ<span class="op">*</span>lT <span class="op">+</span> </span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>                               (<span class="fl">1</span><span class="op">+</span>    Q<span class="op">+</span>lT <span class="op">|</span> subj) <span class="op">+</span> (<span class="fl">1</span> <span class="op">|</span> item);</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fit</span>(MixedModel, form, dat; contrasts)</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(m_prm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>m_prm <span class="op">=</span> <span class="kw">let</span> </span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    form <span class="op">=</span> <span class="pp">@formula</span> (<span class="fl">1000</span><span class="op">/</span>rt) <span class="op">~</span> <span class="fl">1</span><span class="op">+</span>F<span class="op">*</span>P<span class="op">*</span>Q<span class="op">*</span>lQ<span class="op">*</span>lT <span class="op">+</span> </span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>                               (<span class="fl">1</span><span class="op">+</span>    Q<span class="op">+</span>lT <span class="op">|</span> subj) <span class="op">+</span> (<span class="fl">1</span> <span class="op">|</span> item);</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fit</span>(MixedModel, form, dat; contrasts)</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(m_prm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>┌ Warning: ProgressMeter by default refresh meters with additional information in IJulia via `IJulia.clear_output`, which clears all outputs in the cell. 
 │  - To prevent this behaviour, do `ProgressMeter.ijulia_behavior(:append)`. 
 │  - To disable this warning message, do `ProgressMeter.ijulia_behavior(:clear)`.
 └ @ ProgressMeter ~/.julia/packages/ProgressMeter/vnCY0/src/ProgressMeter.jl:626
-Minimizing 250    Time: 0:00:00 ( 0.55 ms/it)</code></pre>
+Minimizing 230    Time: 0:00:00 ( 0.87 ms/it)</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="20">
 <table class="table table-sm table-striped small">
@@ -1971,16 +1977,16 @@ Minimizing 250    Time: 0:00:00 ( 0.55 ms/it)</code></pre>
 <tr class="odd">
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">0.0032010</td>
-<td style="text-align: right;">0.0565771</td>
+<td style="text-align: right;">0.0032009</td>
+<td style="text-align: right;">0.0565761</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">0.0306212</td>
-<td style="text-align: right;">0.1749891</td>
+<td style="text-align: right;">0.0306206</td>
+<td style="text-align: right;">0.1749876</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
@@ -1988,7 +1994,7 @@ Minimizing 250    Time: 0:00:00 ( 0.55 ms/it)</code></pre>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">Q: clr</td>
 <td style="text-align: right;">0.0007626</td>
-<td style="text-align: right;">0.0276154</td>
+<td style="text-align: right;">0.0276149</td>
 <td style="text-align: right;">+0.42</td>
 <td style="text-align: right;"></td>
 </tr>
@@ -1996,14 +2002,14 @@ Minimizing 250    Time: 0:00:00 ( 0.55 ms/it)</code></pre>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">lT: WD</td>
 <td style="text-align: right;">0.0010621</td>
-<td style="text-align: right;">0.0325898</td>
+<td style="text-align: right;">0.0325895</td>
 <td style="text-align: right;">+0.26</td>
 <td style="text-align: right;">+0.38</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Residual</td>
 <td style="text-align: left;"></td>
-<td style="text-align: right;">0.0864769</td>
+<td style="text-align: right;">0.0864770</td>
 <td style="text-align: right;">0.2940696</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -2015,18 +2021,18 @@ Minimizing 250    Time: 0:00:00 ( 0.55 ms/it)</code></pre>
 <section id="post-hoc-lmm" class="level3" data-number="6.1.1">
 <h3 data-number="6.1.1" class="anchored" data-anchor-id="post-hoc-lmm"><span class="header-section-number">6.1.1</span> post-hoc LMM</h3>
 <div class="cell" data-execution_count="20">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>m_prm <span class="op">=</span> <span class="kw">let</span> </span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    form <span class="op">=</span> <span class="pp">@formula</span> (<span class="fl">1000</span><span class="op">/</span>rt) <span class="op">~</span> <span class="fl">1</span><span class="op">+</span>F<span class="op">*</span>P<span class="op">*</span>Q<span class="op">*</span>lQ<span class="op">*</span>lT <span class="op">+</span> </span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>                               (<span class="fl">1</span><span class="op">+</span>    Q<span class="op">+</span>lT <span class="op">|</span> subj) <span class="op">+</span> (<span class="fl">1</span> <span class="op">|</span> item);</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fit</span>(MixedModel, form, dat; contrasts)</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(m_prm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>m_prm <span class="op">=</span> <span class="kw">let</span> </span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    form <span class="op">=</span> <span class="pp">@formula</span> (<span class="fl">1000</span><span class="op">/</span>rt) <span class="op">~</span> <span class="fl">1</span><span class="op">+</span>F<span class="op">*</span>P<span class="op">*</span>Q<span class="op">*</span>lQ<span class="op">*</span>lT <span class="op">+</span> </span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>                               (<span class="fl">1</span><span class="op">+</span>    Q<span class="op">+</span>lT <span class="op">|</span> subj) <span class="op">+</span> (<span class="fl">1</span> <span class="op">|</span> item);</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fit</span>(MixedModel, form, dat; contrasts)</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(m_prm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>┌ Warning: ProgressMeter by default refresh meters with additional information in IJulia via `IJulia.clear_output`, which clears all outputs in the cell. 
 │  - To prevent this behaviour, do `ProgressMeter.ijulia_behavior(:append)`. 
 │  - To disable this warning message, do `ProgressMeter.ijulia_behavior(:clear)`.
 └ @ ProgressMeter ~/.julia/packages/ProgressMeter/vnCY0/src/ProgressMeter.jl:626
-Minimizing 250    Time: 0:00:00 ( 0.55 ms/it)</code></pre>
+Minimizing 230    Time: 0:00:00 ( 0.90 ms/it)</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="21">
 <table class="table table-sm table-striped small">
@@ -2044,16 +2050,16 @@ Minimizing 250    Time: 0:00:00 ( 0.55 ms/it)</code></pre>
 <tr class="odd">
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">0.0032010</td>
-<td style="text-align: right;">0.0565771</td>
+<td style="text-align: right;">0.0032009</td>
+<td style="text-align: right;">0.0565761</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">0.0306212</td>
-<td style="text-align: right;">0.1749891</td>
+<td style="text-align: right;">0.0306206</td>
+<td style="text-align: right;">0.1749876</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
@@ -2061,7 +2067,7 @@ Minimizing 250    Time: 0:00:00 ( 0.55 ms/it)</code></pre>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">Q: clr</td>
 <td style="text-align: right;">0.0007626</td>
-<td style="text-align: right;">0.0276154</td>
+<td style="text-align: right;">0.0276149</td>
 <td style="text-align: right;">+0.42</td>
 <td style="text-align: right;"></td>
 </tr>
@@ -2069,14 +2075,14 @@ Minimizing 250    Time: 0:00:00 ( 0.55 ms/it)</code></pre>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">lT: WD</td>
 <td style="text-align: right;">0.0010621</td>
-<td style="text-align: right;">0.0325898</td>
+<td style="text-align: right;">0.0325895</td>
 <td style="text-align: right;">+0.26</td>
 <td style="text-align: right;">+0.38</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Residual</td>
 <td style="text-align: left;"></td>
-<td style="text-align: right;">0.0864769</td>
+<td style="text-align: right;">0.0864770</td>
 <td style="text-align: right;">0.2940696</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -2090,7 +2096,7 @@ Minimizing 250    Time: 0:00:00 ( 0.55 ms/it)</code></pre>
 <section id="vcs-and-cps-1" class="level2" data-number="6.2">
 <h2 data-number="6.2" class="anchored" data-anchor-id="vcs-and-cps-1"><span class="header-section-number">6.2</span> VCs and CPs</h2>
 <div class="cell" data-execution_count="21">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>MixedModels.<span class="fu">likelihoodratiotest</span>(m_zcp3, m_prm, m_cpx)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>MixedModels.<span class="fu">likelihoodratiotest</span>(m_zcp3, m_prm, m_cpx)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="22">
 <table class="table table-sm table-striped small">
 <colgroup>
@@ -2142,22 +2148,22 @@ Minimizing 250    Time: 0:00:00 ( 0.55 ms/it)</code></pre>
 </div>
 <p>The LRT favors the complex LMM, but not that χ² &lt; 2*(χ²-dof); AIC and BIC suggest against selection.</p>
 <div class="cell" data-execution_count="22">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>gof_summary <span class="op">=</span> <span class="kw">let</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  nms <span class="op">=</span> [<span class="op">:</span>m_zcp3, <span class="op">:</span>m_prm, <span class="op">:</span>m_cpx]</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  mods <span class="op">=</span> <span class="fu">eval</span>.(nms)</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  lrt <span class="op">=</span> MixedModels.<span class="fu">likelihoodratiotest</span>(m_zcp3, m_prm, m_cpx)</span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">DataFrame</span>(;</span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>    name <span class="op">=</span> nms, </span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    dof<span class="op">=</span><span class="fu">dof</span>.(mods),</span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>    deviance<span class="op">=</span><span class="fu">round</span>.(<span class="fu">deviance</span>.(mods), digits<span class="op">=</span><span class="fl">0</span>),</span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>    AIC<span class="op">=</span><span class="fu">round</span>.(<span class="fu">aic</span>.(mods),digits<span class="op">=</span><span class="fl">0</span>),</span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>    AICc<span class="op">=</span><span class="fu">round</span>.(<span class="fu">aicc</span>.(mods),digits<span class="op">=</span><span class="fl">0</span>),</span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>    BIC<span class="op">=</span><span class="fu">round</span>.(<span class="fu">bic</span>.(mods),digits<span class="op">=</span><span class="fl">0</span>),</span>
-<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>    χ²<span class="op">=</span><span class="fu">vcat</span>(<span class="op">:</span>., <span class="fu">round</span>.(lrt.tests.deviancediff, digits<span class="op">=</span><span class="fl">0</span>)),</span>
-<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>    χ²_dof<span class="op">=</span><span class="fu">vcat</span>(<span class="op">:</span>., <span class="fu">round</span>.(lrt.tests.dofdiff, digits<span class="op">=</span><span class="fl">0</span>)),</span>
-<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>    pvalue<span class="op">=</span><span class="fu">vcat</span>(<span class="op">:</span>., <span class="fu">round</span>.(lrt.tests.pvalues, digits<span class="op">=</span><span class="fl">3</span>))</span>
-<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>gof_summary <span class="op">=</span> <span class="kw">let</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  nms <span class="op">=</span> [<span class="op">:</span>m_zcp3, <span class="op">:</span>m_prm, <span class="op">:</span>m_cpx]</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  mods <span class="op">=</span> <span class="fu">eval</span>.(nms)</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  lrt <span class="op">=</span> MixedModels.<span class="fu">likelihoodratiotest</span>(m_zcp3, m_prm, m_cpx)</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">DataFrame</span>(;</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    name <span class="op">=</span> nms, </span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>    dof<span class="op">=</span><span class="fu">dof</span>.(mods),</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>    deviance<span class="op">=</span><span class="fu">round</span>.(<span class="fu">deviance</span>.(mods), digits<span class="op">=</span><span class="fl">0</span>),</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>    AIC<span class="op">=</span><span class="fu">round</span>.(<span class="fu">aic</span>.(mods),digits<span class="op">=</span><span class="fl">0</span>),</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>    AICc<span class="op">=</span><span class="fu">round</span>.(<span class="fu">aicc</span>.(mods),digits<span class="op">=</span><span class="fl">0</span>),</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>    BIC<span class="op">=</span><span class="fu">round</span>.(<span class="fu">bic</span>.(mods),digits<span class="op">=</span><span class="fl">0</span>),</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>    χ²<span class="op">=</span><span class="fu">vcat</span>(<span class="op">:</span>., <span class="fu">round</span>.(lrt.tests.deviancediff, digits<span class="op">=</span><span class="fl">0</span>)),</span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>    χ²_dof<span class="op">=</span><span class="fu">vcat</span>(<span class="op">:</span>., <span class="fu">round</span>.(lrt.tests.dofdiff, digits<span class="op">=</span><span class="fl">0</span>)),</span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>    pvalue<span class="op">=</span><span class="fu">vcat</span>(<span class="op">:</span>., <span class="fu">round</span>.(lrt.tests.pvalues, digits<span class="op">=</span><span class="fl">3</span>))</span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="23">
 <div><div style="float: left;"><span>3×9 DataFrame</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
 <table class="data-frame table table-sm table-striped small" data-quarto-postprocess="true">
@@ -2237,19 +2243,19 @@ Minimizing 250    Time: 0:00:00 ( 0.55 ms/it)</code></pre>
 <section id="crossed-fixed-effects" class="level2" data-number="7.1">
 <h2 data-number="7.1" class="anchored" data-anchor-id="crossed-fixed-effects"><span class="header-section-number">7.1</span> Crossed fixed effects</h2>
 <div class="cell" data-execution_count="23">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>m_mrk17_crossed <span class="op">=</span><span class="kw">let</span> </span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>   form <span class="op">=</span> <span class="pp">@formula</span> (<span class="fl">1000</span><span class="op">/</span>rt) <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> F<span class="op">*</span>P<span class="op">*</span>Q<span class="op">*</span>lQ<span class="op">*</span>lT <span class="op">+</span></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>        (<span class="fl">1</span><span class="op">+</span>Q <span class="op">|</span> subj) <span class="op">+</span> <span class="fu">zerocorr</span>(<span class="fl">0</span><span class="op">+</span>lT <span class="op">|</span> subj) <span class="op">+</span> <span class="fu">zerocorr</span>(<span class="fl">1</span> <span class="op">+</span> P <span class="op">|</span> item) ;</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fit</span>(MixedModel, form, dat; contrasts)</span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(m_prm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>m_mrk17_crossed <span class="op">=</span><span class="kw">let</span> </span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>   form <span class="op">=</span> <span class="pp">@formula</span> (<span class="fl">1000</span><span class="op">/</span>rt) <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> F<span class="op">*</span>P<span class="op">*</span>Q<span class="op">*</span>lQ<span class="op">*</span>lT <span class="op">+</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>        (<span class="fl">1</span><span class="op">+</span>Q <span class="op">|</span> subj) <span class="op">+</span> <span class="fu">zerocorr</span>(<span class="fl">0</span><span class="op">+</span>lT <span class="op">|</span> subj) <span class="op">+</span> <span class="fu">zerocorr</span>(<span class="fl">1</span> <span class="op">+</span> P <span class="op">|</span> item) ;</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fit</span>(MixedModel, form, dat; contrasts)</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(m_prm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>┌ Warning: ProgressMeter by default refresh meters with additional information in IJulia via `IJulia.clear_output`, which clears all outputs in the cell. 
 │  - To prevent this behaviour, do `ProgressMeter.ijulia_behavior(:append)`. 
 │  - To disable this warning message, do `ProgressMeter.ijulia_behavior(:clear)`.
 └ @ ProgressMeter ~/.julia/packages/ProgressMeter/vnCY0/src/ProgressMeter.jl:626
-Minimizing 178    Time: 0:00:00 ( 0.97 ms/it)</code></pre>
+Minimizing 175    Time: 0:00:00 ( 1.39 ms/it)</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="24">
 <table class="table table-sm table-striped small">
@@ -2267,16 +2273,16 @@ Minimizing 178    Time: 0:00:00 ( 0.97 ms/it)</code></pre>
 <tr class="odd">
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">0.0032010</td>
-<td style="text-align: right;">0.0565771</td>
+<td style="text-align: right;">0.0032009</td>
+<td style="text-align: right;">0.0565761</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">0.0306212</td>
-<td style="text-align: right;">0.1749891</td>
+<td style="text-align: right;">0.0306206</td>
+<td style="text-align: right;">0.1749876</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
@@ -2284,7 +2290,7 @@ Minimizing 178    Time: 0:00:00 ( 0.97 ms/it)</code></pre>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">Q: clr</td>
 <td style="text-align: right;">0.0007626</td>
-<td style="text-align: right;">0.0276154</td>
+<td style="text-align: right;">0.0276149</td>
 <td style="text-align: right;">+0.42</td>
 <td style="text-align: right;"></td>
 </tr>
@@ -2292,14 +2298,14 @@ Minimizing 178    Time: 0:00:00 ( 0.97 ms/it)</code></pre>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">lT: WD</td>
 <td style="text-align: right;">0.0010621</td>
-<td style="text-align: right;">0.0325898</td>
+<td style="text-align: right;">0.0325895</td>
 <td style="text-align: right;">+0.26</td>
 <td style="text-align: right;">+0.38</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Residual</td>
 <td style="text-align: left;"></td>
-<td style="text-align: right;">0.0864769</td>
+<td style="text-align: right;">0.0864770</td>
 <td style="text-align: right;">0.2940696</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -2309,7 +2315,7 @@ Minimizing 178    Time: 0:00:00 ( 0.97 ms/it)</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="24">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(m_mrk17_crossed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(m_mrk17_crossed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Linear mixed model fit by maximum likelihood
  :(1000 / rt) ~ 1 + F + P + Q + lQ + lT + F &amp; P + F &amp; Q + P &amp; Q + F &amp; lQ + P &amp; lQ + Q &amp; lQ + F &amp; lT + P &amp; lT + Q &amp; lT + lQ &amp; lT + F &amp; P &amp; Q + F &amp; P &amp; lQ + F &amp; Q &amp; lQ + P &amp; Q &amp; lQ + F &amp; P &amp; lT + F &amp; Q &amp; lT + P &amp; Q &amp; lT + F &amp; lQ &amp; lT + P &amp; lQ &amp; lT + Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ + F &amp; P &amp; Q &amp; lT + F &amp; P &amp; lQ &amp; lT + F &amp; Q &amp; lQ &amp; lT + P &amp; Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ &amp; lT + (1 + Q | subj) + zerocorr(0 + lT | subj) + zerocorr(1 + P | item)
@@ -2318,44 +2324,44 @@ Minimizing 178    Time: 0:00:00 ( 0.97 ms/it)</code></pre>
 
 Variance components:
             Column    Variance   Std.Dev.    Corr.
-item     (Intercept)  0.00320566 0.05661853
-         P: rel       0.00006693 0.00818128   .  
-subj     (Intercept)  0.03061811 0.17498031
-         Q: clr       0.00076247 0.02761285 +0.42
-         lT: WD       0.00106209 0.03258976   .     .  
-Residual              0.08640800 0.29395237
+item     (Intercept)  0.00320569 0.05661882
+         P: rel       0.00006693 0.00818083   .  
+subj     (Intercept)  0.03061735 0.17497813
+         Q: clr       0.00076247 0.02761290 +0.42
+         lT: WD       0.00106208 0.03258949   .     .  
+Residual              0.08640801 0.29395240
  Number of obs: 16409; levels of grouping factors: 240, 73
 
   Fixed-effects parameters:
 ─────────────────────────────────────────────────────────────────────────────────────
                                                    Coef.  Std. Error      z  Pr(&gt;|z|)
 ─────────────────────────────────────────────────────────────────────────────────────
-(Intercept)                                  1.63743      0.0209305   78.23    &lt;1e-99
-F: HF                                        0.019366     0.00431954   4.48    &lt;1e-05
-P: rel                                       0.0188081    0.00236114   7.97    &lt;1e-14
-Q: clr                                       0.042901     0.00396825  10.81    &lt;1e-26
-lQ: clr                                      0.00174654   0.00231531   0.75    0.4506
-lT: WD                                       0.00836023   0.00446182   1.87    0.0610
-F: HF &amp; P: rel                              -0.00711249   0.00236172  -3.01    0.0026
+(Intercept)                                  1.63743      0.0209303   78.23    &lt;1e-99
+F: HF                                        0.019366     0.00431955   4.48    &lt;1e-05
+P: rel                                       0.0188081    0.00236113   7.97    &lt;1e-14
+Q: clr                                       0.042901     0.00396826  10.81    &lt;1e-26
+lQ: clr                                      0.00174653   0.00231531   0.75    0.4506
+lT: WD                                       0.00836023   0.0044618    1.87    0.0610
+F: HF &amp; P: rel                              -0.00711249   0.00236171  -3.01    0.0026
 F: HF &amp; Q: clr                              -0.00141259   0.00230067  -0.61    0.5392
 P: rel &amp; Q: clr                              0.00134142   0.00230239   0.58    0.5601
 F: HF &amp; lQ: clr                             -0.00105227   0.00232139  -0.45    0.6503
 P: rel &amp; lQ: clr                            -0.00240743   0.00232056  -1.04    0.2995
 Q: clr &amp; lQ: clr                             0.00759804   0.00231922   3.28    0.0011
 F: HF &amp; lT: WD                               0.000536555  0.00231365   0.23    0.8166
-P: rel &amp; lT: WD                              2.93244e-5   0.00231751   0.01    0.9899
+P: rel &amp; lT: WD                              2.93243e-5   0.00231751   0.01    0.9899
 Q: clr &amp; lT: WD                              0.00185532   0.00231773   0.80    0.4234
 lQ: clr &amp; lT: WD                            -0.00524632   0.00231608  -2.27    0.0235
 F: HF &amp; P: rel &amp; Q: clr                     -0.000362238  0.00230272  -0.16    0.8750
 F: HF &amp; P: rel &amp; lQ: clr                    -0.00117754   0.00232025  -0.51    0.6118
 F: HF &amp; Q: clr &amp; lQ: clr                     0.00273699   0.00232283   1.18    0.2387
 P: rel &amp; Q: clr &amp; lQ: clr                   -0.00393229   0.0023222   -1.69    0.0904
-F: HF &amp; P: rel &amp; lT: WD                      0.00198641   0.00231879   0.86    0.3916
-F: HF &amp; Q: clr &amp; lT: WD                     -0.00112587   0.00231657  -0.49    0.6270
-P: rel &amp; Q: clr &amp; lT: WD                     0.000261826  0.00231924   0.11    0.9101
-F: HF &amp; lQ: clr &amp; lT: WD                     0.00150677   0.00232198   0.65    0.5164
-P: rel &amp; lQ: clr &amp; lT: WD                    8.67996e-5   0.00232177   0.04    0.9702
-Q: clr &amp; lQ: clr &amp; lT: WD                    0.00916751   0.00231827   3.95    &lt;1e-04
+F: HF &amp; P: rel &amp; lT: WD                      0.0019864    0.00231879   0.86    0.3916
+F: HF &amp; Q: clr &amp; lT: WD                     -0.00112586   0.00231657  -0.49    0.6270
+P: rel &amp; Q: clr &amp; lT: WD                     0.000261825  0.00231924   0.11    0.9101
+F: HF &amp; lQ: clr &amp; lT: WD                     0.00150677   0.00232199   0.65    0.5164
+P: rel &amp; lQ: clr &amp; lT: WD                    8.6796e-5    0.00232177   0.04    0.9702
+Q: clr &amp; lQ: clr &amp; lT: WD                    0.00916752   0.00231827   3.95    &lt;1e-04
 F: HF &amp; P: rel &amp; Q: clr &amp; lQ: clr           -0.00234443   0.00231978  -1.01    0.3122
 F: HF &amp; P: rel &amp; Q: clr &amp; lT: WD            -0.00148721   0.00232057  -0.64    0.5216
 F: HF &amp; P: rel &amp; lQ: clr &amp; lT: WD            0.00308764   0.00232145   1.33    0.1835
@@ -2370,17 +2376,17 @@ F: HF &amp; P: rel &amp; Q: clr &amp; lQ: clr &amp; lT: WD   0.00144888   0.0023
 <section id="nested-fixed-effects" class="level2" data-number="7.2">
 <h2 data-number="7.2" class="anchored" data-anchor-id="nested-fixed-effects"><span class="header-section-number">7.2</span> Nested fixed effects</h2>
 <div class="cell" data-execution_count="25">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>m_mrk17_nested <span class="op">=</span><span class="kw">let</span> </span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>   form <span class="op">=</span> <span class="pp">@formula</span> (<span class="fl">1000</span><span class="op">/</span>rt) <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> Q<span class="op">/</span>(F<span class="op">/</span>P) <span class="op">+</span></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>        (<span class="fl">1</span><span class="op">+</span>Q <span class="op">|</span> subj) <span class="op">+</span> <span class="fu">zerocorr</span>(<span class="fl">0</span><span class="op">+</span>lT <span class="op">|</span> subj) <span class="op">+</span> <span class="fu">zerocorr</span>(<span class="fl">1</span> <span class="op">+</span> P <span class="op">|</span> item) ;</span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fit</span>(MixedModel, form, dat; contrasts)</span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>m_mrk17_nested <span class="op">=</span><span class="kw">let</span> </span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>   form <span class="op">=</span> <span class="pp">@formula</span> (<span class="fl">1000</span><span class="op">/</span>rt) <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> Q<span class="op">/</span>(F<span class="op">/</span>P) <span class="op">+</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>        (<span class="fl">1</span><span class="op">+</span>Q <span class="op">|</span> subj) <span class="op">+</span> <span class="fu">zerocorr</span>(<span class="fl">0</span><span class="op">+</span>lT <span class="op">|</span> subj) <span class="op">+</span> <span class="fu">zerocorr</span>(<span class="fl">1</span> <span class="op">+</span> P <span class="op">|</span> item) ;</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fit</span>(MixedModel, form, dat; contrasts)</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>┌ Warning: ProgressMeter by default refresh meters with additional information in IJulia via `IJulia.clear_output`, which clears all outputs in the cell. 
 │  - To prevent this behaviour, do `ProgressMeter.ijulia_behavior(:append)`. 
 │  - To disable this warning message, do `ProgressMeter.ijulia_behavior(:clear)`.
 └ @ ProgressMeter ~/.julia/packages/ProgressMeter/vnCY0/src/ProgressMeter.jl:626
-Minimizing 175    Time: 0:00:00 ( 0.89 ms/it)</code></pre>
+Minimizing 187    Time: 0:00:00 ( 1.28 ms/it)</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="26">
 <table class="table table-sm table-striped small">
@@ -2516,17 +2522,17 @@ Minimizing 175    Time: 0:00:00 ( 0.89 ms/it)</code></pre>
 <h2 data-number="8.1" class="anchored" data-anchor-id="nesting-within-products-of-factors"><span class="header-section-number">8.1</span> Nesting within products of factors</h2>
 <p>Include parenthesis</p>
 <div class="cell" data-execution_count="26">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>m_mrk17_nested <span class="op">=</span><span class="kw">let</span> </span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>   form <span class="op">=</span> <span class="pp">@formula</span> (<span class="fl">1000</span><span class="op">/</span>rt) <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> Q<span class="op">/</span>(F<span class="op">/</span>P) <span class="op">+</span></span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>        (<span class="fl">1</span><span class="op">+</span>Q <span class="op">|</span> subj) <span class="op">+</span> <span class="fu">zerocorr</span>(<span class="fl">0</span><span class="op">+</span>lT <span class="op">|</span> subj) <span class="op">+</span> <span class="fu">zerocorr</span>(<span class="fl">1</span> <span class="op">+</span> P <span class="op">|</span> item) ;</span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fit</span>(MixedModel, form, dat; contrasts)</span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>m_mrk17_nested <span class="op">=</span><span class="kw">let</span> </span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>   form <span class="op">=</span> <span class="pp">@formula</span> (<span class="fl">1000</span><span class="op">/</span>rt) <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> Q<span class="op">/</span>(F<span class="op">/</span>P) <span class="op">+</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>        (<span class="fl">1</span><span class="op">+</span>Q <span class="op">|</span> subj) <span class="op">+</span> <span class="fu">zerocorr</span>(<span class="fl">0</span><span class="op">+</span>lT <span class="op">|</span> subj) <span class="op">+</span> <span class="fu">zerocorr</span>(<span class="fl">1</span> <span class="op">+</span> P <span class="op">|</span> item) ;</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fit</span>(MixedModel, form, dat; contrasts)</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>┌ Warning: ProgressMeter by default refresh meters with additional information in IJulia via `IJulia.clear_output`, which clears all outputs in the cell. 
 │  - To prevent this behaviour, do `ProgressMeter.ijulia_behavior(:append)`. 
 │  - To disable this warning message, do `ProgressMeter.ijulia_behavior(:clear)`.
 └ @ ProgressMeter ~/.julia/packages/ProgressMeter/vnCY0/src/ProgressMeter.jl:626
-Minimizing 175    Time: 0:00:00 ( 0.89 ms/it)</code></pre>
+Minimizing 187    Time: 0:00:00 ( 1.25 ms/it)</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="27">
 <table class="table table-sm table-striped small">
@@ -2658,56 +2664,56 @@ Minimizing 175    Time: 0:00:00 ( 0.89 ms/it)</code></pre>
 <section id="selection-in-fixed-effects" class="level2" data-number="8.2">
 <h2 data-number="8.2" class="anchored" data-anchor-id="selection-in-fixed-effects"><span class="header-section-number">8.2</span> Selection in fixed effects</h2>
 <div class="cell" data-execution_count="27">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">RegressionFormulae</span></span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="co"># m_prm_5 is equivalent to m_prm</span></span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>m_prm_5 <span class="op">=</span> <span class="kw">let</span> </span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>    form <span class="op">=</span> <span class="pp">@formula</span> (<span class="fl">1000</span><span class="op">/</span>rt) <span class="op">~</span> <span class="fl">1</span><span class="fu">+</span>(F<span class="op">+</span>P<span class="op">+</span>Q<span class="op">+</span>lQ<span class="op">+</span>lT)<span class="op">^</span><span class="fl">5</span> <span class="op">+</span> (<span class="fl">1</span><span class="op">+</span>Q<span class="op">+</span>lT <span class="op">|</span> subj) <span class="op">+</span> (<span class="fl">1</span> <span class="op">|</span> item);</span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fit</span>(MixedModel, form, dat; contrasts)</span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span>;</span>
-<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>m_prm_4 <span class="op">=</span> <span class="kw">let</span> </span>
-<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>    form <span class="op">=</span> <span class="pp">@formula</span> (<span class="fl">1000</span><span class="op">/</span>rt) <span class="op">~</span> <span class="fl">1</span><span class="fu">+</span>(F<span class="op">+</span>P<span class="op">+</span>Q<span class="op">+</span>lQ<span class="op">+</span>lT)<span class="op">^</span><span class="fl">4</span> <span class="op">+</span> (<span class="fl">1</span><span class="op">+</span>Q<span class="op">+</span>lT <span class="op">|</span> subj) <span class="op">+</span> (<span class="fl">1</span> <span class="op">|</span> item);</span>
-<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fit</span>(MixedModel, form, dat; contrasts)</span>
-<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span>;</span>
-<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>m_prm_3 <span class="op">=</span> <span class="kw">let</span> </span>
-<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a>    form <span class="op">=</span> <span class="pp">@formula</span> (<span class="fl">1000</span><span class="op">/</span>rt) <span class="op">~</span> <span class="fl">1</span><span class="fu">+</span>(F<span class="op">+</span>P<span class="op">+</span>Q<span class="op">+</span>lQ<span class="op">+</span>lT)<span class="op">^</span><span class="fl">3</span> <span class="op">+</span> (<span class="fl">1</span><span class="op">+</span>Q<span class="op">+</span>lT <span class="op">|</span> subj) <span class="op">+</span> (<span class="fl">1</span> <span class="op">|</span> item);</span>
-<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fit</span>(MixedModel, form, dat; contrasts)</span>
-<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span>;</span>
-<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a>m_prm_2 <span class="op">=</span> <span class="kw">let</span> </span>
-<span id="cb41-19"><a href="#cb41-19" aria-hidden="true" tabindex="-1"></a>    form <span class="op">=</span> <span class="pp">@formula</span> (<span class="fl">1000</span><span class="op">/</span>rt) <span class="op">~</span> <span class="fl">1</span><span class="fu">+</span>(F<span class="op">+</span>P<span class="op">+</span>Q<span class="op">+</span>lQ<span class="op">+</span>lT)<span class="op">^</span><span class="fl">2</span> <span class="op">+</span> (<span class="fl">1</span><span class="op">+</span>Q<span class="op">+</span>lT <span class="op">|</span> subj) <span class="op">+</span> (<span class="fl">1</span> <span class="op">|</span> item);</span>
-<span id="cb41-20"><a href="#cb41-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fit</span>(MixedModel, form, dat; contrasts)</span>
-<span id="cb41-21"><a href="#cb41-21" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span>;</span>
-<span id="cb41-22"><a href="#cb41-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-23"><a href="#cb41-23" aria-hidden="true" tabindex="-1"></a>m_prm_1 <span class="op">=</span> <span class="kw">let</span> </span>
-<span id="cb41-24"><a href="#cb41-24" aria-hidden="true" tabindex="-1"></a>    form <span class="op">=</span> <span class="pp">@formula</span> (<span class="fl">1000</span><span class="op">/</span>rt) <span class="op">~</span> <span class="fl">1</span><span class="op">+</span> F<span class="op">+</span>P<span class="op">+</span>Q<span class="op">+</span>lQ<span class="op">+</span>lT <span class="op">+</span>   (<span class="fl">1</span><span class="op">+</span>Q<span class="op">+</span>lT <span class="op">|</span> subj) <span class="op">+</span> (<span class="fl">1</span> <span class="op">|</span> item);</span>
-<span id="cb41-25"><a href="#cb41-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fit</span>(MixedModel, form, dat; contrasts)</span>
-<span id="cb41-26"><a href="#cb41-26" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span>;</span>
-<span id="cb41-27"><a href="#cb41-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-28"><a href="#cb41-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare the fits</span></span>
-<span id="cb41-29"><a href="#cb41-29" aria-hidden="true" tabindex="-1"></a>gof_summary <span class="op">=</span> <span class="kw">let</span></span>
-<span id="cb41-30"><a href="#cb41-30" aria-hidden="true" tabindex="-1"></a>  nms <span class="op">=</span> [<span class="op">:</span>m_prm_1, <span class="op">:</span>m_prm_2, <span class="op">:</span>m_prm_3, <span class="op">:</span>m_prm_4, <span class="op">:</span>m_prm_5]</span>
-<span id="cb41-31"><a href="#cb41-31" aria-hidden="true" tabindex="-1"></a>  mods <span class="op">=</span> <span class="fu">eval</span>.(nms)</span>
-<span id="cb41-32"><a href="#cb41-32" aria-hidden="true" tabindex="-1"></a>  lrt <span class="op">=</span> MixedModels.<span class="fu">likelihoodratiotest</span>(m_prm_1, m_prm_2, m_prm_3, m_prm_4, m_prm_5)</span>
-<span id="cb41-33"><a href="#cb41-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">DataFrame</span>(;</span>
-<span id="cb41-34"><a href="#cb41-34" aria-hidden="true" tabindex="-1"></a>    name <span class="op">=</span> nms, </span>
-<span id="cb41-35"><a href="#cb41-35" aria-hidden="true" tabindex="-1"></a>    dof<span class="op">=</span><span class="fu">dof</span>.(mods),</span>
-<span id="cb41-36"><a href="#cb41-36" aria-hidden="true" tabindex="-1"></a>    deviance<span class="op">=</span><span class="fu">deviance</span>.(mods),</span>
-<span id="cb41-37"><a href="#cb41-37" aria-hidden="true" tabindex="-1"></a>    AIC<span class="op">=</span><span class="fu">aic</span>.(mods),</span>
-<span id="cb41-38"><a href="#cb41-38" aria-hidden="true" tabindex="-1"></a>    AICc<span class="op">=</span><span class="fu">aicc</span>.(mods),</span>
-<span id="cb41-39"><a href="#cb41-39" aria-hidden="true" tabindex="-1"></a>    BIC<span class="op">=</span><span class="fu">bic</span>.(mods),</span>
-<span id="cb41-40"><a href="#cb41-40" aria-hidden="true" tabindex="-1"></a>    χ²<span class="op">=</span><span class="fu">vcat</span>(<span class="op">:</span>.,lrt.tests.deviancediff),</span>
-<span id="cb41-41"><a href="#cb41-41" aria-hidden="true" tabindex="-1"></a>    χ²_dof<span class="op">=</span><span class="fu">vcat</span>(<span class="op">:</span>.,lrt.tests.dofdiff),</span>
-<span id="cb41-42"><a href="#cb41-42" aria-hidden="true" tabindex="-1"></a>    pvalue<span class="op">=</span><span class="fu">vcat</span>(<span class="op">:</span>., <span class="fu">round</span>.(lrt.tests.pvalues, digits<span class="op">=</span><span class="fl">3</span>))</span>
-<span id="cb41-43"><a href="#cb41-43" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb41-44"><a href="#cb41-44" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">RegressionFormulae</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="co"># m_prm_5 is equivalent to m_prm</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>m_prm_5 <span class="op">=</span> <span class="kw">let</span> </span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>    form <span class="op">=</span> <span class="pp">@formula</span> (<span class="fl">1000</span><span class="op">/</span>rt) <span class="op">~</span> <span class="fl">1</span><span class="fu">+</span>(F<span class="op">+</span>P<span class="op">+</span>Q<span class="op">+</span>lQ<span class="op">+</span>lT)<span class="op">^</span><span class="fl">5</span> <span class="op">+</span> (<span class="fl">1</span><span class="op">+</span>Q<span class="op">+</span>lT <span class="op">|</span> subj) <span class="op">+</span> (<span class="fl">1</span> <span class="op">|</span> item);</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fit</span>(MixedModel, form, dat; contrasts)</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span>;</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>m_prm_4 <span class="op">=</span> <span class="kw">let</span> </span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>    form <span class="op">=</span> <span class="pp">@formula</span> (<span class="fl">1000</span><span class="op">/</span>rt) <span class="op">~</span> <span class="fl">1</span><span class="fu">+</span>(F<span class="op">+</span>P<span class="op">+</span>Q<span class="op">+</span>lQ<span class="op">+</span>lT)<span class="op">^</span><span class="fl">4</span> <span class="op">+</span> (<span class="fl">1</span><span class="op">+</span>Q<span class="op">+</span>lT <span class="op">|</span> subj) <span class="op">+</span> (<span class="fl">1</span> <span class="op">|</span> item);</span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fit</span>(MixedModel, form, dat; contrasts)</span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span>;</span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>m_prm_3 <span class="op">=</span> <span class="kw">let</span> </span>
+<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a>    form <span class="op">=</span> <span class="pp">@formula</span> (<span class="fl">1000</span><span class="op">/</span>rt) <span class="op">~</span> <span class="fl">1</span><span class="fu">+</span>(F<span class="op">+</span>P<span class="op">+</span>Q<span class="op">+</span>lQ<span class="op">+</span>lT)<span class="op">^</span><span class="fl">3</span> <span class="op">+</span> (<span class="fl">1</span><span class="op">+</span>Q<span class="op">+</span>lT <span class="op">|</span> subj) <span class="op">+</span> (<span class="fl">1</span> <span class="op">|</span> item);</span>
+<span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fit</span>(MixedModel, form, dat; contrasts)</span>
+<span id="cb42-16"><a href="#cb42-16" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span>;</span>
+<span id="cb42-17"><a href="#cb42-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-18"><a href="#cb42-18" aria-hidden="true" tabindex="-1"></a>m_prm_2 <span class="op">=</span> <span class="kw">let</span> </span>
+<span id="cb42-19"><a href="#cb42-19" aria-hidden="true" tabindex="-1"></a>    form <span class="op">=</span> <span class="pp">@formula</span> (<span class="fl">1000</span><span class="op">/</span>rt) <span class="op">~</span> <span class="fl">1</span><span class="fu">+</span>(F<span class="op">+</span>P<span class="op">+</span>Q<span class="op">+</span>lQ<span class="op">+</span>lT)<span class="op">^</span><span class="fl">2</span> <span class="op">+</span> (<span class="fl">1</span><span class="op">+</span>Q<span class="op">+</span>lT <span class="op">|</span> subj) <span class="op">+</span> (<span class="fl">1</span> <span class="op">|</span> item);</span>
+<span id="cb42-20"><a href="#cb42-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fit</span>(MixedModel, form, dat; contrasts)</span>
+<span id="cb42-21"><a href="#cb42-21" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span>;</span>
+<span id="cb42-22"><a href="#cb42-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-23"><a href="#cb42-23" aria-hidden="true" tabindex="-1"></a>m_prm_1 <span class="op">=</span> <span class="kw">let</span> </span>
+<span id="cb42-24"><a href="#cb42-24" aria-hidden="true" tabindex="-1"></a>    form <span class="op">=</span> <span class="pp">@formula</span> (<span class="fl">1000</span><span class="op">/</span>rt) <span class="op">~</span> <span class="fl">1</span><span class="op">+</span> F<span class="op">+</span>P<span class="op">+</span>Q<span class="op">+</span>lQ<span class="op">+</span>lT <span class="op">+</span>   (<span class="fl">1</span><span class="op">+</span>Q<span class="op">+</span>lT <span class="op">|</span> subj) <span class="op">+</span> (<span class="fl">1</span> <span class="op">|</span> item);</span>
+<span id="cb42-25"><a href="#cb42-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fit</span>(MixedModel, form, dat; contrasts)</span>
+<span id="cb42-26"><a href="#cb42-26" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span>;</span>
+<span id="cb42-27"><a href="#cb42-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-28"><a href="#cb42-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare the fits</span></span>
+<span id="cb42-29"><a href="#cb42-29" aria-hidden="true" tabindex="-1"></a>gof_summary <span class="op">=</span> <span class="kw">let</span></span>
+<span id="cb42-30"><a href="#cb42-30" aria-hidden="true" tabindex="-1"></a>  nms <span class="op">=</span> [<span class="op">:</span>m_prm_1, <span class="op">:</span>m_prm_2, <span class="op">:</span>m_prm_3, <span class="op">:</span>m_prm_4, <span class="op">:</span>m_prm_5]</span>
+<span id="cb42-31"><a href="#cb42-31" aria-hidden="true" tabindex="-1"></a>  mods <span class="op">=</span> <span class="fu">eval</span>.(nms)</span>
+<span id="cb42-32"><a href="#cb42-32" aria-hidden="true" tabindex="-1"></a>  lrt <span class="op">=</span> MixedModels.<span class="fu">likelihoodratiotest</span>(m_prm_1, m_prm_2, m_prm_3, m_prm_4, m_prm_5)</span>
+<span id="cb42-33"><a href="#cb42-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">DataFrame</span>(;</span>
+<span id="cb42-34"><a href="#cb42-34" aria-hidden="true" tabindex="-1"></a>    name <span class="op">=</span> nms, </span>
+<span id="cb42-35"><a href="#cb42-35" aria-hidden="true" tabindex="-1"></a>    dof<span class="op">=</span><span class="fu">dof</span>.(mods),</span>
+<span id="cb42-36"><a href="#cb42-36" aria-hidden="true" tabindex="-1"></a>    deviance<span class="op">=</span><span class="fu">deviance</span>.(mods),</span>
+<span id="cb42-37"><a href="#cb42-37" aria-hidden="true" tabindex="-1"></a>    AIC<span class="op">=</span><span class="fu">aic</span>.(mods),</span>
+<span id="cb42-38"><a href="#cb42-38" aria-hidden="true" tabindex="-1"></a>    AICc<span class="op">=</span><span class="fu">aicc</span>.(mods),</span>
+<span id="cb42-39"><a href="#cb42-39" aria-hidden="true" tabindex="-1"></a>    BIC<span class="op">=</span><span class="fu">bic</span>.(mods),</span>
+<span id="cb42-40"><a href="#cb42-40" aria-hidden="true" tabindex="-1"></a>    χ²<span class="op">=</span><span class="fu">vcat</span>(<span class="op">:</span>.,lrt.tests.deviancediff),</span>
+<span id="cb42-41"><a href="#cb42-41" aria-hidden="true" tabindex="-1"></a>    χ²_dof<span class="op">=</span><span class="fu">vcat</span>(<span class="op">:</span>.,lrt.tests.dofdiff),</span>
+<span id="cb42-42"><a href="#cb42-42" aria-hidden="true" tabindex="-1"></a>    pvalue<span class="op">=</span><span class="fu">vcat</span>(<span class="op">:</span>., <span class="fu">round</span>.(lrt.tests.pvalues, digits<span class="op">=</span><span class="fl">3</span>))</span>
+<span id="cb42-43"><a href="#cb42-43" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb42-44"><a href="#cb42-44" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>┌ Warning: ProgressMeter by default refresh meters with additional information in IJulia via `IJulia.clear_output`, which clears all outputs in the cell. 
 │  - To prevent this behaviour, do `ProgressMeter.ijulia_behavior(:append)`. 
 │  - To disable this warning message, do `ProgressMeter.ijulia_behavior(:clear)`.
 └ @ ProgressMeter ~/.julia/packages/ProgressMeter/vnCY0/src/ProgressMeter.jl:626
-Minimizing 249    Time: 0:00:00 ( 0.43 ms/it)</code></pre>
+Minimizing 264    Time: 0:00:00 ( 0.59 ms/it)</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="28">
 <div><div style="float: left;"><span>5×9 DataFrame</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
@@ -2810,17 +2816,17 @@ Minimizing 249    Time: 0:00:00 ( 0.43 ms/it)</code></pre>
 <h2 data-number="8.3" class="anchored" data-anchor-id="posthoc-lmm"><span class="header-section-number">8.3</span> Posthoc LMM</h2>
 <p>We are using only three factors for the illustruation.</p>
 <div class="cell" data-execution_count="28">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>m_prm3 <span class="op">=</span> <span class="kw">let</span> </span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>    form <span class="op">=</span> <span class="pp">@formula</span> (<span class="fl">1000</span><span class="op">/</span>rt) <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> lT<span class="op">*</span>lQ<span class="op">*</span>Q <span class="op">+</span></span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>                               (<span class="fl">1</span><span class="op">+</span>    Q<span class="op">+</span>lT <span class="op">|</span> subj) <span class="op">+</span> (<span class="fl">1</span> <span class="op">|</span> item);</span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fit</span>(MixedModel, form, dat; contrasts)</span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>m_prm3 <span class="op">=</span> <span class="kw">let</span> </span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>    form <span class="op">=</span> <span class="pp">@formula</span> (<span class="fl">1000</span><span class="op">/</span>rt) <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> lT<span class="op">*</span>lQ<span class="op">*</span>Q <span class="op">+</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>                               (<span class="fl">1</span><span class="op">+</span>    Q<span class="op">+</span>lT <span class="op">|</span> subj) <span class="op">+</span> (<span class="fl">1</span> <span class="op">|</span> item);</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fit</span>(MixedModel, form, dat; contrasts)</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>┌ Warning: ProgressMeter by default refresh meters with additional information in IJulia via `IJulia.clear_output`, which clears all outputs in the cell. 
 │  - To prevent this behaviour, do `ProgressMeter.ijulia_behavior(:append)`. 
 │  - To disable this warning message, do `ProgressMeter.ijulia_behavior(:clear)`.
 └ @ ProgressMeter ~/.julia/packages/ProgressMeter/vnCY0/src/ProgressMeter.jl:626
-Minimizing 279    Time: 0:00:00 ( 0.43 ms/it)</code></pre>
+Minimizing 279    Time: 0:00:00 ( 0.63 ms/it)</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="29">
 <table class="table table-sm table-striped small">
@@ -2932,17 +2938,17 @@ Minimizing 279    Time: 0:00:00 ( 0.43 ms/it)</code></pre>
 </div>
 <p>The <code>lT &amp; lQ &amp; Q</code> interactions is significant. Let’s follow it up with a post-hoc LMM, that is looking at the <code>lQ &amp; Q</code> interaction in the two levels of whether the last word was a target or not.</p>
 <div class="cell" data-execution_count="29">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>m_prm3_posthoc1 <span class="op">=</span> <span class="kw">let</span> </span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>    form <span class="op">=</span> <span class="pp">@formula</span> (<span class="fl">1000</span><span class="op">/</span>rt) <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> lT<span class="op">/</span>(lQ<span class="op">*</span>Q) <span class="op">+</span></span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>                               (<span class="fl">1</span><span class="op">+</span>    Q<span class="op">+</span>lT <span class="op">|</span> subj) <span class="op">+</span> (<span class="fl">1</span> <span class="op">|</span> item);</span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fit</span>(MixedModel, form, dat; contrasts)</span>
-<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>m_prm3_posthoc1 <span class="op">=</span> <span class="kw">let</span> </span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>    form <span class="op">=</span> <span class="pp">@formula</span> (<span class="fl">1000</span><span class="op">/</span>rt) <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> lT<span class="op">/</span>(lQ<span class="op">*</span>Q) <span class="op">+</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>                               (<span class="fl">1</span><span class="op">+</span>    Q<span class="op">+</span>lT <span class="op">|</span> subj) <span class="op">+</span> (<span class="fl">1</span> <span class="op">|</span> item);</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fit</span>(MixedModel, form, dat; contrasts)</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>┌ Warning: ProgressMeter by default refresh meters with additional information in IJulia via `IJulia.clear_output`, which clears all outputs in the cell. 
 │  - To prevent this behaviour, do `ProgressMeter.ijulia_behavior(:append)`. 
 │  - To disable this warning message, do `ProgressMeter.ijulia_behavior(:clear)`.
 └ @ ProgressMeter ~/.julia/packages/ProgressMeter/vnCY0/src/ProgressMeter.jl:626
-Minimizing 300    Time: 0:00:00 ( 0.44 ms/it)</code></pre>
+Minimizing 287    Time: 0:00:00 ( 0.62 ms/it)</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="30">
 <table class="table table-sm table-striped small">
@@ -3062,13 +3068,13 @@ Minimizing 300    Time: 0:00:00 ( 0.44 ms/it)</code></pre>
 </div>
 </div>
 <p>The source of the interaction are trials where the last trial was a word target; there is no evidence for the interaction when the last trial was a nonword target.</p>
-<p>The orginal and post-hoc LMM have the same goodness of fit.</p>
+<p>The original and post-hoc LMM have the same goodness of fit.</p>
 <p>[objective(m_prm3), objective(m_prm3_posthoc)] ```</p>
 </section>
 <section id="info" class="level2" data-number="8.4">
 <h2 data-number="8.4" class="anchored" data-anchor-id="info"><span class="header-section-number">8.4</span> Info</h2>
 <div class="cell" data-execution_count="30">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">versioninfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">versioninfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Julia Version 1.9.3
 Commit bed2cd540a1 (2023-08-24 14:43 UTC)
@@ -3076,11 +3082,11 @@ Build Info:
   Official https://julialang.org/ release
 Platform Info:
   OS: Linux (x86_64-linux-gnu)
-  CPU: 16 × Intel(R) Xeon(R) E-2288G CPU @ 3.70GHz
+  CPU: 8 × 11th Gen Intel(R) Core(TM) i5-1135G7 @ 2.40GHz
   WORD_SIZE: 64
   LIBM: libopenlibm
-  LLVM: libLLVM-14.0.6 (ORCJIT, skylake)
-  Threads: 17 on 16 virtual cores</code></pre>
+  LLVM: libLLVM-14.0.6 (ORCJIT, tigerlake)
+  Threads: 9 on 8 virtual cores</code></pre>
 </div>
 </div>
 

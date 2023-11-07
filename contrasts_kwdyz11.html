@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Phillip Alday, Douglas Bates, and Reinhold Kliegl">
-<meta name="dcterms.date" content="2023-09-19">
+<meta name="dcterms.date" content="2023-11-06">
 
 <title>SMLP2023: Advanced Frequentist Track - Contrast Coding of Visual Attention Effects</title>
 <style>
@@ -402,7 +402,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2023-09-19</p>
+      <p class="date">2023-11-06</p>
     </div>
   </div>
   
@@ -428,7 +428,7 @@ div.csl-indent {
 </div>
 <section id="sec-caution" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> A word of caution</h1>
-<p>For a (quasi-)experimental set of data, there is (or should be) a clear <em>a priori</em> theoretical committment to specific hypotheses about differences between factor levels and how these differences enter in interactions with other factors. This specification should be used in the first LMM and reported, irrespective of the outcome. If alternative theories lead to alternative <em>a priori</em> contrast specifications, both analyses are justified. If the observed means render the specification completely irrelevant, the comparisons originally planned could still be reported in a Supplement).</p>
+<p>For a (quasi-)experimental set of data, there is (or should be) a clear <em>a priori</em> theoretical commitment to specific hypotheses about differences between factor levels and how these differences enter in interactions with other factors. This specification should be used in the first LMM and reported, irrespective of the outcome. If alternative theories lead to alternative <em>a priori</em> contrast specifications, both analyses are justified. If the observed means render the specification completely irrelevant, the comparisons originally planned could still be reported in a Supplement).</p>
 <p>In this script, we are working through a large number of different contrasts for the same data. The purpose is to introduce both the preprogrammed (“canned”) and the general options to specify hypotheses about main effects and interactions. Obviously, we do not endorse generating a plot of the means and specifying the contrasts accordingly. This is known as the <a href="https://www.bayesianspectacles.org/origin-of-the-texas-sharpshooter/">Texas sharpshooter</a> fallacy. The link leads to an illustration and brief historical account by Wagenmakers (2018).</p>
 <p>Irrespective of how results turn out, there is nothing wrong with specifying a set of post-hoc contrasts to gain a better understanding of what the data are trying to tell us. Of course, in an article or report about the study, the <em>a priori</em> and post-hoc nature of contrast specifications must be made clear. Some kind of alpha-level adjustment (e.g., Bonferroni) may be called for, too. And, of course, there are grey zones.</p>
 <p>There is quite a bit of statistical literature on contrasts. Two “local” references are <span class="citation" data-cites="Brehm2022">Brehm &amp; Alday (<a href="#ref-Brehm2022" role="doc-biblioref">2022</a>)</span> and <span class="citation" data-cites="Schad2020">Schad et al. (<a href="#ref-Schad2020" role="doc-biblioref">2020</a>)</span>.</p>
@@ -436,7 +436,7 @@ div.csl-indent {
 </section>
 <section id="sec-data" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Example data</h1>
-<p>We take the <code>KWDYZ</code> dataset from <span class="citation" data-cites="Kliegl2011">Kliegl et al. (<a href="#ref-Kliegl2011" role="doc-biblioref">2011</a>)</span>. This is an experiment looking at three effects of visual cueing under four different cue-target relations (CTRs). Two horizontal rectangles are displayed above and below a central fixation point or they displayed in vertical orientation to the left and right of the fixation point. Subjects react to the onset of a small visual target occuring at one of the four ends of the two rectangles. The target is cued validly on 70% of trials by a brief flash of the corner of the rectangle at which it appears; it is cued invalidly at the three other locations 10% of the trials each.</p>
+<p>We take the <code>KWDYZ</code> dataset from <span class="citation" data-cites="Kliegl2011">Kliegl et al. (<a href="#ref-Kliegl2011" role="doc-biblioref">2011</a>)</span>. This is an experiment looking at three effects of visual cueing under four different cue-target relations (CTRs). Two horizontal rectangles are displayed above and below a central fixation point or they displayed in vertical orientation to the left and right of the fixation point. Subjects react to the onset of a small visual target occurring at one of the four ends of the two rectangles. The target is cued validly on 70% of trials by a brief flash of the corner of the rectangle at which it appears; it is cued invalidly at the three other locations 10% of the trials each.</p>
 <p>We specify three contrasts for the four-level factor CTR that are derived from spatial, object-based, and attractor-like features of attention. They map onto sequential differences between appropriately ordered factor levels.</p>
 <p>We also have a dataset from a replication and extension of this study <span class="citation" data-cites="Kliegl2015">Kliegl et al. (<a href="#ref-Kliegl2015" role="doc-biblioref">2015</a>)</span> Both data sets are available in <a href="https://github.com/dmbates/RePsychLing/tree/master/data/">R-package RePsychLing</a></p>
 </section>
@@ -541,8 +541,8 @@ div.csl-indent {
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(MixedModel, form, dat1; contrasts)</span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Minimizing 190    Time: 0:00:00 ( 1.44 ms/it)
-  objective:  325809.5493253395</code></pre>
+<pre><code>Minimizing 200    Time: 0:00:00 ( 1.60 ms/it)
+  objective:  325809.54929832555</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <table class="table table-sm table-striped small">
@@ -560,38 +560,38 @@ div.csl-indent {
 <tr class="odd">
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">389.7336</td>
-<td style="text-align: right;">7.0906</td>
-<td style="text-align: right;">54.97</td>
+<td style="text-align: right;">7.0913</td>
+<td style="text-align: right;">54.96</td>
 <td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">55.1938</td>
+<td style="text-align: right;">55.1998</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: sod</td>
 <td style="text-align: right;">33.7817</td>
-<td style="text-align: right;">3.2869</td>
+<td style="text-align: right;">3.2874</td>
 <td style="text-align: right;">10.28</td>
 <td style="text-align: right;">&lt;1e-24</td>
-<td style="text-align: right;">23.2439</td>
+<td style="text-align: right;">23.2486</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: dos</td>
 <td style="text-align: right;">13.9852</td>
-<td style="text-align: right;">2.3051</td>
+<td style="text-align: right;">2.3057</td>
 <td style="text-align: right;">6.07</td>
 <td style="text-align: right;">&lt;1e-08</td>
-<td style="text-align: right;">10.7456</td>
+<td style="text-align: right;">10.7538</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: dod</td>
-<td style="text-align: right;">-2.7469</td>
-<td style="text-align: right;">2.2140</td>
+<td style="text-align: right;">-2.7470</td>
+<td style="text-align: right;">2.2143</td>
 <td style="text-align: right;">-1.24</td>
-<td style="text-align: right;">0.2147</td>
-<td style="text-align: right;">9.5064</td>
+<td style="text-align: right;">0.2148</td>
+<td style="text-align: right;">9.5110</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Residual</td>
-<td style="text-align: right;">69.8349</td>
+<td style="text-align: right;">69.8348</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -644,10 +644,10 @@ div.csl-indent {
 <tr class="even">
 <td style="text-align: left;">CTR: spt</td>
 <td style="text-align: right;">33.7817</td>
-<td style="text-align: right;">3.2873</td>
+<td style="text-align: right;">3.2871</td>
 <td style="text-align: right;">10.28</td>
 <td style="text-align: right;">&lt;1e-24</td>
-<td style="text-align: right;">23.2473</td>
+<td style="text-align: right;">23.2461</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: obj</td>
@@ -655,15 +655,15 @@ div.csl-indent {
 <td style="text-align: right;">2.3059</td>
 <td style="text-align: right;">6.06</td>
 <td style="text-align: right;">&lt;1e-08</td>
-<td style="text-align: right;">10.7562</td>
+<td style="text-align: right;">10.7567</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: grv</td>
 <td style="text-align: right;">2.7469</td>
-<td style="text-align: right;">2.2144</td>
+<td style="text-align: right;">2.2143</td>
 <td style="text-align: right;">1.24</td>
 <td style="text-align: right;">0.2148</td>
-<td style="text-align: right;">9.5119</td>
+<td style="text-align: right;">9.5106</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Residual</td>
@@ -681,7 +681,7 @@ div.csl-indent {
 </section>
 <section id="dummycoding" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="dummycoding"><span class="header-section-number">4.3</span> DummyCoding</h2>
-<p>Thi contrast corresponds to <code>contr.treatment()</code> in R</p>
+<p>This contrast corresponds to <code>contr.treatment()</code> in R</p>
 <div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>m2 <span class="op">=</span> <span class="kw">let</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  contrasts <span class="op">=</span> <span class="fu">Dict</span>(<span class="op">:</span>CTR <span class="op">=&gt;</span> <span class="fu">DummyCoding</span>(; base<span class="op">=</span><span class="st">"val"</span>))</span>
@@ -703,38 +703,38 @@ div.csl-indent {
 <tr class="odd">
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">358.0914</td>
-<td style="text-align: right;">6.1540</td>
+<td style="text-align: right;">6.1534</td>
 <td style="text-align: right;">58.19</td>
 <td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">47.9101</td>
+<td style="text-align: right;">47.9055</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: dod</td>
 <td style="text-align: right;">45.0200</td>
-<td style="text-align: right;">4.3634</td>
+<td style="text-align: right;">4.3625</td>
 <td style="text-align: right;">10.32</td>
 <td style="text-align: right;">&lt;1e-24</td>
-<td style="text-align: right;">32.2899</td>
+<td style="text-align: right;">32.2821</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: dos</td>
 <td style="text-align: right;">47.7669</td>
-<td style="text-align: right;">3.5565</td>
+<td style="text-align: right;">3.5560</td>
 <td style="text-align: right;">13.43</td>
 <td style="text-align: right;">&lt;1e-40</td>
-<td style="text-align: right;">25.5361</td>
+<td style="text-align: right;">25.5314</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: sod</td>
 <td style="text-align: right;">33.7817</td>
-<td style="text-align: right;">3.2874</td>
+<td style="text-align: right;">3.2868</td>
 <td style="text-align: right;">10.28</td>
 <td style="text-align: right;">&lt;1e-24</td>
-<td style="text-align: right;">23.2483</td>
+<td style="text-align: right;">23.2436</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Residual</td>
-<td style="text-align: right;">69.8348</td>
+<td style="text-align: right;">69.8349</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -780,38 +780,38 @@ div.csl-indent {
 <tr class="odd">
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">389.7336</td>
-<td style="text-align: right;">7.0915</td>
+<td style="text-align: right;">7.0910</td>
 <td style="text-align: right;">54.96</td>
 <td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">55.2009</td>
+<td style="text-align: right;">55.1974</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: sod</td>
 <td style="text-align: right;">33.7817</td>
-<td style="text-align: right;">3.2873</td>
+<td style="text-align: right;">3.2872</td>
 <td style="text-align: right;">10.28</td>
 <td style="text-align: right;">&lt;1e-24</td>
-<td style="text-align: right;">23.2475</td>
+<td style="text-align: right;">23.2470</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: dos</td>
 <td style="text-align: right;">47.7669</td>
-<td style="text-align: right;">3.5566</td>
+<td style="text-align: right;">3.5567</td>
 <td style="text-align: right;">13.43</td>
 <td style="text-align: right;">&lt;1e-40</td>
-<td style="text-align: right;">25.5370</td>
+<td style="text-align: right;">25.5380</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: dod</td>
 <td style="text-align: right;">45.0200</td>
-<td style="text-align: right;">4.3635</td>
+<td style="text-align: right;">4.3634</td>
 <td style="text-align: right;">10.32</td>
 <td style="text-align: right;">&lt;1e-24</td>
-<td style="text-align: right;">32.2907</td>
+<td style="text-align: right;">32.2892</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Residual</td>
-<td style="text-align: right;">69.8348</td>
+<td style="text-align: right;">69.8349</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -853,38 +853,38 @@ div.csl-indent {
 <tr class="odd">
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">389.7336</td>
-<td style="text-align: right;">7.0911</td>
+<td style="text-align: right;">7.0913</td>
 <td style="text-align: right;">54.96</td>
 <td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">55.1984</td>
+<td style="text-align: right;">55.1995</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: sod</td>
 <td style="text-align: right;">16.8909</td>
-<td style="text-align: right;">1.6436</td>
+<td style="text-align: right;">1.6437</td>
 <td style="text-align: right;">10.28</td>
 <td style="text-align: right;">&lt;1e-24</td>
-<td style="text-align: right;">11.6236</td>
+<td style="text-align: right;">11.6239</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: dos</td>
 <td style="text-align: right;">23.8835</td>
-<td style="text-align: right;">1.7782</td>
+<td style="text-align: right;">1.7783</td>
 <td style="text-align: right;">13.43</td>
 <td style="text-align: right;">&lt;1e-40</td>
-<td style="text-align: right;">12.7678</td>
+<td style="text-align: right;">12.7684</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: dod</td>
 <td style="text-align: right;">22.5100</td>
-<td style="text-align: right;">2.1816</td>
+<td style="text-align: right;">2.1819</td>
 <td style="text-align: right;">10.32</td>
 <td style="text-align: right;">&lt;1e-24</td>
-<td style="text-align: right;">16.1441</td>
+<td style="text-align: right;">16.1462</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Residual</td>
-<td style="text-align: right;">69.8349</td>
+<td style="text-align: right;">69.8348</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -920,38 +920,38 @@ div.csl-indent {
 <tr class="odd">
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">389.7336</td>
-<td style="text-align: right;">7.0906</td>
-<td style="text-align: right;">54.96</td>
+<td style="text-align: right;">7.0921</td>
+<td style="text-align: right;">54.95</td>
 <td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">55.1943</td>
+<td style="text-align: right;">55.2059</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: dos</td>
 <td style="text-align: right;">16.1248</td>
-<td style="text-align: right;">1.4403</td>
+<td style="text-align: right;">1.4402</td>
 <td style="text-align: right;">11.20</td>
 <td style="text-align: right;">&lt;1e-28</td>
-<td style="text-align: right;">7.3306</td>
+<td style="text-align: right;">7.3293</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: sod</td>
 <td style="text-align: right;">2.1396</td>
-<td style="text-align: right;">1.3337</td>
+<td style="text-align: right;">1.3338</td>
 <td style="text-align: right;">1.60</td>
 <td style="text-align: right;">0.1087</td>
-<td style="text-align: right;">6.0065</td>
+<td style="text-align: right;">6.0076</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: val</td>
 <td style="text-align: right;">-31.6422</td>
-<td style="text-align: right;">2.6421</td>
-<td style="text-align: right;">-11.98</td>
+<td style="text-align: right;">2.6425</td>
+<td style="text-align: right;">-11.97</td>
 <td style="text-align: right;">&lt;1e-32</td>
-<td style="text-align: right;">19.9491</td>
+<td style="text-align: right;">19.9519</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Residual</td>
-<td style="text-align: right;">69.8349</td>
+<td style="text-align: right;">69.8348</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -993,34 +993,34 @@ div.csl-indent {
 <tr class="odd">
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">389.7336</td>
-<td style="text-align: right;">7.0904</td>
-<td style="text-align: right;">54.97</td>
+<td style="text-align: right;">7.0917</td>
+<td style="text-align: right;">54.96</td>
 <td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">55.1925</td>
+<td style="text-align: right;">55.2025</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: val</td>
 <td style="text-align: right;">-31.6422</td>
-<td style="text-align: right;">2.6426</td>
+<td style="text-align: right;">2.6425</td>
 <td style="text-align: right;">-11.97</td>
 <td style="text-align: right;">&lt;1e-32</td>
-<td style="text-align: right;">19.9533</td>
+<td style="text-align: right;">19.9524</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: sod</td>
 <td style="text-align: right;">2.1396</td>
-<td style="text-align: right;">1.3340</td>
+<td style="text-align: right;">1.3339</td>
 <td style="text-align: right;">1.60</td>
-<td style="text-align: right;">0.1088</td>
-<td style="text-align: right;">6.0107</td>
+<td style="text-align: right;">0.1087</td>
+<td style="text-align: right;">6.0094</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: dos</td>
 <td style="text-align: right;">16.1248</td>
-<td style="text-align: right;">1.4404</td>
-<td style="text-align: right;">11.19</td>
+<td style="text-align: right;">1.4403</td>
+<td style="text-align: right;">11.20</td>
 <td style="text-align: right;">&lt;1e-28</td>
-<td style="text-align: right;">7.3319</td>
+<td style="text-align: right;">7.3308</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Residual</td>
@@ -1065,38 +1065,38 @@ div.csl-indent {
 <tr class="odd">
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">389.7336</td>
-<td style="text-align: right;">7.0907</td>
+<td style="text-align: right;">7.0913</td>
 <td style="text-align: right;">54.96</td>
 <td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">55.1949</td>
+<td style="text-align: right;">55.1999</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: val</td>
 <td style="text-align: right;">-63.2843</td>
-<td style="text-align: right;">5.2850</td>
-<td style="text-align: right;">-11.97</td>
+<td style="text-align: right;">5.2846</td>
+<td style="text-align: right;">-11.98</td>
 <td style="text-align: right;">&lt;1e-32</td>
-<td style="text-align: right;">39.9042</td>
+<td style="text-align: right;">39.9009</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: sod</td>
 <td style="text-align: right;">4.2791</td>
-<td style="text-align: right;">2.6672</td>
+<td style="text-align: right;">2.6678</td>
 <td style="text-align: right;">1.60</td>
-<td style="text-align: right;">0.1086</td>
-<td style="text-align: right;">12.0099</td>
+<td style="text-align: right;">0.1087</td>
+<td style="text-align: right;">12.0182</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: dos</td>
-<td style="text-align: right;">32.2496</td>
-<td style="text-align: right;">2.8808</td>
+<td style="text-align: right;">32.2495</td>
+<td style="text-align: right;">2.8809</td>
 <td style="text-align: right;">11.19</td>
 <td style="text-align: right;">&lt;1e-28</td>
-<td style="text-align: right;">14.6632</td>
+<td style="text-align: right;">14.6644</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Residual</td>
-<td style="text-align: right;">69.8349</td>
+<td style="text-align: right;">69.8348</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -1131,38 +1131,38 @@ div.csl-indent {
 <tr class="odd">
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">389.7336</td>
-<td style="text-align: right;">7.0940</td>
-<td style="text-align: right;">54.94</td>
+<td style="text-align: right;">7.0930</td>
+<td style="text-align: right;">54.95</td>
 <td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">55.2207</td>
+<td style="text-align: right;">55.2132</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: dos</td>
-<td style="text-align: right;">1.3735</td>
+<td style="text-align: right;">1.3734</td>
 <td style="text-align: right;">1.1072</td>
 <td style="text-align: right;">1.24</td>
 <td style="text-align: right;">0.2148</td>
-<td style="text-align: right;">4.7558</td>
+<td style="text-align: right;">4.7557</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: sod</td>
 <td style="text-align: right;">-4.2039</td>
-<td style="text-align: right;">0.6843</td>
+<td style="text-align: right;">0.6845</td>
 <td style="text-align: right;">-6.14</td>
 <td style="text-align: right;">&lt;1e-09</td>
-<td style="text-align: right;">3.3493</td>
+<td style="text-align: right;">3.3523</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: val</td>
 <td style="text-align: right;">-10.5474</td>
-<td style="text-align: right;">0.8807</td>
-<td style="text-align: right;">-11.98</td>
+<td style="text-align: right;">0.8808</td>
+<td style="text-align: right;">-11.97</td>
 <td style="text-align: right;">&lt;1e-32</td>
-<td style="text-align: right;">6.6500</td>
+<td style="text-align: right;">6.6508</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Residual</td>
-<td style="text-align: right;">69.8348</td>
+<td style="text-align: right;">69.8347</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -1200,38 +1200,38 @@ div.csl-indent {
 <tr class="odd">
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">389.7336</td>
-<td style="text-align: right;">7.0940</td>
-<td style="text-align: right;">54.94</td>
+<td style="text-align: right;">7.0930</td>
+<td style="text-align: right;">54.95</td>
 <td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">55.2207</td>
+<td style="text-align: right;">55.2132</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: dos</td>
-<td style="text-align: right;">1.3735</td>
+<td style="text-align: right;">1.3734</td>
 <td style="text-align: right;">1.1072</td>
 <td style="text-align: right;">1.24</td>
 <td style="text-align: right;">0.2148</td>
-<td style="text-align: right;">4.7558</td>
+<td style="text-align: right;">4.7557</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: sod</td>
 <td style="text-align: right;">-4.2039</td>
-<td style="text-align: right;">0.6843</td>
+<td style="text-align: right;">0.6845</td>
 <td style="text-align: right;">-6.14</td>
 <td style="text-align: right;">&lt;1e-09</td>
-<td style="text-align: right;">3.3493</td>
+<td style="text-align: right;">3.3523</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: val</td>
 <td style="text-align: right;">-10.5474</td>
-<td style="text-align: right;">0.8807</td>
-<td style="text-align: right;">-11.98</td>
+<td style="text-align: right;">0.8808</td>
+<td style="text-align: right;">-11.97</td>
 <td style="text-align: right;">&lt;1e-32</td>
-<td style="text-align: right;">6.6500</td>
+<td style="text-align: right;">6.6508</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Residual</td>
-<td style="text-align: right;">69.8348</td>
+<td style="text-align: right;">69.8347</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -1250,7 +1250,7 @@ div.csl-indent {
 <p>Factorial designs (i.e., lab experiments) are traditionally analyzed with analysis of variance. The test statistics of main effects and interactions are based on an orthogonal set of contrasts. We specify them with <code>HypothesisCoding</code>.</p>
 <section id="a2-x-b2" class="level3" data-number="4.8.1">
 <h3 data-number="4.8.1" class="anchored" data-anchor-id="a2-x-b2"><span class="header-section-number">4.8.1</span> A(2) x B(2)</h3>
-<p>An A(2) x B(2) design can be recast as an F(4) design with the levels (A1-B1, A1-B2, A2-B1, A2-B2). The following contrast specifiction returns estimates for the main effect of A, the main effect of B, and the interaction of A and B. In a figure With A on the x-axis and the levels of B shown as two lines, the interaction tests the null hypothesis that the two lines are parallel. A positive coefficient implies overadditivity (diverging lines toward the right) and a negative coefficient underadditivity (converging lines).</p>
+<p>An A(2) x B(2) design can be recast as an F(4) design with the levels (A1-B1, A1-B2, A2-B1, A2-B2). The following contrast specification returns estimates for the main effect of A, the main effect of B, and the interaction of A and B. In a figure With A on the x-axis and the levels of B shown as two lines, the interaction tests the null hypothesis that the two lines are parallel. A positive coefficient implies overadditivity (diverging lines toward the right) and a negative coefficient underadditivity (converging lines).</p>
 <div class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>m5 <span class="op">=</span> <span class="kw">let</span> levels <span class="op">=</span> [<span class="st">"val"</span>, <span class="st">"sod"</span>, <span class="st">"dos"</span>, <span class="st">"dod"</span>]</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  contrasts <span class="op">=</span> <span class="fu">Dict</span>(</span>
@@ -1282,34 +1282,34 @@ div.csl-indent {
 <tr class="odd">
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">389.7336</td>
-<td style="text-align: right;">7.0920</td>
-<td style="text-align: right;">54.95</td>
+<td style="text-align: right;">7.0918</td>
+<td style="text-align: right;">54.96</td>
 <td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">55.2051</td>
+<td style="text-align: right;">55.2032</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: A</td>
 <td style="text-align: right;">59.0052</td>
-<td style="text-align: right;">5.1834</td>
+<td style="text-align: right;">5.1830</td>
 <td style="text-align: right;">11.38</td>
 <td style="text-align: right;">&lt;1e-29</td>
-<td style="text-align: right;">36.2149</td>
+<td style="text-align: right;">36.2109</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: B</td>
 <td style="text-align: right;">31.0348</td>
-<td style="text-align: right;">4.6753</td>
+<td style="text-align: right;">4.6749</td>
 <td style="text-align: right;">6.64</td>
 <td style="text-align: right;">&lt;1e-10</td>
-<td style="text-align: right;">31.7160</td>
+<td style="text-align: right;">31.7124</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: AxB</td>
 <td style="text-align: right;">-36.5287</td>
-<td style="text-align: right;">3.0928</td>
+<td style="text-align: right;">3.0927</td>
 <td style="text-align: right;">-11.81</td>
 <td style="text-align: right;">&lt;1e-31</td>
-<td style="text-align: right;">16.0058</td>
+<td style="text-align: right;">16.0056</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Residual</td>
@@ -1345,7 +1345,7 @@ div.csl-indent {
 <section id="nested-coding" class="level2" data-number="4.9">
 <h2 data-number="4.9" class="anchored" data-anchor-id="nested-coding"><span class="header-section-number">4.9</span> Nested coding</h2>
 <p>Nested contrasts are often specified as follow up as post-hoc tests for ANOVA interactions. They are orthogonal. We specify them with <code>HypothesisCoding</code>.</p>
-<p>An A(2) x B(2) design can be recast as an F(4) design with the levels (A1-B1, A1-B2, A2-B1, A2-B2). The following contrast specifiction returns an estimate for the main effect of A and the effects of B nested in the two levels of A. In a figure With A on the x-axis and the levels of B shown as two lines, the second contrast tests whether A1-B1 is different from A1-B2 and the third contrast tests whether A2-B1 is different from A2-B2.</p>
+<p>An A(2) x B(2) design can be recast as an F(4) design with the levels (A1-B1, A1-B2, A2-B1, A2-B2). The following contrast specification returns an estimate for the main effect of A and the effects of B nested in the two levels of A. In a figure With A on the x-axis and the levels of B shown as two lines, the second contrast tests whether A1-B1 is different from A1-B2 and the third contrast tests whether A2-B1 is different from A2-B2.</p>
 <div class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>m8 <span class="op">=</span> <span class="kw">let</span> levels <span class="op">=</span> [<span class="st">"val"</span>, <span class="st">"sod"</span>, <span class="st">"dos"</span>, <span class="st">"dod"</span>]</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  contrasts <span class="op">=</span> <span class="fu">Dict</span>(</span>
@@ -1377,34 +1377,34 @@ div.csl-indent {
 <tr class="odd">
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">389.7336</td>
-<td style="text-align: right;">7.0913</td>
-<td style="text-align: right;">54.96</td>
+<td style="text-align: right;">7.0937</td>
+<td style="text-align: right;">54.94</td>
 <td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">55.1998</td>
+<td style="text-align: right;">55.2184</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: do_so</td>
 <td style="text-align: right;">59.0052</td>
-<td style="text-align: right;">5.1826</td>
+<td style="text-align: right;">5.1816</td>
 <td style="text-align: right;">11.39</td>
 <td style="text-align: right;">&lt;1e-29</td>
-<td style="text-align: right;">36.2082</td>
+<td style="text-align: right;">36.1992</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: spt</td>
 <td style="text-align: right;">33.7817</td>
-<td style="text-align: right;">3.2874</td>
-<td style="text-align: right;">10.28</td>
+<td style="text-align: right;">3.2883</td>
+<td style="text-align: right;">10.27</td>
 <td style="text-align: right;">&lt;1e-24</td>
-<td style="text-align: right;">23.2481</td>
+<td style="text-align: right;">23.2561</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: grv</td>
-<td style="text-align: right;">2.7470</td>
-<td style="text-align: right;">2.2142</td>
+<td style="text-align: right;">2.7469</td>
+<td style="text-align: right;">2.2146</td>
 <td style="text-align: right;">1.24</td>
 <td style="text-align: right;">0.2148</td>
-<td style="text-align: right;">9.5101</td>
+<td style="text-align: right;">9.5149</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Residual</td>
@@ -1424,7 +1424,7 @@ div.csl-indent {
 <section id="other-orthogonal-contrasts" class="level1" data-number="5">
 <h1 data-number="5"><span class="header-section-number">5</span> Other orthogonal contrasts</h1>
 <p>For factors with more than four levels there are many options for specifying orthogonal contrasts as long as one proceeds in a top-down strictly hiearchical fashion.</p>
-<p>Suppose you have a factor with seven levels and let’s ignore shifting colummns. In this case, you have six options for the first contrast, that is 6 vs.&nbsp;1, 5 vs.2 , 4 vs.&nbsp;3, 3 vs.&nbsp;4, 2 vs.&nbsp;5, and 1 vs.&nbsp;6 levels. Then, you specify orthogonal contrasts for partitions with more than 2 elements and so on. That is, you don’t specify a contrast that crosses an earlier partition line.</p>
+<p>Suppose you have a factor with seven levels and let’s ignore shifting columns. In this case, you have six options for the first contrast, that is 6 vs.&nbsp;1, 5 vs.2 , 4 vs.&nbsp;3, 3 vs.&nbsp;4, 2 vs.&nbsp;5, and 1 vs.&nbsp;6 levels. Then, you specify orthogonal contrasts for partitions with more than 2 elements and so on. That is, you don’t specify a contrast that crosses an earlier partition line.</p>
 <p>In the following example, after an initial 4 vs 3 partitioning of levels, we specify <code>AnovaCoding</code> for the left and <code>HelmertCoding</code> for the right partition.</p>
 <div class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>contrasts <span class="op">=</span> <span class="fu">Dict</span>(</span>

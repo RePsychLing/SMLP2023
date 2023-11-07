@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Phillip Alday, Douglas Bates, and Reinhold Kliegl">
-<meta name="dcterms.date" content="2023-09-19">
+<meta name="dcterms.date" content="2023-11-06">
 
 <title>SMLP2023: Advanced Frequentist Track - More on shrinkage plots</title>
 <style>
@@ -365,7 +365,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2023-09-19</p>
+      <p class="date">2023-11-06</p>
     </div>
   </div>
   
@@ -429,8 +429,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(MixedModel, form, kb07; contrasts)</span>
 <span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Minimizing 934   Time: 0:00:01 ( 1.29 ms/it)
-  objective:  28637.97101024215</code></pre>
+<pre><code>Minimizing 799   Time: 0:00:01 ( 1.60 ms/it)
+  objective:  28637.123623229592</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <table class="table table-sm table-striped small">
@@ -457,79 +457,79 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">2181.6424</td>
-<td style="text-align: right;">77.3512</td>
-<td style="text-align: right;">28.20</td>
+<td style="text-align: right;">2181.6729</td>
+<td style="text-align: right;">77.3136</td>
+<td style="text-align: right;">28.22</td>
 <td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">301.8676</td>
-<td style="text-align: right;">362.4694</td>
+<td style="text-align: right;">301.8062</td>
+<td style="text-align: right;">362.2579</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">spkr: old</td>
-<td style="text-align: right;">67.7496</td>
-<td style="text-align: right;">17.9607</td>
-<td style="text-align: right;">3.77</td>
+<td style="text-align: right;">67.7491</td>
+<td style="text-align: right;">18.2664</td>
+<td style="text-align: right;">3.71</td>
 <td style="text-align: right;">0.0002</td>
-<td style="text-align: right;">33.0524</td>
-<td style="text-align: right;">41.1185</td>
+<td style="text-align: right;">42.3795</td>
+<td style="text-align: right;">40.6807</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">prec: maintain</td>
-<td style="text-align: right;">-333.9200</td>
-<td style="text-align: right;">47.1564</td>
+<td style="text-align: right;">-333.9205</td>
+<td style="text-align: right;">47.1558</td>
 <td style="text-align: right;">-7.08</td>
 <td style="text-align: right;">&lt;1e-11</td>
-<td style="text-align: right;">58.8607</td>
-<td style="text-align: right;">247.3292</td>
+<td style="text-align: right;">61.9630</td>
+<td style="text-align: right;">246.9158</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">load: yes</td>
-<td style="text-align: right;">78.8007</td>
-<td style="text-align: right;">19.7260</td>
-<td style="text-align: right;">3.99</td>
+<td style="text-align: right;">78.7702</td>
+<td style="text-align: right;">19.5298</td>
+<td style="text-align: right;">4.03</td>
 <td style="text-align: right;">&lt;1e-04</td>
-<td style="text-align: right;">66.9505</td>
-<td style="text-align: right;">43.3885</td>
+<td style="text-align: right;">64.9751</td>
+<td style="text-align: right;">42.3890</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">spkr: old &amp; prec: maintain</td>
-<td style="text-align: right;">-21.9960</td>
-<td style="text-align: right;">15.8191</td>
+<td style="text-align: right;">-21.9655</td>
+<td style="text-align: right;">15.8074</td>
 <td style="text-align: right;">-1.39</td>
-<td style="text-align: right;">0.1644</td>
+<td style="text-align: right;">0.1647</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">spkr: old &amp; load: yes</td>
-<td style="text-align: right;">18.3832</td>
-<td style="text-align: right;">15.8191</td>
+<td style="text-align: right;">18.3837</td>
+<td style="text-align: right;">15.8074</td>
 <td style="text-align: right;">1.16</td>
-<td style="text-align: right;">0.2452</td>
+<td style="text-align: right;">0.2448</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">prec: maintain &amp; load: yes</td>
-<td style="text-align: right;">4.5327</td>
-<td style="text-align: right;">15.8191</td>
+<td style="text-align: right;">4.5333</td>
+<td style="text-align: right;">15.8074</td>
 <td style="text-align: right;">0.29</td>
-<td style="text-align: right;">0.7745</td>
+<td style="text-align: right;">0.7743</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">spkr: old &amp; prec: maintain &amp; load: yes</td>
-<td style="text-align: right;">23.6377</td>
-<td style="text-align: right;">15.8191</td>
+<td style="text-align: right;">23.6073</td>
+<td style="text-align: right;">15.8074</td>
 <td style="text-align: right;">1.49</td>
-<td style="text-align: right;">0.1351</td>
+<td style="text-align: right;">0.1353</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Residual</td>
-<td style="text-align: right;">669.0516</td>
+<td style="text-align: right;">668.5542</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -568,8 +568,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">91124.0779</td>
-<td style="text-align: right;">301.8676</td>
+<td style="text-align: right;">91087.0055</td>
+<td style="text-align: right;">301.8062</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -577,35 +577,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">spkr: old</td>
-<td style="text-align: right;">1092.4628</td>
-<td style="text-align: right;">33.0524</td>
-<td style="text-align: right;">+1.00</td>
+<td style="text-align: right;">1796.0221</td>
+<td style="text-align: right;">42.3795</td>
+<td style="text-align: right;">+0.79</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">prec: maintain</td>
-<td style="text-align: right;">3464.5848</td>
-<td style="text-align: right;">58.8607</td>
-<td style="text-align: right;">-0.62</td>
-<td style="text-align: right;">-0.62</td>
+<td style="text-align: right;">3839.4126</td>
+<td style="text-align: right;">61.9630</td>
+<td style="text-align: right;">-0.59</td>
+<td style="text-align: right;">+0.02</td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">load: yes</td>
-<td style="text-align: right;">4482.3662</td>
-<td style="text-align: right;">66.9505</td>
+<td style="text-align: right;">4221.7638</td>
+<td style="text-align: right;">64.9751</td>
 <td style="text-align: right;">+0.36</td>
-<td style="text-align: right;">+0.36</td>
-<td style="text-align: right;">+0.51</td>
+<td style="text-align: right;">+0.85</td>
+<td style="text-align: right;">+0.54</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">131384.0733</td>
-<td style="text-align: right;">362.4694</td>
+<td style="text-align: right;">131230.7914</td>
+<td style="text-align: right;">362.2579</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -613,35 +613,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">spkr: old</td>
-<td style="text-align: right;">1690.7347</td>
-<td style="text-align: right;">41.1185</td>
-<td style="text-align: right;">+0.42</td>
+<td style="text-align: right;">1654.9232</td>
+<td style="text-align: right;">40.6807</td>
+<td style="text-align: right;">+0.44</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">prec: maintain</td>
-<td style="text-align: right;">61171.7458</td>
-<td style="text-align: right;">247.3292</td>
+<td style="text-align: right;">60967.4037</td>
+<td style="text-align: right;">246.9158</td>
 <td style="text-align: right;">-0.69</td>
-<td style="text-align: right;">+0.37</td>
+<td style="text-align: right;">+0.35</td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">load: yes</td>
-<td style="text-align: right;">1882.5594</td>
-<td style="text-align: right;">43.3885</td>
-<td style="text-align: right;">+0.29</td>
-<td style="text-align: right;">+0.14</td>
-<td style="text-align: right;">-0.13</td>
+<td style="text-align: right;">1796.8284</td>
+<td style="text-align: right;">42.3890</td>
+<td style="text-align: right;">+0.32</td>
+<td style="text-align: right;">+0.16</td>
+<td style="text-align: right;">-0.14</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Residual</td>
 <td style="text-align: left;"></td>
-<td style="text-align: right;">447630.0111</td>
-<td style="text-align: right;">669.0516</td>
+<td style="text-align: right;">446964.7062</td>
+<td style="text-align: right;">668.5542</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -662,33 +662,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Linear mixed model fit by maximum likelihood
  rt_trunc ~ 1 + spkr + prec + load + spkr &amp; prec + spkr &amp; load + prec &amp; load + spkr &amp; prec &amp; load + (1 + spkr + prec + load | subj) + (1 + spkr + prec + load | item)
     logLik   -2 logLik      AIC         AICc        BIC     
- -14318.9855  28637.9710  28695.9710  28696.9602  28855.1640
+ -14318.5618  28637.1236  28695.1236  28696.1128  28854.3166
 
 Variance components:
              Column       Variance  Std.Dev.   Corr.
-subj     (Intercept)      91124.0779 301.8676
-         spkr: old         1092.4628  33.0524 +1.00
-         prec: maintain    3464.5848  58.8607 -0.62 -0.62
-         load: yes         4482.3662  66.9505 +0.36 +0.36 +0.51
-item     (Intercept)     131384.0733 362.4694
-         spkr: old         1690.7347  41.1185 +0.42
-         prec: maintain   61171.7458 247.3292 -0.69 +0.37
-         load: yes         1882.5594  43.3885 +0.29 +0.14 -0.13
-Residual                 447630.0111 669.0516
+subj     (Intercept)      91087.0055 301.8062
+         spkr: old         1796.0221  42.3795 +0.79
+         prec: maintain    3839.4126  61.9630 -0.59 +0.02
+         load: yes         4221.7638  64.9751 +0.36 +0.85 +0.54
+item     (Intercept)     131230.7914 362.2579
+         spkr: old         1654.9232  40.6807 +0.44
+         prec: maintain   60967.4037 246.9158 -0.69 +0.35
+         load: yes         1796.8284  42.3890 +0.32 +0.16 -0.14
+Residual                 446964.7062 668.5542
  Number of obs: 1789; levels of grouping factors: 56, 32
 
   Fixed-effects parameters:
 ───────────────────────────────────────────────────────────────────────────────
                                              Coef.  Std. Error      z  Pr(&gt;|z|)
 ───────────────────────────────────────────────────────────────────────────────
-(Intercept)                             2181.64        77.3512  28.20    &lt;1e-99
-spkr: old                                 67.7496      17.9607   3.77    0.0002
-prec: maintain                          -333.92        47.1564  -7.08    &lt;1e-11
-load: yes                                 78.8007      19.726    3.99    &lt;1e-04
-spkr: old &amp; prec: maintain               -21.996       15.8191  -1.39    0.1644
-spkr: old &amp; load: yes                     18.3832      15.8191   1.16    0.2452
-prec: maintain &amp; load: yes                 4.53274     15.8191   0.29    0.7745
-spkr: old &amp; prec: maintain &amp; load: yes    23.6377      15.8191   1.49    0.1351
+(Intercept)                             2181.67        77.3136  28.22    &lt;1e-99
+spkr: old                                 67.7491      18.2664   3.71    0.0002
+prec: maintain                          -333.921       47.1558  -7.08    &lt;1e-11
+load: yes                                 78.7702      19.5298   4.03    &lt;1e-04
+spkr: old &amp; prec: maintain               -21.9655      15.8074  -1.39    0.1647
+spkr: old &amp; load: yes                     18.3837      15.8074   1.16    0.2448
+prec: maintain &amp; load: yes                 4.53327     15.8074   0.29    0.7743
+spkr: old &amp; prec: maintain &amp; load: yes    23.6073      15.8074   1.49    0.1353
 ───────────────────────────────────────────────────────────────────────────────</code></pre>
 </div>
 </div>
@@ -699,10 +699,10 @@ spkr: old &amp; prec: maintain &amp; load: yes    23.6377      15.8191   1.49   
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>l1 <span class="op">=</span> <span class="fu">first</span>(m1.λ)   <span class="co"># Cholesky factor of relative covariance for subj</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <pre><code>4×4 LowerTriangular{Float64, Matrix{Float64}}:
-  0.451187     ⋅           ⋅          ⋅ 
-  0.0494019   0.0          ⋅          ⋅ 
- -0.0547554  -0.00478924  0.0686931   ⋅ 
-  0.0359018  -0.00650109  0.0931791  0.0</code></pre>
+  0.451431    ⋅           ⋅            ⋅ 
+  0.0502903  0.0385895    ⋅            ⋅ 
+ -0.0550269  0.0745788   0.0           ⋅ 
+  0.035189   0.090593   -0.000214038  0.0</code></pre>
 </div>
 </div>
 <p>Notice the zero on the diagonal. A triangular matrix with zeros on the diagonal is singular.</p>
@@ -710,10 +710,10 @@ spkr: old &amp; prec: maintain &amp; load: yes    23.6377      15.8191   1.49   
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>l2 <span class="op">=</span> <span class="fu">last</span>(m1.λ)    <span class="co"># this one is also singular</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
 <pre><code>4×4 LowerTriangular{Float64, Matrix{Float64}}:
-  0.541766    ⋅            ⋅          ⋅ 
-  0.0259253  0.0557222     ⋅          ⋅ 
- -0.253781   0.267843     0.0226331   ⋅ 
-  0.0189249  0.000871109  0.0620218  0.0</code></pre>
+  0.541853    ⋅           ⋅          ⋅ 
+  0.0268744  0.0545925    ⋅          ⋅ 
+ -0.253091   0.268002    0.0228756   ⋅ 
+  0.0199967  0.00128943  0.0601543  0.0</code></pre>
 </div>
 </div>
 <p>To regenerate the covariance matrix we need to know that the covariance is not the <em>square</em> of <code>l1</code>, it is <code>l1 * l1'</code> (so that the result is symmetric) and multiplied by σ̂²</p>
@@ -721,30 +721,30 @@ spkr: old &amp; prec: maintain &amp; load: yes    23.6377      15.8191   1.49   
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>Σ₁ <span class="op">=</span> <span class="fu">varest</span>(m1) <span class="op">.*</span> (l1 <span class="op">*</span> l1<span class="op">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>4×4 Matrix{Float64}:
-  91124.1    9977.46   -11058.7   7250.91
-   9977.46   1092.46    -1210.85   793.924
- -11058.7   -1210.85     3464.58  1999.15
-   7250.91    793.924    1999.15  4482.37</code></pre>
+  91087.0   10147.3     -11103.0     7100.22
+  10147.3    1796.02        49.4502  2353.54
+ -11103.0      49.4502    3839.41    2154.36
+   7100.22   2353.54      2154.36    4221.76</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">diag</span>(Σ₁)  <span class="co"># compare to the variance column in the VarCorr output</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
 <pre><code>4-element Vector{Float64}:
- 91124.07791836817
-  1092.4628467755617
-  3464.584800597221
-  4482.366224216353</code></pre>
+ 91087.0054784778
+  1796.0221392123499
+  3839.4125796885137
+  4221.763756192171</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>.(<span class="fu">diag</span>(Σ₁))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
 <pre><code>4-element Vector{Float64}:
- 301.86764967178607
-  33.05242573209358
-  58.86072375189776
-  66.95047590731788</code></pre>
+ 301.8062383027856
+  42.37950140353647
+  61.96299363078348
+  64.9751010479566</code></pre>
 </div>
 </div>
 </section>
@@ -948,21 +948,21 @@ spkr: old &amp; prec: maintain &amp; load: yes    23.6377      15.8191   1.49   
 <tr class="odd">
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">133026.916</td>
+<td style="text-align: right;">133026.918</td>
 <td style="text-align: right;">364.729</td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">prec: maintain</td>
-<td style="text-align: right;">63841.497</td>
+<td style="text-align: right;">63841.496</td>
 <td style="text-align: right;">252.669</td>
 <td style="text-align: right;">-0.70</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">88870.081</td>
+<td style="text-align: right;">88870.080</td>
 <td style="text-align: right;">298.111</td>
 <td style="text-align: right;"></td>
 </tr>
@@ -1088,21 +1088,21 @@ spkr: old &amp; prec: maintain &amp; load: yes    23.6377      15.8191   1.49   
 <tr class="odd">
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">133015.243</td>
+<td style="text-align: right;">133015.242</td>
 <td style="text-align: right;">364.713</td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">prec: maintain</td>
-<td style="text-align: right;">63766.936</td>
+<td style="text-align: right;">63766.935</td>
 <td style="text-align: right;">252.521</td>
 <td style="text-align: right;">-0.70</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">88819.436</td>
+<td style="text-align: right;">88819.438</td>
 <td style="text-align: right;">298.026</td>
 <td style="text-align: right;"></td>
 </tr>
@@ -1200,7 +1200,7 @@ spkr: old &amp; prec: maintain &amp; load: yes    23.6377      15.8191   1.49   
 <td style="text-align: left;">ρ</td>
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">(Intercept), prec: maintain</td>
-<td style="text-align: right;">-0.893081</td>
+<td style="text-align: right;">-0.89308</td>
 <td style="text-align: right;">-0.457084</td>
 </tr>
 <tr class="even">
@@ -1405,14 +1405,14 @@ spkr: old &amp; prec: maintain &amp; load: yes    23.6377      15.8191   1.49   
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">prec: maintain</td>
 <td style="text-align: right;">177.803</td>
-<td style="text-align: right;">318.381</td>
+<td style="text-align: right;">318.379</td>
 </tr>
 <tr class="odd">
 <td class="rowNumber" style="text-align: right; font-weight: bold;">7</td>
 <td style="text-align: left;">ρ</td>
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">(Intercept), prec: maintain</td>
-<td style="text-align: right;">-0.904893</td>
+<td style="text-align: right;">-0.904904</td>
 <td style="text-align: right;">-0.477346</td>
 </tr>
 <tr class="even">
@@ -1420,7 +1420,7 @@ spkr: old &amp; prec: maintain &amp; load: yes    23.6377      15.8191   1.49   
 <td style="text-align: left;">σ</td>
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">234.301</td>
+<td style="text-align: right;">234.299</td>
 <td style="text-align: right;">361.964</td>
 </tr>
 <tr class="odd">
@@ -1453,21 +1453,21 @@ spkr: old &amp; prec: maintain &amp; load: yes    23.6377      15.8191   1.49   
 <tr class="odd">
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">133015.243</td>
+<td style="text-align: right;">133015.242</td>
 <td style="text-align: right;">364.713</td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">prec: maintain</td>
-<td style="text-align: right;">63766.936</td>
+<td style="text-align: right;">63766.935</td>
 <td style="text-align: right;">252.521</td>
 <td style="text-align: right;">-0.70</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">88819.436</td>
+<td style="text-align: right;">88819.438</td>
 <td style="text-align: right;">298.026</td>
 <td style="text-align: right;"></td>
 </tr>
@@ -1522,12 +1522,12 @@ spkr: old &amp; prec: maintain &amp; load: yes    23.6377      15.8191   1.49   
 <tbody>
 <tr class="odd">
 <td class="rowNumber" style="text-align: right; font-weight: bold;">1</td>
-<td style="text-align: right;">130.125</td>
+<td style="text-align: right;">131.284</td>
 <td style="text-align: right;">29</td>
-<td style="text-align: right;">28638.0</td>
-<td style="text-align: right;">28696.0</td>
-<td style="text-align: right;">28855.2</td>
-<td style="text-align: right;">28697.0</td>
+<td style="text-align: right;">28637.1</td>
+<td style="text-align: right;">28695.1</td>
+<td style="text-align: right;">28854.3</td>
+<td style="text-align: right;">28696.1</td>
 </tr>
 <tr class="even">
 <td class="rowNumber" style="text-align: right; font-weight: bold;">2</td>

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Phillip Alday, Douglas Bates, and Reinhold Kliegl">
-<meta name="dcterms.date" content="2023-09-19">
+<meta name="dcterms.date" content="2023-11-06">
 
 <title>SMLP2023: Advanced Frequentist Track - Transformed and original metrics in Emotikon</title>
 <style>
@@ -380,7 +380,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2023-09-19</p>
+      <p class="date">2023-11-06</p>
     </div>
   </div>
   
@@ -394,7 +394,7 @@ div.csl-indent {
 <p>Fitting the LMM of the publication takes time, roughly 1 hour. However, if you save the model parameters (and other relevant information), you can restore the fitted model object very quickly. The notebook also illustrates this procedure.</p>
 <section id="getting-the-packages-and-data" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="getting-the-packages-and-data"><span class="header-section-number">1</span> Getting the packages and data</h2>
-<div class="cell" data-execution_count="1">
+<div class="cell" data-execution_count="2">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">AlgebraOfGraphics</span></span>
@@ -414,7 +414,7 @@ div.csl-indent {
 </div>
 <section id="data-and-figure-in-publication" class="level3" data-number="1.1">
 <h3 data-number="1.1" class="anchored" data-anchor-id="data-and-figure-in-publication"><span class="header-section-number">1.1</span> Data and figure in publication</h3>
-<div class="cell" data-execution_count="2">
+<div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dat <span class="op">=</span> <span class="fu">DataFrame</span>(Arrow.<span class="fu">Table</span>(<span class="fu">joinpath</span>(datadir, <span class="st">"fggk21.arrow"</span>)))</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="pp">@transform</span>!(dat, <span class="op">:</span>a1 <span class="op">=</span> <span class="op">:</span>age <span class="op">-</span> <span class="fl">8.5</span>);</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">select!</span>(<span class="fu">groupby</span>(dat, <span class="op">:</span><span class="bu">Test</span>), <span class="op">:</span>, <span class="op">:</span>score <span class="op">=&gt;</span> zscore <span class="op">=&gt;</span> <span class="op">:</span>zScore);</span>
@@ -543,7 +543,7 @@ div.csl-indent {
 </section>
 <section id="data-and-figure-with-z-scores-based-on-original-metric" class="level3" data-number="1.2">
 <h3 data-number="1.2" class="anchored" data-anchor-id="data-and-figure-with-z-scores-based-on-original-metric"><span class="header-section-number">1.2</span> Data and figure with z-scores based on original metric</h3>
-<div class="cell" data-execution_count="3">
+<div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># dat_om = rcopy(R"readRDS('./data/fggk21_om.rds')");  #Don't know what the _om is</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># @transform!(dat_om, :a1 = :age - 8.5);</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># select!(groupby(dat_om, :Test), :, :score =&gt; zscore =&gt; :zScore);</span></span>
@@ -555,7 +555,7 @@ div.csl-indent {
 <h2 data-number="2" class="anchored" data-anchor-id="lmms"><span class="header-section-number">2</span> LMMs</h2>
 <section id="contrasts" class="level3" data-number="2.1">
 <h3 data-number="2.1" class="anchored" data-anchor-id="contrasts"><span class="header-section-number">2.1</span> Contrasts</h3>
-<div class="cell" data-execution_count="4">
+<div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>contrasts <span class="op">=</span> <span class="fu">Dict</span>(</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="op">:</span><span class="bu">Test</span> <span class="op">=&gt;</span> <span class="fu">SeqDiffCoding</span>(),</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="op">:</span>Sex <span class="op">=&gt;</span> <span class="fu">HelmertCoding</span>(),</span>
@@ -567,7 +567,7 @@ div.csl-indent {
 </section>
 <section id="formula" class="level3" data-number="2.2">
 <h3 data-number="2.2" class="anchored" data-anchor-id="formula"><span class="header-section-number">2.2</span> Formula</h3>
-<div class="cell" data-execution_count="5">
+<div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>f1 <span class="op">=</span> <span class="pp">@formula</span> zScore <span class="op">~</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fl">1</span> <span class="op">+</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">Test</span> <span class="op">*</span> a1 <span class="op">*</span> Sex <span class="op">+</span></span>
@@ -582,7 +582,7 @@ div.csl-indent {
 <li>Command for fitting LMM m1 = fit(MixedModel, f1, dat, contrasts=contr)</li>
 <li>Fit statistics for LMM m1: Minimizing 5179 Time: 0 Time: 1:00:38 ( 0.70 s/it)</li>
 </ul>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>m1x <span class="op">=</span> <span class="fu">LinearMixedModel</span>(f1, dat; contrasts)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">restoreoptsum!</span>(m1x, <span class="st">"./fits/fggk21_m1_optsum.json"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
@@ -824,7 +824,7 @@ div.csl-indent {
 </table>
 </div>
 </div>
-<div class="cell" data-execution_count="7">
+<div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(m1x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <table class="table table-sm table-striped small">
@@ -1082,21 +1082,21 @@ div.csl-indent {
 <li>Command for fitting LMM m1_om = fit(MixedModel, f1, dat_om, contrasts=contr)</li>
 <li>Minimizing 10502 Time: 0 Time: 2:09:40 ( 0.74 s/it)</li>
 <li>Store with: julia&gt; saveoptsum(“./fits/fggk21_m1_om_optsum.json”, m1_om)</li>
-<li>Only for short-term and when desparate: julia&gt; serialize(“./fits/m1_om.jls”, m1_om);</li>
+<li>Only for short-term and when desperate: julia&gt; serialize(“./fits/m1_om.jls”, m1_om);</li>
 </ul>
 <section id="restoreoptsum" class="level4" data-number="2.4.1">
 <h4 data-number="2.4.1" class="anchored" data-anchor-id="restoreoptsum"><span class="header-section-number">2.4.1</span> … restoreoptsum!()</h4>
-<div class="cell" data-execution_count="8">
+<div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>m1_om <span class="op">=</span> <span class="fu">LinearMixedModel</span>(f1, dat; contrasts<span class="op">=</span>contr);</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">restoreoptsum!</span>(m1_om, <span class="st">"./fits/fggk21_m1_om_optsum.json"</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="deserialize" class="level4" data-number="2.4.2">
 <h4 data-number="2.4.2" class="anchored" data-anchor-id="deserialize"><span class="header-section-number">2.4.2</span> … deserialize()</h4>
-<div class="cell" data-execution_count="9">
+<div class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>m1x_om <span class="op">=</span> <span class="fu">deserialize</span>(<span class="st">"./fits/m1_om.jls"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="10">
+<div class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(m1x_om)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
@@ -1104,20 +1104,20 @@ div.csl-indent {
 <section id="residual-diagnostics-for-lmm-m1" class="level3" data-number="2.5">
 <h3 data-number="2.5" class="anchored" data-anchor-id="residual-diagnostics-for-lmm-m1"><span class="header-section-number">2.5</span> Residual diagnostics for LMM m1</h3>
 <p>Residual plots for published LMM</p>
-<div class="cell" data-execution_count="11">
+<div class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#scatter(fitted(m1x), residuals(m1x)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="12">
+<div class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#qqnorm(m1x)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="residual-diagnostics-for-lmm-m1_om" class="level3" data-number="2.6">
 <h3 data-number="2.6" class="anchored" data-anchor-id="residual-diagnostics-for-lmm-m1_om"><span class="header-section-number">2.6</span> Residual diagnostics for LMM m1_om</h3>
 <p>Residual plots for LMM with Star and Speed in original metric.</p>
-<div class="cell" data-execution_count="13">
+<div class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#scatter(fitted(m1_om_v2), residuals(m1_om_v2)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="14">
+<div class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#qqnorm(m1_om_v2)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="list">

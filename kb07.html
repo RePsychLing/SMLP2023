@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Phillip Alday, Douglas Bates, and Reinhold Kliegl">
-<meta name="dcterms.date" content="2023-09-19">
+<meta name="dcterms.date" content="2023-11-06">
 
 <title>SMLP2023: Advanced Frequentist Track - Bootstrapping a fitted model</title>
 <style>
@@ -385,7 +385,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2023-09-19</p>
+      <p class="date">2023-11-06</p>
     </div>
   </div>
   
@@ -532,7 +532,7 @@ div.csl-indent {
 </div>
 </div>
 </div>
-<p>The experimental factors; <code>spkr</code>, <code>prec</code>, and <code>load</code>, are two-level factors. The <code>EffectsCoding</code> contrast is used with these to create a <span class="math inline">\(\pm1\)</span> encoding. Furthermore, <code>Grouping</code> constrasts are assigned to the <code>subj</code> and <code>item</code> factors. This is not a contrast per-se but an indication that these factors will be used as grouping factors for random effects and, therefore, there is no need to create a contrast matrix. For large numbers of levels in a grouping factor, an attempt to create a contrast matrix may cause memory overflow.</p>
+<p>The experimental factors; <code>spkr</code>, <code>prec</code>, and <code>load</code>, are two-level factors. The <code>EffectsCoding</code> contrast is used with these to create a <span class="math inline">\(\pm1\)</span> encoding. Furthermore, <code>Grouping</code> contrasts are assigned to the <code>subj</code> and <code>item</code> factors. This is not a contrast per-se but an indication that these factors will be used as grouping factors for random effects and, therefore, there is no need to create a contrast matrix. For large numbers of levels in a grouping factor, an attempt to create a contrast matrix may cause memory overflow.</p>
 <p>It is not important in these cases but a good practice in any case.</p>
 <div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>contrasts <span class="op">=</span> <span class="fu">merge</span>(</span>
@@ -553,8 +553,8 @@ div.csl-indent {
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(MixedModel, form, kb07; contrasts)</span>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Minimizing 934   Time: 0:00:01 ( 1.39 ms/it)
-  objective:  28637.97101024215</code></pre>
+<pre><code>Minimizing 799    Time: 0:00:01 ( 1.84 ms/it)
+  objective:  28637.123623229592</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <table class="table table-sm table-striped small">
@@ -581,79 +581,79 @@ div.csl-indent {
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">2181.6424</td>
-<td style="text-align: right;">77.3512</td>
-<td style="text-align: right;">28.20</td>
+<td style="text-align: right;">2181.6729</td>
+<td style="text-align: right;">77.3136</td>
+<td style="text-align: right;">28.22</td>
 <td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">301.8676</td>
-<td style="text-align: right;">362.4694</td>
+<td style="text-align: right;">301.8062</td>
+<td style="text-align: right;">362.2579</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">spkr: old</td>
-<td style="text-align: right;">67.7496</td>
-<td style="text-align: right;">17.9607</td>
-<td style="text-align: right;">3.77</td>
+<td style="text-align: right;">67.7491</td>
+<td style="text-align: right;">18.2664</td>
+<td style="text-align: right;">3.71</td>
 <td style="text-align: right;">0.0002</td>
-<td style="text-align: right;">33.0524</td>
-<td style="text-align: right;">41.1185</td>
+<td style="text-align: right;">42.3795</td>
+<td style="text-align: right;">40.6807</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">prec: maintain</td>
-<td style="text-align: right;">-333.9200</td>
-<td style="text-align: right;">47.1564</td>
+<td style="text-align: right;">-333.9205</td>
+<td style="text-align: right;">47.1558</td>
 <td style="text-align: right;">-7.08</td>
 <td style="text-align: right;">&lt;1e-11</td>
-<td style="text-align: right;">58.8607</td>
-<td style="text-align: right;">247.3292</td>
+<td style="text-align: right;">61.9630</td>
+<td style="text-align: right;">246.9158</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">load: yes</td>
-<td style="text-align: right;">78.8007</td>
-<td style="text-align: right;">19.7260</td>
-<td style="text-align: right;">3.99</td>
+<td style="text-align: right;">78.7702</td>
+<td style="text-align: right;">19.5298</td>
+<td style="text-align: right;">4.03</td>
 <td style="text-align: right;">&lt;1e-04</td>
-<td style="text-align: right;">66.9505</td>
-<td style="text-align: right;">43.3885</td>
+<td style="text-align: right;">64.9751</td>
+<td style="text-align: right;">42.3890</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">spkr: old &amp; prec: maintain</td>
-<td style="text-align: right;">-21.9960</td>
-<td style="text-align: right;">15.8191</td>
+<td style="text-align: right;">-21.9655</td>
+<td style="text-align: right;">15.8074</td>
 <td style="text-align: right;">-1.39</td>
-<td style="text-align: right;">0.1644</td>
+<td style="text-align: right;">0.1647</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">spkr: old &amp; load: yes</td>
-<td style="text-align: right;">18.3832</td>
-<td style="text-align: right;">15.8191</td>
+<td style="text-align: right;">18.3837</td>
+<td style="text-align: right;">15.8074</td>
 <td style="text-align: right;">1.16</td>
-<td style="text-align: right;">0.2452</td>
+<td style="text-align: right;">0.2448</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">prec: maintain &amp; load: yes</td>
-<td style="text-align: right;">4.5327</td>
-<td style="text-align: right;">15.8191</td>
+<td style="text-align: right;">4.5333</td>
+<td style="text-align: right;">15.8074</td>
 <td style="text-align: right;">0.29</td>
-<td style="text-align: right;">0.7745</td>
+<td style="text-align: right;">0.7743</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">spkr: old &amp; prec: maintain &amp; load: yes</td>
-<td style="text-align: right;">23.6377</td>
-<td style="text-align: right;">15.8191</td>
+<td style="text-align: right;">23.6073</td>
+<td style="text-align: right;">15.8074</td>
 <td style="text-align: right;">1.49</td>
-<td style="text-align: right;">0.1351</td>
+<td style="text-align: right;">0.1353</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Residual</td>
-<td style="text-align: right;">669.0516</td>
+<td style="text-align: right;">668.5542</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -694,8 +694,8 @@ div.csl-indent {
 <tr class="odd">
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">91124.0779</td>
-<td style="text-align: right;">301.8676</td>
+<td style="text-align: right;">91087.0055</td>
+<td style="text-align: right;">301.8062</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -703,35 +703,35 @@ div.csl-indent {
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">spkr: old</td>
-<td style="text-align: right;">1092.4628</td>
-<td style="text-align: right;">33.0524</td>
-<td style="text-align: right;">+1.00</td>
+<td style="text-align: right;">1796.0221</td>
+<td style="text-align: right;">42.3795</td>
+<td style="text-align: right;">+0.79</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">prec: maintain</td>
-<td style="text-align: right;">3464.5848</td>
-<td style="text-align: right;">58.8607</td>
-<td style="text-align: right;">-0.62</td>
-<td style="text-align: right;">-0.62</td>
+<td style="text-align: right;">3839.4126</td>
+<td style="text-align: right;">61.9630</td>
+<td style="text-align: right;">-0.59</td>
+<td style="text-align: right;">+0.02</td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">load: yes</td>
-<td style="text-align: right;">4482.3662</td>
-<td style="text-align: right;">66.9505</td>
+<td style="text-align: right;">4221.7638</td>
+<td style="text-align: right;">64.9751</td>
 <td style="text-align: right;">+0.36</td>
-<td style="text-align: right;">+0.36</td>
-<td style="text-align: right;">+0.51</td>
+<td style="text-align: right;">+0.85</td>
+<td style="text-align: right;">+0.54</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">131384.0733</td>
-<td style="text-align: right;">362.4694</td>
+<td style="text-align: right;">131230.7914</td>
+<td style="text-align: right;">362.2579</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -739,35 +739,35 @@ div.csl-indent {
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">spkr: old</td>
-<td style="text-align: right;">1690.7347</td>
-<td style="text-align: right;">41.1185</td>
-<td style="text-align: right;">+0.42</td>
+<td style="text-align: right;">1654.9232</td>
+<td style="text-align: right;">40.6807</td>
+<td style="text-align: right;">+0.44</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">prec: maintain</td>
-<td style="text-align: right;">61171.7458</td>
-<td style="text-align: right;">247.3292</td>
+<td style="text-align: right;">60967.4037</td>
+<td style="text-align: right;">246.9158</td>
 <td style="text-align: right;">-0.69</td>
-<td style="text-align: right;">+0.37</td>
+<td style="text-align: right;">+0.35</td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">load: yes</td>
-<td style="text-align: right;">1882.5594</td>
-<td style="text-align: right;">43.3885</td>
-<td style="text-align: right;">+0.29</td>
-<td style="text-align: right;">+0.14</td>
-<td style="text-align: right;">-0.13</td>
+<td style="text-align: right;">1796.8284</td>
+<td style="text-align: right;">42.3890</td>
+<td style="text-align: right;">+0.32</td>
+<td style="text-align: right;">+0.16</td>
+<td style="text-align: right;">-0.14</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Residual</td>
 <td style="text-align: left;"></td>
-<td style="text-align: right;">447630.0111</td>
-<td style="text-align: right;">669.0516</td>
+<td style="text-align: right;">446964.7062</td>
+<td style="text-align: right;">668.5542</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -874,21 +874,21 @@ div.csl-indent {
 <tr class="odd">
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">133015.241</td>
+<td style="text-align: right;">133015.242</td>
 <td style="text-align: right;">364.713</td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">prec: maintain</td>
-<td style="text-align: right;">63766.936</td>
+<td style="text-align: right;">63766.937</td>
 <td style="text-align: right;">252.521</td>
 <td style="text-align: right;">-0.70</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">88819.437</td>
+<td style="text-align: right;">88819.438</td>
 <td style="text-align: right;">298.026</td>
 <td style="text-align: right;"></td>
 </tr>
@@ -938,10 +938,10 @@ div.csl-indent {
 <tr class="even">
 <td style="text-align: left;">rt_trunc ~ 1 + spkr + prec + load + spkr &amp; prec + spkr &amp; load + prec &amp; load + spkr &amp; prec &amp; load + (1 + spkr + prec + load | subj) + (1 + spkr + prec + load | item)</td>
 <td style="text-align: right;">29</td>
-<td style="text-align: right;">28638</td>
-<td style="text-align: right;">26</td>
+<td style="text-align: right;">28637</td>
+<td style="text-align: right;">27</td>
 <td style="text-align: right;">20</td>
-<td style="text-align: left;">0.1698</td>
+<td style="text-align: left;">0.1431</td>
 </tr>
 </tbody>
 </table>
@@ -960,29 +960,29 @@ div.csl-indent {
 <pre><code>Table with 14 columns and 2000 rows:
       obj      β1       β2       β3        β4       σ        σ1       σ2       ⋯
     ┌───────────────────────────────────────────────────────────────────────────
- 1  │ 28769.9  2152.69  60.3921  -359.134  54.1231  702.318  421.687  212.916  ⋯
- 2  │ 28775.3  2221.81  61.7318  -349.417  71.1992  697.028  442.809  278.93   ⋯
+ 1  │ 28769.9  2152.69  60.3921  -359.134  54.1231  702.317  421.683  212.915  ⋯
+ 2  │ 28775.3  2221.81  61.7318  -349.417  71.1992  697.028  442.809  278.934  ⋯
  3  │ 28573.6  2325.31  53.9668  -404.225  81.3407  657.746  364.354  274.392  ⋯
  4  │ 28682.9  2274.65  52.9438  -384.66   69.6788  682.801  398.9    319.726  ⋯
- 5  │ 28616.1  2191.34  54.7785  -357.919  111.829  673.878  253.244  235.909  ⋯
+ 5  │ 28616.1  2191.34  54.7785  -357.919  111.829  673.878  253.248  235.913  ⋯
  6  │ 28634.1  2176.73  95.9793  -378.383  82.1559  671.685  510.996  309.876  ⋯
- 7  │ 28620.4  2128.07  57.6928  -267.747  60.4621  666.986  396.878  295.008  ⋯
+ 7  │ 28620.4  2128.07  57.6928  -267.747  60.4621  666.986  396.878  295.009  ⋯
  8  │ 28665.9  2152.59  55.8208  -274.382  76.5128  684.746  369.091  274.446  ⋯
  9  │ 28651.2  2088.3   76.4636  -296.14   95.6124  680.282  265.684  186.041  ⋯
  10 │ 28679.9  2375.23  72.2422  -423.922  94.0833  680.729  425.72   287.686  ⋯
- 11 │ 28686.8  2034.11  59.9149  -224.859  59.5448  682.433  308.676  272.183  ⋯
- 12 │ 28702.2  2130.98  83.3953  -271.61   79.974   689.679  401.972  264.255  ⋯
- 13 │ 28625.0  2055.35  55.3526  -363.937  67.7128  676.818  309.148  265.792  ⋯
- 14 │ 28570.3  2160.73  81.5575  -321.913  108.979  661.524  426.871  259.827  ⋯
- 15 │ 28613.6  2237.73  36.9996  -362.443  82.1812  673.873  312.863  241.595  ⋯
+ 11 │ 28686.8  2034.11  59.9149  -224.859  59.5448  682.433  308.675  272.181  ⋯
+ 12 │ 28702.2  2130.98  83.3953  -271.61   79.974   689.679  401.974  264.255  ⋯
+ 13 │ 28625.0  2055.35  55.3526  -363.937  67.7128  676.817  309.154  265.796  ⋯
+ 14 │ 28570.3  2160.73  81.5575  -321.913  108.979  661.524  426.869  259.825  ⋯
+ 15 │ 28613.6  2237.73  36.9996  -362.443  82.1812  673.873  312.861  241.595  ⋯
  16 │ 28681.4  2306.64  43.8801  -429.983  103.082  686.437  360.536  204.514  ⋯
  17 │ 28577.2  2143.78  66.2959  -373.598  93.157   668.15   321.47   183.119  ⋯
- 18 │ 28616.1  2197.03  55.9111  -356.06   74.1476  675.711  302.638  212.898  ⋯
+ 18 │ 28616.1  2197.03  55.9111  -356.06   74.1476  675.709  302.678  212.917  ⋯
  19 │ 28771.6  2067.71  56.5032  -324.984  64.804   699.136  344.776  225.602  ⋯
- 20 │ 28674.3  2181.99  40.6566  -251.315  63.1301  683.81   340.57   295.054  ⋯
- 21 │ 28677.6  2129.89  72.7198  -245.006  84.7693  681.416  359.087  287.655  ⋯
- 22 │ 28582.1  2179.8   74.8364  -405.798  68.2978  664.168  357.696  231.402  ⋯
- 23 │ 28714.9  2326.34  74.7091  -400.441  67.79    692.38   354.037  259.052  ⋯
+ 20 │ 28674.3  2181.99  40.6566  -251.315  63.1301  683.81   340.569  295.054  ⋯
+ 21 │ 28677.6  2129.89  72.7198  -245.006  84.7693  681.416  359.088  287.655  ⋯
+ 22 │ 28582.1  2179.8   74.8364  -405.798  68.2978  664.168  357.697  231.402  ⋯
+ 23 │ 28714.9  2326.34  74.7091  -400.441  67.79    692.381  354.032  259.052  ⋯
  ⋮  │    ⋮        ⋮        ⋮        ⋮         ⋮        ⋮        ⋮        ⋮     ⋱</code></pre>
 </div>
 </div>
@@ -991,17 +991,17 @@ div.csl-indent {
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(kbm02samp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
 <pre><code>DictTable with 2 columns and 9 rows:
- par   lower     upper
- ────┬────────────────────
- β1  │ 2028.01   2337.92
- β2  │ 38.431    99.5944
- β3  │ -439.321  -245.864
- β4  │ 46.0262   107.511
- ρ1  │ -0.89799  -0.445596
- σ   │ 655.249   701.497
- σ1  │ 261.196   448.509
- σ2  │ 175.489   312.043
- σ3  │ 228.099   357.789</code></pre>
+ par   lower      upper
+ ────┬─────────────────────
+ β1  │ 2028.01    2337.92
+ β2  │ 38.431     99.5944
+ β3  │ -439.321   -245.864
+ β4  │ 46.0262    107.511
+ ρ1  │ -0.897984  -0.445598
+ σ   │ 655.249    701.497
+ σ1  │ 261.196    448.512
+ σ2  │ 175.489    312.049
+ σ3  │ 228.099    357.789</code></pre>
 </div>
 </div>
 <p>A sample like this can be used for more than just creating an interval because it approximates the distribution of the estimator. For the fixed-effects parameters the estimators are close to being normally distributed, <a href="#fig-kbm02fedens">Figure&nbsp;1</a>.</p>

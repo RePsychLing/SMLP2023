@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Douglas Bates">
-<meta name="dcterms.date" content="2023-09-19">
+<meta name="dcterms.date" content="2023-11-06">
 
 <title>SMLP2023: Advanced Frequentist Track - Confidence intervals from profiled objective</title>
 <style>
@@ -367,7 +367,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2023-09-19</p>
+      <p class="date">2023-11-06</p>
     </div>
   </div>
   
@@ -447,7 +447,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(pr01.m) <span class="co"># model is a property of the profile object</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Minimizing 67    Time: 0:00:00 ( 9.08 ms/it)</code></pre>
+<pre><code>Minimizing 67    Time: 0:00:00 ( 9.68 ms/it)</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Linear mixed model fit by maximum likelihood
@@ -495,7 +495,7 @@ prec: maintain  0.0698293  0.00865212   8.07    &lt;1e-15
  8  │ σ   -0.504067  0.531523  0.0212961  0.0112177  0.0698297  0.138251  ⋯
  9  │ σ   0.0        0.531523  0.0212959  0.011218   0.0698293  0.139458  ⋯
  10 │ σ   0.501151   0.531523  0.0212956  0.0112184  0.069829   0.140675  ⋯
- 11 │ σ   0.999417   0.531522  0.0212953  0.0112187  0.0698286  0.141904  ⋯
+ 11 │ σ   0.999416   0.531522  0.0212953  0.0112187  0.0698286  0.141904  ⋯
  12 │ σ   1.49482    0.531522  0.021295   0.0112191  0.0698282  0.143143  ⋯
  13 │ σ   1.98739    0.531522  0.0212947  0.0112195  0.0698279  0.144392  ⋯
  14 │ σ   2.47714    0.531521  0.0212944  0.0112199  0.0698275  0.145653  ⋯
@@ -503,11 +503,11 @@ prec: maintain  0.0698293  0.00865212   8.07    &lt;1e-15
  16 │ σ   3.4483     0.531521  0.0212937  0.0112206  0.0698267  0.148208  ⋯
  17 │ σ   3.92976    0.53152   0.0212934  0.011221   0.0698263  0.149502  ⋯
  18 │ σ   4.4085     0.53152   0.0212931  0.0112214  0.0698259  0.150807  ⋯
- 19 │ β1  -4.15491   0.453786  0.0212914  0.0112175  0.0763354  0.139442  ⋯
- 20 │ β1  -3.75285   0.462423  0.0212917  0.0112177  0.0755102  0.139444  ⋯
- 21 │ β1  -3.33142   0.471061  0.0212921  0.0112179  0.0747192  0.139446  ⋯
+ 19 │ β1  -4.15491   0.453786  0.0212914  0.0112175  0.0763344  0.139442  ⋯
+ 20 │ β1  -3.75285   0.462423  0.0212917  0.0112177  0.0755073  0.139444  ⋯
+ 21 │ β1  -3.33142   0.471061  0.0212921  0.0112179  0.074719   0.139446  ⋯
  22 │ β1  -2.89208   0.479698  0.0212926  0.0112181  0.0739651  0.139448  ⋯
- 23 │ β1  -2.43663   0.488335  0.0212931  0.0112182  0.0732385  0.13945   ⋯
+ 23 │ β1  -2.43663   0.488335  0.0212931  0.0112182  0.0732384  0.13945   ⋯
  ⋮  │ ⋮       ⋮         ⋮          ⋮          ⋮          ⋮         ⋮      ⋱</code></pre>
 </div>
 </div>
@@ -579,7 +579,7 @@ prec: maintain  0.0698293  0.00865212   8.07    &lt;1e-15
  ────┬─────────────────────────────────
  β1  │ 0.531523   0.497103    0.565942
  β2  │ 0.0212959  0.0148295   0.0277621
- β3  │ 0.011218   0.00475174  0.0176844
+ β3  │ 0.011218   0.00475175  0.0176844
  β4  │ 0.0698293  0.0523046   0.0873562
  σ   │ 0.139458   0.13486     0.144322
  σ1  │ 0.0781364  0.0612443   0.103257
@@ -656,12 +656,12 @@ prec: maintain  0.0698293  0.00865212   8.07    &lt;1e-15
  β1  │ 0.497384    0.562267
  β2  │ 0.0147172   0.0274258
  β3  │ 0.00481004  0.0169282
- β4  │ 0.0524409   0.0857708
- ρ1  │ -0.577499   0.183778
- σ   │ 0.134747    0.144354
- σ1  │ 0.0587605   0.0986544
- σ2  │ 0.0316108   0.0571327
- σ3  │ 0.0572288   0.087862</code></pre>
+ β4  │ 0.0524409   0.0857707
+ ρ1  │ -0.557298   0.203936
+ σ   │ 0.134749    0.144354
+ σ1  │ 0.0587605   0.0986167
+ σ2  │ 0.0316134   0.0571327
+ σ3  │ 0.05724     0.087862</code></pre>
 </div>
 </div>
 <p>Comparing these intervals with those from the profile results shows that the intervals on the fixed-effects parameters from the two methods are quite similar. The intervals on <span class="math inline">\(\sigma\)</span> from the two methods are quite similar but the bootstrap intervals on the other variance components are shifted to the left relative to those from the profiling results. The reason for this is because the bootstrap intervals are chosen to be the shortest intervals with the desired coverage. In a density that is skewed to the right, as these are, the shortest interval will be to the left of an interval with equal tail coverage, which is how the profile-based intervals are constructed.</p>
