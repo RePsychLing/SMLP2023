@@ -18,7 +18,7 @@ ProgressMeter.ijulia_behavior(:clear);
 
 # A word of caution {#sec-caution}
 
-For a (quasi-)experimental set of data, there is (or should be) a clear _a priori_ theoretical committment to specific hypotheses about differences between factor levels and how these differences enter in interactions with other factors. This specification should be used in the first LMM and reported, irrespective of the outcome. If alternative theories lead to alternative _a priori_ contrast specifications, both analyses are justified. If the observed means render the specification completely irrelevant, the comparisons originally planned could still be reported in a Supplement).
+For a (quasi-)experimental set of data, there is (or should be) a clear _a priori_ theoretical commitment to specific hypotheses about differences between factor levels and how these differences enter in interactions with other factors. This specification should be used in the first LMM and reported, irrespective of the outcome. If alternative theories lead to alternative _a priori_ contrast specifications, both analyses are justified. If the observed means render the specification completely irrelevant, the comparisons originally planned could still be reported in a Supplement).
 
 In this script, we are working through a large number of different contrasts for the same data. The purpose is to introduce both the preprogrammed (“canned”) and the general options to specify hypotheses about main effects and interactions. Obviously, we do not endorse generating a plot of the means and specifying the contrasts accordingly. This is known as the [Texas sharpshooter](https://www.bayesianspectacles.org/origin-of-the-texas-sharpshooter/) fallacy. The link leads to an illustration and brief historical account by Wagenmakers (2018).
 
@@ -33,7 +33,7 @@ For further readings see “Further Readings” in @Schad2020.
 We take the `KWDYZ` dataset from @Kliegl2011.
 This is an experiment looking at three effects of visual cueing under four different cue-target relations (CTRs).
 Two horizontal rectangles are displayed above and below a central fixation point or they displayed in vertical orientation to the left and right of the fixation point.
-Subjects react to the onset of a small visual target occuring at one of the four ends of the two rectangles.
+Subjects react to the onset of a small visual target occurring at one of the four ends of the two rectangles.
 The target is cued validly on 70% of trials by a brief flash of the corner of the rectangle at which it appears; it is cued invalidly at the three other locations 10% of the trials each.
 
 We specify three contrasts for the four-level factor CTR that are derived from spatial, object-based, and attractor-like features of attention. They map onto sequential differences between appropriately ordered factor levels.
@@ -114,7 +114,7 @@ The difference to the preprogrammed `SeqDiffCoding` is that for the third contra
 
 ## DummyCoding
 
-Thi contrast corresponds to `contr.treatment()` in R
+This contrast corresponds to `contr.treatment()` in R
 
 ```{julia}
 m2 = let
@@ -259,7 +259,7 @@ We specify them with `HypothesisCoding`.
 ### A(2) x B(2)
 
 An A(2) x B(2) design can be recast as an F(4) design with the levels (A1-B1, A1-B2, A2-B1, A2-B2).
-The following contrast specifiction returns estimates for the main effect of A, the main effect of B, and the interaction of A and B.
+The following contrast specification returns estimates for the main effect of A, the main effect of B, and the interaction of A and B.
 In a figure With A on the x-axis and the levels of B shown as two lines, the interaction tests the null hypothesis that the two lines are parallel.
 A positive coefficient implies overadditivity (diverging lines toward the right) and a negative coefficient underadditivity (converging lines).
 
@@ -310,7 +310,7 @@ TO BE DONE
 Nested contrasts are often specified as follow up as post-hoc tests for ANOVA interactions. They are orthogonal. We specify them with `HypothesisCoding`.
 
 An A(2) x B(2) design can be recast as an F(4) design with the levels (A1-B1, A1-B2, A2-B1, A2-B2).
-The following contrast specifiction returns an estimate for the main effect of A and the effects of B nested in the two levels of A.
+The following contrast specification returns an estimate for the main effect of A and the effects of B nested in the two levels of A.
 In a figure With A on the x-axis and the levels of B shown as two lines, the second contrast tests whether A1-B1 is different from A1-B2 and the third contrast tests whether A2-B1 is different from A2-B2.
 
 ```{julia}
@@ -337,7 +337,7 @@ There is no test of the interaction (parallelism).
 
 For factors with more than four levels there are many options for specifying orthogonal contrasts as long as one proceeds in a top-down strictly hiearchical fashion.
 
-Suppose you have a factor with seven levels and let's ignore shifting colummns.
+Suppose you have a factor with seven levels and let's ignore shifting columns.
 In this case, you have six options for the first contrast, that is 6 vs. 1, 5 vs.2 , 4 vs. 3, 3 vs. 4, 2 vs. 5, and 1 vs. 6 levels.
 Then, you specify orthogonal contrasts for partitions with more than 2 elements and so on.
 That is, you don't specify a contrast that crosses an earlier partition line.

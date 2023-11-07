@@ -37,14 +37,14 @@ The raw data are available as an [OSF project](https://osf.io/n63s2) as Zip file
 These Zip files contain one data file for each participant, which has a mixture of demographic data, responses on some pre-tests, and the actual trial runs.
 
 Parsing these data files is not fun -- see [this repository](https://github.com/dmbates/EnglishLexicon.jl) for some of the code used to untangle the data.
-(This respository is an unregistered Julia package.)
+(This repository is an unregistered Julia package.)
 
 Some lessons from this:
 
 - When an identifier is described as a "unique subject id", it probably isn't.
 - In a multi-center trial, the coordinating center should assign the range of id's for each satellite site.  Failure of a satellite site to stay within its range should result in banishment to a Siberian work camp.
 - As with all data cleaning, the prevailing attitude should be "trust, but verify".  Just because you are told that the file is in a certain format, doesn't mean it is.  Just because you are told that the identifiers are unique doesn't mean they are, etc.
-- It works best if each file has a well-defined, preferably simple, stucture.  These data files had two different formats mushed together.
+- It works best if each file has a well-defined, preferably simple, structure.  These data files had two different formats mushed together.
 - This is the idea of "tidy data" - each file contains only one type of record along with well-defined rules of how you relate one file to another.
 - If one of the fields is a date, declare the **only** acceptable form of writing a date, preferably `yyyy-mm-dd`.  Anyone getting creative about the format of the dates will be required to write the software to parse that form (and that is usually not an easy task).
 - As you make changes in a file, document them.  If you look at the `EnglishLexicon.jl` repository you will see that it is in the form of scripts that take the original Zip files and produce the Arrow files.  That way, if necessary, the changes can be undone or modified.
@@ -201,7 +201,7 @@ let
 end
 ```
 
-The pattern in the range of word lengths with non-negligible counts (there are points in the plot down to word lengths of 1 and up to word lengths of 21 but these points are very small) is that the accuracy for words is nearly constant at about 84% and the accuracy fof nonwords is slightly higher until lengths of 13, at which point it falls off a bit.
+The pattern in the range of word lengths with non-negligible counts (there are points in the plot down to word lengths of 1 and up to word lengths of 21 but these points are very small) is that the accuracy for words is nearly constant at about 84% and the accuracy for nonwords is slightly higher until lengths of 13, at which point it falls off a bit.
 
 ### Summaries by subject {#sec-elpsumrysubj}
 

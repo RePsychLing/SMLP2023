@@ -91,7 +91,7 @@ VarCorr(m1x)
   - Command for fitting LMM m1_om = fit(MixedModel, f1, dat_om, contrasts=contr)
   - Minimizing 10502 Time: 0 Time: 2:09:40 ( 0.74  s/it)
   - Store with: julia> saveoptsum("./fits/fggk21_m1_om_optsum.json", m1_om)
-  - Only for short-term and when desparate: julia> serialize("./fits/m1_om.jls", m1_om);
+  - Only for short-term and when desperate: julia> serialize("./fits/m1_om.jls", m1_om);
 
 #### ... restoreoptsum!()
 
