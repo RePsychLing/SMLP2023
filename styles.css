@@ -1,1 +1,9 @@
 /* css styles */
+
+#docstring{
+    border: solid black;
+    border-width: thick;
+    background-color: #f8f5f0;
+    margin-left: 5%;
+    margin-right: 5%;
+}
