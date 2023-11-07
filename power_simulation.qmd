@@ -98,7 +98,7 @@ The MixedModelsSim package provides a function `simdat_crossed` for simulating e
 
 Let's see what that looks like in practice. 
 We'll look at a simple 2 x 2 design with 20 subjects and 20 items.
-Our first factor `age` will vary betwen subjects and have the levels `old` and `young`.
+Our first factor `age` will vary between subjects and have the levels `old` and `young`.
 Our second factor `frequency` will vary between items and have the levels `low` and `high`.
 Finally, we also need to specify a random number generator to use for seeding the data simulation.
 
@@ -115,7 +115,7 @@ Table(dat)
 
 We have 400 rows -- 20 subjects x 20 items.
 Similarly, the experimental factors are expanded out to be fully crossed. 
-Finally, we have a dependent variable `dv` initalized to be draws from the standard normal distribution $N(0,1)$.
+Finally, we have a dependent variable `dv` initialized to be draws from the standard normal distribution $N(0,1)$.
 
 :::{.callout-note title="Latin squares, partial crossing, and continuous covariates"}
 `simdat_crossed` is designed to simulate a fully crossed factorial design. 
