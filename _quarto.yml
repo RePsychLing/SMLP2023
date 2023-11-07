@@ -48,7 +48,7 @@ format:
     theme:
       light: [sandstone, theme.scss]
       dark: [darkly, theme-dark.scss]
-    # defaults, can be overriden
+    # defaults, can be overridden
     toc: true
     toc-depth: 2
     fig-width: 8

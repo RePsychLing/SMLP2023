@@ -23,7 +23,7 @@ The authors analyzed response speed, that is (1/RT)*1000 -- completely warranted
 
 ## Current data
 
-The current data distributed with the _RData_ collection is attributed to the 3-hour TIB group, but the means do not agree at all with those reported for this group in [@Belenky2003 Figure 3] where the 3-hour TIB group is also based on only 13 (not 18) subjects. Specifically, the current data show a much smaller slow-down of response speed across E1 to E7 and do not reflect the recovery during R1 to R3. The currrent data also cover only 10 not 11 days, but it looks like only R3 is missing. The closest match of the current means was with the average of the 3-hour and 7-hour TIB groups; if only males were included, this would amount to 18 subjects. (This conjecture is based only on visual inspection of graphs.)
+The current data distributed with the _RData_ collection is attributed to the 3-hour TIB group, but the means do not agree at all with those reported for this group in [@Belenky2003 Figure 3] where the 3-hour TIB group is also based on only 13 (not 18) subjects. Specifically, the current data show a much smaller slow-down of response speed across E1 to E7 and do not reflect the recovery during R1 to R3. The current data also cover only 10 not 11 days, but it looks like only R3 is missing. The closest match of the current means was with the average of the 3-hour and 7-hour TIB groups; if only males were included, this would amount to 18 subjects. (This conjecture is based only on visual inspection of graphs.)
 
 # Setup
 

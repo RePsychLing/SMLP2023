@@ -252,7 +252,7 @@ Notice that the linear term for `age` is not significant but the quadratic term 
 We usually retain the lower order term, even if it is not significant, if the higher order term is significant.
 
 Notice also that the parameter estimates for the treatment contrasts for `livch` are similar.
-Thus the distinction of 1, 2, or 3+ childen is not as important as the contrast between having any children and not having any.
+Thus the distinction of 1, 2, or 3+ children is not as important as the contrast between having any children and not having any.
 Those women who already have children are more likely to use artificial contraception.
 
 Furthermore, the women without children have a different probability vs age profile than the women with children.
@@ -375,4 +375,4 @@ preds = effects(design, gm3; invlink=AutoInvLink())
 
   - From the data plot we can see a quadratic trend in the probability by age.
   - The patterns for women with children are similar and we do not need to distinguish between 1, 2, and 3+ children.
-  - We do distinguish between those women who do not have children and those with children.  This shows up in a signficant `age & children` interaction term.
+  - We do distinguish between those women who do not have children and those with children.  This shows up in a significant `age & children` interaction term.
