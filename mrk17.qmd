@@ -429,7 +429,7 @@ end
 
 The source of the interaction are trials where the last trial was a word target; there is no evidence for the interaction when the last trial was a nonword target.
 
-The orginal and post-hoc LMM have the same goodness of fit.
+The original and post-hoc LMM have the same goodness of fit.
 
 ```{julia}
 [objective(m_prm3), objective(m_prm3_posthoc)]

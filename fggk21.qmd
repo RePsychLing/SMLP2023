@@ -9,7 +9,7 @@ All the data to reproduce the models in the publication are used here, too; the 
 
 The script is structured in four main sections:
 
- 1. **Setup** with reading and examing the data, plotting the main results, and specifying the contrasts for the fixed factor `Test`
+ 1. **Setup** with reading and examining the data, plotting the main results, and specifying the contrasts for the fixed factor `Test`
  2. a demonstration of **model complexification** to determine a parsimonious random-effect structure appropriate for and supported by the data, including also a quite elaborate demonstration of **principle component analyses (PCAs)** of levels (scores) and effects,
  3. specification of **nested fixed effects or interactions** in the levels of another, superordinate factors,
  4. a **Glossary of MixedModels.jl commands** to inspect the information generated for a fitted model object.
@@ -385,7 +385,7 @@ In general, smaller deviance, AIC, and BIC indicate an improvement in goodness o
 Usually, χ² should be larger than the associated degrees of freedom; for AIC and BIC the decrease should amount to more than 5, according to some literature.
 Severity of meeting these criteria increases from deviance to AIC to BIC.
 Therefore, it is not always the case that the criteria are unanimous in their verdict.
-Basicly, the more confirmatory the analysis, the more one may go with deviance and AIC; for exploratory analyses the BIC is probably a better guide.
+Basically, the more confirmatory the analysis, the more one may go with deviance and AIC; for exploratory analyses the BIC is probably a better guide.
 There are grey zones here.
 
 ### Comparing fixed effects of `m_ovi`, `m_zcp`, and `m_cpx`
@@ -685,7 +685,7 @@ end
 n, p, q, k = size(m1)  # nobs, fe params, VCs+CPs, re terms
 ```
 
-In prinicple, the models should yield the save deviance.
+In principle, the models should yield the save deviance.
 When models are not supported by the data, that is for singular models, there may be small differences between deviances for these reparameterizations.
 During optimization such models search for the absolute minimum in a very shallow surface and may end up in a local minimum instead.
 
@@ -722,7 +722,7 @@ dof(m1)
 
 # Glossary of _MixedModels.jl_ commands
 
-Here we introduce most of the commands available in the _MixedModels.jl_ package that allow the immediated inspection and analysis of results returned in a fitted _linear_ mixed-effect model.
+Here we introduce most of the commands available in the _MixedModels.jl_ package that allow the immediate inspection and analysis of results returned in a fitted _linear_ mixed-effect model.
 
 Postprocessing related to conditional modes will be dealt with in a different tutorial.
 
@@ -858,7 +858,7 @@ These commands inform us about the model parameters associated with the RES.
 ```
 
 ```{julia}
-issingular(m1) # Test if model is singular for paramter vector m1.theta (default)
+issingular(m1) # Test if model is singular for parameter vector m1.theta (default)
 ```
 
 ```{julia}

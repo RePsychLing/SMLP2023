@@ -8,7 +8,7 @@ author: "Reinhold Kliegl"
 
 We take the `kwdyz11` dataset [@Kliegl2011] from an experiment looking at three effects of visual cueing under four different cue-target relations (CTRs).
 Two horizontal rectangles are displayed above and below a central fixation point or they displayed in vertical orientation to the left and right of the fixation point.
-Subjects react to the onset of a small visual target occuring at one of the four ends of the two rectangles.
+Subjects react to the onset of a small visual target occurring at one of the four ends of the two rectangles.
 The target is cued validly on 70% of trials by a brief flash of the corner of the rectangle at which it appears; it is cued invalidly at the three other locations 10% of the trials each.
 
 We specify three contrasts for the four-level factor CTR that are derived from spatial, object-based, and attractor-like features of attention.
@@ -316,7 +316,7 @@ draw(
 ## Fixed effects (w/o GM)
 
 The shortest coverage interval for the `GM` ranges from 376 to 404 ms.
-To keep the plot range small we do not inlcude its density here.
+To keep the plot range small we do not include its density here.
 
 ```{julia}
 #| code-fold: true
