@@ -1,0 +1,124 @@
+---
+title: "Partially-within subjects designs"
+jupyter: julia-1.9
+---
+
+Begin by loading the packages to be used.
+
+```{julia}
+#| code-fold: true
+#| output: false
+using AlgebraOfGraphics
+using CairoMakie
+using DataFrames
+using MixedModels
+using MixedModelsMakie
+using MixedModelsSim
+using ProgressMeter
+using Random
+
+CairoMakie.activate!(; type="svg")
+
+ProgressMeter.ijulia_behavior(:clear)
+```
+
+```{julia}
+#| code-fold: true
+n_subj = 40
+n_item = 3
+# things are expressed as "between", so "within subjects" is "between items"
+item_btwn = Dict(:frequency => ["high", "medium", "low"])
+design = simdat_crossed(MersenneTwister(42), n_subj, n_item;
+                        item_btwn = item_btwn)
+design = DataFrame(design)
+```
+
+```{julia}
+#| code-fold: true
+unique!(select(design, :item, :frequency))
+```
+
+```{julia}
+#| code-fold: true
+m0 = let contrasts, form
+    contrasts = Dict(:frequency => HelmertCoding(base="high"))
+    form = @formula(dv ~ 1 + frequency +
+                    (1 + frequency | subj))
+    fit(MixedModel, form, design; contrasts)
+end
+```
+
+```{julia}
+#| code-fold: true
+corrmat = [ 1    0.1 -0.2
+            0.1  1    0.1
+           -0.2  0.1  1 ]
+re_subj = create_re(1.2, 1.5, -1.5; corrmat)
+```
+
+```{julia}
+#| code-fold: true
+θ = createθ(m0; subj=re_subj)
+```
+
+```{julia}
+#| code-fold: true
+σ = 1;
+β = [1.0, -3, -2];
+```
+
+```{julia}
+#| code-fold: true
+fit!(simulate!(m0; θ, β, σ))
+```
+
+
+```{julia}
+#| code-fold: true
+shrinkageplot(m0)
+```
+
+```{julia}
+#| code-fold: true
+caterpillar(m0; orderby=nothing, vline_at_zero=true)
+```
+
+
+```{julia}
+#| code-fold: true
+design[!, :dv] .= response(m0)
+```
+
+```{julia}
+#| code-fold: true
+design_partial = filter(design) do row
+    subj = parse(Int, row.subj[2:end])
+    item = parse(Int, row.item[2:end])
+    # for even-numbered subjects, we keep all conditions
+    # for odd-numbered subjects, we keep only the two "odd" items,
+    # i.e. the first and last conditions
+    return iseven(subj) || isodd(item)
+end
+sort!(unique!(select(design_partial, :subj, :frequency)), :subj)
+```
+
+```{julia}
+#| code-fold: true
+
+m1 = let contrasts, form
+    contrasts = Dict(:frequency => HelmertCoding(base="high"))
+    form = @formula(dv ~ 1 + frequency +
+                    (1 + frequency | subj))
+    fit(MixedModel, form, design_partial; contrasts)
+end
+```
+
+```{julia}
+#| code-fold: true
+shrinkageplot(m1)
+```
+
+```{julia}
+#| code-fold: true
+caterpillar(m1; orderby=nothing, vline_at_zero=true)
+```
