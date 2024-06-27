@@ -1,0 +1,290 @@
+---
+title: "Using simulation to estimate uncertainty and power"
+subtitle: "Or how I learned how to stop worrying and love the bootstrap"
+jupyter: julia-1.9
+format:
+  html:
+    embed-resources: true
+    css: styles.css
+---
+
+```{julia}
+#| output: false
+using AlgebraOfGraphics
+using CairoMakie
+using DataFrames
+using Distributions
+using MixedModels
+using MixedModelsMakie
+using MixedModelsSim
+using ProgressMeter
+using StatsBase
+using Random
+
+using AlgebraOfGraphics: AlgebraOfGraphics as AOG
+using MixedModels: dataset
+ProgressMeter.ijulia_behavior(:clear)
+```
+
+# The Parametric Bootstrap
+
+Let us consider the `kb07` dataset.
+
+```{julia}
+kb07 = dataset(:kb07)
+contrasts = Dict(:spkr => EffectsCoding(),
+                 :prec => EffectsCoding(),
+                 :load => EffectsCoding())
+fm1 = fit(MixedModel,
+          @formula(rt_trunc ~ 1 * spkr * prec * load +
+                             (1 | subj) +
+                             (1 | item)),
+          kb07; contrasts)
+```
+
+We can perform a *parametric bootstrap* on the model to get estimates of our uncertainty.
+In the parametric bootstrap, we use the *parameters* we estimated to simulate new data.
+If we repeat this process many times, we are able to "pick ourselves up by our bootstraps"
+and examine the variability we would expect to see based purely on chance if the ground truth
+exactly matched our estimates.
+In this way, we are able to estimate our uncertainty -- we cannot be more certain than the 'natural'
+variability we would have for a given parameter value.
+
+```{julia}
+pb1 = parametricbootstrap(MersenneTwister(42), 1000, fm1;
+                          optsum_overrides=(;ftol_rel=1e-8))
+```
+
+
+:::{.callout-tip collapse=true, title="`optsum_overrides`"}
+The option `optsum_overrides` allows us to pass additional arguments for controlling the model fitting of each simulation replicate.
+`ftol_rel=1e-8` lowers the threshold for changes in the objective -- more directly, the optimizer considers the model converged if the change in the deviance is less than $10^{-8}$, which is a very small change, but larger than the default $10^{-12}$. Because the majority of the optimization time is spent in final fine-tuning, changing this threshold can greatly speed up the fitting time at the cost of a small loss of quality in fit. For a stochastic process like the bootstrap, that change in quality just adds to the general noise, but that's acceptable tradeoff in order to get many more replicates.
+:::
+
+Now, if we look at the docstring for `parametricbootstrap`, we see that there are keyword-arguments for the various model parameters:
+
+:::{.border id="docstring"}
+```{julia}
+#| code-fold: true
+@doc parametricbootstrap
+```
+:::
+
+These keyword arguments are forward on to the `simulate!` function, which simulates a new dataset based on model matrices and parameter values.
+The model matrices are simply taken from the model at hand.
+By default, the parameter values are the estimated parameter values from a fitted model.
+
+:::{.border id="docstring"}
+```{julia}
+#| code-fold: true
+@doc simulate!
+```
+:::
+
+So now we have a way to simulate new data with new parameter values once we have a model.
+We just need a way to create a model with our preferred design.
+We'll use the MixedModelsSim package for that.
+
+## Simulating data from scratch.
+
+The MixedModelsSim package provides a function `simdat_crossed` for simulating effects from a crossed design:
+
+:::{.border id="docstring"}
+```{julia}
+#| code-fold: true
+@doc simdat_crossed
+```
+:::
+
+Let's see what that looks like in practice.
+We'll look at a simple 2 x 2 design with 20 subjects and 20 items.
+Our first factor `age` will vary between subjects and have the levels `old` and `young`.
+Our second factor `frequency` will vary between items and have the levels `low` and `high`.
+Finally, we also need to specify a random number generator to use for seeding the data simulation.
+
+```{julia}
+subj_n = 20
+item_n = 20
+subj_btwn = Dict(:age => ["old", "young"])
+item_btwn = Dict(:frequency => ["low", "high"])
+const RNG = MersenneTwister(42)
+dat = simdat_crossed(RNG, subj_n, item_n;
+                     subj_btwn, item_btwn)
+Table(dat)
+```
+
+We have 400 rows -- 20 subjects x 20 items.
+Similarly, the experimental factors are expanded out to be fully crossed.
+Finally, we have a dependent variable `dv` initialized to be draws from the standard normal distribution $N(0,1)$.
+
+:::{.callout-note title="Latin squares, partial crossing, and continuous covariates"}
+`simdat_crossed` is designed to simulate a fully crossed factorial design.
+If you have a partially crossed or Latin squaresdesign, then you could delete the "extra" cells to reduce the fully crossed data here to be partially crossed.
+For continuous covariates, we need to separately construct the covariates and then use a tabular join to create the design.
+We'll examine an example of this later.
+:::
+
+```{julia}
+simmod = fit(MixedModel,
+             @formula(dv ~ 1 + age * frequency +
+                          (1 + frequency | subj) +
+                          (1 + age | item)), dat)
+println(simmod)
+```
+
+make sure to discuss contrasts here
+
+```{julia}
+β = [250.0, -25.0, 10, 0.0]
+simulate!(RNG, simmod; β)
+```
+
+
+```{julia}
+fit!(simmod)
+```
+
+```{julia}
+σ = 25.0
+fit!(simulate!(RNG, simmod; β, σ))
+```
+
+```{julia}
+# relative to σ!
+subj_re = create_re(2.0, 1.3)
+```
+
+```{julia}
+item_re = create_re(1.3, 2.0)
+```
+
+```{julia}
+θ = createθ(simmod; subj=subj_re, item=item_re)
+```
+
+```{julia}
+fit!(simulate!(RNG, simmod; β, σ, θ))
+```
+
+```{julia}
+samp = parametricbootstrap(RNG, 1000, simmod; β, σ, θ)
+```
+
+```{julia}
+ridgeplot(samp)
+```
+
+```{julia}
+let f = Figure()
+    ax = Axis(f[1, 1])
+    coefplot!(ax, samp;
+              conf_level=0.8,
+              vline_at_zero=true,
+              show_intercept=true)
+    ridgeplot!(ax, samp;
+               conf_level=0.8,
+               vline_at_zero=true,
+               show_intercept=true,
+               xlabel="Normalized density and 80% range")
+    scatter!(ax, β, length(β):-1:1;
+             marker=:x,
+             markersize=20,
+             color=:red)
+    f
+end
+```
+
+
+```{julia}
+coefpvalues = DataFrame()
+@showprogress for subj_n in [20, 40, 60, 80, 100, 120, 140],  item_n in [40, 60, 80, 100, 120, 140]
+    dat = simdat_crossed(RNG, subj_n, item_n;
+                         subj_btwn, item_btwn)
+    simmod = MixedModel(@formula(dv ~ 1 + age * frequency +
+                                     (1 + frequency | subj) +
+                                     (1 + age | item)),
+                        dat)
+
+    θ = createθ(simmod; subj=subj_re, item=item_re)
+    simboot = parametricbootstrap(RNG, 100, simmod;
+                                  β, σ, θ,
+                                  optsum_overrides=(;ftol_rel=1e-8),
+                                  progress=false)
+    df = DataFrame(simboot.coefpvalues)
+    df[!, :subj_n] .= subj_n
+    df[!, :item_n] .= item_n
+    append!(coefpvalues, df)
+end
+```
+
+```{julia}
+power = combine(groupby(coefpvalues, [:coefname, :subj_n, :item_n]),
+                :p => (p -> mean(p .< 0.05)) => :power)
+```
+
+```{julia}
+power = combine(groupby(coefpvalues,
+                        [:coefname, :subj_n, :item_n]),
+                :p => (p -> mean(p .< 0.05)) => :power,
+                :p => (p -> sem(p .< 0.05)) => :power_se)
+
+```
+
+```{julia}
+select!(power, :coefname, :subj_n, :item_n, :power,
+        [:power, :power_se] => ByRow((p, se) -> [p - 1.96*se, p + 1.96*se]) => [:lower, :upper])
+```
+
+
+```{julia}
+data(power) * mapping(:subj_n, :item_n, :power; layout=:coefname) * visual(Heatmap) |> draw
+```
+
+
+```{julia}
+dat = simdat_crossed(RNG, subj_n, item_n;
+                     subj_btwn, item_btwn)
+dat = DataFrame(dat)
+```
+
+```{julia}
+item_covariates = unique!(select(dat, :item))
+```
+
+
+```{julia}
+item_covariates[!, :chaos] = rand(RNG,
+                                  Normal(5, 2),
+                                  nrow(item_covariates))
+```
+
+```{julia}
+leftjoin!(dat, item_covariates; on=:item)
+```
+
+```{julia}
+simmod = fit(MixedModel,
+             @formula(dv ~ 1 + age * frequency * chaos +
+                          (1 + frequency | subj) +
+                          (1 + age | item)), dat; contrasts)
+```
+
+TODO: continuous covariate
+TODO: bernoulli response
+TODO: savereplicates
+
+```{julia}
+dat[!, :dv] = rand(RNG, Bernoulli(), nrow(dat))
+```
+
+```{julia}
+dat[!, :dv] = rand(RNG, Poisson(), nrow(dat))
+```
+
+```{julia}
+dat[!, :n] = rand(RNG, Poisson(), nrow(dat)) .+ 3
+```
+
+```{julia}
+dat[!, :dv] = rand.(RNG, Binomial.(dat[!, :n])) ./ dat[!, :n]
+```
