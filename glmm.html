@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.5.46">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Phillip Alday, Douglas Bates, and Reinhold Kliegl">
-<meta name="dcterms.date" content="2023-11-06">
+<meta name="dcterms.date" content="2024-06-26">
 
-<title>SMLP2023: Advanced Frequentist Track - Generalized linear mixed models</title>
+<title>Generalized linear mixed models – SMLP2023: Advanced Frequentist Track</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -24,7 +24,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -35,7 +35,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -59,7 +59,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -88,7 +88,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -97,17 +103,45 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
 }</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -115,40 +149,40 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">SMLP2023: Advanced Frequentist Track</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/RePsychLing/SMLP2023" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/RePsychLing/SMLP2023"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
+          </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
-          </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./glmm.html">Generalized linear mixed models</a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./glmm.html">Generalized linear mixed models</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -157,7 +191,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
@@ -167,9 +201,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
  <span class="menu-text">Getting started with Julia</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -196,9 +230,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
  <span class="menu-text">Worked examples</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -239,13 +273,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">RePsychLing Masson, Rabe, &amp; Kliegl, 2017) with Julia: Specification and selection</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./partial_within.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Partially-within subjects designs</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
  <span class="menu-text">Contrast coding</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -272,9 +312,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
  <span class="menu-text">Bootstrap and profiling</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -301,9 +341,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
  <span class="menu-text">Visualizations and diagnostics</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -331,7 +371,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -343,7 +383,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#generalized-linear-mixed-models" id="toc-generalized-linear-mixed-models" class="nav-link" data-scroll-target="#generalized-linear-mixed-models"><span class="header-section-number">3</span> Generalized Linear Mixed Models</a></li>
   <li><a href="#summarizing-the-results" id="toc-summarizing-the-results" class="nav-link" data-scroll-target="#summarizing-the-results"><span class="header-section-number">4</span> Summarizing the results</a></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/RePsychLing/SMLP2023/edit/main/glmm.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/RePsychLing/SMLP2023/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+<div class="toc-actions"><ul class="collapse"><li><a href="https://github.com/RePsychLing/SMLP2023/edit/main/glmm.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RePsychLing/SMLP2023/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -367,7 +407,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2023-11-06</p>
+      <p class="date">2024-06-26</p>
     </div>
   </div>
   
@@ -375,11 +415,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
+
 </header>
 
+
 <p>Load the packages to be used</p>
-<div class="cell" data-execution_count="1">
-<details>
+<div id="ea8e9621" class="cell" data-execution_count="1">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">AlgebraOfGraphics</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">CairoMakie</span></span>
@@ -402,13 +444,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <section id="matrix-notation-for-the-sleepstudy-model" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="matrix-notation-for-the-sleepstudy-model"><span class="header-section-number">1</span> Matrix notation for the sleepstudy model</h2>
-<div class="cell" data-execution_count="2">
+<div id="f33db5a0" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sleepstudy <span class="op">=</span> <span class="fu">DataFrame</span>(<span class="fu">dataset</span>(<span class="op">:</span>sleepstudy))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <div><div style="float: left;"><span>180×3 DataFrame</span></div><div style="float: right;"><span style="font-style: italic;">155 rows omitted</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
-<table class="data-frame table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="data-frame caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
-<tr class="header header">
+<tr class="header">
 <th class="rowNumber" data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold;">Row</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">subj</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">days</th>
@@ -583,14 +625,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="3">
+<div id="41ceaa22" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>contrasts <span class="op">=</span> <span class="fu">Dict</span>(<span class="op">:</span>subj <span class="op">=&gt;</span> <span class="fu">Grouping</span>())</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>m1 <span class="op">=</span> <span class="kw">let</span> f <span class="op">=</span> <span class="pp">@formula</span> reaction <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> days <span class="op">+</span> (<span class="fl">1</span> <span class="op">+</span> days <span class="op">|</span> subj)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(MixedModel, f, sleepstudy; contrasts)</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Minimizing 57    Time: 0:00:00 ( 4.10 ms/it)</code></pre>
+<pre><code>Minimizing 57    Time: 0:00:00 ( 3.78 ms/it)</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Linear mixed model fit by maximum likelihood
@@ -600,7 +642,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 Variance components:
             Column    Variance Std.Dev.   Corr.
-subj     (Intercept)  565.51066 23.78047
+subj     (Intercept)  565.51067 23.78047
          days          32.68212  5.71683 +0.08
 Residual              654.94145 25.59182
  Number of obs: 180; levels of grouping factors: 18
@@ -615,7 +657,7 @@ days          10.4673     1.50224   6.97    &lt;1e-11
 </div>
 </div>
 <p>The response vector, y, has 180 elements. The fixed-effects coefficient vector, β, has 2 elements and the fixed-effects model matrix, X, is of size 180 × 2.</p>
-<div class="cell" data-execution_count="4">
+<div id="cf44cf94" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>m1.y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>180-element view(::Matrix{Float64}, :, 3) with eltype Float64:
@@ -647,15 +689,15 @@ days          10.4673     1.50224   6.97    &lt;1e-11
  364.1236</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="5">
+<div id="ac075687" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>m1.β</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>2-element Vector{Float64}:
- 251.40510484848417
-  10.467285959595896</code></pre>
+ 251.4051048484836
+  10.467285959597044</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="6">
+<div id="4a567368" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>m1.X</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>180×2 Matrix{Float64}:
@@ -689,14 +731,14 @@ days          10.4673     1.50224   6.97    &lt;1e-11
 </div>
 <p>The second column of X is just the <code>days</code> vector and the first column is all 1’s.</p>
 <p>There are 36 random effects, 2 for each of the 18 levels of <code>subj</code>. The “estimates” (technically, the conditional means or conditional modes) are returned as a vector of matrices, one matrix for each grouping factor. In this case there is only one grouping factor for the random effects so there is one one matrix which contains 18 intercept random effects and 18 slope random effects.</p>
-<div class="cell" data-execution_count="7">
+<div id="27666414" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>m1.b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <pre><code>1-element Vector{Matrix{Float64}}:
- [2.815818033394916 -40.04844099287436 … 0.7232621645096935 12.118907745826883; 9.075511916305423 -8.644079548078082 … -0.9710526581529085 1.3106980682714398]</code></pre>
+ [2.8158198796389 -40.04844205814212 … 0.7232619479594231 12.118907795182105; 9.075511561300857 -8.644079376096018 … -0.9710526156139855 1.3106980690771255]</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="8">
+<div id="912d0e3e" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">only</span>(m1.b)   <span class="co"># only one grouping factor</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
 <pre><code>2×18 Matrix{Float64}:
@@ -706,7 +748,7 @@ days          10.4673     1.50224   6.97    &lt;1e-11
 </div>
 <p>There is a model matrix, Z, for the random effects. In general it has one chunk of columns for the first grouping factor, a chunk of columns for the second grouping factor, etc.</p>
 <p>In this case there is only one grouping factor.</p>
-<div class="cell" data-execution_count="9">
+<div id="f04847bf" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Int</span>.(<span class="fu">first</span>(m1.reterms))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>180×36 Matrix{Int64}:
@@ -739,68 +781,68 @@ days          10.4673     1.50224   6.97    &lt;1e-11
 </div>
 </div>
 <p>The defining property of a linear model or linear mixed model is that the fitted values are linear combinations of the fixed-effects parameters and the random effects. We can write the fitted values as</p>
-<div class="cell" data-execution_count="10">
+<div id="4898975f" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>m1.X <span class="op">*</span> m1.β <span class="op">+</span> <span class="fu">only</span>(m1.reterms) <span class="op">*</span> <span class="fu">vec</span>(<span class="fu">only</span>(m1.b))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
 <pre><code>180-element Vector{Float64}:
- 254.2209228818791
- 273.7637207577804
- 293.3065186336817
- 312.84931650958305
- 332.3921143854843
- 351.9349122613857
- 371.477710137287
- 391.0205080131883
- 410.56330588908963
- 430.10610376499096
- 211.3566638556098
- 213.17987026712763
- 215.0030766786454
+ 254.2209247281225
+ 273.7637222490204
+ 293.30651976991834
+ 312.8493172908162
+ 332.3921148117141
+ 351.93491233261204
+ 371.4777098535099
+ 391.02050737440777
+ 410.5633048953057
+ 430.1061024162036
+ 211.3566627903415
+ 213.1798693738425
+ 215.00307595734353
    ⋮
- 328.09823342453774
- 337.5944667259808
- 263.52401259431105
- 275.3019966221784
- 287.0799806500457
- 298.85796467791306
- 310.6359487057804
- 322.41393273364775
- 334.1919167615151
- 345.96990078938245
- 357.7478848172497
- 369.5258688451171</code></pre>
+ 328.0982335483075
+ 337.59446689229054
+ 263.5240126436657
+ 275.3019966723399
+ 287.07998070101405
+ 298.8579647296882
+ 310.63594875836236
+ 322.4139327870366
+ 334.1919168157107
+ 345.9699008443849
+ 357.7478848730591
+ 369.5258689017332</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="11">
+<div id="90d41276" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fitted</span>(m1)   <span class="co"># just to check that these are indeed the same as calculated above</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
 <pre><code>180-element Vector{Float64}:
- 254.2209228818791
- 273.7637207577804
- 293.3065186336817
- 312.84931650958305
- 332.3921143854843
- 351.9349122613857
- 371.477710137287
- 391.02050801318836
- 410.56330588908963
- 430.10610376499096
- 211.3566638556098
- 213.17987026712763
- 215.0030766786454
+ 254.2209247281225
+ 273.7637222490204
+ 293.30651976991834
+ 312.8493172908162
+ 332.3921148117141
+ 351.93491233261204
+ 371.4777098535099
+ 391.0205073744078
+ 410.56330489530575
+ 430.1061024162036
+ 211.3566627903415
+ 213.1798693738425
+ 215.00307595734355
    ⋮
- 328.0982334245378
- 337.5944667259808
- 263.52401259431105
- 275.3019966221784
- 287.07998065004574
- 298.85796467791306
- 310.6359487057804
- 322.41393273364775
- 334.1919167615151
- 345.96990078938245
- 357.74788481724977
- 369.5258688451171</code></pre>
+ 328.0982335483075
+ 337.59446689229054
+ 263.5240126436657
+ 275.3019966723399
+ 287.07998070101405
+ 298.8579647296882
+ 310.63594875836236
+ 322.4139327870366
+ 334.1919168157107
+ 345.9699008443849
+ 357.7478848730591
+ 369.5258689017332</code></pre>
 </div>
 </div>
 <p>In symbols we would write the <em>linear predictor expression</em> as <span class="math display">\[
@@ -813,16 +855,16 @@ days          10.4673     1.50224   6.97    &lt;1e-11
 \end{aligned}
 \]</span> where <span class="math inline">\(\boldsymbol{\Sigma}_\boldsymbol{\theta}\)</span> is a 36 × 36 symmetric covariance matrix that has a special form - it consists of 18 diagonal blocks, each of size 2 × 2 and all the same.</p>
 <p>Recall that this symmetric matrix can be constructed from the parameters <span class="math inline">\(\boldsymbol\theta\)</span>, which generate the lower triangular matrix <span class="math inline">\(\boldsymbol\lambda\)</span>, and the estimate <span class="math inline">\(\widehat{\sigma^2}\)</span>.</p>
-<div class="cell" data-execution_count="12">
+<div id="9839b5ab" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>m1.θ</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="13">
 <pre><code>3-element Vector{Float64}:
- 0.9292213081613828
- 0.01816836498823806
- 0.22264488151102485</code></pre>
+ 0.9292213124664976
+ 0.01816838673115054
+ 0.22264486480463275</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="13">
+<div id="0313063a" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>λ <span class="op">=</span> <span class="fu">only</span>(m1.λ)  <span class="co"># with multiple grouping factors there will be multiple λ's</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="14">
 <pre><code>2×2 LinearAlgebra.LowerTriangular{Float64, Matrix{Float64}}:
@@ -830,7 +872,7 @@ days          10.4673     1.50224   6.97    &lt;1e-11
  0.0181684  0.222645</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="14">
+<div id="1ea64432" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>Σ <span class="op">=</span> <span class="fu">varest</span>(m1) <span class="op">*</span> (λ <span class="op">*</span> λ<span class="ch">')</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="15">
 <pre><code>2×2 Matrix{Float64}:
@@ -839,10 +881,10 @@ days          10.4673     1.50224   6.97    &lt;1e-11
 </div>
 </div>
 <p>Compare the diagonal elements to the <em>Variance</em> column of</p>
-<div class="cell" data-execution_count="15">
+<div id="4e9fb738" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="16">
-<table class="table table-sm table-striped small">
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="16">
+<table class="caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
 <th style="text-align: left;"></th>
@@ -856,7 +898,7 @@ days          10.4673     1.50224   6.97    &lt;1e-11
 <tr class="odd">
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">565.51066</td>
+<td style="text-align: right;">565.51067</td>
 <td style="text-align: right;">23.78047</td>
 <td style="text-align: right;"></td>
 </tr>
@@ -910,7 +952,7 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 \mu=g^{-1}(\eta)=\frac{1}{1+\exp(-\eta)}.
 \]</span> This is why fitting a binary response is sometimes called <em>logistic regression</em>.</p>
 <p>For later use we define a Julia <code>logistic</code> function. See <a href="https://github.com/dmbates/JSM2021/blob/main/notebooks/2compilation.jl">this presentation</a> for more information than you could possibly want to know on how Julia converts code like this to run on the processor.</p>
-<div class="cell" data-execution_count="16">
+<div id="d209933c" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">increment</span>(x) <span class="op">=</span> x <span class="op">+</span> <span class="fu">one</span>(x)</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">logistic</span>(η) <span class="op">=</span> <span class="fu">inv</span>(<span class="fu">increment</span>(<span class="fu">exp</span>(<span class="op">-</span>η)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="17">
@@ -926,13 +968,13 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 <section id="an-example-of-a-bernoulli-glmm" class="level3" data-number="3.1">
 <h3 data-number="3.1" class="anchored" data-anchor-id="an-example-of-a-bernoulli-glmm"><span class="header-section-number">3.1</span> An example of a Bernoulli GLMM</h3>
 <p>The <code>contra</code> dataset in the <code>MixedModels</code> package is from a survey on the use of artificial contraception by women in Bangladesh.</p>
-<div class="cell" data-execution_count="17">
+<div id="323ffccf" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>contra <span class="op">=</span> <span class="fu">DataFrame</span>(<span class="fu">dataset</span>(<span class="op">:</span>contra))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="18">
 <div><div style="float: left;"><span>1934×5 DataFrame</span></div><div style="float: right;"><span style="font-style: italic;">1909 rows omitted</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
-<table class="data-frame table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="data-frame caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
-<tr class="header header">
+<tr class="header">
 <th class="rowNumber" data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold;">Row</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">dist</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">urban</th>
@@ -1163,13 +1205,13 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="18">
+<div id="24a1f918" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">combine</span>(<span class="fu">groupby</span>(contra, <span class="op">:</span>dist), nrow)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="19">
 <div><div style="float: left;"><span>60×2 DataFrame</span></div><div style="float: right;"><span style="font-style: italic;">35 rows omitted</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
-<table class="data-frame table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="data-frame caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
-<tr class="header header">
+<tr class="header">
 <th class="rowNumber" data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold;">Row</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">dist</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">nrow</th>
@@ -1318,10 +1360,10 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 </div>
 <p>The information recorded included woman’s age, the number of live children she has, whether she lives in an urban or rural setting, and the political district in which she lives.</p>
 <p>The age was centered. Unfortunately, the version of the data to which I had access did not record what the centering value was.</p>
-<p>A data plot, <a href="#fig-contradata">Figure&nbsp;1</a>, shows that the probability of contraception use is <strong>not</strong> linear in <code>age</code> - it is low for younger women, higher for women in the middle of the range (assumed to be women in late 20’s to early 30’s) and low again for older women (late 30’s to early 40’s in this survey).</p>
+<p>A data plot, <a href="#fig-contradata" class="quarto-xref">Figure&nbsp;1</a>, shows that the probability of contraception use is <strong>not</strong> linear in <code>age</code> - it is low for younger women, higher for women in the middle of the range (assumed to be women in late 20’s to early 30’s) and low again for older women (late 30’s to early 40’s in this survey).</p>
 <p>If we fit a model with only the <code>age</code> term in the fixed effects, that term will not be significant. This doesn’t mean that there is no “age effect”, it only means that there is no significant linear effect for <code>age</code>.</p>
-<div class="cell" data-execution_count="19">
-<details>
+<div id="cell-fig-contradata" class="cell" data-execution_count="19">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">draw</span>(</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data</span>(</span>
@@ -1342,15 +1384,19 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 <span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="20">
-<div id="fig-contradata" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="glmm_files/figure-html/fig-contradata-output-1.svg" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;1: Smoothed relative frequency of contraception use versus centered age for women in the 1989 Bangladesh Fertility Survey</figcaption>
+<div id="fig-contradata" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-contradata-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="glmm_files/figure-html/fig-contradata-output-1.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-contradata-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Smoothed relative frequency of contraception use versus centered age for women in the 1989 Bangladesh Fertility Survey
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="20">
+<div id="f8260971" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>contrasts <span class="op">=</span> <span class="fu">Dict</span>(</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="op">:</span>dist <span class="op">=&gt;</span> <span class="fu">Grouping</span>(),</span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="op">:</span>urban <span class="op">=&gt;</span> <span class="fu">HelmertCoding</span>(),</span>
@@ -1365,10 +1411,10 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 <span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(MixedModel, form, contra, dist; nAGQ, contrasts)</span>
 <span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Minimizing 199    Time: 0:00:00 ( 2.05 ms/it)</code></pre>
+<pre><code>Minimizing 205    Time: 0:00:00 ( 1.93 ms/it)</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="21">
-<table class="table table-sm table-striped small">
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="21">
+<table class="caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
 <th style="text-align: left;"></th>
@@ -1386,14 +1432,14 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 <td style="text-align: right;">0.1686</td>
 <td style="text-align: right;">-4.08</td>
 <td style="text-align: right;">&lt;1e-04</td>
-<td style="text-align: right;">0.4787</td>
+<td style="text-align: right;">0.4786</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">age</td>
 <td style="text-align: right;">0.0035</td>
 <td style="text-align: right;">0.0092</td>
 <td style="text-align: right;">0.38</td>
-<td style="text-align: right;">0.7023</td>
+<td style="text-align: right;">0.7022</td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
@@ -1406,7 +1452,7 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 </tr>
 <tr class="even">
 <td style="text-align: left;">urban: Y</td>
-<td style="text-align: right;">0.3483</td>
+<td style="text-align: right;">0.3484</td>
 <td style="text-align: right;">0.0600</td>
 <td style="text-align: right;">5.81</td>
 <td style="text-align: right;">&lt;1e-08</td>
@@ -1414,7 +1460,7 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 </tr>
 <tr class="odd">
 <td style="text-align: left;">livch: 1</td>
-<td style="text-align: right;">0.8152</td>
+<td style="text-align: right;">0.8151</td>
 <td style="text-align: right;">0.1622</td>
 <td style="text-align: right;">5.02</td>
 <td style="text-align: right;">&lt;1e-06</td>
@@ -1443,10 +1489,10 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 <p>Notice that the linear term for <code>age</code> is not significant but the quadratic term for <code>age</code> is highly significant. We usually retain the lower order term, even if it is not significant, if the higher order term is significant.</p>
 <p>Notice also that the parameter estimates for the treatment contrasts for <code>livch</code> are similar. Thus the distinction of 1, 2, or 3+ children is not as important as the contrast between having any children and not having any. Those women who already have children are more likely to use artificial contraception.</p>
 <p>Furthermore, the women without children have a different probability vs age profile than the women with children. To allow for this we define a binary <code>children</code> factor and incorporate an <code>age&amp;children</code> interaction.</p>
-<div class="cell" data-execution_count="21">
+<div id="c67c4337" class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(gm1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="22">
-<table class="table table-sm table-striped small">
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="22">
+<table class="caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
 <th style="text-align: left;"></th>
@@ -1459,8 +1505,8 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 <tr class="odd">
 <td style="text-align: left;">dist</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">0.229113</td>
-<td style="text-align: right;">0.478657</td>
+<td style="text-align: right;">0.229095</td>
+<td style="text-align: right;">0.478639</td>
 </tr>
 </tbody>
 </table>
@@ -1470,7 +1516,7 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 </section>
 <section id="convert-livch-to-a-binary-factor" class="level3" data-number="3.2">
 <h3 data-number="3.2" class="anchored" data-anchor-id="convert-livch-to-a-binary-factor"><span class="header-section-number">3.2</span> Convert <code>livch</code> to a binary factor</h3>
-<div class="cell" data-execution_count="22">
+<div id="2b8ea1ba" class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="pp">@transform</span>!(contra, <span class="op">:</span>children <span class="op">=</span> <span class="op">:</span>livch <span class="op">≠</span> <span class="st">"0"</span>)</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="co"># add the associated contrast specifier</span></span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>contrasts[<span class="op">:</span>children] <span class="op">=</span> <span class="fu">EffectsCoding</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1478,7 +1524,7 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 <pre><code>EffectsCoding(nothing, nothing)</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="23">
+<div id="94a7db02" class="cell" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>gm2 <span class="op">=</span> <span class="kw">let</span></span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  form <span class="op">=</span> <span class="pp">@formula</span>(</span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>    use <span class="op">~</span></span>
@@ -1492,10 +1538,10 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 <span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(MixedModel, form, contra, dist; nAGQ, contrasts)</span>
 <span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Minimizing 144    Time: 0:00:00 ( 1.01 ms/it)</code></pre>
+<pre><code>Minimizing 125    Time: 0:00:00 ( 0.96 ms/it)</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="24">
-<table class="table table-sm table-striped small">
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="24">
+<table class="caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
 <th style="text-align: left;"></th>
@@ -1511,7 +1557,7 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">-0.3614</td>
 <td style="text-align: right;">0.1275</td>
-<td style="text-align: right;">-2.84</td>
+<td style="text-align: right;">-2.83</td>
 <td style="text-align: right;">0.0046</td>
 <td style="text-align: right;">0.4757</td>
 </tr>
@@ -1520,7 +1566,7 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 <td style="text-align: right;">-0.0131</td>
 <td style="text-align: right;">0.0110</td>
 <td style="text-align: right;">-1.19</td>
-<td style="text-align: right;">0.2352</td>
+<td style="text-align: right;">0.2353</td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
@@ -1559,8 +1605,8 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 </table>
 </div>
 </div>
-<div class="cell" data-execution_count="24">
-<details>
+<div id="e9431fbb" class="cell" data-execution_count="24">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  mods <span class="op">=</span> [gm2, gm1]</span>
@@ -1576,9 +1622,9 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 </details>
 <div class="cell-output cell-output-display" data-execution_count="25">
 <div><div style="float: left;"><span>2×6 DataFrame</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
-<table class="data-frame table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="data-frame caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
-<tr class="header header">
+<tr class="header">
 <th class="rowNumber" data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold;">Row</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">model</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">npar</th>
@@ -1627,7 +1673,7 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 <section id="using-urbandist-as-a-grouping-factor" class="level3" data-number="3.3">
 <h3 data-number="3.3" class="anchored" data-anchor-id="using-urbandist-as-a-grouping-factor"><span class="header-section-number">3.3</span> Using <code>urban&amp;dist</code> as a grouping factor</h3>
 <p>It turns out that there can be more difference between urban and rural settings within the same political district than there is between districts. To model this difference we build a model with <code>urban&amp;dist</code> as a grouping factor.</p>
-<div class="cell" data-execution_count="25">
+<div id="7ddca8d2" class="cell" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>gm3 <span class="op">=</span> <span class="kw">let</span></span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  form <span class="op">=</span> <span class="pp">@formula</span>(</span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>    use <span class="op">~</span></span>
@@ -1641,10 +1687,10 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 <span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(MixedModel, form, contra, dist; nAGQ, contrasts)</span>
 <span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Minimizing 140    Time: 0:00:00 ( 1.01 ms/it)</code></pre>
+<pre><code>Minimizing 149    Time: 0:00:00 ( 0.96 ms/it)</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="26">
-<table class="table table-sm table-striped small">
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="26">
+<table class="caption-top table table-sm table-striped small">
 <colgroup>
 <col style="width: 32%">
 <col style="width: 12%">
@@ -1677,12 +1723,12 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 <td style="text-align: right;">-0.0129</td>
 <td style="text-align: right;">0.0112</td>
 <td style="text-align: right;">-1.16</td>
-<td style="text-align: right;">0.2471</td>
+<td style="text-align: right;">0.2472</td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">children: true</td>
-<td style="text-align: right;">0.6065</td>
+<td style="text-align: right;">0.6064</td>
 <td style="text-align: right;">0.1045</td>
 <td style="text-align: right;">5.80</td>
 <td style="text-align: right;">&lt;1e-08</td>
@@ -1716,8 +1762,8 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 </table>
 </div>
 </div>
-<div class="cell" data-execution_count="26">
-<details>
+<div id="a00c3561" class="cell" data-execution_count="26">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  mods <span class="op">=</span> [gm3, gm2, gm1]</span>
@@ -1733,9 +1779,9 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 </details>
 <div class="cell-output cell-output-display" data-execution_count="27">
 <div><div style="float: left;"><span>3×6 DataFrame</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
-<table class="data-frame table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="data-frame caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
-<tr class="header header">
+<tr class="header">
 <th class="rowNumber" data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold;">Row</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">model</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">npar</th>
@@ -1761,7 +1807,7 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 <td style="text-align: right;">7</td>
 <td style="text-align: right;">2353.82</td>
 <td style="text-align: right;">2368.48</td>
-<td style="text-align: right;">2407.45</td>
+<td style="text-align: right;">2407.46</td>
 <td style="text-align: right;">2368.54</td>
 </tr>
 <tr class="even">
@@ -1788,10 +1834,10 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 </div>
 </div>
 <p>Notice that the parameter count in <code>gm3</code> is the same as that of <code>gm2</code> - the thing that has changed is the number of levels of the grouping factor- resulting in a much lower deviance for <code>gm3</code>. This reinforces the idea that a simple count of the number of parameters to be estimated does not always reflect the complexity of the model.</p>
-<div class="cell" data-execution_count="27">
+<div id="b7a81cc5" class="cell" data-execution_count="27">
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>gm2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="28">
-<table class="table table-sm table-striped small">
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="28">
+<table class="caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
 <th style="text-align: left;"></th>
@@ -1807,7 +1853,7 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">-0.3614</td>
 <td style="text-align: right;">0.1275</td>
-<td style="text-align: right;">-2.84</td>
+<td style="text-align: right;">-2.83</td>
 <td style="text-align: right;">0.0046</td>
 <td style="text-align: right;">0.4757</td>
 </tr>
@@ -1816,7 +1862,7 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 <td style="text-align: right;">-0.0131</td>
 <td style="text-align: right;">0.0110</td>
 <td style="text-align: right;">-1.19</td>
-<td style="text-align: right;">0.2352</td>
+<td style="text-align: right;">0.2353</td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
@@ -1855,10 +1901,10 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 </table>
 </div>
 </div>
-<div class="cell" data-execution_count="28">
+<div id="f7e56c46" class="cell" data-execution_count="28">
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>gm3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="29">
-<table class="table table-sm table-striped small">
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="29">
+<table class="caption-top table table-sm table-striped small">
 <colgroup>
 <col style="width: 32%">
 <col style="width: 12%">
@@ -1891,12 +1937,12 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 <td style="text-align: right;">-0.0129</td>
 <td style="text-align: right;">0.0112</td>
 <td style="text-align: right;">-1.16</td>
-<td style="text-align: right;">0.2471</td>
+<td style="text-align: right;">0.2472</td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">children: true</td>
-<td style="text-align: right;">0.6065</td>
+<td style="text-align: right;">0.6064</td>
 <td style="text-align: right;">0.1045</td>
 <td style="text-align: right;">5.80</td>
 <td style="text-align: right;">&lt;1e-08</td>
@@ -1935,7 +1981,7 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 <section id="predictions-for-some-subgroups" class="level3" data-number="3.4">
 <h3 data-number="3.4" class="anchored" data-anchor-id="predictions-for-some-subgroups"><span class="header-section-number">3.4</span> Predictions for some subgroups</h3>
 <p>For a “typical” district (random effect near zero) the predictions on the linear predictor scale for a woman whose age is near the centering value (i.e.&nbsp;centered age of zero) are:</p>
-<div class="cell" data-execution_count="29">
+<div id="1f7e9f28" class="cell" data-execution_count="29">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Effects</span></span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>design <span class="op">=</span> <span class="fu">Dict</span>(</span>
 <span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="op">:</span>children <span class="op">=&gt;</span> [<span class="cn">true</span>, <span class="cn">false</span>], <span class="op">:</span>urban <span class="op">=&gt;</span> [<span class="st">"Y"</span>, <span class="st">"N"</span>], <span class="op">:</span>age <span class="op">=&gt;</span> [<span class="fl">0.0</span>]</span>
@@ -1943,9 +1989,9 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 <span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>preds <span class="op">=</span> <span class="fu">effects</span>(design, gm3; invlink<span class="op">=</span><span class="fu">AutoInvLink</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="30">
 <div><div style="float: left;"><span>4×7 DataFrame</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
-<table class="data-frame table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="data-frame caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
-<tr class="header header">
+<tr class="header">
 <th class="rowNumber" data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold;">Row</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">children</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">age</th>
@@ -1972,40 +2018,40 @@ y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2}+ b_1 z_{i,1} +\dots+b_{36} z_{i,36}+\eps
 <td style="text-align: right;">true</td>
 <td style="text-align: right;">0.0</td>
 <td style="text-align: left;">Y</td>
-<td style="text-align: right;">0.65894</td>
-<td style="text-align: right;">0.0338297</td>
+<td style="text-align: right;">0.658941</td>
+<td style="text-align: right;">0.0338299</td>
 <td style="text-align: right;">0.625111</td>
-<td style="text-align: right;">0.69277</td>
+<td style="text-align: right;">0.692771</td>
 </tr>
 <tr class="even">
 <td class="rowNumber" style="text-align: right; font-weight: bold;">2</td>
 <td style="text-align: right;">false</td>
 <td style="text-align: right;">0.0</td>
 <td style="text-align: left;">Y</td>
-<td style="text-align: right;">0.364859</td>
-<td style="text-align: right;">0.0534099</td>
-<td style="text-align: right;">0.311449</td>
-<td style="text-align: right;">0.418269</td>
+<td style="text-align: right;">0.364868</td>
+<td style="text-align: right;">0.0534103</td>
+<td style="text-align: right;">0.311458</td>
+<td style="text-align: right;">0.418279</td>
 </tr>
 <tr class="odd">
 <td class="rowNumber" style="text-align: right; font-weight: bold;">3</td>
 <td style="text-align: right;">true</td>
 <td style="text-align: right;">0.0</td>
 <td style="text-align: left;">N</td>
-<td style="text-align: right;">0.467891</td>
-<td style="text-align: right;">0.0281376</td>
-<td style="text-align: right;">0.439754</td>
-<td style="text-align: right;">0.496029</td>
+<td style="text-align: right;">0.46789</td>
+<td style="text-align: right;">0.0281378</td>
+<td style="text-align: right;">0.439752</td>
+<td style="text-align: right;">0.496028</td>
 </tr>
 <tr class="even">
 <td class="rowNumber" style="text-align: right; font-weight: bold;">4</td>
 <td style="text-align: right;">false</td>
 <td style="text-align: right;">0.0</td>
 <td style="text-align: left;">N</td>
-<td style="text-align: right;">0.207259</td>
-<td style="text-align: right;">0.0364054</td>
-<td style="text-align: right;">0.170854</td>
-<td style="text-align: right;">0.243665</td>
+<td style="text-align: right;">0.207265</td>
+<td style="text-align: right;">0.0364059</td>
+<td style="text-align: right;">0.170859</td>
+<td style="text-align: right;">0.243671</td>
 </tr>
 </tbody>
 </table>
@@ -2067,6 +2113,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       } else {
         el.classList.add('notransition');
       }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
     }
   }
   const toggleColorMode = (alternate) => {
@@ -2135,13 +2208,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'default';
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -2176,18 +2251,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -2219,11 +2283,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
-  function tippyHover(el, contentFn) {
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/RePsychLing\.github\.io\/SMLP2023");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -2233,8 +2336,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -2246,7 +2358,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -2290,6 +2525,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -2315,6 +2551,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -2376,12 +2638,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./contrasts_kwdyz11.html" class="pagination-link">
+      <a href="./contrasts_kwdyz11.html" class="pagination-link" aria-label="Contrast Coding of Visual Attention Effects">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Contrast Coding of Visual Attention Effects</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./bootstrap.html" class="pagination-link">
+      <a href="./bootstrap.html" class="pagination-link" aria-label="Parametric bootstrap for mixed-effects models">
         <span class="nav-page-text">Parametric bootstrap for mixed-effects models</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -2390,4 +2652,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-</body></html>
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RePsychLing/SMLP2023/edit/main/glmm.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RePsychLing/SMLP2023/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

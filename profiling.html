@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.5.46">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Douglas Bates">
-<meta name="dcterms.date" content="2023-11-06">
+<meta name="dcterms.date" content="2024-06-26">
 
-<title>SMLP2023: Advanced Frequentist Track - Confidence intervals from profiled objective</title>
+<title>Confidence intervals from profiled objective – SMLP2023: Advanced Frequentist Track</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -24,7 +24,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -35,7 +35,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -88,7 +88,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -97,14 +103,42 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -112,40 +146,40 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">SMLP2023: Advanced Frequentist Track</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/RePsychLing/SMLP2023" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/RePsychLing/SMLP2023"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
+          </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
-          </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./bootstrap.html">Bootstrap and profiling</a></li><li class="breadcrumb-item"><a href="./profiling.html">Confidence intervals from profiled objective</a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./bootstrap.html">Bootstrap and profiling</a></li><li class="breadcrumb-item"><a href="./profiling.html">Confidence intervals from profiled objective</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -154,7 +188,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
@@ -164,9 +198,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
  <span class="menu-text">Getting started with Julia</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -193,9 +227,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
  <span class="menu-text">Worked examples</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -236,13 +270,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">RePsychLing Masson, Rabe, &amp; Kliegl, 2017) with Julia: Specification and selection</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./partial_within.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Partially-within subjects designs</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
  <span class="menu-text">Contrast coding</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -269,9 +309,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
  <span class="menu-text">Bootstrap and profiling</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -298,9 +338,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
  <span class="menu-text">Visualizations and diagnostics</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -328,7 +368,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -343,12 +383,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#comparisons-with-the-parametric-bootstrap" id="toc-comparisons-with-the-parametric-bootstrap" class="nav-link" data-scroll-target="#comparisons-with-the-parametric-bootstrap"><span class="header-section-number">2</span> Comparisons with the parametric bootstrap</a></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/RePsychLing/SMLP2023/edit/main/profiling.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/RePsychLing/SMLP2023/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+<div class="toc-actions"><ul class="collapse"><li><a href="https://github.com/RePsychLing/SMLP2023/edit/main/profiling.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RePsychLing/SMLP2023/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./bootstrap.html">Bootstrap and profiling</a></li><li class="breadcrumb-item"><a href="./profiling.html">Confidence intervals from profiled objective</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">Confidence intervals from profiled objective</h1>
 </div>
@@ -367,7 +407,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2023-11-06</p>
+      <p class="date">2024-06-26</p>
     </div>
   </div>
   
@@ -375,7 +415,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
+
 </header>
+
 
 <section id="assessing-the-variability-of-parameter-estimates" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Assessing the variability of parameter estimates</h1>
@@ -386,8 +428,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="profiling-a-model-for-the-kb07-data" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="profiling-a-model-for-the-kb07-data"><span class="header-section-number">1.1</span> Profiling a model for the kb07 data</h2>
 <p>Load the packages to be used</p>
-<div class="cell" data-execution_count="1">
-<details>
+<div id="2f8b168b" class="cell" data-execution_count="1">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">AlgebraOfGraphics</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">CairoMakie</span></span>
@@ -402,7 +444,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 <p>Load the data and define the contrasts so that the coefficients for each of the experimental variables, <code>load</code>, <code>spkr</code> and <code>prec</code>, are positive.</p>
-<div class="cell" data-execution_count="2">
+<div id="71263c3a" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>contrasts <span class="op">=</span> <span class="fu">Dict</span>( <span class="co"># base levels so estimates for speed are positive</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="op">:</span>load <span class="op">=&gt;</span> <span class="fu">EffectsCoding</span>(; base<span class="op">=</span><span class="st">"yes"</span>),</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="op">:</span>prec <span class="op">=&gt;</span> <span class="fu">EffectsCoding</span>(; base<span class="op">=</span><span class="st">"break"</span>),</span>
@@ -440,14 +482,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Now we fit and profile a model. The response is defined as <code>1000 / rt_raw</code> where <code>rt_raw</code> is measured in milliseconds. Thus the response being modeled is the speed measured in responses per second.</p>
-<div class="cell" data-execution_count="3">
+<div id="75e707d4" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>pr01 <span class="op">=</span> <span class="kw">let</span> f <span class="op">=</span> <span class="pp">@formula</span> <span class="fl">1000</span> <span class="op">/</span> rt_raw <span class="op">~</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="fl">1</span> <span class="op">+</span> load <span class="op">+</span> spkr <span class="op">+</span> prec <span class="op">+</span> (<span class="fl">1</span> <span class="op">+</span> prec <span class="op">|</span> item) <span class="op">+</span> (<span class="fl">1</span> <span class="op">|</span> subj)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">profile</span>(<span class="fu">fit</span>(MixedModel, f, kb07; contrasts))</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(pr01.m) <span class="co"># model is a property of the profile object</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Minimizing 67    Time: 0:00:00 ( 9.68 ms/it)</code></pre>
+<pre><code>Minimizing 67    Time: 0:00:00 (10.77 ms/it)</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Linear mixed model fit by maximum likelihood
@@ -479,7 +521,7 @@ prec: maintain  0.0698293  0.00865212   8.07    &lt;1e-15
 <section id="fixing-values-of-parameters" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="fixing-values-of-parameters"><span class="header-section-number">1.2</span> Fixing values of parameters</h2>
 <p>The information from the profile is encapsulated in a table.</p>
-<div class="cell" data-execution_count="4">
+<div id="2c7c5c33" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>pr01.tbl</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>Table with 15 columns and 249 rows:
@@ -503,17 +545,17 @@ prec: maintain  0.0698293  0.00865212   8.07    &lt;1e-15
  16 │ σ   3.4483     0.531521  0.0212937  0.0112206  0.0698267  0.148208  ⋯
  17 │ σ   3.92976    0.53152   0.0212934  0.011221   0.0698263  0.149502  ⋯
  18 │ σ   4.4085     0.53152   0.0212931  0.0112214  0.0698259  0.150807  ⋯
- 19 │ β1  -4.15491   0.453786  0.0212914  0.0112175  0.0763344  0.139442  ⋯
- 20 │ β1  -3.75285   0.462423  0.0212917  0.0112177  0.0755073  0.139444  ⋯
- 21 │ β1  -3.33142   0.471061  0.0212921  0.0112179  0.074719   0.139446  ⋯
- 22 │ β1  -2.89208   0.479698  0.0212926  0.0112181  0.0739651  0.139448  ⋯
- 23 │ β1  -2.43663   0.488335  0.0212931  0.0112182  0.0732384  0.13945   ⋯
+ 19 │ β1  -4.15491   0.453786  0.0212914  0.0112175  0.0763347  0.139442  ⋯
+ 20 │ β1  -3.75285   0.462423  0.0212917  0.0112177  0.0755058  0.139444  ⋯
+ 21 │ β1  -3.33142   0.471061  0.0212921  0.0112179  0.0747195  0.139446  ⋯
+ 22 │ β1  -2.89208   0.479698  0.0212926  0.0112181  0.073965   0.139448  ⋯
+ 23 │ β1  -2.43663   0.488335  0.0212931  0.0112182  0.0732385  0.13945   ⋯
  ⋮  │ ⋮       ⋮         ⋮          ⋮          ⋮          ⋮         ⋮      ⋱</code></pre>
 </div>
 </div>
 <p>Each row of the table summarizes a fit of the original model to the original data but with one of the parameters held fixed. For the first 18 rows of the table, the parameter being held fixed is <span class="math inline">\(\sigma\)</span>, as shown in the <code>p</code> column. In the next set of rows the parameter being held fixed will be <span class="math inline">\(\beta_1\)</span>, the intercept.</p>
 <p>There are blocks of rows for the fixed-effects (<span class="math inline">\(\boldsymbol{\beta}\)</span>) parameters, the variance components (on the scale of a standard deviation), and the <span class="math inline">\(\boldsymbol{\theta}\)</span> parameters that generate the covariance factor <span class="math inline">\(\boldsymbol{\Lambda}_{\boldsymbol{\theta}}\)</span>. (At present the correlation parameters are not profiled - we may add them later but that computation is rather awkward.)</p>
-<div class="cell" data-execution_count="5">
+<div id="27058e8a" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(<span class="fu">unique</span>(pr01.tbl.p))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[:σ, :β1, :β2, :β3, :β4, :θ1, :θ2, :θ3, :θ4, :σ1, :σ2, :σ3]</code></pre>
@@ -521,7 +563,7 @@ prec: maintain  0.0698293  0.00865212   8.07    &lt;1e-15
 </div>
 <p>To reiterate, the first row contains the parameter estimates for this model fit to the original response values with the constraint that <span class="math inline">\(\sigma=0.130088\)</span>, instead of the global estimate <span class="math inline">\(\hat{\sigma}=0.139458\)</span> in the row for which <span class="math inline">\(\zeta=0.0\)</span>.</p>
 <p>The global estimates are included in every block at the row for which <span class="math inline">\(\zeta=0.0\)</span>.</p>
-<div class="cell" data-execution_count="6">
+<div id="a60a9e03" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(r <span class="op">-&gt;</span> <span class="fu">iszero</span>(r.ζ), pr01.tbl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>Table with 15 columns and 12 rows:
@@ -553,17 +595,21 @@ prec: maintain  0.0698293  0.00865212   8.07    &lt;1e-15
 </section>
 <section id="profile-zeta-plots" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="profile-zeta-plots"><span class="header-section-number">1.3</span> Profile zeta plots</h2>
-<p><a href="#fig-kb07zetabeta">Figure&nbsp;1</a> shows, for each of the fixed effects parameters, <span class="math inline">\(\zeta\)</span> versus the parameter value.</p>
-<div class="cell" data-execution_count="7">
-<details>
+<p><a href="#fig-kb07zetabeta" class="quarto-xref">Figure&nbsp;1</a> shows, for each of the fixed effects parameters, <span class="math inline">\(\zeta\)</span> versus the parameter value.</p>
+<div id="cell-fig-kb07zetabeta" class="cell" data-execution_count="7">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zetaplot!</span>(<span class="fu">Figure</span>(; resolution<span class="op">=</span>(<span class="fl">1200</span>, <span class="fl">350</span>)), pr01; ptyp<span class="op">=</span><span class="ch">'β'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="8">
-<div id="fig-kb07zetabeta" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="profiling_files/figure-html/fig-kb07zetabeta-output-1.svg" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;1: ζ versus the value of the coefficient for the fixed-effects parameters in a model of response speed for the kb07 data.</figcaption>
+<div id="fig-kb07zetabeta" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-kb07zetabeta-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="profiling_files/figure-html/fig-kb07zetabeta-output-1.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kb07zetabeta-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: ζ versus the value of the coefficient for the fixed-effects parameters in a model of response speed for the kb07 data.
+</figcaption>
 </figure>
 </div>
 </div>
@@ -571,7 +617,7 @@ prec: maintain  0.0698293  0.00865212   8.07    &lt;1e-15
 <p>The lines on these panels are read like normal probability plots, i.e.&nbsp;QQ plots against a standard normal distribution. Those on the <span class="math inline">\(\beta_2\)</span> and <span class="math inline">\(\beta_3\)</span> panels are, to the resolution of the plot, straight lines which indicates that the estimators of those parameters are normally distributed over the region of interest.</p>
 <p>The points in the <span class="math inline">\(\beta_1\)</span> and <span class="math inline">\(\beta_4\)</span> panels are slightly over-dispersed relative to the straight line, which means that the estimators of these parameters are distributed like a T-distribution with a moderate number of degrees of freedom.</p>
 <p>The profile-<span class="math inline">\(\zeta\)</span> function can be used to generate confidence intervals on the parameters</p>
-<div class="cell" data-execution_count="8">
+<div id="be35fc73" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(pr01)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
 <pre><code>DictTable with 3 columns and 8 rows:
@@ -579,7 +625,7 @@ prec: maintain  0.0698293  0.00865212   8.07    &lt;1e-15
  ────┬─────────────────────────────────
  β1  │ 0.531523   0.497103    0.565942
  β2  │ 0.0212959  0.0148295   0.0277621
- β3  │ 0.011218   0.00475175  0.0176844
+ β3  │ 0.011218   0.00475174  0.0176844
  β4  │ 0.0698293  0.0523046   0.0873562
  σ   │ 0.139458   0.13486     0.144322
  σ1  │ 0.0781364  0.0612443   0.103257
@@ -587,47 +633,59 @@ prec: maintain  0.0698293  0.00865212   8.07    &lt;1e-15
  σ3  │ 0.0736113  0.0600844   0.0916852</code></pre>
 </div>
 </div>
-<p>as shown in <a href="#fig-kb07abszetabeta">Figure&nbsp;2</a>, which shows the absolute value of <span class="math inline">\(\zeta\)</span>, which is simply the square root of the difference in the objective, versus the parameter being profiled.</p>
-<div class="cell" data-execution_count="9">
-<details>
+<p>as shown in <a href="#fig-kb07abszetabeta" class="quarto-xref">Figure&nbsp;2</a>, which shows the absolute value of <span class="math inline">\(\zeta\)</span>, which is simply the square root of the difference in the objective, versus the parameter being profiled.</p>
+<div id="cell-fig-kb07abszetabeta" class="cell" data-execution_count="9">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zetaplot!</span>(<span class="fu">Figure</span>(; resolution<span class="op">=</span>(<span class="fl">1200</span>, <span class="fl">330</span>)), pr01; ptyp<span class="op">=</span><span class="ch">'β'</span>, absv<span class="op">=</span><span class="cn">true</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="10">
-<div id="fig-kb07abszetabeta" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="profiling_files/figure-html/fig-kb07abszetabeta-output-1.svg" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;2: Absolute value of ζ versus value of the coefficient for the fixed-effects parameters in a model of response speed for the kb07 data. The horizontal lines are confidence intervals with nominal 50%, 80%, 90%, 95% and 99% confidence.</figcaption>
+<div id="fig-kb07abszetabeta" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-kb07abszetabeta-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="profiling_files/figure-html/fig-kb07abszetabeta-output-1.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kb07abszetabeta-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Absolute value of ζ versus value of the coefficient for the fixed-effects parameters in a model of response speed for the kb07 data. The horizontal lines are confidence intervals with nominal 50%, 80%, 90%, 95% and 99% confidence.
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <p>The 95% confidence intervals are the second horizontal lines from the top in each panel, at 1.96 on the vertical scale.</p>
-<div class="cell" data-execution_count="10">
-<details>
+<div id="cell-fig-kb07abszetasigma" class="cell" data-execution_count="10">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zetaplot!</span>(<span class="fu">Figure</span>(; resolution<span class="op">=</span>(<span class="fl">1200</span>, <span class="fl">330</span>)), pr01; ptyp<span class="op">=</span><span class="ch">'σ'</span>, absv<span class="op">=</span><span class="cn">true</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="11">
-<div id="fig-kb07abszetasigma" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="profiling_files/figure-html/fig-kb07abszetasigma-output-1.svg" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;3: Absolute value of ζ versus value of the coefficient for the variance component parameters in a model of response speed for the kb07 data. The horizontal lines are confidence intervals with nominal 50%, 80%, 90%, 95% and 99% confidence.</figcaption>
+<div id="fig-kb07abszetasigma" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-kb07abszetasigma-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="profiling_files/figure-html/fig-kb07abszetasigma-output-1.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kb07abszetasigma-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Absolute value of ζ versus value of the coefficient for the variance component parameters in a model of response speed for the kb07 data. The horizontal lines are confidence intervals with nominal 50%, 80%, 90%, 95% and 99% confidence.
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p><a href="#fig-kb07abszetasigma">Figure&nbsp;3</a> shows similar confidence intervals on the parameters representing standard deviations as does <a href="#fig-kb07abszetatheta">Figure&nbsp;4</a> for the <span class="math inline">\(\theta\)</span> parameters.</p>
-<div class="cell" data-execution_count="11">
-<details>
+<p><a href="#fig-kb07abszetasigma" class="quarto-xref">Figure&nbsp;3</a> shows similar confidence intervals on the parameters representing standard deviations as does <a href="#fig-kb07abszetatheta" class="quarto-xref">Figure&nbsp;4</a> for the <span class="math inline">\(\theta\)</span> parameters.</p>
+<div id="cell-fig-kb07abszetatheta" class="cell" data-execution_count="11">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zetaplot!</span>(<span class="fu">Figure</span>(; resolution<span class="op">=</span>(<span class="fl">1200</span>, <span class="fl">330</span>)), pr01; ptyp<span class="op">=</span><span class="ch">'θ'</span>, absv<span class="op">=</span><span class="cn">true</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="12">
-<div id="fig-kb07abszetatheta" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="profiling_files/figure-html/fig-kb07abszetatheta-output-1.svg" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;4: Absolute value of ζ versus parameter value for the θ parameters in a model of response speed for the kb07 data. The horizontal lines are confidence intervals with nominal 50%, 80%, 90%, 95% and 99% confidence.</figcaption>
+<div id="fig-kb07abszetatheta" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-kb07abszetatheta-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="profiling_files/figure-html/fig-kb07abszetatheta-output-1.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kb07abszetatheta-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Absolute value of ζ versus parameter value for the θ parameters in a model of response speed for the kb07 data. The horizontal lines are confidence intervals with nominal 50%, 80%, 90%, 95% and 99% confidence.
+</figcaption>
 </figure>
 </div>
 </div>
@@ -645,7 +703,7 @@ prec: maintain  0.0698293  0.00865212   8.07    &lt;1e-15
 <p>The main advantage of the bootstrap is that any parameter or any function of the parameters, such as the predicted response at some setting of the experimental factors, can be evaluated and assessed from the sample. When doing so, however, it is necessary to work with large samples so as to avoid undesirable levels of sample re-use.</p>
 <p>Because profiling different parameters requires customized code for each parameter type, it is more difficult to generalize this approach to different types of parameters or predictions. We have already mentioned that the correlation parameters are not profiled in the current version of the code.</p>
 <p>For comparison with the profiling results, we create a table of 2500 bootstrap samples</p>
-<div class="cell" data-execution_count="12">
+<div id="6849c796" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="bu">Random</span>.<span class="fu">seed!</span>(<span class="fl">8765678</span>)</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>samp01 <span class="op">=</span> <span class="fu">parametricbootstrap</span>(<span class="fl">2500</span>, pr01.m; optsum_overrides<span class="op">=</span>(; ftol_rel<span class="op">=</span><span class="fl">1e-8</span>))</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(samp01)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -654,50 +712,58 @@ prec: maintain  0.0698293  0.00865212   8.07    &lt;1e-15
  par   lower       upper
  ────┬──────────────────────
  β1  │ 0.497384    0.562267
- β2  │ 0.0147172   0.0274258
+ β2  │ 0.0147171   0.0274258
  β3  │ 0.00481004  0.0169282
- β4  │ 0.0524409   0.0857707
- ρ1  │ -0.557298   0.203936
- σ   │ 0.134749    0.144354
- σ1  │ 0.0587605   0.0986167
+ β4  │ 0.0524409   0.0857708
+ ρ1  │ -0.557298   0.203929
+ σ   │ 0.134778    0.144387
+ σ1  │ 0.0587605   0.0986544
  σ2  │ 0.0316134   0.0571327
- σ3  │ 0.05724     0.087862</code></pre>
+ σ3  │ 0.0572288   0.087862</code></pre>
 </div>
 </div>
 <p>Comparing these intervals with those from the profile results shows that the intervals on the fixed-effects parameters from the two methods are quite similar. The intervals on <span class="math inline">\(\sigma\)</span> from the two methods are quite similar but the bootstrap intervals on the other variance components are shifted to the left relative to those from the profiling results. The reason for this is because the bootstrap intervals are chosen to be the shortest intervals with the desired coverage. In a density that is skewed to the right, as these are, the shortest interval will be to the left of an interval with equal tail coverage, which is how the profile-based intervals are constructed.</p>
-<p>The profile-<span class="math inline">\(\zeta\)</span> function can be transformed to an equivalent density function which we plot in <a href="#fig-kb07densigma">Figure&nbsp;5</a>, showing the skewness of the variance component parameters other than <span class="math inline">\(\sigma\)</span>.</p>
-<div class="cell" data-execution_count="13">
-<details>
+<p>The profile-<span class="math inline">\(\zeta\)</span> function can be transformed to an equivalent density function which we plot in <a href="#fig-kb07densigma" class="quarto-xref">Figure&nbsp;5</a>, showing the skewness of the variance component parameters other than <span class="math inline">\(\sigma\)</span>.</p>
+<div id="cell-fig-kb07densigma" class="cell" data-execution_count="13">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">profiledensity!</span>(<span class="fu">Figure</span>(; resolution<span class="op">=</span>(<span class="fl">1200</span>, <span class="fl">300</span>)), pr01; share_y_scale<span class="op">=</span><span class="cn">false</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="14">
-<div id="fig-kb07densigma" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="profiling_files/figure-html/fig-kb07densigma-output-1.svg" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;5: Density functions of the marginal distribution of the estimators of variance component parameters in a model of response speed in the kb07 data.</figcaption>
+<div id="fig-kb07densigma" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-kb07densigma-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="profiling_files/figure-html/fig-kb07densigma-output-1.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kb07densigma-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Density functions of the marginal distribution of the estimators of variance component parameters in a model of response speed in the kb07 data.
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <p>Alternatively we can see the skewness in the plots of <span class="math inline">\(\zeta\)</span></p>
-<div class="cell" data-execution_count="14">
-<details>
+<div id="cell-fig-kb07zetasigma" class="cell" data-execution_count="14">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zetaplot!</span>(<span class="fu">Figure</span>(; resolution<span class="op">=</span>(<span class="fl">1100</span>, <span class="fl">330</span>)), pr01; ptyp<span class="op">=</span><span class="ch">'σ'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="15">
-<div id="fig-kb07zetasigma" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="profiling_files/figure-html/fig-kb07zetasigma-output-1.svg" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;6: Plot of ζ scores for the variance component parameters in a model of response speed for the kb07 data</figcaption>
+<div id="fig-kb07zetasigma" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-kb07zetasigma-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="profiling_files/figure-html/fig-kb07zetasigma-output-1.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kb07zetasigma-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Plot of ζ scores for the variance component parameters in a model of response speed for the kb07 data
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>The skewness is less obvious in <a href="#fig-kb07bskdesigma">Figure&nbsp;7</a> because of the stochastic nature of the bootstrap sample and the kernel density estimators.</p>
-<div class="cell" data-execution_count="15">
-<details>
+<p>The skewness is less obvious in <a href="#fig-kb07bskdesigma" class="quarto-xref">Figure&nbsp;7</a> because of the stochastic nature of the bootstrap sample and the kernel density estimators.</p>
+<div id="cell-fig-kb07bskdesigma" class="cell" data-execution_count="15">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> pars<span class="op">=</span>[<span class="st">"σ"</span>, <span class="st">"σ1"</span>, <span class="st">"σ2"</span>, <span class="st">"σ3"</span>]</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">draw</span>(</span>
@@ -711,10 +777,14 @@ prec: maintain  0.0698293  0.00865212   8.07    &lt;1e-15
 <span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="16">
-<div id="fig-kb07bskdesigma" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="profiling_files/figure-html/fig-kb07bskdesigma-output-1.svg" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;7: Kernel density estimator plots from bootstrap samples of the variance component parameters in a model of response speed for the kb07 data</figcaption>
+<div id="fig-kb07bskdesigma" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-kb07bskdesigma-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="profiling_files/figure-html/fig-kb07bskdesigma-output-1.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kb07bskdesigma-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7: Kernel density estimator plots from bootstrap samples of the variance component parameters in a model of response speed for the kb07 data
+</figcaption>
 </figure>
 </div>
 </div>
@@ -765,6 +835,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       } else {
         el.classList.add('notransition');
       }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
     }
   }
   const toggleColorMode = (alternate) => {
@@ -833,13 +930,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'default';
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -874,18 +973,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -917,11 +1005,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
-  function tippyHover(el, contentFn) {
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/RePsychLing\.github\.io\/SMLP2023");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -931,8 +1058,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -944,7 +1080,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -988,6 +1247,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1013,6 +1273,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1074,12 +1360,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./bootstrap.html" class="pagination-link">
+      <a href="./bootstrap.html" class="pagination-link" aria-label="Parametric bootstrap for mixed-effects models">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Parametric bootstrap for mixed-effects models</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./kb07.html" class="pagination-link">
+      <a href="./kb07.html" class="pagination-link" aria-label="Bootstrapping a fitted model">
         <span class="nav-page-text">Bootstrapping a fitted model</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -1088,4 +1374,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-</body></html>
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RePsychLing/SMLP2023/edit/main/profiling.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RePsychLing/SMLP2023/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

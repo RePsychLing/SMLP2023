@@ -1,95 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://RePsychLing.github.io/SMLP2023/useful_packages.html</loc>
-    <lastmod>2023-11-07T01:00:07.216Z</lastmod>
-  </url>
-  <url>
-    <loc>https://RePsychLing.github.io/SMLP2023/sleepstudy.html</loc>
-    <lastmod>2023-11-07T01:00:05.613Z</lastmod>
-  </url>
-  <url>
-    <loc>https://RePsychLing.github.io/SMLP2023/shrinkageplot.html</loc>
-    <lastmod>2023-11-07T01:00:04.065Z</lastmod>
-  </url>
-  <url>
-    <loc>https://RePsychLing.github.io/SMLP2023/profiling.html</loc>
-    <lastmod>2023-11-07T01:00:02.333Z</lastmod>
-  </url>
-  <url>
-    <loc>https://RePsychLing.github.io/SMLP2023/mrk17.html</loc>
-    <lastmod>2023-11-07T01:00:01.105Z</lastmod>
-  </url>
-  <url>
-    <loc>https://RePsychLing.github.io/SMLP2023/kwdyz11.html</loc>
-    <lastmod>2023-11-07T00:59:54.385Z</lastmod>
-  </url>
-  <url>
-    <loc>https://RePsychLing.github.io/SMLP2023/kb07.html</loc>
-    <lastmod>2023-11-07T00:59:49.925Z</lastmod>
-  </url>
-  <url>
-    <loc>https://RePsychLing.github.io/SMLP2023/glmm.html</loc>
-    <lastmod>2023-11-07T00:59:48.601Z</lastmod>
-  </url>
-  <url>
-    <loc>https://RePsychLing.github.io/SMLP2023/contrasts_kwdyz11.html</loc>
-    <lastmod>2023-11-07T00:59:40.829Z</lastmod>
-  </url>
-  <url>
-    <loc>https://RePsychLing.github.io/SMLP2023/check_emotikon_transform.html</loc>
-    <lastmod>2023-11-07T00:59:33.853Z</lastmod>
-  </url>
-  <url>
-    <loc>https://RePsychLing.github.io/SMLP2023/arrow.html</loc>
-    <lastmod>2023-11-07T00:59:31.913Z</lastmod>
-  </url>
-  <url>
-    <loc>https://RePsychLing.github.io/SMLP2023/about.html</loc>
-    <lastmod>2023-11-07T00:59:28.313Z</lastmod>
-  </url>
-  <url>
-    <loc>https://RePsychLing.github.io/SMLP2023/AoGPlots.html</loc>
-    <lastmod>2023-11-07T00:59:29.309Z</lastmod>
-  </url>
-  <url>
-    <loc>https://RePsychLing.github.io/SMLP2023/bootstrap.html</loc>
-    <lastmod>2023-11-07T00:59:33.005Z</lastmod>
-  </url>
-  <url>
-    <loc>https://RePsychLing.github.io/SMLP2023/contrasts_fggk21.html</loc>
-    <lastmod>2023-11-07T00:59:39.217Z</lastmod>
-  </url>
-  <url>
     <loc>https://RePsychLing.github.io/SMLP2023/fggk21.html</loc>
-    <lastmod>2023-11-07T00:59:46.929Z</lastmod>
-  </url>
-  <url>
-    <loc>https://RePsychLing.github.io/SMLP2023/index.html</loc>
-    <lastmod>2023-11-07T00:59:49.113Z</lastmod>
-  </url>
-  <url>
-    <loc>https://RePsychLing.github.io/SMLP2023/kkl15.html</loc>
-    <lastmod>2023-11-07T00:59:53.157Z</lastmod>
+    <lastmod>2024-06-27T04:50:32.005Z</lastmod>
   </url>
   <url>
     <loc>https://RePsychLing.github.io/SMLP2023/largescaledesigned.html</loc>
-    <lastmod>2023-11-07T00:59:57.821Z</lastmod>
+    <lastmod>2024-06-27T04:50:32.009Z</lastmod>
+  </url>
+  <url>
+    <loc>https://RePsychLing.github.io/SMLP2023/shrinkageplot.html</loc>
+    <lastmod>2024-06-27T02:31:26.485Z</lastmod>
+  </url>
+  <url>
+    <loc>https://RePsychLing.github.io/SMLP2023/glmm.html</loc>
+    <lastmod>2024-06-27T04:50:32.005Z</lastmod>
+  </url>
+  <url>
+    <loc>https://RePsychLing.github.io/SMLP2023/bootstrap.html</loc>
+    <lastmod>2024-06-27T04:50:32.005Z</lastmod>
+  </url>
+  <url>
+    <loc>https://RePsychLing.github.io/SMLP2023/sleepstudy.html</loc>
+    <lastmod>2024-06-27T04:50:32.009Z</lastmod>
+  </url>
+  <url>
+    <loc>https://RePsychLing.github.io/SMLP2023/profiling.html</loc>
+    <lastmod>2024-06-27T02:31:26.481Z</lastmod>
+  </url>
+  <url>
+    <loc>https://RePsychLing.github.io/SMLP2023/contrasts_kwdyz11.html</loc>
+    <lastmod>2024-06-27T04:50:32.005Z</lastmod>
+  </url>
+  <url>
+    <loc>https://RePsychLing.github.io/SMLP2023/check_emotikon_transform.html</loc>
+    <lastmod>2024-06-27T04:50:32.005Z</lastmod>
+  </url>
+  <url>
+    <loc>https://RePsychLing.github.io/SMLP2023/AoGPlots.html</loc>
+    <lastmod>2024-06-27T02:31:26.477Z</lastmod>
   </url>
   <url>
     <loc>https://RePsychLing.github.io/SMLP2023/pkg.html</loc>
-    <lastmod>2023-11-07T01:00:01.549Z</lastmod>
+    <lastmod>2024-06-27T02:31:26.481Z</lastmod>
+  </url>
+  <url>
+    <loc>https://RePsychLing.github.io/SMLP2023/index.html</loc>
+    <lastmod>2024-06-27T02:31:26.481Z</lastmod>
+  </url>
+  <url>
+    <loc>https://RePsychLing.github.io/SMLP2023/about.html</loc>
+    <lastmod>2024-06-27T02:31:26.481Z</lastmod>
+  </url>
+  <url>
+    <loc>https://RePsychLing.github.io/SMLP2023/useful_packages.html</loc>
+    <lastmod>2024-06-27T02:31:26.485Z</lastmod>
   </url>
   <url>
     <loc>https://RePsychLing.github.io/SMLP2023/selection.html</loc>
-    <lastmod>2023-11-07T01:00:02.865Z</lastmod>
+    <lastmod>2024-06-27T02:31:26.481Z</lastmod>
   </url>
   <url>
     <loc>https://RePsychLing.github.io/SMLP2023/singularity.html</loc>
-    <lastmod>2023-11-07T01:00:04.613Z</lastmod>
+    <lastmod>2024-06-27T04:50:32.009Z</lastmod>
   </url>
   <url>
     <loc>https://RePsychLing.github.io/SMLP2023/sleepstudy_speed.html</loc>
-    <lastmod>2023-11-07T01:00:06.696Z</lastmod>
+    <lastmod>2024-06-27T04:50:32.009Z</lastmod>
+  </url>
+  <url>
+    <loc>https://RePsychLing.github.io/SMLP2023/kb07.html</loc>
+    <lastmod>2024-06-27T04:50:32.005Z</lastmod>
+  </url>
+  <url>
+    <loc>https://RePsychLing.github.io/SMLP2023/arrow.html</loc>
+    <lastmod>2024-06-27T02:31:26.481Z</lastmod>
+  </url>
+  <url>
+    <loc>https://RePsychLing.github.io/SMLP2023/partial_within.html</loc>
+    <lastmod>2024-06-27T04:55:46.495Z</lastmod>
+  </url>
+  <url>
+    <loc>https://RePsychLing.github.io/SMLP2023/mrk17.html</loc>
+    <lastmod>2024-06-27T04:51:55.335Z</lastmod>
+  </url>
+  <url>
+    <loc>https://RePsychLing.github.io/SMLP2023/kwdyz11.html</loc>
+    <lastmod>2024-06-27T04:50:32.009Z</lastmod>
+  </url>
+  <url>
+    <loc>https://RePsychLing.github.io/SMLP2023/contrasts_fggk21.html</loc>
+    <lastmod>2024-06-27T04:50:32.005Z</lastmod>
+  </url>
+  <url>
+    <loc>https://RePsychLing.github.io/SMLP2023/kkl15.html</loc>
+    <lastmod>2024-06-27T04:50:32.005Z</lastmod>
   </url>
 </urlset>
