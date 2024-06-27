@@ -12,7 +12,7 @@ using AlgebraOfGraphics
 using CairoMakie
 using DataFrames
 using MixedModels
-using MixedModlesMakie
+using MixedModelsMakie
 using MixedModelsSim
 using ProgressMeter
 using Random
